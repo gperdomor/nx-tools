@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "projects": {
+    "nx-docker": {
+      "root": "libs/nx-docker",
+      "sourceRoot": "libs/nx-docker/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/nx-docker/.eslintrc",
+            "tsConfig": [
+              "libs/nx-docker/tsconfig.lib.json",
+              "libs/nx-docker/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/nx-docker/jest.config.js",
+            "tsConfig": "libs/nx-docker/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/nx-docker",
+            "tsConfig": "libs/nx-docker/tsconfig.lib.json",
+            "packageJson": "libs/nx-docker/package.json",
+            "main": "libs/nx-docker/src/index.ts",
+            "assets": [
+              "libs/nx-docker/*.md",
+              {
+                "input": "./libs/nx-docker/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./libs/nx-docker",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./libs/nx-docker",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-docker-e2e": {
+      "projectType": "application",
+      "root": "apps/nx-docker-e2e",
+      "sourceRoot": "apps/nx-docker-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-docker:build",
+            "npmPackageName": "@gperdomor/nx-docker",
+            "pluginOutputPath": "dist/libs/nx-docker",
+            "jestConfig": "apps/nx-docker-e2e/jest.config.js",
+            "tsSpecConfig": "apps/nx-docker-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/react": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/web": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nx-plugin": {
+      "plugin": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      }
+    }
+  }
+}

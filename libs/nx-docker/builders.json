@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/architect/src/builders-schema.json",
+  "builders": {
+    "build": {
+      "implementation": "./src/builders/nx-docker/builder",
+      "schema": "./src/builders/nx-docker/schema.json",
+      "description": "nx-docker builder"
+    }
+  }
+}
