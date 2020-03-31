@@ -4,6 +4,69 @@
   "title": "NxDocker builder",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "repository": {
+      "type": "string",
+      "description": "Docker repository to tag the image with"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username used to log in to a Docker registry. If not set then no login will occur"
+    },
+    "password": {
+      "type": "string",
+      "description": "Password or personal access token used to log in to a Docker registry. If not set then no login will occur"
+    },
+    "registry": {
+      "type": "string",
+      "description": "Server address of Docker registry. If not set then will default to Docker Hub"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags"
+    },
+    "tag_with_ref": {
+      "type": "string",
+      "description": "Automatically tags the built image with the git reference. The format of the tag depends on the type of git reference with all forward slashes replaced with -.",
+      "default": true
+    },
+    "tag_with_sha": {
+      "type": "string",
+      "description": "Automatically tags the built image with the git short SHA prefixed with sha-",
+      "default": true
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to run the docker build from.",
+      "default": "."
+    },
+    "dockerfile": {
+      "type": "string",
+      "description": "Name of the Dockerfile.",
+      "default": "Dockerfile"
+    },
+    "target": {
+      "type": "string",
+      "description": "Sets the target stage to build"
+    },
+    "build_args": {
+      "type": "string",
+      "description": "Comma-delimited list of build-time variables (build_args: arg1=value1,arg2=value2)"
+    },
+    "labels": {
+      "type": "string",
+      "description": "Comma-delimited list of labels to add to the built image (labels: label_name_1=label_value_1,label_name_2=label_value_2)"
+    },
+    "add_git_labels": {
+      "type": "boolean",
+      "description": "Adds labels with git repository information to the built image based on the standards set out in https://github.com/opencontainers/image-spec/blob/master/annotations.md",
+      "default": true
+    },
+    "push": {
+      "type": "boolean",
+      "description": "Whether to push the built image",
+      "default": true
+    }
+  },
+  "required": ["repository"]
 }
