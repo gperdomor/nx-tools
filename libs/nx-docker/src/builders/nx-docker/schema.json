@@ -68,5 +68,5 @@
       "default": true
     }
   },
-  "required": ["repository"]
+  "required": []
 }

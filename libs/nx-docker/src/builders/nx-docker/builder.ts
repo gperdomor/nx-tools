@@ -18,6 +18,7 @@ export function runBuilder(
         error:
           'ERROR: Bad builder config for @gperdomor/nx-docker - "repository" option is required'
       });
+      observer.complete();
       return;
     }
 
