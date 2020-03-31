@@ -24,9 +24,7 @@ describe('nx-docker e2e', () => {
       await runNxCommandAsync(
         `generate @gperdomor/nx-docker:nxDocker ${plugin} --directory subdir`
       );
-      expect(() =>
-        checkFilesExist(`libs/subdir/${plugin}/src/index.ts`)
-      ).not.toThrow();
+      expect(() => checkFilesExist(`libs/subdir/${plugin}/src/index.ts`)).not.toThrow();
       done();
     });
   });

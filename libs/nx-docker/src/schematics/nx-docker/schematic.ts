@@ -32,14 +32,10 @@ interface NormalizedSchema extends NxDockerSchematicSchema {
 
 function normalizeOptions(options: NxDockerSchematicSchema): NormalizedSchema {
   const name = toFileName(options.name);
-  const projectDirectory = options.directory
-    ? `${toFileName(options.directory)}/${name}`
-    : name;
+  const projectDirectory = options.directory ? `${toFileName(options.directory)}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${projectRootDir(projectType)}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map(s => s.trim())
-    : [];
+  const parsedTags = options.tags ? options.tags.split(',').map(s => s.trim()) : [];
 
   return {
     ...options,

@@ -12,10 +12,7 @@
           "options": {
             "linter": "eslint",
             "config": "libs/nx-docker/.eslintrc",
-            "tsConfig": [
-              "libs/nx-docker/tsconfig.lib.json",
-              "libs/nx-docker/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/nx-docker/tsconfig.lib.json", "libs/nx-docker/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
           }
         },
