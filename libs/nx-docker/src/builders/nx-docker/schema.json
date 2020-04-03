@@ -26,12 +26,12 @@
       "description": "Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags"
     },
     "tag_with_ref": {
-      "type": "string",
+      "type": "boolean",
       "description": "Automatically tags the built image with the git reference. The format of the tag depends on the type of git reference with all forward slashes replaced with -.",
       "default": true
     },
     "tag_with_sha": {
-      "type": "string",
+      "type": "boolean",
       "description": "Automatically tags the built image with the git short SHA prefixed with sha-",
       "default": true
     },
