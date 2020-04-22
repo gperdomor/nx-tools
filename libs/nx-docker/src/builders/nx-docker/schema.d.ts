@@ -64,5 +64,9 @@ export interface NxDockerBuilderSchema extends JsonObject {
    * Whether to push the built image
    */
   push?: boolean;
+  /**
+   * Comma-delimited list of images to consider as cache sources  (cache_froms: myorg/baseimage:latest)
+   */
+  cache_froms: string;
   [k: string]: any;
 }
