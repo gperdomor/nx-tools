@@ -8,7 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['12.16-alpine', '13.10-alpine', '13.12-alpine', 13.13-alpine]
+        node:
+          - 12.16-alpine
+          - 13.10-alpine
+          - 13.12-alpine
+          - 13.12-alpine
+          - 13.13-alpine
+          - 14.0-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2

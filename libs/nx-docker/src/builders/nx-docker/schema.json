@@ -66,6 +66,10 @@
       "type": "boolean",
       "description": "Whether to push the built image",
       "default": true
+    },
+    "cache_froms": {
+      "type": "string",
+      "description": "Comma-delimited list of images to consider as cache sources  (cache_froms: myorg/baseimage:latest)"
     }
   },
   "required": []
