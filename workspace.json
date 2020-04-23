@@ -12,8 +12,14 @@
           "options": {
             "linter": "eslint",
             "config": "libs/nx-docker/.eslintrc",
-            "tsConfig": ["libs/nx-docker/tsconfig.lib.json", "libs/nx-docker/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
+            "tsConfig": [
+              "libs/nx-docker/tsconfig.lib.json",
+              "libs/nx-docker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/nx-docker/**"
+            ]
           }
         },
         "test": {
@@ -69,10 +75,72 @@
           }
         }
       }
+    },
+    "example-app": {
+      "root": "apps/example-app",
+      "sourceRoot": "apps/example-app/src",
+      "projectType": "application",
+      "prefix": "example-app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/example-app",
+            "main": "apps/example-app/src/main.ts",
+            "tsConfig": "apps/example-app/tsconfig.app.json",
+            "assets": [
+              "apps/example-app/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example-app/src/environments/environment.ts",
+                  "with": "apps/example-app/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/example-app/.eslintrc",
+            "tsConfig": [
+              "apps/example-app/tsconfig.app.json",
+              "apps/example-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/example-app/**"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/example-app/jest.config.js",
+            "tsConfig": "apps/example-app/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/node"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -129,5 +197,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "example-app"
 }
