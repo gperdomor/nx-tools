@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs';
-
 import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
-
+import { Observable } from 'rxjs';
 import { NxDockerBuilderSchema } from './schema';
 import { createProcess, loadEnvVars } from './utils';
 
@@ -49,7 +47,11 @@ export function runBuilder(
         command.push(`-e GITHUB_SHA=${process.env.GITHUB_SHA}`);
       }
 
-      command.push(`docker/github-actions:v1.0 build-push`);
+      if (process.env.DOCKER_BUILDKIT) {
+        command.push(`-e DOCKER_BUILDKIT=${process.env.DOCKER_BUILDKIT}`);
+      }
+
+      command.push(`docker/github-actions:v1.1.0 build-push`);
 
       const success = await createProcess(command.join(' '), undefined, true, undefined);
 

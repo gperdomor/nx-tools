@@ -1,6 +1,5 @@
-import { exec } from 'child_process';
-
 import { TEN_MEGABYTES } from '@nrwl/workspace/src/core/file-utils';
+import { exec } from 'child_process';
 
 export const createProcess = (
   command: string,

@@ -1,0 +1,8 @@
+.cache
+.git
+.github
+.gitlab
+.vscode
+dist
+node_modules
+tmp
