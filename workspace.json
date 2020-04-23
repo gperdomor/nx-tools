@@ -12,14 +12,8 @@
           "options": {
             "linter": "eslint",
             "config": "libs/nx-docker/.eslintrc",
-            "tsConfig": [
-              "libs/nx-docker/tsconfig.lib.json",
-              "libs/nx-docker/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!libs/nx-docker/**"
-            ]
+            "tsConfig": ["libs/nx-docker/tsconfig.lib.json", "libs/nx-docker/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
           }
         },
         "test": {
@@ -89,9 +83,7 @@
             "outputPath": "dist/apps/example-app",
             "main": "apps/example-app/src/main.ts",
             "tsConfig": "apps/example-app/tsconfig.app.json",
-            "assets": [
-              "apps/example-app/src/assets"
-            ]
+            "assets": ["apps/example-app/src/assets"]
           },
           "configurations": {
             "production": {
@@ -122,10 +114,7 @@
               "apps/example-app/tsconfig.app.json",
               "apps/example-app/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/example-app/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/example-app/**"]
           }
         },
         "test": {
@@ -134,6 +123,22 @@
             "jestConfig": "apps/example-app/jest.config.js",
             "tsConfig": "apps/example-app/tsconfig.spec.json",
             "passWithNoTests": true
+          }
+        },
+        "docker": {
+          "builder": "./dist/libs/nx-docker:build",
+          "options": {
+            "repository": "$CI_PROJECT_PATH/example-app",
+            "cache_froms": "$CI_PROJECT_PATH/example-app:latest",
+            "dockerfile": "apps/example-app/Dockerfile",
+            "registry": "$CI_REGISTRY",
+            "username": "$CI_REGISTRY_USER",
+            "password": "$CI_REGISTRY_PASSWORD",
+            "tag_with_ref": false,
+            "tag_with_sha": false,
+            "tags": "latest",
+            "push": false,
+            "socket": "/var/run/docker.sock"
           }
         }
       }

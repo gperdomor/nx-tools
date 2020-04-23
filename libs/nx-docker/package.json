@@ -1,6 +1,6 @@
 {
   "name": "@gperdomor/nx-docker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "src/index.js",
   "schematics": "./collection.json",
   "builders": "./builders.json"
