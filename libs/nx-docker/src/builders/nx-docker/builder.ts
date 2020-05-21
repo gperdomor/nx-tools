@@ -9,12 +9,12 @@ export function runBuilder(
 ): Observable<BuilderOutput> {
   loadEnvVars(options.envFile);
 
-  return Observable.create(async observer => {
+  return Observable.create(async (observer) => {
     if (!options.repository) {
       observer.next({
         success: false,
         error:
-          'ERROR: Bad builder config for @gperdomor/nx-docker - "repository" option is required'
+          'ERROR: Bad builder config for @gperdomor/nx-docker - "repository" option is required',
       });
       observer.complete();
       return;
@@ -29,7 +29,7 @@ export function runBuilder(
         command.push(`-v ${options.socket}:/var/run/docker.sock`);
       }
 
-      Object.keys(options).forEach(key => {
+      Object.keys(options).forEach((key) => {
         if (options[key]) {
           if (key === 'path' || key === 'dockerfile') {
             command.push(`-e INPUT_${key.toUpperCase()}=${workDir}/${options[key]}`);

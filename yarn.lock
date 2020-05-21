@@ -418,51 +418,51 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@nrwl/cli@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-9.2.3.tgz#55a0824514501033edba14f23b244bb4bab2976f"
-  integrity sha512-dyvKMpuZGIE3QRVRD4iX+Kyv8xJS1Wknblk3bBS4JIEVd+fwtpcddEUGvhVGhdOnSv0I3rQ8y2/vtjPwTnEedw==
+"@nrwl/cli@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/cli/-/cli-9.3.0.tgz#5d54625be09dd72a9b3458749ea88103794986c9"
+  integrity sha512-S3fZg9g/+sVovoEwW00i1MiRQ70BWu55rsHyl8PxN+cciNOnnWP88IjZFnRreoLUnRaNhOlOE8AEp7q2x0M38A==
   dependencies:
-    "@nrwl/tao" "9.2.3"
+    "@nrwl/tao" "9.3.0"
     chalk "2.4.2"
     tmp "0.0.33"
     yargs "^11.0.0"
     yargs-parser "10.0.0"
 
-"@nrwl/eslint-plugin-nx@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-9.2.3.tgz#999705af684cb114014644425caa10b2f4a8b0ee"
-  integrity sha512-xN7mnNo4FSio73JzPYIhaBJVWeTLhgN5+Cz8j21U/o8f3pIvFs3Aoq4P4nyO7Gmb5wc8sfCMpmvmFGLsQavjGA==
+"@nrwl/eslint-plugin-nx@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-9.3.0.tgz#2996b3edf1a5d8bd2e6cf349938f3a3296fbf322"
+  integrity sha512-fsTxh0P4WmOBYykGSjyQRdRi74V0lxVPk3GafbnQVQ+yi+G8+JdskVblvXnM9YUa3nC0bLF2MMR7SPY8SPbYww==
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.19.2"
 
-"@nrwl/jest@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-9.2.3.tgz#15c2d3e28b3a2aec6f55a307d2da45d0736b3cae"
-  integrity sha512-2br+bz/RJ7JTULHOpm+Fkn1qjKy+s7Lx6IKfDA5wBR5Ys/9MITTyAuDN0TIGSJmkjrouHjek3DUdjcgwLBPMiQ==
+"@nrwl/jest@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/jest/-/jest-9.3.0.tgz#5f69731c187d7d9f078c5c4b019b57e81344157a"
+  integrity sha512-/ihVH9YTOnC+gwMvy4nlUg/W1rtM+W2RZuH9AeiBeruUQn2Ipbx6e4P8Ecxnc91P95sZus79qJQklsaeXjPqmA==
   dependencies:
     "@angular-devkit/architect" "~0.901.0"
     "@angular-devkit/core" "~9.1.0"
     "@angular-devkit/schematics" "~9.1.0"
 
-"@nrwl/linter@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-9.2.3.tgz#218b214a280d3dd66796091330fdde1f5e319207"
-  integrity sha512-u/WyA4PiIAvkzAez8KN67Q2mPYQzgOiCcbQHyESce8xZ0oF3W83k+qL5zkrZfoX75o0g+Xlbw/diQ49o9/kw0g==
+"@nrwl/linter@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-9.3.0.tgz#9167b709cbb17d0012ab29a54a4a10c1a7228c47"
+  integrity sha512-3FxY2RKt2TUuOSPq9zhGfk48JPA51hoBoEcJ2Na/b87bKGMBspYoHV7k0TgF5/B3g2lQdk0/xARRBWAOJkAJjg==
   dependencies:
     "@angular-devkit/architect" "~0.901.0"
 
-"@nrwl/node@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-9.2.3.tgz#8ebb9ef19916af4bbdf987d9dd968934a8e49a8f"
-  integrity sha512-hQluT2h46iVZO9jTQ9VlUC4l1oCSRSfuLnJU8QYLTUoBZtRu4AaWhWvItR84maYpWsZD0PJmz7pkWyjG8Va+9w==
+"@nrwl/node@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/node/-/node-9.3.0.tgz#9670d671f4cebf3708e84f35e6cb0ccebcb4cee3"
+  integrity sha512-Qv1rDTum8wio/n55yKts1tPnZnbemitk3tMYP3kfplW9g362zns24Z5MgDF9bKXEBHuvEGotaAIFX5Vg6GiL8Q==
   dependencies:
     "@angular-devkit/architect" "~0.901.0"
     "@angular-devkit/build-webpack" "~0.901.0"
     "@angular-devkit/core" "~9.1.0"
     "@angular-devkit/schematics" "~9.1.0"
-    "@nrwl/jest" "9.2.3"
-    "@nrwl/linter" "9.2.3"
+    "@nrwl/jest" "9.3.0"
+    "@nrwl/linter" "9.3.0"
     circular-dependency-plugin "5.2.0"
     copy-webpack-plugin "5.1.1"
     fork-ts-checker-webpack-plugin "^3.1.1"
@@ -476,26 +476,26 @@
     webpack-merge "4.2.1"
     webpack-node-externals "1.7.2"
 
-"@nrwl/nx-plugin@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/nx-plugin/-/nx-plugin-9.2.3.tgz#8d1ad6989a79a80d4d5b6174769e153e0c1cc49d"
-  integrity sha512-dvFu7hxSUfpl8S2NX45DwQ2WbrHA/Ci85LeAR6wtplgSceXaermlruahB2dMFb+P7W/VN6O98+n+P3RjKVFziQ==
+"@nrwl/nx-plugin@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/nx-plugin/-/nx-plugin-9.3.0.tgz#099f0d78a643f4afce39c75d94f8287849132fec"
+  integrity sha512-4CcwVIllt1QMmSvTOiH0kegBd9IPvPzdBsKKRj5pi3JMvm4qerw2RhK9inoHASyWE2ORutqdofIE1f7m1Nxtlg==
   dependencies:
     "@angular-devkit/architect" "~0.901.0"
     "@angular-devkit/core" "~9.1.0"
     "@angular-devkit/schematics" "~9.1.0"
-    "@nrwl/linter" "9.2.3"
-    "@nrwl/node" "9.2.3"
+    "@nrwl/linter" "9.3.0"
+    "@nrwl/node" "9.3.0"
     fs-extra "7.0.1"
     inquirer "^6.3.1"
     tmp "0.0.33"
     yargs "^11.0.0"
     yargs-parser "10.0.0"
 
-"@nrwl/tao@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-9.2.3.tgz#be61af4b016f680fd9d288e94b12a04f199ceda3"
-  integrity sha512-aWJ67P1Up62D69+JIeRftWI1SX/kfq63zPGDbrkTe+buhwPoaT9LJpDuUSVxRTQRux+l/Bh5w14Zxyfj2pB9Zg==
+"@nrwl/tao@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/tao/-/tao-9.3.0.tgz#04ac3de1276838eda59c4ebfccf53baec00aab7d"
+  integrity sha512-jD8dt3sMFKMK4Z8WXEwRTF2AJ12u1v19L0Dhdp+KOETelf0BlzvIhEmgJx2vfcsGMe+oVzTTEwMnWsouXm6cMg==
   dependencies:
     "@angular-devkit/architect" "~0.901.0"
     "@angular-devkit/core" "~9.1.0"
@@ -505,14 +505,14 @@
     minimist "^1.2.0"
     strip-json-comments "2.0.1"
 
-"@nrwl/workspace@9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-9.2.3.tgz#89fcac5972eba657361c1c920d552fac0522f2bd"
-  integrity sha512-RPtG0c7RYgWyi+WannGvfR+XEDiAIwWGWlRsqg0+BYld36md66xVsb36fmH1JPYaf1iJOTmzDtKwmUjpyxRmQQ==
+"@nrwl/workspace@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@nrwl/workspace/-/workspace-9.3.0.tgz#faf47aab20e6f8515853fb0997bc92bdb86ac3ed"
+  integrity sha512-IXIWnximAQDpFxifZzETFyF58ul5t4kIAojlwxoF/V9BGAnIwlMxodcsPmqXp1b25vX8w6ir5DeHN+Efz1YuGg==
   dependencies:
     "@angular-devkit/core" "~9.1.0"
     "@angular-devkit/schematics" "~9.1.0"
-    "@nrwl/cli" "9.2.3"
+    "@nrwl/cli" "9.3.0"
     axios "0.19.2"
     chalk "2.4.2"
     cosmiconfig "4.0.0"
@@ -5303,10 +5303,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-prettier@1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
-  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
+prettier@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.4.tgz#2d1bae173e355996ee355ec9830a7a1ee05457ef"
+  integrity sha512-SVJIQ51spzFDvh4fIbCLvciiDMCrRhlN3mbZvv/+ycjvmF5E73bKdGfU8QDLNmjYJf+lsGnDBC4UUnvTe5OO0w==
 
 pretty-format@^25.1.0, pretty-format@^25.2.3:
   version "25.2.3"

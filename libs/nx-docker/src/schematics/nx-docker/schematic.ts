@@ -5,7 +5,7 @@ import {
   mergeWith,
   move,
   Rule,
-  url
+  url,
 } from '@angular-devkit/schematics';
 import {
   addProjectToNxJsonInTree,
@@ -14,7 +14,7 @@ import {
   projectRootDir,
   ProjectType,
   toFileName,
-  updateWorkspace
+  updateWorkspace,
 } from '@nrwl/workspace';
 import { NxDockerSchematicSchema } from './schema';
 
@@ -35,14 +35,14 @@ function normalizeOptions(options: NxDockerSchematicSchema): NormalizedSchema {
   const projectDirectory = options.directory ? `${toFileName(options.directory)}/${name}` : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${projectRootDir(projectType)}/${projectDirectory}`;
-  const parsedTags = options.tags ? options.tags.split(',').map(s => s.trim()) : [];
+  const parsedTags = options.tags ? options.tags.split(',').map((s) => s.trim()) : [];
 
   return {
     ...options,
     projectName,
     projectRoot,
     projectDirectory,
-    parsedTags
+    parsedTags,
   };
 }
 
@@ -52,32 +52,32 @@ function addFiles(options: NormalizedSchema): Rule {
       applyTemplates({
         ...options,
         ...names(options.name),
-        offsetFromRoot: offsetFromRoot(options.projectRoot)
+        offsetFromRoot: offsetFromRoot(options.projectRoot),
       }),
-      move(options.projectRoot)
+      move(options.projectRoot),
     ])
   );
 }
 
-export default function(options: NxDockerSchematicSchema): Rule {
+export default function (options: NxDockerSchematicSchema): Rule {
   const normalizedOptions = normalizeOptions(options);
   return chain([
-    updateWorkspace(workspace => {
+    updateWorkspace((workspace) => {
       workspace.projects
         .add({
           name: normalizedOptions.projectName,
           root: normalizedOptions.projectRoot,
           sourceRoot: `${normalizedOptions.projectRoot}/src`,
-          projectType
+          projectType,
         })
         .targets.add({
           name: 'build',
-          builder: '@gperdomor/nx-docker:build'
+          builder: '@gperdomor/nx-docker:build',
         });
     }),
     addProjectToNxJsonInTree(normalizedOptions.projectName, {
-      tags: normalizedOptions.parsedTags
+      tags: normalizedOptions.parsedTags,
     }),
-    addFiles(normalizedOptions)
+    addFiles(normalizedOptions),
   ]);
 }

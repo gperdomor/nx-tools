@@ -3,10 +3,10 @@ import {
   ensureNxProject,
   readJson,
   runNxCommandAsync,
-  uniq
+  uniq,
 } from '@nrwl/nx-plugin/testing';
 describe('nx-docker e2e', () => {
-  it('should create nx-docker', async done => {
+  it('should create nx-docker', async (done) => {
     const plugin = uniq('nx-docker');
     ensureNxProject('@gperdomor/nx-docker', 'dist/libs/nx-docker');
     await runNxCommandAsync(`generate @gperdomor/nx-docker:nxDocker ${plugin}`);
@@ -18,7 +18,7 @@ describe('nx-docker e2e', () => {
   });
 
   describe('--directory', () => {
-    it('should create src in the specified directory', async done => {
+    it('should create src in the specified directory', async (done) => {
       const plugin = uniq('nx-docker');
       ensureNxProject('@gperdomor/nx-docker', 'dist/libs/nx-docker');
       await runNxCommandAsync(
@@ -30,7 +30,7 @@ describe('nx-docker e2e', () => {
   });
 
   describe('--tags', () => {
-    it('should add tags to nx.json', async done => {
+    it('should add tags to nx.json', async (done) => {
       const plugin = uniq('nx-docker');
       ensureNxProject('@gperdomor/nx-docker', 'dist/libs/nx-docker');
       await runNxCommandAsync(
