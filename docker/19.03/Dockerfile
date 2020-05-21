@@ -4,7 +4,19 @@ FROM node:${NODE_VERSION}
 LABEL maintainer="gperdomor@gmail.com"
 
 # Add git
-RUN apk add --no-cache git
+RUN apk add --no-cache \
+    bash \
+    bzip2 \
+    curl \
+    git \
+    gnupg \
+    gzip \
+    make \
+    net-tools \
+    parallel \
+    tar \
+    unzip \
+    zip
 
 RUN apk add --no-cache \
 		ca-certificates \

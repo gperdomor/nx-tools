@@ -14,12 +14,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -29,9 +24,7 @@
     },
     "nx-docker-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "nx-docker"
-      ]
+      "implicitDependencies": ["nx-docker"]
     },
     "example-app": {
       "tags": []
