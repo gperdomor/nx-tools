@@ -10,6 +10,7 @@ jobs:
       matrix:
         node:
           - 12.16-alpine
+          - 12.17-alpine
           - 13.10-alpine
           - 13.12-alpine
           - 13.12-alpine

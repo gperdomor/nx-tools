@@ -1,4 +1,4 @@
-ARG NODE_VERSION=13.13-alpine
+ARG NODE_VERSION=14.3-alpine
 FROM node:${NODE_VERSION}
 
 LABEL maintainer="gperdomor@gmail.com"
