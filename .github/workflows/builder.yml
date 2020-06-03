@@ -11,6 +11,7 @@ jobs:
         node:
           - 12.16-alpine
           - 12.17-alpine
+          - 12.18-alpine
           - 13.10-alpine
           - 13.12-alpine
           - 13.12-alpine
@@ -20,6 +21,7 @@ jobs:
           - 14.1-alpine
           - 14.2-alpine
           - 14.3-alpine
+          - 14.4-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2
