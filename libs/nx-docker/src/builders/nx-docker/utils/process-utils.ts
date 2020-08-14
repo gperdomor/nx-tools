@@ -1,12 +1,7 @@
 import { TEN_MEGABYTES } from '@nrwl/workspace/src/core/file-utils';
 import { exec } from 'child_process';
 
-export const createProcess = (
-  command: string,
-  readyWhen: string,
-  color: boolean,
-  cwd: string
-): Promise<boolean> => {
+export const createProcess = (command: string, readyWhen: string, color: boolean, cwd: string): Promise<boolean> => {
   return new Promise((res) => {
     const childProcess = exec(command, {
       maxBuffer: TEN_MEGABYTES,

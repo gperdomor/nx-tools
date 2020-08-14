@@ -9,18 +9,13 @@ describe('nx-docker schematic', () => {
   let appTree: Tree;
   const options: NxDockerSchematicSchema = { name: 'test' };
 
-  const testRunner = new SchematicTestRunner(
-    '@gperdomor/nx-docker',
-    join(__dirname, '../../../collection.json')
-  );
+  const testRunner = new SchematicTestRunner('@gperdomor/nx-docker', join(__dirname, '../../../collection.json'));
 
   beforeEach(() => {
     appTree = createEmptyWorkspace(Tree.empty());
   });
 
   it('should run successfully', async () => {
-    await expect(
-      testRunner.runSchematicAsync('nxDocker', options, appTree).toPromise()
-    ).resolves.not.toThrowError();
+    await expect(testRunner.runSchematicAsync('nx-docker', options, appTree).toPromise()).resolves.not.toThrowError();
   });
 });

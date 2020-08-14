@@ -1,14 +1,16 @@
 {
-  "name": "gperdomor",
+  "name": "nx-tools",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "ng": "nx",
+    "postinstall": "node ./decorate-angular-cli.js",
     "nx": "nx",
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test",
-    "lint": "nx workspace-lint && nx lint",
-    "e2e": "nx e2e",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "nx workspace-lint && ng lint",
+    "e2e": "ng e2e",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
     "affected:build": "nx affected:build",
@@ -20,7 +22,7 @@
     "format": "nx format:write",
     "format:write": "nx format:write",
     "format:check": "nx format:check",
-    "update": "nx migrate latest",
+    "update": "ng update @nrwl/workspace",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help"
@@ -28,11 +30,13 @@
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@nrwl/eslint-plugin-nx": "9.3.0",
-    "@nrwl/jest": "9.3.0",
-    "@nrwl/node": "9.3.0",
-    "@nrwl/nx-plugin": "9.3.0",
-    "@nrwl/workspace": "9.3.0",
+    "@angular/cli": "~10.0.0",
+    "@nrwl/eslint-plugin-nx": "10.0.12",
+    "@nrwl/jest": "10.0.12",
+    "@nrwl/node": "10.0.12",
+    "@nrwl/nx-cloud": "latest",
+    "@nrwl/nx-plugin": "10.0.12",
+    "@nrwl/workspace": "10.0.12",
     "@types/jest": "25.1.4",
     "@types/node": "~8.9.4",
     "@typescript-eslint/eslint-plugin": "2.19.2",
@@ -45,6 +49,6 @@
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
-    "typescript": "~3.8.3"
+    "typescript": "~3.9.3"
   }
 }

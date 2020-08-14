@@ -3,7 +3,7 @@
   "name": "nx-docker",
   "version": "0.0.1",
   "schematics": {
-    "nxDocker": {
+    "nx-docker": {
       "factory": "./src/schematics/nx-docker/schematic",
       "schema": "./src/schematics/nx-docker/schema.json",
       "description": "nx-docker schematic"

@@ -1,12 +1,4 @@
-import {
-  apply,
-  applyTemplates,
-  chain,
-  mergeWith,
-  move,
-  Rule,
-  url,
-} from '@angular-devkit/schematics';
+import { apply, applyTemplates, chain, mergeWith, move, Rule, url } from '@angular-devkit/schematics';
 import {
   addProjectToNxJsonInTree,
   names,
@@ -55,7 +47,7 @@ function addFiles(options: NormalizedSchema): Rule {
         offsetFromRoot: offsetFromRoot(options.projectRoot),
       }),
       move(options.projectRoot),
-    ])
+    ]),
   );
 }
 

@@ -11,9 +11,8 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/nx-docker/.eslintrc",
             "tsConfig": ["libs/nx-docker/tsconfig.lib.json", "libs/nx-docker/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
+            "exclude": ["**/node_modules/**", "!libs/nx-docker/**/*"]
           }
         },
         "test": {
@@ -62,7 +61,7 @@
           "builder": "@nrwl/nx-plugin:e2e",
           "options": {
             "target": "nx-docker:build",
-            "npmPackageName": "@gperdomor/nx-docker",
+            "npmPackageName": "@nx-tools/nx-docker",
             "pluginOutputPath": "dist/libs/nx-docker",
             "jestConfig": "apps/nx-docker-e2e/jest.config.js",
             "tsSpecConfig": "apps/nx-docker-e2e/tsconfig.spec.json"
@@ -109,9 +108,8 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/example-app/.eslintrc",
             "tsConfig": ["apps/example-app/tsconfig.app.json", "apps/example-app/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/example-app/**"]
+            "exclude": ["**/node_modules/**", "!apps/example-app/**/*"]
           }
         },
         "test": {
@@ -120,22 +118,6 @@
             "jestConfig": "apps/example-app/jest.config.js",
             "tsConfig": "apps/example-app/tsconfig.spec.json",
             "passWithNoTests": true
-          }
-        },
-        "docker": {
-          "builder": "./dist/libs/nx-docker:build",
-          "options": {
-            "repository": "$CI_PROJECT_PATH/example-app",
-            "cache_froms": "$CI_PROJECT_PATH/example-app:latest",
-            "dockerfile": "apps/example-app/Dockerfile",
-            "registry": "$CI_REGISTRY",
-            "username": "$CI_REGISTRY_USER",
-            "password": "$CI_REGISTRY_PASSWORD",
-            "tag_with_ref": false,
-            "tag_with_sha": false,
-            "tags": "latest",
-            "push": false,
-            "socket": "/var/run/docker.sock"
           }
         }
       }
@@ -147,56 +129,36 @@
   "schematics": {
     "@nrwl/workspace": {
       "library": {
-        "linter": "eslint"
+        "linter": "tslint"
       }
     },
     "@nrwl/cypress": {
       "cypress-project": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/react": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/next": {
-      "application": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/web": {
-      "application": {
-        "linter": "eslint"
+        "linter": "tslint"
       }
     },
     "@nrwl/node": {
       "application": {
-        "linter": "eslint"
+        "linter": "tslint"
       },
       "library": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/nx-plugin": {
-      "plugin": {
-        "linter": "eslint"
+        "linter": "tslint"
       }
     },
     "@nrwl/nest": {
       "application": {
-        "linter": "eslint"
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
       }
     },
     "@nrwl/express": {
       "application": {
-        "linter": "eslint"
+        "linter": "tslint"
       },
       "library": {
-        "linter": "eslint"
+        "linter": "tslint"
       }
     }
   },

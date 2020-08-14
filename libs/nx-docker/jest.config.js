@@ -1,6 +1,11 @@
 module.exports = {
   name: 'nx-docker',
   preset: '../../jest.config.js',
+  globals: {
+    'ts-jest': {
+      tsConfig: '<rootDir>/tsconfig.spec.json',
+    },
+  },
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },

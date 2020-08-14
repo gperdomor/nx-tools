@@ -3,18 +3,14 @@ import { Observable } from 'rxjs';
 import { NxDockerBuilderSchema } from './schema';
 import { createProcess, loadEnvVars } from './utils';
 
-export function runBuilder(
-  options: NxDockerBuilderSchema,
-  context: BuilderContext
-): Observable<BuilderOutput> {
+export function runBuilder(options: NxDockerBuilderSchema, context: BuilderContext): Observable<BuilderOutput> {
   loadEnvVars(options.envFile);
 
   return Observable.create(async (observer) => {
     if (!options.repository) {
       observer.next({
         success: false,
-        error:
-          'ERROR: Bad builder config for @gperdomor/nx-docker - "repository" option is required',
+        error: 'ERROR: Bad builder config for @gperdomor/nx-docker - "repository" option is required',
       });
       observer.complete();
       return;
