@@ -120,8 +120,8 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/example-app/jest.config.js",
-            "tsConfig": "apps/example-app/tsconfig.spec.json",
+            "jestConfig": "apps/examples/docker/jest.config.js",
+            "tsConfig": "apps/examples/docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -266,6 +266,13 @@
           "builder": "./dist/libs/nx-prisma:rollback",
           "options": {
             "schema": "apps/examples/prisma/data/schema.prisma"
+          }
+        },
+        "seed": {
+          "builder": "./dist/libs/nx-prisma:seed",
+          "options": {
+            "script": "apps/examples/prisma/data/seed.ts",
+            "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
           }
         }
       }

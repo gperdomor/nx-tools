@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "builders": "./builders.json",
   "peerDependencies": {
-    "@prisma/cli": ">= 2"
+    "@prisma/cli": ">= 2",
+    "ts-node": "*"
   }
 }

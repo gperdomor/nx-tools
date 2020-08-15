@@ -14,6 +14,11 @@
       "implementation": "./src/builders/rollback/builder",
       "schema": "./src/builders/rollback/schema.json",
       "description": "Reverts latest prisma migration"
+    },
+    "seed": {
+      "implementation": "./src/builders/seed/builder",
+      "schema": "./src/builders/seed/schema.json",
+      "description": "Runs the seed script"
     }
   }
 }

@@ -2,8 +2,8 @@
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "types": ["node", "jest"],
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es2017"
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "data/seed.ts"]
 }

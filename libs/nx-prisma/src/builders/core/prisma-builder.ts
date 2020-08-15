@@ -5,7 +5,7 @@ import { runCommands, PrismaCommands, PrismaBuilderOptions } from './run-command
 
 export const createPrismaBuilder = <T extends PrismaBuilderOptions>(
   commands: PrismaCommands<T>
-) => (options: T, _context: BuilderContext): Observable<BuilderOutput> => {
+) => (options: T): Observable<BuilderOutput> => {
   return new Observable((observer) => {
     if (!options.schema) {
       observer.next({
@@ -15,13 +15,16 @@ export const createPrismaBuilder = <T extends PrismaBuilderOptions>(
       observer.complete();
     } else {
       runCommands(commands, options).subscribe({
-        next: (success) => observer.next({ success }),
-        complete: () => observer.complete(),
-        error: (e) => {
+        complete: () => {
+          observer.next({ success: true });
+          observer.complete();
+        },
+        error: () => {
           observer.next({
             success: false,
-            error: `ERROR: Something went wrong in @gperdomor/nx-prisma - ${e.message}`,
+            error: `ERROR: Something went wrong in @gperdomor/nx-prisma`,
           });
+          observer.complete();
         },
       });
     }

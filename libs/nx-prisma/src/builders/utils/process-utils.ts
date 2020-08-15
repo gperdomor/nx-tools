@@ -44,7 +44,7 @@ export const createProcess = async ({
     childProcess.on('close', (code) => {
       if (!readyWhen) {
         if (code === 0) res(true);
-        else reject(code);
+        else reject(new Error(`${code}`));
       }
     });
   });

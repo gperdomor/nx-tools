@@ -31,7 +31,6 @@ export const runCommands = <T extends PrismaBuilderOptions>(
     concatMap(async ([baseCommand, args]) => {
       const command = `${baseCommand} --schema=${options.schema} ${args.join(' ')}`;
       await createProcess({ command, silent: options.silent, color: true });
-      return true;
     })
   );
 };
