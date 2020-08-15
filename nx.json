@@ -1,5 +1,5 @@
 {
-  "npmScope": "gperdomor",
+  "npmScope": "nx-tools",
   "affected": {
     "defaultBase": "master"
   },
@@ -17,7 +17,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "accessToken": "ZjVkNTg0YWItOWE1YS00OWNmLTgxOTktZTBmOTAxOTg1OTNifHJlYWQtd3JpdGU=",
+        "accessToken": "MDAxYjJkNjYtZDkyZS00MWM2LWEyMjYtYmNjNjBkY2EwZDRjfHJlYWQtd3JpdGU=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
@@ -31,9 +31,10 @@
     "nx-docker-e2e": {
       "tags": [],
       "implicitDependencies": ["nx-docker"]
-    },
-    "example-app": {
-      "tags": []
     }
+  },
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
   }
 }

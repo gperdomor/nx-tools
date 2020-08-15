@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gperdomor/nx-docker": ["libs/nx-docker/src/index.ts"]
+      "@gperdomor/nx-docker": ["packages/nx-docker/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
