@@ -1,0 +1,8 @@
+{
+  "name": "@gperdomor/nx-prisma",
+  "version": "0.0.1",
+  "builders": "./builders.json",
+  "peerDependencies": {
+    "@prisma/cli": ">= 2"
+  }
+}

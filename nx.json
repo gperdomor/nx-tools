@@ -28,6 +28,9 @@
     },
     "example-app": {
       "tags": []
+    },
+    "nx-prisma": {
+      "tags": []
     }
   }
 }

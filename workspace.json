@@ -142,6 +142,58 @@
           }
         }
       }
+    },
+    "nx-prisma": {
+      "root": "libs/nx-prisma",
+      "sourceRoot": "libs/nx-prisma/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/nx-prisma/.eslintrc",
+            "tsConfig": ["libs/nx-prisma/tsconfig.lib.json", "libs/nx-prisma/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/nx-prisma/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/nx-prisma/jest.config.js",
+            "tsConfig": "libs/nx-prisma/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/libs/nx-prisma",
+            "tsConfig": "libs/nx-prisma/tsconfig.lib.json",
+            "packageJson": "libs/nx-prisma/package.json",
+            "main": "libs/nx-prisma/src/index.ts",
+            "assets": [
+              "libs/nx-prisma/*.md",
+              {
+                "input": "libs/nx-prisma/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "libs/nx-prisma",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "libs/nx-prisma",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
