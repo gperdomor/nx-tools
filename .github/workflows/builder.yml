@@ -11,6 +11,8 @@ jobs:
         node:
           - 12.17-alpine
           - 12.18-alpine
+          - 13.13-alpine
+          - 13.14-alpine
           - 14.7-alpine
           - 14.8-alpine
     steps:
