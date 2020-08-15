@@ -10,7 +10,7 @@ jobs:
       matrix:
         docker:
           # - 19.03.11
-          - '19.03.12'
+          - 19.03.12
         node:
           # - 12.17-alpine
           # - 12.18-alpine
@@ -32,7 +32,7 @@ jobs:
           repository: gperdomor/nx-docker
           path: docker/19.03
           tags: ${{ format('{0}-node-{1}', matrix.docker, matrix.node) }}
-          build_args: NODE_VERSION=${{ matrix.node }},DOCKER_VERSION=${{ matrix.docker }}
+          build_args: NODE_VERSION=${{ matrix.node }},DOCKER_VER=${{ matrix.docker }}
           tag_with_ref: ${{ matrix.node == '14.8-alpine' && matrix.docker == '19.03.12' }} # only tag with ref when is not master branch
           push: true
           #push: ${{ startsWith(github.ref, 'refs/tags/') }}
