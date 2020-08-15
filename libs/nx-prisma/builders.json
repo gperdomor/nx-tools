@@ -4,6 +4,16 @@
       "implementation": "./src/builders/generate/builder",
       "schema": "./src/builders/generate/schema.json",
       "description": "Generates Prisma artifacts (e.g. Prisma Client)"
+    },
+    "migrations": {
+      "implementation": "./src/builders/migrations/builder",
+      "schema": "./src/builders/migrations/schema.json",
+      "description": "Syncs Prisma Migrations"
+    },
+    "rollback": {
+      "implementation": "./src/builders/rollback/builder",
+      "schema": "./src/builders/rollback/schema.json",
+      "description": "Reverts latest prisma migration"
     }
   }
 }

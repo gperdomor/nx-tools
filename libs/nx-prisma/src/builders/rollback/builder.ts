@@ -1,10 +1,10 @@
 import { createBuilder } from '@angular-devkit/architect';
 
 import { createPrismaBuilder } from '../core/prisma-builder';
-import { PrismaGenerateSchema } from './schema';
+import { PrismaMigrateSchema } from './schema';
 
-export const runBuilder = createPrismaBuilder<PrismaGenerateSchema>({
-  commands: ['prisma generate'],
+export const runBuilder = createPrismaBuilder<PrismaMigrateSchema>({
+  commands: ['prisma migrate down --experimental'],
 });
 
 export default createBuilder(runBuilder);

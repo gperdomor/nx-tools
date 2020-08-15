@@ -9,14 +9,14 @@ interface CreateProcessOptions {
   silent?: boolean;
 }
 
-export const createProcess = ({
+export const createProcess = async ({
   command,
   color,
   readyWhen,
   cwd,
   silent,
-}: CreateProcessOptions): Promise<boolean> => {
-  return new Promise((res) => {
+}: CreateProcessOptions) => {
+  return new Promise<boolean>((res, reject) => {
     const childProcess = exec(command, {
       maxBuffer: TEN_MEGABYTES,
       env: { ...process.env, FORCE_COLOR: `${color}` },
@@ -37,13 +37,14 @@ export const createProcess = ({
     childProcess.stderr.on('data', (err) => {
       if (!silent) process.stderr.write(err);
       if (readyWhen && err.toString().indexOf(readyWhen) > -1) {
-        res(true);
+        reject(reject);
       }
     });
 
     childProcess.on('close', (code) => {
       if (!readyWhen) {
-        res(code === 0);
+        if (code === 0) res(true);
+        else reject(code);
       }
     });
   });
