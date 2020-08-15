@@ -8,15 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        docker:
-          # - 19.03.11
-          - 19.03.12
         node:
-          # - 12.17-alpine
-          # - 12.18-alpine
-          # - 13.13-alpine
-          # - 13.14-alpine
-          # - 14.7-alpine
+          - 12.17-alpine
+          - 12.18-alpine
+          - 13.13-alpine
+          - 13.14-alpine
+          - 14.7-alpine
           - 14.8-alpine
     steps:
       - name: Checkout
@@ -31,8 +28,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: gperdomor/nx-docker
           path: docker/19.03
-          tags: ${{ format('{0}-node-{1}', matrix.docker, matrix.node) }}
-          build_args: NODE_VERSION=${{ matrix.node }},DOCKER_VER=${{ matrix.docker }}
-          tag_with_ref: ${{ matrix.node == '14.8-alpine' && matrix.docker == '19.03.12' }} # only tag with ref when is not master branch
+          tags: '19.03.11-node-${{ matrix.node }}'
+          build_args: NODE_VERSION=${{ matrix.node }}
+          tag_with_ref: ${{ matrix.node == '14.8-alpine' }} # only tag with ref when is not master branch
           push: true
           #push: ${{ startsWith(github.ref, 'refs/tags/') }}
