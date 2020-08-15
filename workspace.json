@@ -70,20 +70,20 @@
         }
       }
     },
-    "example-app": {
-      "root": "apps/example-app",
-      "sourceRoot": "apps/example-app/src",
+    "examples-docker": {
+      "root": "apps/examples/docker",
+      "sourceRoot": "apps/examples/docker/src",
       "projectType": "application",
-      "prefix": "example-app",
+      "prefix": "examples-docker",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/example-app",
-            "main": "apps/example-app/src/main.ts",
-            "tsConfig": "apps/example-app/tsconfig.app.json",
-            "assets": ["apps/example-app/src/assets"]
+            "outputPath": "dist/apps/examples/docker",
+            "main": "apps/examples/docker/src/main.ts",
+            "tsConfig": "apps/examples/docker/tsconfig.app.json",
+            "assets": ["apps/examples/docker/src/assets"]
           },
           "configurations": {
             "production": {
@@ -92,8 +92,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/example-app/src/environments/environment.ts",
-                  "with": "apps/example-app/src/environments/environment.prod.ts"
+                  "replace": "apps/examples/docker/src/environments/environment.ts",
+                  "with": "apps/examples/docker/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -102,19 +102,19 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "example-app:build"
+            "buildTarget": "examples-docker:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/example-app/.eslintrc",
+            "config": "apps/examples/docker/.eslintrc",
             "tsConfig": [
-              "apps/example-app/tsconfig.app.json",
-              "apps/example-app/tsconfig.spec.json"
+              "apps/examples/docker/tsconfig.app.json",
+              "apps/examples/docker/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/example-app/**"]
+            "exclude": ["**/node_modules/**", "!apps/examples/docker/**"]
           }
         },
         "test": {
@@ -128,9 +128,9 @@
         "docker": {
           "builder": "./dist/libs/nx-docker:build",
           "options": {
-            "repository": "$CI_PROJECT_PATH/example-app",
-            "cache_froms": "$CI_PROJECT_PATH/example-app:latest",
-            "dockerfile": "apps/example-app/Dockerfile",
+            "repository": "$CI_PROJECT_PATH/examples-docker",
+            "cache_froms": "$CI_PROJECT_PATH/examples-docker:latest",
+            "dockerfile": "apps/examples/docker/Dockerfile",
             "registry": "$CI_REGISTRY",
             "username": "$CI_REGISTRY_USER",
             "password": "$CI_REGISTRY_PASSWORD",
@@ -191,6 +191,81 @@
                 "output": "."
               }
             ]
+          }
+        }
+      }
+    },
+    "examples-prisma": {
+      "root": "apps/examples/prisma",
+      "sourceRoot": "apps/examples/prisma/src",
+      "projectType": "application",
+      "prefix": "examples-prisma",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/examples/prisma",
+            "main": "apps/examples/prisma/src/main.ts",
+            "tsConfig": "apps/examples/prisma/tsconfig.app.json",
+            "assets": ["apps/examples/prisma/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/examples/prisma/src/environments/environment.ts",
+                  "with": "apps/examples/prisma/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "examples-prisma:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/examples/prisma/.eslintrc",
+            "tsConfig": [
+              "apps/examples/prisma/tsconfig.app.json",
+              "apps/examples/prisma/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/examples/prisma/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/examples/prisma/jest.config.js",
+            "tsConfig": "apps/examples/prisma/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "generate": {
+          "builder": "./dist/libs/nx-prisma:generate",
+          "options": {
+            "schema": "apps/examples/prisma/data/schema.prisma"
+          }
+        },
+        "migrations": {
+          "builder": "./dist/libs/nx-prisma:migrations",
+          "options": {
+            "schema": "apps/examples/prisma/data/schema.prisma"
+          }
+        },
+        "rollback": {
+          "builder": "./dist/libs/nx-prisma:rollback",
+          "options": {
+            "schema": "apps/examples/prisma/data/schema.prisma"
           }
         }
       }

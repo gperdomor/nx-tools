@@ -1,0 +1,9 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "module": "esnext",
+    "target": "es2017"
+  },
+  "include": ["**/*.ts"]
+}

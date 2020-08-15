@@ -26,10 +26,13 @@
       "tags": [],
       "implicitDependencies": ["nx-docker"]
     },
-    "example-app": {
+    "examples-docker": {
       "tags": []
     },
     "nx-prisma": {
+      "tags": []
+    },
+    "examples-prisma": {
       "tags": []
     }
   }
