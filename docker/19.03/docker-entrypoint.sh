@@ -45,15 +45,10 @@ fi
 
 if [ "$1" = 'dockerd' ]; then
 	cat >&2 <<-'EOW'
-
 		📎 Hey there!  It looks like you're trying to run a Docker daemon.
-
 		   You probably should use the "dind" image variant instead, something like:
-
 		     docker run --privileged --name some-docker ... docker:dind ...
-
 		   See https://hub.docker.com/_/docker/ for more documentation and usage examples.
-
 	EOW
 	sleep 3
 fi

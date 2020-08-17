@@ -1,2 +1,2 @@
-export * from './env-utils';
+export * from './git-utils';
 export * from './process-utils';
