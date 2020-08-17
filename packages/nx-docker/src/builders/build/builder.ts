@@ -1,18 +1,21 @@
 import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
+import { JsonObject } from '@angular-devkit/core';
 import { from, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { runBuild, runLogin, runPush } from './helpers/commands.helper';
-import { Login, ProjectMetadata } from './interfaces';
+import { Login } from './interfaces';
 import { BuildBuilderSchema } from './schema';
-import { loadEnvVars } from './utils/env.utils';
 import { getBuildOptions, getGitOptions, getLoginOptions } from './utils/options.utils';
 import { getTags } from './utils/tag.utils';
 
-export function runBuilder(options: BuildBuilderSchema, context: BuilderContext): Observable<BuilderOutput> {
-  loadEnvVars();
+try {
+  require('dotenv').config();
+  // eslint-disable-next-line no-empty
+} catch (e) {}
 
+export function run(options: BuildBuilderSchema & JsonObject, context: BuilderContext): Observable<BuilderOutput> {
   return from(context.getProjectMetadata(context?.target?.project)).pipe(
-    map((metadata) => {
+    map((metadata: any) => {
       const login: Login = getLoginOptions(options);
 
       if (login.username && login.password) {
@@ -21,7 +24,7 @@ export function runBuilder(options: BuildBuilderSchema, context: BuilderContext)
 
       const git = getGitOptions();
 
-      const buildOpts = getBuildOptions(options, (metadata as unknown) as ProjectMetadata);
+      const buildOpts = getBuildOptions(options, metadata.root);
 
       const tags = getTags(options, git);
 
@@ -41,4 +44,4 @@ export function runBuilder(options: BuildBuilderSchema, context: BuilderContext)
   );
 }
 
-export default createBuilder(runBuilder);
+export default createBuilder(run);

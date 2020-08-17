@@ -21,6 +21,7 @@ const runDockerCommand = (
     execSync(execute, {
       cwd,
       env: {
+        ...process.env,
         DOCKER_BUILDKIT: 1,
       },
       stdio: [0, 1, 2],

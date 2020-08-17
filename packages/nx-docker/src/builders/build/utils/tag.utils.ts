@@ -31,7 +31,7 @@ export const getTags = (options: BuildBuilderSchema, git: Git): string[] => {
     tags.push(toFullTag(options.registry, repo, tag));
   }
 
-  if (options.tag_with_ref) {
+  if (options.tagWithRef) {
     switch (git.reference.type) {
       case GitReferenceType.GitRefHead:
         if (git.reference.name === 'master') {
@@ -41,7 +41,7 @@ export const getTags = (options: BuildBuilderSchema, git: Git): string[] => {
         }
         break;
       case GitReferenceType.GitRefPullRequest:
-        appendGitRefTag(tags, options.registry, repo, git.reference.name);
+        appendGitRefTag(tags, options.registry, repo, `pr-${git.reference.name}`);
         break;
       case GitReferenceType.GitRefTag:
         appendGitRefTag(tags, options.registry, repo, git.reference.name);
@@ -49,7 +49,7 @@ export const getTags = (options: BuildBuilderSchema, git: Git): string[] => {
     }
   }
 
-  if (options.tag_with_sha) {
+  if (options.tagWithSha) {
     appendShortGitShaTag(tags, git, options.registry, repo);
   }
 

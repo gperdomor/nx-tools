@@ -123,8 +123,9 @@
         "docker": {
           "builder": "./dist/packages/nx-docker:build",
           "options": {
-            "repository": "gperdomor/api",
-            "tags": "19.03.12-node14.8-alpine",
+            "repository": "gperdomor/example-app",
+            "tagWithRef": true,
+            "tagWithSha": true,
             "push": true
           }
         }

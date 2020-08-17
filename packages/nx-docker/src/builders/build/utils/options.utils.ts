@@ -1,4 +1,4 @@
-import { BuildOptions, Git, ProjectMetadata } from '../interfaces';
+import { BuildOptions, Git } from '../interfaces';
 import { Login } from '../interfaces/login.interface';
 import { BuildBuilderSchema } from '../schema';
 import { getCommitRef, getCommitRepository, getCommitSha, parseGitRef } from './git.utils';
@@ -22,15 +22,17 @@ export const getGitOptions = (): Git => ({
   reference: parseGitRef(getCommitRef()),
 });
 
-export const getBuildOptions = (options: BuildBuilderSchema, metadata: ProjectMetadata): BuildOptions => {
+export const getBuildOptions = (options: BuildBuilderSchema, projectRoot: string): BuildOptions => {
   const build: BuildOptions = {
     path: options.path,
-    dockerfile: options.dockerfile || `${metadata.root}/Dockerfile`,
-    addGitLabels: options.add_git_labels,
+    dockerfile: options.dockerfile || `${projectRoot}/Dockerfile`,
+    addGitLabels: options.addGitLabels,
     target: options.target,
-    alwaysPull: options.always_pull,
-    cacheFroms: options.cache_froms?.split(',') || [],
-    buildArgs: options.build_args?.split(',') || [],
+    alwaysPull: options.alwaysPull,
+    cacheFroms: options.cacheFroms?.split(',') || [],
+    buildArgs: options.buildArgs
+      ? [...options.buildArgs.split(','), 'BUILDKIT_INLINE_CACHE=1']
+      : ['BUILDKIT_INLINE_CACHE=1'],
     labels: options.labels?.split(',') || [],
   };
 

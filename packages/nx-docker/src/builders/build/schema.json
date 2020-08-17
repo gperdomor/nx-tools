@@ -23,12 +23,12 @@
       "type": "string",
       "description": "Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags"
     },
-    "tag_with_ref": {
+    "tagWithRef": {
       "type": "boolean",
       "description": "Automatically tags the built image with the git reference as per the readme.",
       "default": false
     },
-    "tag_with_sha": {
+    "tagWithSha": {
       "type": "boolean",
       "description": "Automatically tags the built image with the git short SHA as per the readme",
       "default": false
@@ -46,15 +46,15 @@
       "type": "string",
       "description": "Sets the target stage to build"
     },
-    "always_pull": {
+    "alwaysPull": {
       "description": "Always attempt to pull a newer version of the image",
       "default": false
     },
-    "build_args": {
+    "buildArgs": {
       "type": "string",
       "description": "Comma-delimited list of build-time variables"
     },
-    "cache_froms": {
+    "cacheFroms": {
       "type": "string",
       "description": "Comma-delimited list of images to consider as cache sources"
     },
@@ -62,7 +62,7 @@
       "type": "string",
       "description": "Comma-delimited list of labels to add to the built image"
     },
-    "add_git_labels": {
+    "addGitLabels": {
       "type": "boolean",
       "description": "Adds labels with git repository information to the built image",
       "default": false

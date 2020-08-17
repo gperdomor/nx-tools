@@ -54,22 +54,22 @@ describe('Options Helpers', () => {
         repository: 'repo',
         path: 'some-path',
         dockerfile: 'path/to/dockerfile',
-        add_git_labels: false,
+        addGitLabels: false,
         target: 'demo',
-        always_pull: true,
-        cache_froms: 'c1,c2,c3',
-        build_args: 'b1,b2,b3',
+        alwaysPull: true,
+        cacheFroms: 'c1,c2,c3',
+        buildArgs: 'b1,b2,b3',
         labels: 'l1,l2,l3',
       };
 
-      expect(getBuildOptions(options, { root: 'path/to/project' })).toEqual({
+      expect(getBuildOptions(options, 'path/to/project')).toEqual({
         path: 'some-path',
         dockerfile: 'path/to/dockerfile',
         addGitLabels: false,
         target: 'demo',
         alwaysPull: true,
         cacheFroms: ['c1', 'c2', 'c3'],
-        buildArgs: ['b1', 'b2', 'b3'],
+        buildArgs: ['b1', 'b2', 'b3', 'BUILDKIT_INLINE_CACHE=1'],
         labels: ['l1', 'l2', 'l3'],
       });
     });
@@ -79,28 +79,24 @@ describe('Options Helpers', () => {
         repository: 'repo',
         path: 'some-path',
         dockerfile: undefined,
-        add_git_labels: true,
+        addGitLabels: true,
         target: undefined,
-        always_pull: false,
-        cache_froms: undefined,
-        build_args: undefined,
+        alwaysPull: false,
+        cacheFroms: undefined,
+        buildArgs: undefined,
         labels: undefined,
       };
 
-      expect(getBuildOptions(options, { root: 'path/to/project' })).toEqual({
+      expect(getBuildOptions(options, 'path/to/project')).toEqual({
         path: 'some-path',
         dockerfile: 'path/to/project/Dockerfile',
         addGitLabels: true,
         target: undefined,
         alwaysPull: false,
         cacheFroms: [],
-        buildArgs: [],
+        buildArgs: ['BUILDKIT_INLINE_CACHE=1'],
         labels: [],
       });
     });
-  });
-
-  describe('getLabels', () => {
-    it.todo('getLoginOpts');
   });
 });
