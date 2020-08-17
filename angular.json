@@ -68,6 +68,67 @@
           }
         }
       }
+    },
+    "example-app": {
+      "root": "packages/example-app",
+      "sourceRoot": "packages/example-app/src",
+      "projectType": "application",
+      "prefix": "example-app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/packages/example-app",
+            "main": "packages/example-app/src/main.ts",
+            "tsConfig": "packages/example-app/tsconfig.app.json",
+            "assets": ["packages/example-app/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "packages/example-app/src/environments/environment.ts",
+                  "with": "packages/example-app/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-app:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["packages/example-app/tsconfig.app.json", "packages/example-app/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!packages/example-app/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/example-app/jest.config.js",
+            "tsConfig": "packages/example-app/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "docker": {
+          "builder": "./dist/packages/nx-docker:build",
+          "options": {
+            "repository": "gperdomor/api",
+            "tags": "19.03.12-node14.8-alpine",
+            "push": true
+          }
+        }
+      }
     }
   },
   "cli": {

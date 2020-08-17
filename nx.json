@@ -31,6 +31,9 @@
     "nx-docker-e2e": {
       "tags": [],
       "implicitDependencies": ["nx-docker"]
+    },
+    "example-app": {
+      "tags": []
     }
   },
   "workspaceLayout": {

@@ -33,6 +33,7 @@
     "@angular/cli": "~10.0.0",
     "@nrwl/eslint-plugin-nx": "10.0.12",
     "@nrwl/jest": "10.0.12",
+    "@nrwl/node": "10.0.12",
     "@nrwl/nx-cloud": "latest",
     "@nrwl/nx-plugin": "10.0.12",
     "@nrwl/workspace": "10.0.12",
