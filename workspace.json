@@ -128,15 +128,10 @@
         "docker": {
           "builder": "./dist/libs/nx-docker:build",
           "options": {
-            "repository": "$CI_PROJECT_PATH/example-app",
-            "cache_froms": "$CI_PROJECT_PATH/example-app:latest",
+            "repository": "gperdomor/example-app",
             "dockerfile": "apps/example-app/Dockerfile",
-            "registry": "$CI_REGISTRY",
-            "username": "$CI_REGISTRY_USER",
-            "password": "$CI_REGISTRY_PASSWORD",
-            "tag_with_ref": false,
-            "tag_with_sha": false,
-            "tags": "latest",
+            "tag_with_ref": true,
+            "tag_with_sha": true,
             "push": false,
             "socket": "/var/run/docker.sock"
           }

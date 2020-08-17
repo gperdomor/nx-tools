@@ -44,14 +44,12 @@ To use with Gitlab CI just only need add something like this to your pipeline:
 
 ```
 build:
-  image: gperdomor/nx-docker:13.12-alpine
+  image: gperdomor/nx-docker:19.03.12-node-14.8-alpine
   services:
-    - docker:19.03-dind
+    - docker:19.03.12-dind
   variables:
     GIT_DEPTH: 0
     DOCKER_TLS_CERTDIR: '/certs'
-    GITHUB_SHA: $CI_COMMIT_SHA
-    GITHUB_REF: refs/heads/$CI_COMMIT_BRANCH
   script:
     - npm i
     - npm run nx affected -- --target=docker --base=remotes/origin/master
@@ -86,9 +84,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        env:
-          CYPRESS_INSTALL_BINARY: 0
-          DISABLE_OPENCOLLECTIVE: 1
 
       - name: 'nx build'
         run: npm run nx affected -- --target=docker --all
