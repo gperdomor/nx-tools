@@ -32,7 +32,7 @@ export function runBuilder(
         }
 
         Object.keys(options)
-          .filter((key) => !['socket', 'build_args', 'tag_with_ref', 'tag_with_sha'].includes(key))
+          .filter((key) => !['socket', 'build_args'].includes(key))
           .forEach((key) => {
             if (options[key]) {
               if (key === 'path' || key === 'dockerfile') {
