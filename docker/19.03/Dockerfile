@@ -1,4 +1,4 @@
-ARG NODE_VERSION=14.3-alpine
+ARG NODE_VERSION=14.8-alpine
 FROM node:${NODE_VERSION}
 
 LABEL maintainer="gperdomor@gmail.com"
@@ -30,7 +30,7 @@ RUN apk add --no-cache \
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ENV DOCKER_CHANNEL stable
-ENV DOCKER_VERSION 19.03.8
+ENV DOCKER_VERSION 19.03.11
 # TODO ENV DOCKER_SHA256
 # https://github.com/docker/docker-ce/blob/5b073ee2cf564edee5adca05eee574142f7627bb/components/packaging/static/hash_files !!
 # (no SHA file artifacts on download.docker.com yet as of 2017-06-07 though)
@@ -78,7 +78,5 @@ ENV DOCKER_TLS_CERTDIR=/certs
 RUN mkdir /certs /certs/client && chmod 1777 /certs /certs/client
 # (doing both /certs and /certs/client so that if Docker does a "copy-up" into a volume defined on /certs/client, it will "do the right thing" by default in a way that still works for rootless users)
 
-# RUN ["chmod", "+x", "/usr/local/bin/modprobe"]
-# RUN ["chmod", "+x", "/usr/local/bin/docker-entrypoint.sh"]
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["sh"]

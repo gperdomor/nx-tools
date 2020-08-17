@@ -31,6 +31,8 @@ export function runBuilder(
           if (options[key]) {
             if (key === 'path' || key === 'dockerfile') {
               command.push(`-e INPUT_${key.toUpperCase()}=${workDir}/${options[key]}`);
+            } else if (key === 'repository') {
+              command.push(`-e INPUT_${key.toUpperCase()}=${options[key].toLowerCase()}`);
             } else {
               command.push(`-e INPUT_${key.toUpperCase()}=${options[key]}`);
             }
