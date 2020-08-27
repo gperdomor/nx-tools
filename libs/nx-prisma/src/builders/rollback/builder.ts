@@ -1,9 +1,9 @@
 import { createBuilder } from '@angular-devkit/architect';
 
 import { createPrismaBuilder } from '../core/prisma-builder';
-import { PrismaMigrateSchema } from './schema';
+import { PrismaRollbackSchema } from './schema';
 
-export const runBuilder = createPrismaBuilder<PrismaMigrateSchema>({
+export const runBuilder = createPrismaBuilder<PrismaRollbackSchema>({
   commands: ['prisma migrate down --experimental'],
 });
 
