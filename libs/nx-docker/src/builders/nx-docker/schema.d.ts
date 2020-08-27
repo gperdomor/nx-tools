@@ -70,5 +70,6 @@ export interface NxDockerBuilderSchema {
    * Whether to push the image
    */
   push?: boolean;
-  [k: string]: any;
+
+  socket?: string;
 }

@@ -53,7 +53,8 @@
     },
     "build_args": {
       "type": "string",
-      "description": "Comma-delimited list of build-time variables"
+      "description": "Comma-delimited list of build-time variables",
+      "default": ""
     },
     "cache_froms": {
       "type": "string",
@@ -72,6 +73,10 @@
       "type": "boolean",
       "description": "Whether to push the image",
       "default": true
+    },
+    "socket": {
+      "type": "string",
+      "default": "/var/run/docker.sock"
     }
   },
   "required": ["repository"]
