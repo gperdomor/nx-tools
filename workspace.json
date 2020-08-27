@@ -129,7 +129,7 @@
           "builder": "./dist/libs/nx-docker:build",
           "options": {
             "repository": "gperdomor/example-app",
-            "dockerfile": "apps/example-app/Dockerfile",
+            "dockerfile": "apps/examples/docker/Dockerfile",
             "tag_with_ref": true,
             "tag_with_sha": true,
             "push": false,
