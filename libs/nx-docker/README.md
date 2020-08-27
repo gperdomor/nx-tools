@@ -1,6 +1,6 @@
-![Docker builder](https://github.com/gperdomor/nx-tools/workflows/Docker%20builder/badge.svg)
-
 # nx-docker
+
+![Docker builder](https://github.com/gperdomor/nx-tools/workflows/Docker%20builder/badge.svg)
 
 This builder provides a wrapper around github [docker action](https://github.com/docker/build-push-action)
 
@@ -8,7 +8,7 @@ This builder provides a wrapper around github [docker action](https://github.com
 
 The first step is configure the builder in your `angular.json` or `workspace.json`, so add something like this to every project you need to dockerize:
 
-```
+```json
 "docker": {
   "builder": "@gperdomor/nx-docker:build",
   "options": {
@@ -20,7 +20,7 @@ The first step is configure the builder in your `angular.json` or `workspace.jso
 
 You can customize your ci using environment variables
 
-```
+```json
 "docker": {
   "builder": "@gperdomor/nx-docker:build",
   "options": {
@@ -36,13 +36,13 @@ You can customize your ci using environment variables
 }
 ```
 
-To check all posible options please check the official [docker action](https://github.com/docker/build-push-action) or this [schema.json](src/builders/nx-docker/schema.json) file
+To check all possible options please check the official [docker action](https://github.com/docker/build-push-action) or this [schema.json](src/builders/nx-docker/schema.json) file
 
 ### Use with Gitlab CI
 
 To use with Gitlab CI just only need add something like this to your pipeline:
 
-```
+```yml
 build:
   image: gperdomor/nx-docker:19.03.12-node-14.8-alpine
   services:
@@ -57,13 +57,13 @@ build:
 
 Because this is a wrapper of the Github Action, you need set `GITHUB_SHA` and `GITHUB_REF` if `tag_with_sha: true` and `tag_with_ref: true`
 
-Also you need configure other enviroment variables depending on your builder options,
+Also you need configure other environment variables depending on your builder options,
 
 ### Use with Github Actions
 
 To use with Github Actions just only need add something like this to your workflow
 
-```
+```yml
 name: Build
 # This workflow is triggered on pushes to the repository.
 on: [push]
@@ -92,5 +92,4 @@ jobs:
           CI_PROJECT_PATH: ${{ github.repository }}
           CI_REGISTRY_USER: gperdomor
           CI_REGISTRY_PASSWORD: ${{ github.token }}
-
 ```
