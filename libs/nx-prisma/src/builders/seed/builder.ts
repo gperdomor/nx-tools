@@ -10,7 +10,7 @@ export const runBuilder = (
   { logger }: BuilderContext
 ): Observable<BuilderOutput> => {
   return new Observable((observer) => {
-    createProcess({ command: `ts-node --project ${options.tsConfig} ./${options.script}` })
+    createProcess({ command: `ts-node --project ${options.tsConfig} ${options.script}`, cwd: './' })
       .then(() => {
         logger.info('Seeding complete!');
         observer.next({ success: true });
