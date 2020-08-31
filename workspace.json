@@ -126,7 +126,7 @@
       "root": "apps/example-docker",
       "sourceRoot": "apps/example-docker/src",
       "projectType": "application",
-      "prefix": "examples-docker",
+      "prefix": "example-docker",
       "schematics": {},
       "architect": {
         "build": {
@@ -194,7 +194,7 @@
       "root": "apps/example-prisma",
       "sourceRoot": "apps/example-prisma/src",
       "projectType": "application",
-      "prefix": "examples-prisma",
+      "prefix": "-prisma",
       "schematics": {},
       "architect": {
         "build": {
