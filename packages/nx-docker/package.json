@@ -1,0 +1,9 @@
+{
+  "name": "@nx-tools/nx-docker",
+  "author": "gperdomor",
+  "repository": "https://github.com/gperdomor/nx-tools",
+  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "license": "MIT",
+  "version": "0.4.0",
+  "builders": "./builders.json"
+}

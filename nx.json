@@ -1,20 +1,26 @@
 {
-  "npmScope": "gperdomor",
+  "npmScope": "nx-tools",
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
-    "workspace.json": "*",
+    "angular.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
     },
+    "tsconfig.base.json": "*",
     "tslint.json": "*",
-    "nx.json": "*",
-    "tsconfig.base.json": "*"
+    "nx.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "accessToken": "N2VhYzk1OGEtMjVkYi00NjU5LWE4YTYtMzNmYjA0NGYyMTU4fHJlYWQtd3JpdGU=",
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
@@ -29,6 +35,10 @@
     "nx-prisma": {
       "tags": []
     },
+    "nx-prisma-e2e": {
+      "tags": [],
+      "implicitDependencies": ["nx-prisma"]
+    },
     "example-docker": {
       "tags": []
     },
@@ -36,7 +46,8 @@
       "tags": []
     }
   },
-  "affected": {
-    "defaultBase": "master"
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
   }
 }

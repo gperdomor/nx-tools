@@ -16,8 +16,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@gperdomor/nx-docker": ["libs/nx-docker/src/index.ts"],
-      "@gperdomor/nx-prisma": ["libs/nx-prisma/src/index.ts"]
+      "@nx-tools/nx-docker": ["packages/nx-docker/src/index.ts"],
+      "@nx-tools/nx-prisma": ["packages/nx-prisma/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

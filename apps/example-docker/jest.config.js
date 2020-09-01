@@ -1,6 +1,10 @@
 module.exports = {
-  name: 'example-app',
+  name: 'example-docker',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/apps/example-app',
-  globals: { 'ts-jest': { tsConfig: '<rootDir>/tsconfig.spec.json' } },
+  globals: {
+    'ts-jest': {
+      tsConfig: '<rootDir>/tsconfig.spec.json',
+    },
+  },
+  coverageDirectory: '../../coverage/apps/example-docker',
 };

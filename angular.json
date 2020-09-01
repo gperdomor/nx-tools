@@ -1,0 +1,335 @@
+{
+  "version": 1,
+  "projects": {
+    "nx-docker": {
+      "root": "packages/nx-docker",
+      "sourceRoot": "packages/nx-docker/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "packages/nx-docker/tsconfig.lib.json",
+              "packages/nx-docker/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/nx-docker/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/nx-docker/jest.config.js",
+            "tsConfig": "packages/nx-docker/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/nx-docker",
+            "tsConfig": "packages/nx-docker/tsconfig.lib.json",
+            "packageJson": "packages/nx-docker/package.json",
+            "main": "packages/nx-docker/src/index.ts",
+            "assets": [
+              "packages/nx-docker/*.md",
+              {
+                "input": "./packages/nx-docker/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-docker",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-docker",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-docker-e2e": {
+      "projectType": "application",
+      "root": "apps/nx-docker-e2e",
+      "sourceRoot": "apps/nx-docker-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-docker:build",
+            "npmPackageName": "@nx-tools/nx-docker",
+            "pluginOutputPath": "dist/packages/nx-docker",
+            "jestConfig": "apps/nx-docker-e2e/jest.config.js",
+            "tsSpecConfig": "apps/nx-docker-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "nx-prisma": {
+      "root": "packages/nx-prisma",
+      "sourceRoot": "packages/nx-prisma/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "packages/nx-prisma/tsconfig.lib.json",
+              "packages/nx-prisma/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!packages/nx-prisma/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/nx-prisma/jest.config.js",
+            "tsConfig": "packages/nx-prisma/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/nx-prisma",
+            "tsConfig": "packages/nx-prisma/tsconfig.lib.json",
+            "packageJson": "packages/nx-prisma/package.json",
+            "main": "packages/nx-prisma/src/index.ts",
+            "assets": [
+              "packages/nx-prisma/*.md",
+              {
+                "input": "./packages/nx-prisma/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-prisma",
+                "glob": "collection.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-prisma",
+                "glob": "builders.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-prisma-e2e": {
+      "projectType": "application",
+      "root": "apps/nx-prisma-e2e",
+      "sourceRoot": "apps/nx-prisma-e2e/src",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-prisma:build",
+            "npmPackageName": "@nx-tools/nx-prisma",
+            "pluginOutputPath": "dist/packages/nx-prisma",
+            "jestConfig": "apps/nx-prisma-e2e/jest.config.js",
+            "tsSpecConfig": "apps/nx-prisma-e2e/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "example-docker": {
+      "root": "apps/example-docker",
+      "sourceRoot": "apps/example-docker/src",
+      "projectType": "application",
+      "prefix": "example-docker",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/example-docker",
+            "main": "apps/example-docker/src/main.ts",
+            "tsConfig": "apps/example-docker/tsconfig.app.json",
+            "assets": ["apps/example-docker/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example-docker/src/environments/environment.ts",
+                  "with": "apps/example-docker/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-docker:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/example-docker/tsconfig.app.json",
+              "apps/example-docker/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/example-docker/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/example-docker/jest.config.js",
+            "tsConfig": "apps/example-docker/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "docker": {
+          "builder": "./dist/packages/nx-docker:build",
+          "options": {
+            "repository": "gperdomor/example-app",
+            "dockerfile": "apps/example-docker/Dockerfile",
+            "tag_with_ref": true,
+            "tag_with_sha": true,
+            "push": false,
+            "socket": "/var/run/docker.sock"
+          }
+        }
+      }
+    },
+    "example-prisma": {
+      "root": "apps/example-prisma",
+      "sourceRoot": "apps/example-prisma/src",
+      "projectType": "application",
+      "prefix": "example-prisma",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/example-prisma",
+            "main": "apps/example-prisma/src/main.ts",
+            "tsConfig": "apps/example-prisma/tsconfig.app.json",
+            "assets": ["apps/example-prisma/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/example-prisma/src/environments/environment.ts",
+                  "with": "apps/example-prisma/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "example-prisma:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/example-prisma/tsconfig.app.json",
+              "apps/example-prisma/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/example-prisma/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/example-prisma/jest.config.js",
+            "tsConfig": "apps/example-prisma/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "generate": {
+          "builder": "./dist/packages/nx-prisma:generate",
+          "options": {
+            "schema": "apps/example-prisma/data/schema.prisma"
+          }
+        },
+        "migrations": {
+          "builder": "./dist/packages/nx-prisma:migrations",
+          "options": {
+            "schema": "apps/example-prisma/data/schema.prisma"
+          }
+        },
+        "rollback": {
+          "builder": "./dist/packages/nx-prisma:rollback",
+          "options": {
+            "schema": "apps/example-prisma/data/schema.prisma"
+          }
+        },
+        "seed": {
+          "builder": "./dist/packages/nx-prisma:seed",
+          "options": {
+            "script": "apps/example-prisma/data/seed.ts",
+            "tsConfig": "apps/example-prisma/tsconfig.tools.json"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/node"
+  },
+  "schematics": {
+    "@nrwl/workspace": {
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/cypress": {
+      "cypress-project": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/node": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/nest": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    },
+    "@nrwl/express": {
+      "application": {
+        "linter": "tslint"
+      },
+      "library": {
+        "linter": "tslint"
+      }
+    }
+  },
+  "defaultProject": "example-docker"
+}
