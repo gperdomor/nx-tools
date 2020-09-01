@@ -1,7 +1,7 @@
 // TODO: Add tests for this file
 
-import { TEN_MEGABYTES } from '@nrwl/workspace/src/core/file-utils';
 import { exec } from 'child_process';
+import { TEN_MEGABYTES } from './constants';
 
 interface CreateProcessOptions {
   command: string;
