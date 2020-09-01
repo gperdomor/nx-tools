@@ -1,7 +1,6 @@
+import { createProcess } from '@nx-tools/core';
 import { from, zip } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
-
-import { createProcess } from '../utils/process-utils';
 
 export interface PrismaBuilderOptions {
   schema?: string;
