@@ -15,6 +15,7 @@ jobs:
           - 13.14-alpine
           - 14.7-alpine
           - 14.8-alpine
+          - 14.9-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,6 +31,6 @@ jobs:
           path: docker/19.03
           tags: '19.03.12-node-${{ matrix.node }}'
           build_args: NODE_VERSION=${{ matrix.node }}
-          tag_with_ref: ${{ matrix.node == '14.8-alpine' }} # only tag with ref when is not master branch
+          tag_with_ref: ${{ matrix.node == '14.9-alpine' }} # only tag with ref when is not master branch
           push: true
           #push: ${{ startsWith(github.ref, 'refs/tags/') }}
