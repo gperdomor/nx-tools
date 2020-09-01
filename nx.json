@@ -44,6 +44,9 @@
     },
     "example-prisma": {
       "tags": []
+    },
+    "core": {
+      "tags": []
     }
   },
   "workspaceLayout": {
