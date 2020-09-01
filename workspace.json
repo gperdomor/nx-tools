@@ -13,7 +13,7 @@
             "linter": "eslint",
             "config": "libs/nx-docker/.eslintrc",
             "tsConfig": ["libs/nx-docker/tsconfig.lib.json", "libs/nx-docker/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/nx-docker/**"]
+            "exclude": ["**/node_modules/**", "!libs/nx-docker/**/*"]
           }
         },
         "test": {
@@ -82,7 +82,7 @@
             "linter": "eslint",
             "config": "libs/nx-prisma/.eslintrc",
             "tsConfig": ["libs/nx-prisma/tsconfig.lib.json", "libs/nx-prisma/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/nx-prisma/**"]
+            "exclude": ["**/node_modules/**", "!libs/nx-prisma/**/*"]
           }
         },
         "test": {
@@ -166,7 +166,7 @@
               "apps/example-docker/tsconfig.app.json",
               "apps/example-docker/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/example-docker/**"]
+            "exclude": ["**/node_modules/**", "!apps/example-docker/**/*"]
           }
         },
         "test": {
@@ -234,7 +234,7 @@
               "apps/example-prisma/tsconfig.app.json",
               "apps/example-prisma/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/example-prisma/**"]
+            "exclude": ["**/node_modules/**", "!apps/example-prisma/**/*"]
           }
         },
         "test": {
