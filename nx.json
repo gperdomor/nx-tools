@@ -6,9 +6,9 @@
       "dependencies": "*",
       "devDependencies": "*"
     },
-    "tsconfig.json": "*",
     "tslint.json": "*",
-    "nx.json": "*"
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
@@ -35,5 +35,8 @@
     "example-prisma": {
       "tags": []
     }
+  },
+  "affected": {
+    "defaultBase": "master"
   }
 }
