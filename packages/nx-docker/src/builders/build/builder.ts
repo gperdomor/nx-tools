@@ -1,13 +1,9 @@
 import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
 import { JsonObject } from '@angular-devkit/core';
+import { createProcess, loadEnvVars } from '@nx-tools/core';
 import { Observable } from 'rxjs';
-import { createProcess, getCommitRef, getCommitSha } from '../utils';
+import { getCommitRef, getCommitSha } from '../utils';
 import { NxDockerBuilderSchema } from './schema';
-
-try {
-  require('dotenv').config();
-  // eslint-disable-next-line no-empty
-} catch (e) {}
 
 export function runBuilder(
   options: NxDockerBuilderSchema & JsonObject,
@@ -23,6 +19,8 @@ export function runBuilder(
       observer.complete();
     } else {
       try {
+        loadEnvVars();
+
         const workDir = '/code';
 
         const command = [`docker container run --rm -v ${context.workspaceRoot}:${workDir}`];
@@ -66,12 +64,20 @@ export function runBuilder(
 
         command.push(`docker/github-actions:v1.1.0 build-push`);
 
-        createProcess(command.join(' '), undefined, true, undefined).then((success) => {
-          observer.next({ success });
-          observer.complete();
+        createProcess({ command: command.join(' '), silent: false, color: true })
+          .then((success) => {
+            observer.next({ success });
+            observer.complete();
+          })
+          .catch((error) => {
+            throw error;
+          });
+      } catch (error) {
+        observer.next({
+          error: `ERROR: Something went wrong in @nx-tools/nx-docker - ${error.message}`,
+          success: false,
         });
-      } catch (e) {
-        observer.error(`ERROR: Something went wrong in @nx-tools/nx-docker - ${e.message}`);
+        observer.complete();
       }
     }
   });
