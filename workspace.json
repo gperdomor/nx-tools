@@ -20,7 +20,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/nx-docker/jest.config.js",
-            "tsConfig": "libs/nx-docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -48,7 +47,8 @@
                 "glob": "builders.json",
                 "output": "."
               }
-            ]
+            ],
+            "srcRootForCompilationRoot": "libs/nx-docker"
           }
         }
       }
@@ -89,7 +89,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/nx-prisma/jest.config.js",
-            "tsConfig": "libs/nx-prisma/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -117,7 +116,8 @@
                 "glob": "builders.json",
                 "output": "."
               }
-            ]
+            ],
+            "srcRootForCompilationRoot": "libs/nx-prisma"
           }
         }
       }
@@ -173,7 +173,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/example-docker/jest.config.js",
-            "tsConfig": "apps/example-docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -241,7 +240,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/example-prisma/jest.config.js",
-            "tsConfig": "apps/example-prisma/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
