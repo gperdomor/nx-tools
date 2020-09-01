@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "title": "Prisma Builder",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "script": {
+      "type": "string",
+      "description": "The path to the seeding script"
+    },
+    "tsConfig": {
+      "type": "string",
+      "description": "TypeScript config to use for seeding"
+    },
+    "silent": {
+      "type": "boolean",
+      "description": "Remove all terminal outputs the child process"
+    }
+  },
+  "required": ["script", "tsConfig"]
+}
