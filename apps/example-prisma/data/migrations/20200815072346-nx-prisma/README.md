@@ -43,5 +43,3 @@ migration ..20200815072346-nx-prisma
 +  name  String?
 +}
 ```
-
-
