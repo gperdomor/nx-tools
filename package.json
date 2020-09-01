@@ -25,12 +25,15 @@
     "update": "ng update @nrwl/workspace",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help"
+    "help": "nx help",
+    "commit": "git-cz"
   },
   "private": true,
   "dependencies": {},
   "devDependencies": {
     "@angular/cli": "10.0.8",
+    "@commitlint/cli": "9.1.2",
+    "@commitlint/config-conventional": "9.1.2",
     "@nrwl/eslint-plugin-nx": "10.1.0",
     "@nrwl/jest": "10.1.0",
     "@nrwl/node": "10.1.0",
@@ -43,14 +46,39 @@
     "@types/node": "~14.6.2",
     "@typescript-eslint/eslint-plugin": "2.19.2",
     "@typescript-eslint/parser": "2.19.2",
+    "commitizen": "4.2.1",
+    "cz-conventional-changelog": "3.3.0",
     "dotenv": "8.2.0",
-    "eslint-config-prettier": "6.11.0",
     "eslint": "6.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "husky": "4.2.5",
     "jest": "26.4.2",
+    "lint-staged": "10.2.13",
     "prettier": "2.1.1",
     "ts-jest": "26.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.3",
     "typescript": "3.9.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,scss,md,ts,html,graphql}": [
+      "npm run format --uncommitted"
+    ]
   }
 }
