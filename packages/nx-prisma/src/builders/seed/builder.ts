@@ -1,9 +1,7 @@
-import { createBuilder, BuilderOutput, BuilderContext } from '@angular-devkit/architect';
-
+import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
+import { createProcess } from '@nx-tools/core';
 import { Observable } from 'rxjs';
-
 import { PrismaSeedSchema } from './schema';
-import { createProcess } from '../utils';
 
 export const runBuilder = (
   options: PrismaSeedSchema,

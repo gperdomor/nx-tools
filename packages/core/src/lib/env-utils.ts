@@ -1,3 +1,5 @@
+// TODO: Add tests for this file
+
 export const loadEnvVars = (path?: string) => {
   if (path) {
     const result = require('dotenv').config({ path });

@@ -1,13 +1,24 @@
-import { TEN_MEGABYTES } from '@nrwl/workspace/src/core/file-utils';
-import { exec } from 'child_process';
+// TODO: Add tests for this file
 
-export const createProcess = (
-  command: string,
-  readyWhen: string,
-  color: boolean,
-  cwd: string
-): Promise<boolean> => {
-  return new Promise((res) => {
+import { exec } from 'child_process';
+import { TEN_MEGABYTES } from './constants';
+
+interface CreateProcessOptions {
+  command: string;
+  color?: boolean;
+  readyWhen?: string;
+  cwd?: string;
+  silent?: boolean;
+}
+
+export const createProcess = async ({
+  command,
+  color,
+  readyWhen,
+  cwd,
+  silent,
+}: CreateProcessOptions) => {
+  return new Promise<boolean>((res, reject) => {
     const childProcess = exec(command, {
       maxBuffer: TEN_MEGABYTES,
       env: { ...process.env, FORCE_COLOR: `${color}` },
@@ -19,22 +30,23 @@ export const createProcess = (
      */
     process.on('exit', () => childProcess.kill());
     childProcess.stdout.on('data', (data) => {
-      process.stdout.write(data);
+      if (!silent) process.stdout.write(data);
       if (readyWhen && data.toString().indexOf(readyWhen) > -1) {
         res(true);
       }
     });
 
     childProcess.stderr.on('data', (err) => {
-      process.stderr.write(err);
+      if (!silent) process.stderr.write(err);
       if (readyWhen && err.toString().indexOf(readyWhen) > -1) {
-        res(true);
+        reject(reject);
       }
     });
 
     childProcess.on('close', (code) => {
       if (!readyWhen) {
-        res(code === 0);
+        if (code === 0) res(true);
+        else reject(new Error(`${code}`));
       }
     });
   });
