@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: gperdomor/nx-docker
           path: docker/19.03
-          tags: '19.03.12-node-${{ matrix.node }}'
+          tags: ${{ matrix.node }}
           build_args: NODE_VERSION=${{ matrix.node }}
           tag_with_ref: ${{ matrix.node == '14.11-alpine' }} # only tag with ref when is not master branch
           push: true

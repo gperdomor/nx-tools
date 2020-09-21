@@ -67,10 +67,15 @@ export function runBuilder(
         createProcess({ command: command.join(' '), silent: false, color: true })
           .then((success) => {
             observer.next({ success });
-            observer.complete();
           })
           .catch((error) => {
-            throw error;
+            observer.next({
+              error: `ERROR: Something went wrong in @nx-tools/nx-docker - ${error.message}`,
+              success: false,
+            });
+          })
+          .finally(() => {
+            observer.complete();
           });
       } catch (error) {
         observer.next({
