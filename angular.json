@@ -22,7 +22,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "packages/nx-docker/jest.config.js",
-            "tsConfig": "packages/nx-docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -66,8 +65,7 @@
             "target": "nx-docker:build",
             "npmPackageName": "@nx-tools/nx-docker",
             "pluginOutputPath": "dist/packages/nx-docker",
-            "jestConfig": "apps/nx-docker-e2e/jest.config.js",
-            "tsSpecConfig": "apps/nx-docker-e2e/tsconfig.spec.json"
+            "jestConfig": "apps/nx-docker-e2e/jest.config.js"
           }
         }
       }
@@ -93,7 +91,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "packages/nx-prisma/jest.config.js",
-            "tsConfig": "packages/nx-prisma/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -137,8 +134,7 @@
             "target": "nx-prisma:build",
             "npmPackageName": "@nx-tools/nx-prisma",
             "pluginOutputPath": "dist/packages/nx-prisma",
-            "jestConfig": "apps/nx-prisma-e2e/jest.config.js",
-            "tsSpecConfig": "apps/nx-prisma-e2e/tsconfig.spec.json"
+            "jestConfig": "apps/nx-prisma-e2e/jest.config.js"
           }
         }
       }
@@ -193,7 +189,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/example-docker/jest.config.js",
-            "tsConfig": "apps/example-docker/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -260,7 +255,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/example-prisma/jest.config.js",
-            "tsConfig": "apps/example-prisma/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
@@ -309,7 +303,6 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "packages/core/jest.config.js",
-            "tsConfig": "packages/core/tsconfig.spec.json",
             "passWithNoTests": true
           }
         },
