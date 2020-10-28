@@ -20,7 +20,6 @@ export const isAppveyor = () => {
 
 export const isAzurePipelines = () => {
   return (
-    process.env.SYSTEM_TEAMFOUNDATIONCOLLECTIONURI != undefined &&
-    process.env.SYSTEM_TEAMFOUNDATIONCOLLECTIONURI !== ''
+    process.env.SYSTEM_TEAMFOUNDATIONCOLLECTIONURI != undefined && process.env.SYSTEM_TEAMFOUNDATIONCOLLECTIONURI !== ''
   );
 };

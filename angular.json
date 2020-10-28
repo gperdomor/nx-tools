@@ -11,10 +11,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "packages/nx-docker/tsconfig.lib.json",
-              "packages/nx-docker/tsconfig.spec.json"
-            ],
+            "tsConfig": ["packages/nx-docker/tsconfig.lib.json", "packages/nx-docker/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!packages/nx-docker/**/*"]
           }
         },
@@ -80,10 +77,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "packages/nx-prisma/tsconfig.lib.json",
-              "packages/nx-prisma/tsconfig.spec.json"
-            ],
+            "tsConfig": ["packages/nx-prisma/tsconfig.lib.json", "packages/nx-prisma/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!packages/nx-prisma/**/*"]
           }
         },
@@ -178,10 +172,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/example-docker/tsconfig.app.json",
-              "apps/example-docker/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/example-docker/tsconfig.app.json", "apps/example-docker/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/example-docker/**/*"]
           }
         },
@@ -244,10 +235,7 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": [
-              "apps/example-prisma/tsconfig.app.json",
-              "apps/example-prisma/tsconfig.spec.json"
-            ],
+            "tsConfig": ["apps/example-prisma/tsconfig.app.json", "apps/example-prisma/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**", "!apps/example-prisma/**/*"]
           }
         },

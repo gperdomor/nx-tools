@@ -11,13 +11,7 @@ interface CreateProcessOptions {
   silent?: boolean;
 }
 
-export const createProcess = async ({
-  command,
-  color,
-  readyWhen,
-  cwd,
-  silent,
-}: CreateProcessOptions) => {
+export const createProcess = async ({ command, color, readyWhen, cwd, silent }: CreateProcessOptions) => {
   return new Promise<boolean>((res, reject) => {
     const childProcess = exec(command, {
       maxBuffer: TEN_MEGABYTES,

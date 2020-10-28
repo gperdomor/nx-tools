@@ -3,10 +3,7 @@ import { createProcess } from '@nx-tools/core';
 import { Observable } from 'rxjs';
 import { PrismaSeedSchema } from './schema';
 
-export const runBuilder = (
-  options: PrismaSeedSchema,
-  { logger }: BuilderContext
-): Observable<BuilderOutput> => {
+export const runBuilder = (options: PrismaSeedSchema, { logger }: BuilderContext): Observable<BuilderOutput> => {
   return new Observable((observer) => {
     createProcess({ command: `ts-node --project ${options.tsConfig} ${options.script}`, cwd: './' })
       .then(() => {
