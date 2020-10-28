@@ -3,17 +3,9 @@ import { TestingArchitectHost } from '@angular-devkit/architect/testing';
 import { schema } from '@angular-devkit/core';
 import { exists } from 'fs';
 import { join } from 'path';
-import {
-  PrismaGenerateSchema,
-  PrismaMigrateSchema,
-  PrismaRollbackSchema,
-  PrismaSeedSchema,
-} from '../src';
+import { PrismaGenerateSchema, PrismaMigrateSchema, PrismaRollbackSchema, PrismaSeedSchema } from '../src';
 
-const options: PrismaGenerateSchema &
-  PrismaMigrateSchema &
-  PrismaRollbackSchema &
-  PrismaSeedSchema = {
+const options: PrismaGenerateSchema & PrismaMigrateSchema & PrismaRollbackSchema & PrismaSeedSchema = {
   schema: join(__dirname, 'schema.prisma'),
   script: join(__dirname, 'seed.ts'),
   tsConfig: join(__dirname, '../tsconfig.e2e.json'),
@@ -46,9 +38,7 @@ describe('Prisma Builders', () => {
 
     it('generates client', async () => {
       await run.stop();
-      exists(join(__dirname, 'artifacts/client'), (clientExists) =>
-        expect(clientExists).toBe(true)
-      );
+      exists(join(__dirname, 'artifacts/client'), (clientExists) => expect(clientExists).toBe(true));
     });
   });
 

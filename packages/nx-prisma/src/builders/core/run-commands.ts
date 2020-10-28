@@ -16,20 +16,20 @@ export interface PrismaCommands<T extends PrismaBuilderOptions> {
 const extractArgs = <T extends PrismaBuilderOptions>(
   length: number,
   { args, argsFactory }: Pick<PrismaCommands<T>, 'args' | 'argsFactory'>,
-  options: T
+  options: T,
 ) => {
   return Array.from({ length }, (_, i) => argsFactory?.(options)?.[i] ?? args?.[i] ?? []);
 };
 
 export const runCommands = <T extends PrismaBuilderOptions>(
   { commands, args, argsFactory }: PrismaCommands<T>,
-  options: T
+  options: T,
 ) => {
   const commandArgs = extractArgs(commands.length, { args, argsFactory }, options);
   return zip(from(commands), from(commandArgs)).pipe(
     concatMap(async ([baseCommand, args]) => {
       const command = `${baseCommand} --schema=${options.schema} ${args.join(' ')}`;
       await createProcess({ command, silent: options.silent, color: true });
-    })
+    }),
   );
 };

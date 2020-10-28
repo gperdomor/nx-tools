@@ -1,11 +1,4 @@
-import {
-  isAppveyor,
-  isAzurePipelines,
-  isCircleCI,
-  isGithubActions,
-  isGitlabCI,
-  isTravis,
-} from './ci-utils';
+import { isAppveyor, isAzurePipelines, isCircleCI, isGithubActions, isGitlabCI, isTravis } from './ci-utils';
 
 export const getCommitSha = (): string => {
   if (isGitlabCI() && process.env.CI_COMMIT_SHA != null) {
@@ -45,7 +38,7 @@ export const getCommitSha = (): string => {
   }
 
   throw new Error(
-    `Unable to get the SHA for the current build. Check the documentation for the expected environment variables.`
+    `Unable to get the SHA for the current build. Check the documentation for the expected environment variables.`,
   );
 };
 
@@ -112,6 +105,6 @@ export const getCommitRef = (): string => {
   }
 
   throw new Error(
-    `Unable to get the REF for the current build. Check the documentation for the expected environment variables.`
+    `Unable to get the REF for the current build. Check the documentation for the expected environment variables.`,
   );
 };

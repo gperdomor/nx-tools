@@ -9,15 +9,35 @@ jobs:
     strategy:
       matrix:
         node:
+          # 12 LTS
+          - 12.9-alpine
+          - 12.10-alpine
+          - 12.11-alpine
+          - 12.12-alpine
+          - 12.13-alpine
+          - 12.14-alpine
+          - 12.15-alpine
+          - 12.16-alpine
           - 12.17-alpine
           - 12.18-alpine
+          # 13
+          - 13.10-alpine
+          - 13.11-alpine
+          - 13.12-alpine
           - 13.13-alpine
           - 13.14-alpine
+          # 14 LTS
+          - 14.6-alpine
           - 14.7-alpine
           - 14.8-alpine
           - 14.9-alpine
           - 14.10-alpine
           - 14.11-alpine
+          - 14.12-alpine
+          - 14.13-alpine
+          - 14.14-alpine
+          - 14.15-alpine
+          - 15.0-alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -33,6 +53,6 @@ jobs:
           path: docker/19.03
           tags: ${{ matrix.node }}
           build_args: NODE_VERSION=${{ matrix.node }}
-          tag_with_ref: ${{ matrix.node == '14.11-alpine' }} # only tag with ref when is not master branch
+          tag_with_ref: ${{ matrix.node == '14.15-alpine' }} # only tag with ref when is not master branch
           push: true
           #push: ${{ startsWith(github.ref, 'refs/tags/') }}

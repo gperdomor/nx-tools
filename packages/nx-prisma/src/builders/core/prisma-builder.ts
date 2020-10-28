@@ -2,9 +2,9 @@ import { BuilderOutput } from '@angular-devkit/architect';
 import { Observable } from 'rxjs';
 import { PrismaBuilderOptions, PrismaCommands, runCommands } from './run-commands';
 
-export const createPrismaBuilder = <T extends PrismaBuilderOptions>(
-  commands: PrismaCommands<T>
-) => (options: T): Observable<BuilderOutput> => {
+export const createPrismaBuilder = <T extends PrismaBuilderOptions>(commands: PrismaCommands<T>) => (
+  options: T,
+): Observable<BuilderOutput> => {
   return new Observable((observer) => {
     if (!options.schema) {
       observer.next({

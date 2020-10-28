@@ -7,14 +7,13 @@ import { NxDockerBuilderSchema } from './schema';
 
 export function runBuilder(
   options: NxDockerBuilderSchema & JsonObject,
-  context: BuilderContext
+  context: BuilderContext,
 ): Observable<BuilderOutput> {
   return new Observable((observer) => {
     if (!options.repository) {
       observer.next({
         success: false,
-        error:
-          'ERROR: Bad builder config for @nx-tools/nx-docker - "repository" option is required',
+        error: 'ERROR: Bad builder config for @nx-tools/nx-docker - "repository" option is required',
       });
       observer.complete();
     } else {
@@ -36,9 +35,7 @@ export function runBuilder(
               if (key === 'path' || key === 'dockerfile') {
                 command.push(`-e INPUT_${key.toUpperCase()}=${workDir}/${options[key]}`);
               } else if (key === 'repository') {
-                const repository = options[key].startsWith('$')
-                  ? options[key]
-                  : options[key].toLowerCase();
+                const repository = options[key].startsWith('$') ? options[key] : options[key].toLowerCase();
                 command.push(`-e INPUT_${key.toUpperCase()}=${repository}`);
               } else {
                 command.push(`-e INPUT_${key.toUpperCase()}=${options[key]}`);
