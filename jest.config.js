@@ -7,5 +7,6 @@ module.exports = {
     '<rootDir>/packages/nx-prisma',
     '<rootDir>/apps/nx-prisma-e2e',
     '<rootDir>/packages/core',
+    '<rootDir>/packages/exec',
   ],
 };
