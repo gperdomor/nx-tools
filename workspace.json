@@ -8,11 +8,9 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["packages/nx-docker/tsconfig.lib.json", "packages/nx-docker/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!packages/nx-docker/**/*"]
+            "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
           }
         },
         "test": {
@@ -74,11 +72,9 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["packages/nx-prisma/tsconfig.lib.json", "packages/nx-prisma/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!packages/nx-prisma/**/*"]
+            "lintFilePatterns": ["packages/nx-prisma/**/*.ts"]
           }
         },
         "test": {
@@ -169,11 +165,9 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["apps/example-docker/tsconfig.app.json", "apps/example-docker/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/example-docker/**/*"]
+            "lintFilePatterns": ["apps/example-docker/**/*.ts"]
           }
         },
         "test": {
@@ -232,11 +226,9 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["apps/example-prisma/tsconfig.app.json", "apps/example-prisma/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/example-prisma/**/*"]
+            "lintFilePatterns": ["apps/example-prisma/**/*.ts"]
           }
         },
         "test": {
@@ -280,11 +272,9 @@
       "schematics": {},
       "architect": {
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@nrwl/linter:eslint",
           "options": {
-            "linter": "eslint",
-            "tsConfig": ["packages/core/tsconfig.lib.json", "packages/core/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!packages/core/**/*"]
+            "lintFilePatterns": ["packages/core/**/*.ts"]
           }
         },
         "test": {
@@ -309,42 +299,6 @@
   },
   "cli": {
     "defaultCollection": "@nrwl/node"
-  },
-  "schematics": {
-    "@nrwl/workspace": {
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/cypress": {
-      "cypress-project": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/node": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/nest": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    },
-    "@nrwl/express": {
-      "application": {
-        "linter": "tslint"
-      },
-      "library": {
-        "linter": "tslint"
-      }
-    }
   },
   "defaultProject": "example-docker"
 }
