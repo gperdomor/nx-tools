@@ -48,9 +48,6 @@
     },
     "core": {
       "tags": []
-    },
-    "exec": {
-      "tags": []
     }
   },
   "workspaceLayout": {

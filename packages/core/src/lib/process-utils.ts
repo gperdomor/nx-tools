@@ -1,7 +1,6 @@
-// TODO: Add tests for this file
-
 import { exec } from 'child_process';
-import { TEN_MEGABYTES } from './constants';
+
+export const TEN_MEGABYTES = 1024 * 10000;
 
 interface CreateProcessOptions {
   command: string;
