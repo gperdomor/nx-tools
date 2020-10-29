@@ -5,6 +5,8 @@
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "version": "0.4.0",
+  "main": "src/index.js",
+  "schematics": "./collection.json",
   "builders": "./builders.json",
   "dependencies": {
     "@nx-tools/core": ">= 0.1.0"

@@ -2,11 +2,9 @@ import { Architect } from '@angular-devkit/architect';
 import { TestingArchitectHost } from '@angular-devkit/architect/testing';
 import { schema } from '@angular-devkit/core';
 import { join } from 'path';
-import { NxDockerBuilderSchema } from './schema';
+import { BuildBuilderSchema } from './schema';
 
-const options: NxDockerBuilderSchema = {
-  repository: 'gperdomor/example-docker',
-};
+const options: BuildBuilderSchema = {};
 
 describe('Command Runner Builder', () => {
   let architect: Architect;
