@@ -1,5 +1,6 @@
 {
   "name": "nx-tools",
+  "description": "NX Tools plugins",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {

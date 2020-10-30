@@ -9,8 +9,7 @@ jobs:
     strategy:
       matrix:
         node:
-          # 12 LTS
-          - 12.9-alpine
+          #  12 LTS
           - 12.10-alpine
           - 12.11-alpine
           - 12.12-alpine
@@ -20,6 +19,7 @@ jobs:
           - 12.16-alpine
           - 12.17-alpine
           - 12.18-alpine
+          - 12.19-alpine
           # 13
           - 13.10-alpine
           - 13.11-alpine
@@ -65,20 +65,17 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          context: .
+          context: docker/19.03
           file: docker/19.03/Dockerfile
-          tags: gperdomor/nx-docker:${{ matrix.node }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v6,linux/arm/v7
+          tags: gperdomor/nx-docker:v2-${{ matrix.node }}
+          platforms: linux/amd64,linux/arm64
           # tags: ${{ steps.docker_meta.outputs.tags }}
-          # labels: ${{ steps.docker_meta.outputs.labels }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
           build-args: |
             NODE_VERSION=${{ matrix.node }}
 
       - name: Image tags
         run: echo ${{ steps.docker_meta.outputs.tags }}
-
-      - name: Image labels
-        run: echo ${{ steps.docker_meta.outputs.labels }}
 
       - name: Image ditagsgest
         run: echo ${{ steps.docker_build.outputs.digest }}
