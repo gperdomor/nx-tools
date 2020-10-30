@@ -13,8 +13,8 @@ export interface InputOptions {
  * @param     options  optional. See InputOptions.
  * @returns   string
  */
-export const getInput = (name: string, options?: InputOptions): string => {
-  const val: string = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || '';
+export const getInput = (name: string, fallback?: string, options?: InputOptions): string => {
+  const val: string = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || fallback || '';
   if (options && options.required && !val) {
     throw new Error(`Input required and not supplied: ${name}`);
   }

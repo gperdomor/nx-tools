@@ -4,8 +4,8 @@ import * as os from 'os';
 import * as path from 'path';
 import * as semver from 'semver';
 import * as tmp from 'tmp';
-// import * as github from '@actions/github';
 import * as buildx from './buildx';
+import { DockerBuilderInputsSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;
 
@@ -33,12 +33,7 @@ export interface Inputs {
 
 export const defaultContext = (): string => {
   if (!_defaultContext) {
-    // _defaultContext = `https://github.com/${github.context.repo.owner}/${
-    //   github.context.repo.repo
-    // }.git#${github.context?.ref?.replace(/^refs\//, '')}`;
-
-    // FIXME: use custom providers
-    _defaultContext = `https://github.com/gperdomor/nx-tools.git#demo`;
+    _defaultContext = '.';
   }
   return _defaultContext;
 };
@@ -54,27 +49,30 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
   return tmp.tmpNameSync(options);
 }
 
-export const getInputs = async (defaultContext: string): Promise<Inputs> => {
+const parseBoolean = (value?: boolean): 'true' | 'false' | undefined =>
+  value === undefined ? undefined : value ? 'true' : 'false';
+
+export const getInputs = async (defaultContext: string, options: DockerBuilderInputsSchema): Promise<Inputs> => {
   return {
-    context: core.getInput('context') || defaultContext,
-    file: core.getInput('file') || 'Dockerfile',
-    buildArgs: await getInputList('build-args', true),
-    labels: await getInputList('labels', true),
-    tags: await getInputList('tags'),
-    pull: /true/i.test(core.getInput('pull')),
-    target: core.getInput('target'),
-    allow: await getInputList('allow'),
-    noCache: /true/i.test(core.getInput('no-cache')),
-    builder: core.getInput('builder'),
-    platforms: await getInputList('platforms'),
-    load: /true/i.test(core.getInput('load')),
-    push: /true/i.test(core.getInput('push')),
-    outputs: await getInputList('outputs', true),
-    cacheFrom: await getInputList('cache-from', true),
-    cacheTo: await getInputList('cache-to', true),
-    secrets: await getInputList('secrets', true),
-    githubToken: core.getInput('github-token'),
-    ssh: await getInputList('ssh'),
+    context: core.getInput('context', options.context) || defaultContext,
+    file: core.getInput('file', options.file) || 'Dockerfile',
+    buildArgs: await getInputList('build-args', options.buildArgs, true),
+    labels: await getInputList('labels', options.labels, true),
+    tags: await getInputList('tags', options.tags),
+    pull: /true/i.test(core.getInput('pull', parseBoolean(options.pull))),
+    target: core.getInput('target', options.target),
+    allow: await getInputList('allow', options.allow),
+    noCache: /true/i.test(core.getInput('no-cache', parseBoolean(options.noCache))),
+    builder: core.getInput('builder', options.builder),
+    platforms: await getInputList('platforms', options.platforms),
+    load: /true/i.test(core.getInput('load', parseBoolean(options.load))),
+    push: /true/i.test(core.getInput('push', parseBoolean(options.push))),
+    outputs: await getInputList('outputs', options.outputs, true),
+    cacheFrom: await getInputList('cache-from', options.cacheFrom, true),
+    cacheTo: await getInputList('cache-to', options.cacheTo, true),
+    secrets: await getInputList('secrets', options.secrets, true),
+    githubToken: core.getInput('github-token', options.githubToken),
+    ssh: await getInputList('ssh', options.ssh),
   };
 };
 
@@ -162,11 +160,13 @@ const getCommonArgs = async (inputs: Inputs): Promise<Array<string>> => {
   return args;
 };
 
-export const getInputList = async (name: string, ignoreComma?: boolean): Promise<string[]> => {
+export const getInputList = async (name: string, fallback?: string[], ignoreComma?: boolean): Promise<string[]> => {
   const items = core.getInput(name);
+
   if (items == '') {
-    return [];
+    return fallback ?? [];
   }
+
   return items
     .split(/\r?\n/)
     .filter((x) => x)

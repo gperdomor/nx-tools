@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/@angular-devkit/architect/src/builders-schema.json",
   "builders": {
     "build": {
-      "implementation": "./src/builders/build/builder",
+      "implementation": "./src/builders/build/main",
       "schema": "./src/builders/build/schema.json",
       "description": "Runs docker build"
     }

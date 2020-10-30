@@ -23,11 +23,17 @@ describe('core', () => {
 
     describe('When Input is required', () => {
       it('should return the input if exists', () => {
-        expect(getInput('REQUIRED_EXIST', { required: true })).toEqual('Value 1');
+        expect(getInput('REQUIRED_EXIST', undefined, { required: true })).toEqual('Value 1');
+        expect(getInput('REQUIRED_EXIST__', 'fb', { required: true })).toEqual('fb');
+      });
+
+      it('env variables take priority', () => {
+        expect(getInput('REQUIRED_EXIST', 'fallback', { required: true })).toEqual('Value 1');
+        expect(getInput('REQUIRED_EXIST___', '   fallback', { required: true })).toEqual('fallback');
       });
 
       it('should thrown error if not exists', () => {
-        expect(() => getInput('REQUIRED_NOT_EXIST', { required: true })).toThrow(
+        expect(() => getInput('REQUIRED_NOT_EXIST', undefined, { required: true })).toThrow(
           /Input required and not supplied: REQUIRED_NOT_EXIST/,
         );
       });

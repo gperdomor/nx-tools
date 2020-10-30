@@ -4,9 +4,9 @@ import * as fs from 'fs';
 import * as buildx from './buildx';
 import * as context from './context';
 import * as exec from './exec';
-import { BuildBuilderSchema } from './schema';
+import { DockerBuilderInputsSchema } from './schema';
 
-export async function runBuilder(options: BuildBuilderSchema, ctx: BuilderContext): Promise<BuilderOutput> {
+export async function runBuilder(options: DockerBuilderInputsSchema, ctx: BuilderContext): Promise<BuilderOutput> {
   try {
     dotenv();
 
@@ -26,7 +26,7 @@ export async function runBuilder(options: BuildBuilderSchema, ctx: BuilderContex
     ctx.logger.info(`📣 Buildx version: ${buildxVersion}`);
 
     const defContext = context.defaultContext();
-    const inputs: context.Inputs = await context.getInputs(defContext);
+    const inputs: context.Inputs = await context.getInputs(defContext, options);
 
     ctx.logger.info(`🏃 Starting build...`);
     const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);

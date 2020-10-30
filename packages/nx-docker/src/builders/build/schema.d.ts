@@ -1,3 +1,4 @@
 import { JsonObject } from '@angular-devkit/core';
+import { Inputs } from './context';
 
-export interface BuildBuilderSchema extends JsonObject {} // eslint-disable-line
+export interface DockerBuilderInputsSchema extends JsonObject, Partial<Inputs> {} // eslint-disable-line
