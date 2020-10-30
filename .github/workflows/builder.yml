@@ -74,8 +74,5 @@ jobs:
           build-args: |
             NODE_VERSION=${{ matrix.node }}
 
-      - name: Image tags
-        run: echo ${{ steps.docker_meta.outputs.tags }}
-
       - name: Image ditagsgest
         run: echo ${{ steps.docker_build.outputs.digest }}

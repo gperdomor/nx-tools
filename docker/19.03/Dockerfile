@@ -81,36 +81,5 @@ ENV DOCKER_TLS_CERTDIR=/certs
 RUN mkdir /certs /certs/client && chmod 1777 /certs /certs/client
 # (doing both /certs and /certs/client so that if Docker does a "copy-up" into a volume defined on /certs/client, it will "do the right thing" by default in a way that still works for rootless users)
 
-##############################
-## INSTALLING BUILDX PLUGIN ##
-##############################
-
-ENV DOCKER_BUILDX_VERSION 0.4.2
-
-RUN set -eux; \
-	\
-	apkArch="$(apk --print-arch)"; \
-	case "$apkArch" in \
-		'x86_64') \
-			url="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-amd64"; \
-			;; \
-		'armhf') \
-			url="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-arm-v6"; \
-			;; \
-		'armv7') \
-			url="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-arm-v7"; \
-			;; \
-		'aarch64') \
-			url="https://github.com/docker/buildx/releases/download/v$DOCKER_BUILDX_VERSION/buildx-v$DOCKER_BUILDX_VERSION.linux-arm64"; \
-			;; \
-		*) echo >&2 "error: unsupported architecture ($apkArch)"; exit 1 ;; \
-	esac; \
-	\
-  mkdir -p ~/.docker/cli-plugins; \
-	\
-	wget -nv -O ~/.docker/cli-plugins/docker-buildx "$url"; \
-  \
-  chmod a+x ~/.docker/cli-plugins/docker-buildx;
-
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["sh"]
