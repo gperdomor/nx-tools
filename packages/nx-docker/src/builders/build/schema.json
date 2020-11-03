@@ -1,83 +1,78 @@
 {
-  "$schema": "http://json-schema.org/schema",
-  "title": "NxDocker builder",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://json-schema.org/draft-07/schema",
+  "title": "Build builder",
   "description": "",
   "type": "object",
   "properties": {
-    "username": {
+    "context": {
       "type": "string",
-      "description": "Username used to log in to a Docker registry. If not set then no login will occur"
+      "description": "Build's context is the set of files located in the specified PATH or URL (default .)"
     },
-    "password": {
+    "file": {
       "type": "string",
-      "description": "Password or personal access token used to log in to a Docker registry. If not set then no login will occur"
+      "description": "Path to the Dockerfile (default Dockerfile)"
     },
-    "registry": {
-      "type": "string",
-      "description": "Server address of Docker registry. If not set then will default to Docker Hub"
+    "build-args": {
+      "type": "array",
+      "description": "List of build-time variables"
     },
-    "repository": {
-      "type": "string",
-      "description": "Docker repository to tag the image with"
+    "labels": {
+      "type": "array",
+      "description": "List of metadata for an image"
     },
     "tags": {
-      "type": "string",
-      "description": "Comma-delimited list of tags. These will be added to the registry/repository to form the image's tags"
+      "type": "array",
+      "description": "List of tags"
     },
-    "tag_with_ref": {
+    "pull": {
       "type": "boolean",
-      "description": "Automatically tags the built image with the git reference as per the readme.",
-      "default": false
-    },
-    "tag_with_sha": {
-      "type": "boolean",
-      "description": "Automatically tags the built image with the git short SHA as per the readme",
-      "default": false
-    },
-    "path": {
-      "type": "string",
-      "description": "Path to the build context",
-      "default": "."
-    },
-    "dockerfile": {
-      "type": "string",
-      "description": "Path to the Dockerfile (Default is '{path}/Dockerfile')"
+      "description": "Sets the target stage to build"
     },
     "target": {
       "type": "string",
-      "description": "Sets the target stage to build"
+      "description": "Path to the Dockerfile (default Dockerfile)"
     },
-    "always_pull": {
-      "description": "Always attempt to pull a newer version of the image",
-      "default": false
+    "allow": {
+      "type": "array",
+      "description": "List of extra privileged entitlement (eg. network.host,security.insecure)"
     },
-    "build_args": {
-      "type": "string",
-      "description": "Comma-delimited list of build-time variables",
-      "default": ""
-    },
-    "cache_froms": {
-      "type": "string",
-      "description": "Comma-delimited list of images to consider as cache sources"
-    },
-    "labels": {
-      "type": "string",
-      "description": "Comma-delimited list of labels to add to the built image"
-    },
-    "add_git_labels": {
+    "no-cache": {
       "type": "boolean",
-      "description": "Adds labels with git repository information to the built image",
-      "default": false
+      "description": "Do not use cache when building the image (default false)"
+    },
+    "platforms": {
+      "type": "array",
+      "description": "List of target platforms for build"
+    },
+    "load": {
+      "type": "boolean",
+      "description": "Load is a shorthand for --output=type=docker (default false)"
     },
     "push": {
       "type": "boolean",
-      "description": "Whether to push the image",
-      "default": true
+      "description": "Push is a shorthand for --output=type=registry (default false)"
     },
-    "socket": {
-      "type": "string",
-      "default": "/var/run/docker.sock"
+    "outputs": {
+      "type": "array",
+      "description": "List of output destinations (format: type=local,dest=path)"
+    },
+    "cache-from": {
+      "type": "array",
+      "description": "List of external cache sources (eg. type=local,src=path/to/dir)"
+    },
+    "cache-to": {
+      "type": "array",
+      "description": "List of cache export destinations (eg. type=local,dest=path/to/dir)"
+    },
+    "secrets": {
+      "type": "array",
+      "description": "List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)"
+    },
+    "ssh": {
+      "type": "array",
+      "description": "List of SSH agent socket or keys to expose to the build"
     }
   },
-  "required": ["repository"]
+  "required": []
 }

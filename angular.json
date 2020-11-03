@@ -180,12 +180,7 @@
         "docker": {
           "builder": "./dist/packages/nx-docker:build",
           "options": {
-            "repository": "gperdomor/example-app",
-            "dockerfile": "apps/example-docker/Dockerfile",
-            "tag_with_ref": true,
-            "tag_with_sha": true,
-            "push": false,
-            "socket": "/var/run/docker.sock"
+            "dockerfile": "apps/example-docker/Dockerfile"
           }
         }
       }

@@ -18,6 +18,10 @@ RUN apk add --no-cache \
     unzip \
     zip
 
+##############################
+## INSTALLING BUILDX PLUGIN ##
+##############################
+
 RUN apk add --no-cache \
 		ca-certificates \
 # DOCKER_HOST=ssh://... -- https://github.com/docker/cli/pull/1014

@@ -9,8 +9,7 @@ jobs:
     strategy:
       matrix:
         node:
-          # 12 LTS
-          - 12.9-alpine
+          #  12 LTS
           - 12.10-alpine
           - 12.11-alpine
           - 12.12-alpine
@@ -20,6 +19,7 @@ jobs:
           - 12.16-alpine
           - 12.17-alpine
           - 12.18-alpine
+          - 12.19-alpine
           # 13
           - 13.10-alpine
           - 13.11-alpine
@@ -42,17 +42,37 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build image
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker meta
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@v1
+        with:
+          images: name/app
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: gperdomor/nx-docker
-          path: docker/19.03
-          tags: ${{ matrix.node }}
-          build_args: NODE_VERSION=${{ matrix.node }}
-          tag_with_ref: ${{ matrix.node == '14.15-alpine' }} # only tag with ref when is not master branch
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
           push: true
-          #push: ${{ startsWith(github.ref, 'refs/tags/') }}
+          context: docker/19.03
+          file: docker/19.03/Dockerfile
+          tags: gperdomor/nx-docker:v2-${{ matrix.node }}
+          platforms: linux/amd64,linux/arm64
+          # tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          build-args: |
+            NODE_VERSION=${{ matrix.node }}
+
+      - name: Image ditagsgest
+        run: echo ${{ steps.docker_build.outputs.digest }}

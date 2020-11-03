@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "name": "nx-docker",
+  "version": "0.0.1",
+  "schematics": {
+    "nx-docker": {
+      "factory": "./src/schematics/nx-docker/schematic",
+      "schema": "./src/schematics/nx-docker/schema.json",
+      "description": "nx-docker schematic"
+    }
+  }
+}
