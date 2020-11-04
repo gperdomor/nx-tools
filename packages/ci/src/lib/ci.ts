@@ -4,6 +4,7 @@ import { GitLabContext } from './contexts/gitlab.context';
 import { PROVIDER } from './enums';
 
 let _provider: PROVIDER;
+const _test = process.env.NODE_ENV === 'test';
 
 export const getRunnerProvider = () => {
   if (process.env.GITHUB_ACTIONS === 'true') {
@@ -16,7 +17,7 @@ export const getRunnerProvider = () => {
 };
 
 export const getProvider = (): string => {
-  if (!_provider) {
+  if (!_provider || _test) {
     _provider = getRunnerProvider();
   }
   return _provider;
