@@ -48,6 +48,9 @@
     },
     "core": {
       "tags": []
+    },
+    "ci": {
+      "tags": []
     }
   },
   "workspaceLayout": {
