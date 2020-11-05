@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as buildx from './buildx';
 import * as context from './context';
 import * as exec from './exec';
+import { extractMetadata } from './meta/main';
 import { DockerBuilderInputsSchema } from './schema';
 
 export async function runBuilder(options: DockerBuilderInputsSchema, ctx: BuilderContext): Promise<BuilderOutput> {
@@ -28,8 +29,20 @@ export async function runBuilder(options: DockerBuilderInputsSchema, ctx: Builde
     const defContext = context.defaultContext();
     const inputs: context.Inputs = await context.getInputs(defContext, options);
 
+    if (inputs.meta.enabled) {
+      const meta = await extractMetadata(options.meta);
+      if (inputs.meta.mode === context.MetaMode.prepend) {
+        inputs.labels = [...meta.labels(), ...inputs.labels];
+        inputs.tags = [...meta.tags(), ...inputs.tags];
+      } else {
+        inputs.labels = [...inputs.labels, ...meta.labels()];
+        inputs.tags = [...inputs.tags, ...meta.tags()];
+      }
+    }
+
     ctx.logger.info(`🏃 Starting build...`);
     const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
+
     await exec.exec('docker', args).then((res) => {
       if (res.stderr != '' && !res.success) {
         throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]}`);

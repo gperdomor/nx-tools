@@ -1,5 +1,5 @@
-import * as aexec from '@actions/exec';
-import { ExecOptions } from '@actions/exec';
+import * as aexec from '@nx-tools/core';
+import { ExecOptions } from '@nx-tools/core';
 
 export interface ExecResult {
   success: boolean;

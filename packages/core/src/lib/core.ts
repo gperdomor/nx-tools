@@ -100,3 +100,6 @@ export const asyncForEach = async (array, callback) => {
     await callback(array[index], index, array);
   }
 };
+
+export const parseBoolean = (value?: boolean): 'true' | 'false' | undefined =>
+  value === undefined ? undefined : value ? 'true' : 'false';
