@@ -1,6 +1,7 @@
 import { BuilderContext, BuilderOutput, createBuilder } from '@angular-devkit/architect';
 import { dotenv } from '@nx-tools/core';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as buildx from './buildx';
 import * as context from './context';
 import * as exec from './exec';
@@ -11,9 +12,9 @@ export async function runBuilder(options: DockerBuilderInputsSchema, ctx: Builde
   try {
     dotenv();
 
-    // if (os.platform() !== 'linux') {
-    //   throw new Error(`Only supported on linux platform`);
-    // }
+    if (os.platform() !== 'linux' || os.platform() !== 'darwin') {
+      throw new Error(`Only supported on linux and darwin platform`);
+    }
 
     if (!(await buildx.isAvailable())) {
       throw new Error(`Buildx is required. See https://github.com/docker/setup-buildx-action to set up buildx.`);
