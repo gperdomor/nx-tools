@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'nx-docker-e2e',
+  displayName: 'example-prisma',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/nx-docker-e2e',
+  coverageDirectory: '../../coverage/e2e/example-prisma',
 };

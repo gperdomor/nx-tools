@@ -12,7 +12,7 @@ export async function runBuilder(options: DockerBuilderInputsSchema, ctx: Builde
   try {
     dotenv();
 
-    if (os.platform() !== 'linux' || os.platform() !== 'darwin') {
+    if (os.platform() !== 'linux' && os.platform() !== 'darwin') {
       throw new Error(`Only supported on linux and darwin platform`);
     }
 

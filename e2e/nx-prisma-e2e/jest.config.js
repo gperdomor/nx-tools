@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'example-prisma',
+  displayName: 'nx-prisma-e2e',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/example-prisma',
+  coverageDirectory: '../../coverage/e2e/nx-prisma-e2e',
 };
