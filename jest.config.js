@@ -1,12 +1,12 @@
 module.exports = {
   projects: [
     '<rootDir>/packages/nx-docker',
-    '<rootDir>/apps/nx-docker-e2e',
-    '<rootDir>/apps/example-docker',
-    '<rootDir>/apps/example-prisma',
+    '<rootDir>/e2e/nx-docker-e2e',
     '<rootDir>/packages/nx-prisma',
-    '<rootDir>/apps/nx-prisma-e2e',
+    '<rootDir>/e2e/nx-prisma-e2e',
+    '<rootDir>/e2e/example-docker',
+    '<rootDir>/e2e/example-prisma',
     '<rootDir>/packages/core',
-    '<rootDir>/packages/exec',
+    '<rootDir>/packages/ci',
   ],
 };

@@ -72,6 +72,18 @@
     "ssh": {
       "type": "array",
       "description": "List of SSH agent socket or keys to expose to the build"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "mode": {
+          "type": "string",
+          "enum": ["prepend", "append"],
+          "description": "Behavior of extracted data. (default prepend)"
+        }
+      },
+      "description": "Extract metadata from CI context"
     }
   },
   "required": []

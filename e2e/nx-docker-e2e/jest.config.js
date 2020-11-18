@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'example-docker',
+  displayName: 'nx-docker-e2e',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/example-docker',
+  coverageDirectory: '../../coverage/e2e/nx-docker-e2e',
 };

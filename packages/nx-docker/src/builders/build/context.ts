@@ -1,13 +1,19 @@
-import * as core from '@nx-tools/core';
+import { asyncForEach, getInput, parseBoolean } from '@nx-tools/core';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as semver from 'semver';
 import * as tmp from 'tmp';
 import * as buildx from './buildx';
+import { Inputs as MetaInputs } from './meta/context';
 import { DockerBuilderInputsSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;
+
+export enum MetaMode {
+  prepend = 'prepend',
+  append = 'append',
+}
 
 export interface Inputs {
   context: string;
@@ -29,6 +35,10 @@ export interface Inputs {
   secrets: string[];
   githubToken: string;
   ssh: string[];
+  meta: {
+    enabled: boolean;
+    mode: MetaMode;
+  } & Partial<MetaInputs>;
 }
 
 export const defaultContext = (): string => {
@@ -49,30 +59,42 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
   return tmp.tmpNameSync(options);
 }
 
-const parseBoolean = (value?: boolean): 'true' | 'false' | undefined =>
-  value === undefined ? undefined : value ? 'true' : 'false';
+const parseMetaMode = (value?: string): MetaMode | undefined => {
+  switch (value) {
+    case 'prepend':
+      return MetaMode.prepend;
+    case 'append':
+      return MetaMode.append;
+    default:
+      return undefined;
+  }
+};
 
 export const getInputs = async (defaultContext: string, options: DockerBuilderInputsSchema): Promise<Inputs> => {
   return {
-    context: core.getInput('context', options.context) || defaultContext,
-    file: core.getInput('file', options.file) || 'Dockerfile',
+    context: getInput('context', options.context) || defaultContext,
+    file: getInput('file', options.file) || 'Dockerfile',
     buildArgs: await getInputList('build-args', options.buildArgs, true),
     labels: await getInputList('labels', options.labels, true),
     tags: await getInputList('tags', options.tags),
-    pull: /true/i.test(core.getInput('pull', parseBoolean(options.pull))),
-    target: core.getInput('target', options.target),
+    pull: /true/i.test(getInput('pull', parseBoolean(options.pull))),
+    target: getInput('target', options.target),
     allow: await getInputList('allow', options.allow),
-    noCache: /true/i.test(core.getInput('no-cache', parseBoolean(options.noCache))),
-    builder: core.getInput('builder', options.builder),
+    noCache: /true/i.test(getInput('no-cache', parseBoolean(options.noCache))),
+    builder: getInput('builder', options.builder),
     platforms: await getInputList('platforms', options.platforms),
-    load: /true/i.test(core.getInput('load', parseBoolean(options.load))),
-    push: /true/i.test(core.getInput('push', parseBoolean(options.push))),
+    load: /true/i.test(getInput('load', parseBoolean(options.load))),
+    push: /true/i.test(getInput('push', parseBoolean(options.push))),
     outputs: await getInputList('outputs', options.outputs, true),
     cacheFrom: await getInputList('cache-from', options.cacheFrom, true),
     cacheTo: await getInputList('cache-to', options.cacheTo, true),
     secrets: await getInputList('secrets', options.secrets, true),
-    githubToken: core.getInput('github-token', options.githubToken),
+    githubToken: getInput('github-token', options.githubToken),
     ssh: await getInputList('ssh', options.ssh),
+    meta: {
+      enabled: /true/i.test(getInput('meta-enabled', parseBoolean(options.meta.enabled))),
+      mode: parseMetaMode(getInput('meta-mode', options.meta.mode)) || MetaMode.prepend,
+    },
   };
 };
 
@@ -161,7 +183,7 @@ const getCommonArgs = async (inputs: Inputs): Promise<Array<string>> => {
 };
 
 export const getInputList = async (name: string, fallback?: string[], ignoreComma?: boolean): Promise<string[]> => {
-  const items = core.getInput(name);
+  const items = getInput(name);
 
   if (items == '') {
     return fallback ?? [];
@@ -174,10 +196,4 @@ export const getInputList = async (name: string, fallback?: string[], ignoreComm
       (acc, line) => acc.concat(!ignoreComma ? line.split(',').filter((x) => x) : line).map((pat) => pat.trim()),
       [],
     );
-};
-
-export const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
 };

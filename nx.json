@@ -4,7 +4,7 @@
     "defaultBase": "master"
   },
   "implicitDependencies": {
-    "angular.json": "*",
+    "workspace.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
@@ -48,10 +48,13 @@
     },
     "core": {
       "tags": []
+    },
+    "ci": {
+      "tags": []
     }
   },
   "workspaceLayout": {
-    "appsDir": "apps",
+    "appsDir": "e2e",
     "libsDir": "packages"
   }
 }

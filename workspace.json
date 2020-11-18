@@ -51,8 +51,8 @@
     },
     "nx-docker-e2e": {
       "projectType": "application",
-      "root": "apps/nx-docker-e2e",
-      "sourceRoot": "apps/nx-docker-e2e/src",
+      "root": "e2e/nx-docker-e2e",
+      "sourceRoot": "e2e/nx-docker-e2e/src",
       "architect": {
         "e2e": {
           "builder": "@nrwl/nx-plugin:e2e",
@@ -60,7 +60,7 @@
             "target": "nx-docker:build",
             "npmPackageName": "@nx-tools/nx-docker",
             "pluginOutputPath": "dist/packages/nx-docker",
-            "jestConfig": "apps/nx-docker-e2e/jest.config.js"
+            "jestConfig": "e2e/nx-docker-e2e/jest.config.js"
           }
         }
       }
@@ -115,8 +115,8 @@
     },
     "nx-prisma-e2e": {
       "projectType": "application",
-      "root": "apps/nx-prisma-e2e",
-      "sourceRoot": "apps/nx-prisma-e2e/src",
+      "root": "e2e/nx-prisma-e2e",
+      "sourceRoot": "e2e/nx-prisma-e2e/src",
       "architect": {
         "e2e": {
           "builder": "@nrwl/nx-plugin:e2e",
@@ -124,14 +124,14 @@
             "target": "nx-prisma:build",
             "npmPackageName": "@nx-tools/nx-prisma",
             "pluginOutputPath": "dist/packages/nx-prisma",
-            "jestConfig": "apps/nx-prisma-e2e/jest.config.js"
+            "jestConfig": "e2e/nx-prisma-e2e/jest.config.js"
           }
         }
       }
     },
     "example-docker": {
-      "root": "apps/example-docker",
-      "sourceRoot": "apps/example-docker/src",
+      "root": "e2e/example-docker",
+      "sourceRoot": "e2e/example-docker/src",
       "projectType": "application",
       "prefix": "example-docker",
       "schematics": {},
@@ -139,10 +139,10 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/example-docker",
-            "main": "apps/example-docker/src/main.ts",
-            "tsConfig": "apps/example-docker/tsconfig.app.json",
-            "assets": ["apps/example-docker/src/assets"]
+            "outputPath": "dist/e2e/example-docker",
+            "main": "e2e/example-docker/src/main.ts",
+            "tsConfig": "e2e/example-docker/tsconfig.app.json",
+            "assets": ["e2e/example-docker/src/assets"]
           },
           "configurations": {
             "production": {
@@ -151,8 +151,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/example-docker/src/environments/environment.ts",
-                  "with": "apps/example-docker/src/environments/environment.prod.ts"
+                  "replace": "e2e/example-docker/src/environments/environment.ts",
+                  "with": "e2e/example-docker/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -167,27 +167,30 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/example-docker/**/*.ts"]
+            "lintFilePatterns": ["e2e/example-docker/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/example-docker/jest.config.js",
+            "jestConfig": "e2e/example-docker/jest.config.js",
             "passWithNoTests": true
           }
         },
         "docker": {
           "builder": "./dist/packages/nx-docker:build",
           "options": {
-            "dockerfile": "apps/example-docker/Dockerfile"
+            "push": true,
+            "file": "apps/api/Dockerfile",
+            "tags": ["gperdomor/api:latest"],
+            "platforms": ["linux/amd64", "linux/arm64"]
           }
         }
       }
     },
     "example-prisma": {
-      "root": "apps/example-prisma",
-      "sourceRoot": "apps/example-prisma/src",
+      "root": "e2e/example-prisma",
+      "sourceRoot": "e2e/example-prisma/src",
       "projectType": "application",
       "prefix": "example-prisma",
       "schematics": {},
@@ -195,10 +198,10 @@
         "build": {
           "builder": "@nrwl/node:build",
           "options": {
-            "outputPath": "dist/apps/example-prisma",
-            "main": "apps/example-prisma/src/main.ts",
-            "tsConfig": "apps/example-prisma/tsconfig.app.json",
-            "assets": ["apps/example-prisma/src/assets"]
+            "outputPath": "dist/e2e/example-prisma",
+            "main": "e2e/example-prisma/src/main.ts",
+            "tsConfig": "e2e/example-prisma/tsconfig.app.json",
+            "assets": ["e2e/example-prisma/src/assets"]
           },
           "configurations": {
             "production": {
@@ -207,8 +210,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/example-prisma/src/environments/environment.ts",
-                  "with": "apps/example-prisma/src/environments/environment.prod.ts"
+                  "replace": "e2e/example-prisma/src/environments/environment.ts",
+                  "with": "e2e/example-prisma/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -223,13 +226,13 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/example-prisma/**/*.ts"]
+            "lintFilePatterns": ["e2e/example-prisma/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/example-prisma/jest.config.js",
+            "jestConfig": "e2e/example-prisma/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -287,6 +290,37 @@
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
             "assets": ["packages/core/*.md"]
+          }
+        }
+      }
+    },
+    "ci": {
+      "root": "packages/ci",
+      "sourceRoot": "packages/ci/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/ci/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "packages/ci/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:package",
+          "options": {
+            "outputPath": "dist/packages/ci",
+            "tsConfig": "packages/ci/tsconfig.lib.json",
+            "packageJson": "packages/ci/package.json",
+            "main": "packages/ci/src/index.ts",
+            "assets": ["packages/ci/*.md"]
           }
         }
       }
