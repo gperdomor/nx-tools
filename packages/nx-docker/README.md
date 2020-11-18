@@ -1,12 +1,18 @@
-# nx-docker
+# @nx-tools/nx-docker
 
-![Docker builder](https://github.com/gperdomor/nx-tools/workflows/Docker%20builder/badge.svg)
+> This docs refer to version 1.0.0@alpha.x
 
 This builder provides the tools needed to build and push Docker images with Buildx.
 
 ## Getting started
 
-The first step is configure the builder in your `angular.json` or `workspace.json`, so add something like this to every project you need to dockerize:
+The first step is install this package
+
+```bash
+npm i -D @nx-tools/nx-docker@next
+```
+
+Then configure the builder in your `angular.json` or `workspace.json`, so add something like this to every project you need to dockerize:
 
 ```json
 "docker": {
@@ -32,21 +38,23 @@ image to these registries.
 
 <details>
   <summary><b>Show config</b></summary>
-  ```json
-  "docker": {
-    "builder": "@nx-tools/nx-docker:build",
-    "options": {
-      "file": "apps/api/Dockerfile",
-      "push": true,
-      "tags": [
-        "user/app:latest",
-        "user/app:1.0.0",
-        "ghcr.io/user/app:latest",
-        "ghcr.io/user/app:1.0.0"
-      ]
-    }
+
+```json
+"docker": {
+  "builder": "@nx-tools/nx-docker:build",
+  "options": {
+    "file": "apps/api/Dockerfile",
+    "push": true,
+    "tags": [
+      "user/app:latest",
+      "user/app:1.0.0",
+      "ghcr.io/user/app:latest",
+      "ghcr.io/user/app:1.0.0"
+    ]
   }
-  ```
+}
+```
+
 </details>
 
 ### Export image to Docker
@@ -56,16 +64,18 @@ in another step of your workflow:
 
 <details>
   <summary><b>Show config</b></summary>
-  ```json
-  "docker": {
-    "builder": "@nx-tools/nx-docker:build",
-    "options": {
-      "file": "apps/api/Dockerfile",
-      "load": true,
-      "tags": ["user/app:latest"]
-    }
+
+```json
+"docker": {
+  "builder": "@nx-tools/nx-docker:build",
+  "options": {
+    "file": "apps/api/Dockerfile",
+    "load": true,
+    "tags": ["user/app:latest"]
   }
-  ```
+}
+```
+
 </details>
 
 ### Multi-platform image
@@ -74,17 +84,19 @@ You can build your apps for multiple platform, like linux/amd64, linux/arm64, li
 
 <details>
   <summary><b>Show config</b></summary>
-  ```json
-  "docker": {
-    "builder": "@nx-tools/nx-docker:build",
-    "options": {
-      "file": "apps/api/Dockerfile",
-      "push": true,
-      "tags": ["user/app:latest"],
-      "platforms": ["linux/amd64", "linux/arm64", "linux/386"],
-    }
+
+```json
+"docker": {
+  "builder": "@nx-tools/nx-docker:build",
+  "options": {
+    "file": "apps/api/Dockerfile",
+    "push": true,
+    "tags": ["user/app:latest"],
+    "platforms": ["linux/amd64", "linux/arm64", "linux/386"],
   }
-  ```
+}
+```
+
 </details>
 
 ### Use automatic metadata
@@ -98,20 +110,22 @@ Mode:
 
 <details>
   <summary><b>Show config</b></summary>
-  ```json
-  "docker": {
-    "builder": "@nx-tools/nx-docker:build",
-    "options": {
-      "file": "apps/api/Dockerfile",
-      "push": true,
-      "tags": ["user/app:latest"],
-      "meta": {
-        "enabled": true,
-        "mode": "prepend"
-      }
+
+```json
+"docker": {
+  "builder": "@nx-tools/nx-docker:build",
+  "options": {
+    "file": "apps/api/Dockerfile",
+    "push": true,
+    "tags": ["user/app:latest"],
+    "meta": {
+      "enabled": true,
+      "mode": "prepend"
     }
   }
-  ```
+}
+```
+
 </details>
 
 ## Customizing
@@ -151,7 +165,7 @@ To check all possible options please check this [schema.json](src/builders/nx-do
 
 ### Use with Gitlab CI
 
-To use with Gitlab CI we provide a custom node image with Docker and Buildx integrated. Just only need to use in your pipeline:
+To use with Gitlab CI we provide a [custom node image](https://github.com/users/gperdomor/packages/container/package/nx-docker) with Docker and Buildx integrated. Just only need to use in your pipeline:
 
 ```yml
 build:
