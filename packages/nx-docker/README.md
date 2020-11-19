@@ -177,7 +177,8 @@ build:
     DOCKER_TLS_CERTDIR: '/certs'
   script:
     - npm i
-    - echo "$REGISTRY_PASSWORD" | docker login -u $REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker buildx create --use
     - npm run nx affected -- --target=docker --base=remotes/origin/master
 ```
 
