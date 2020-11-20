@@ -8,7 +8,9 @@ export class GitLabContext extends Context {
     super();
     this.eventName = process.env.CI_PIPELINE_SOURCE as string;
     this.sha = process.env.CI_COMMIT_SHA as string;
-    this.ref = process.env.CI_COMMIT_REF_SLUG as string;
+    this.ref = process.env.CI_COMMIT_TAG
+      ? `refs/tags/${process.env.CI_COMMIT_TAG as string}`
+      : `refs/heads/${process.env.CI_COMMIT_REF_SLUG as string}`;
     // this.workflow = process.env.GITHUB_WORKFLOW as string;
     this.action = process.env.CI_JOB_ID as string;
     this.actor = process.env.GITLAB_USER_LOGIN as string;

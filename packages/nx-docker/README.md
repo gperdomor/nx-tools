@@ -178,6 +178,7 @@ build:
   script:
     - npm i
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker run --privileged --rm tonistiigi/binfmt --install all # required for multi-arch build
     - docker buildx create --use
     - npm run nx affected -- --target=docker --base=remotes/origin/master
 ```
