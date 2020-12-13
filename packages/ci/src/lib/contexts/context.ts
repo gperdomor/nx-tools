@@ -1,4 +1,7 @@
-export abstract class Context {
+import { RunnerProvider } from '../runner-provider.enum';
+
+export abstract class RunnerContext {
+  provider: RunnerProvider;
   eventName: string;
   sha: string;
   ref: string;
@@ -8,4 +11,8 @@ export abstract class Context {
   job: string;
   runNumber: number;
   runId: number;
+
+  constructor(provider: RunnerProvider) {
+    this.provider = provider;
+  }
 }

@@ -1,11 +1,12 @@
-import { Context } from './context';
+import { RunnerProvider } from '../runner-provider.enum';
+import { RunnerContext } from './context';
 
-export class GitHubContext extends Context {
+export class GitHubContext extends RunnerContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super();
+    super(RunnerProvider.GitHub);
     this.eventName = process.env.GITHUB_EVENT_NAME as string;
     this.sha = process.env.GITHUB_SHA as string;
     this.ref = process.env.GITHUB_REF as string;

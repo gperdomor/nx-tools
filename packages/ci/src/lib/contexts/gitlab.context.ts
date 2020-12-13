@@ -1,11 +1,12 @@
-import { Context } from './context';
+import { RunnerProvider } from '../runner-provider.enum';
+import { RunnerContext } from './context';
 
-export class GitLabContext extends Context {
+export class GitLabContext extends RunnerContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super();
+    super(RunnerProvider.GitLab);
     this.eventName = process.env.CI_PIPELINE_SOURCE as string;
     this.sha = process.env.CI_COMMIT_SHA as string;
     this.ref = process.env.CI_COMMIT_TAG

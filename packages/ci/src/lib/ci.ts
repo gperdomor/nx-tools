@@ -1,37 +1,23 @@
-import { Context } from './contexts/context';
-import { GitHubContext } from './contexts/github.context';
-import { GitLabContext } from './contexts/gitlab.context';
-import { PROVIDER } from './enums';
+import { RunnerProvider } from './runner-provider.enum';
 
-let _provider: PROVIDER;
-const _test = process.env.NODE_ENV === 'test';
+let _provider: RunnerProvider;
 
 export const getRunnerProvider = () => {
   if (process.env.GITHUB_ACTIONS === 'true') {
-    return PROVIDER.github;
+    return RunnerProvider.GitHub;
   } else if (process.env.GITLAB_CI === 'true') {
-    return PROVIDER.gitlab;
+    return RunnerProvider.GitLab;
   } else if (process.env.RUN_LOCAL) {
-    return PROVIDER.local;
+    return RunnerProvider.Local;
+  } else {
+    throw new Error('Unknown runner provider');
   }
 };
 
-export const getProvider = (): string => {
-  if (!_provider || _test) {
-    _provider = getRunnerProvider();
-  }
-  return _provider;
+export const runnerProvider = (): RunnerProvider => {
+  return getRunnerProvider();
+  // if (!_provider) {
+  //   _provider = getRunnerProvider();
+  // }
+  // return _provider;
 };
-
-export class ContextProxyFactory {
-  public static create(): Context {
-    switch (getProvider()) {
-      case PROVIDER.github:
-        return new GitHubContext();
-      case PROVIDER.gitlab:
-        return new GitLabContext();
-      default:
-        throw new Error('A CI context is required');
-    }
-  }
-}

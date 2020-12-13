@@ -1,0 +1,3 @@
+ARG NODE_VERSION=15.4-alpine
+
+FROM node:${NODE_VERSION}

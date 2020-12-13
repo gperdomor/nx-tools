@@ -22,6 +22,10 @@
       "parserOptions": { "project": "./tsconfig.*?.json" },
       "rules": {}
     },
-    { "files": ["*.js", "*.jsx"], "extends": ["plugin:@nrwl/nx/javascript"], "rules": {} }
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    }
   ]
 }
