@@ -16,14 +16,23 @@
     },
     "build-args": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of build-time variables"
     },
     "labels": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of metadata for an image"
     },
     "tags": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of tags"
     },
     "pull": {
@@ -36,6 +45,9 @@
     },
     "allow": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of extra privileged entitlement (eg. network.host,security.insecure)"
     },
     "no-cache": {
@@ -44,6 +56,9 @@
     },
     "platforms": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of target platforms for build"
     },
     "load": {
@@ -56,22 +71,37 @@
     },
     "outputs": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of output destinations (format: type=local,dest=path)"
     },
     "cache-from": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of external cache sources (eg. type=local,src=path/to/dir)"
     },
     "cache-to": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of cache export destinations (eg. type=local,dest=path/to/dir)"
     },
     "secrets": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)"
     },
     "ssh": {
       "type": "array",
+      "items": {
+        "type": "string"
+      },
       "description": "List of SSH agent socket or keys to expose to the build"
     },
     "meta": {
