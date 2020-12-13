@@ -8,12 +8,12 @@ import { RunnerProvider } from './runner-provider.enum';
 export class RunnerContextProxyFactory {
   public static create(): RunnerContext {
     switch (getRunnerProvider()) {
-      case RunnerProvider.GitHub:
-        return new GitHubContext();
       case RunnerProvider.GitLab:
         return new GitLabContext();
       case RunnerProvider.Local:
         return new LocalContext();
+      case RunnerProvider.GitHub:
+        return new GitHubContext();
     }
   }
 }

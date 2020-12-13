@@ -12,6 +12,7 @@ describe('CI', () => {
     describe('When is GitLabCI', () => {
       beforeEach(() => {
         process.env.GITLAB_CI = 'true';
+        process.env.GITHUB_ACTIONS = 'false';
       });
 
       it('Should return gitlab', () => {
