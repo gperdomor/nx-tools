@@ -1,4 +1,8 @@
 {
   "name": "@nx-tools/ci",
-  "version": "1.0.0-alpha.8"
+  "author": "gperdomor",
+  "repository": "https://github.com/gperdomor/nx-tools",
+  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "license": "MIT",
+  "version": "1.0.0-alpha.11"
 }

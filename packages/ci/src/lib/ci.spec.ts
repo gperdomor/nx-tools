@@ -1,55 +1,42 @@
 import { getRunnerProvider } from './ci';
-import { PROVIDER } from './enums';
+import { RunnerProvider } from './runner-provider.enum';
 
 describe('CI', () => {
-  let env: NodeJS.ProcessEnv;
+  describe('getRunnerProvider', () => {
+    afterEach(() => {
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
+    });
 
-  describe('getProvider', () => {
     describe('When is GitLabCI', () => {
       beforeEach(() => {
-        env = process.env;
         process.env.GITLAB_CI = 'true';
-      });
-
-      afterEach(() => {
-        process.env = env;
-        process.env.GITLAB_CI = undefined;
+        process.env.GITHUB_ACTIONS = 'false';
       });
 
       it('Should return gitlab', () => {
-        expect(getRunnerProvider()).toEqual(PROVIDER.gitlab);
+        expect(getRunnerProvider()).toEqual(RunnerProvider.GitLab);
       });
     });
 
     describe('When is GitHub Actions', () => {
       beforeEach(() => {
-        env = process.env;
         process.env.GITHUB_ACTIONS = 'true';
       });
 
-      afterEach(() => {
-        process.env = env;
-        process.env.GITHUB_ACTIONS = undefined;
-      });
-
       it('Should return github', () => {
-        expect(getRunnerProvider()).toEqual(PROVIDER.github);
+        expect(getRunnerProvider()).toEqual(RunnerProvider.GitHub);
       });
     });
 
     describe('When is local', () => {
       beforeEach(() => {
-        env = process.env;
         process.env.RUN_LOCAL = 'true';
       });
 
-      afterEach(() => {
-        process.env = env;
-        process.env.RUN_LOCAL = undefined;
-      });
-
       it('Should return local', () => {
-        expect(getRunnerProvider()).toEqual(PROVIDER.local);
+        expect(getRunnerProvider()).toEqual(RunnerProvider.Local);
       });
     });
   });

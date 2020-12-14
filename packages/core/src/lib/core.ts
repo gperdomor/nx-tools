@@ -1,5 +1,6 @@
-import * as ci from '@nx-tools/ci';
-import { EOL } from 'os';
+import { runnerProvider, RunnerProvider } from '@nx-tools/ci';
+import chalk from 'chalk';
+import * as os from 'os';
 
 /**
  * Interface for getInput options
@@ -24,6 +25,10 @@ export enum ExitCode {
   Failure = 1,
 }
 
+//-----------------------------------------------------------------------
+// Variables
+//-----------------------------------------------------------------------
+
 /**
  * Gets the value of an input.  The value is also trimmed.
  *
@@ -40,13 +45,9 @@ export const getInput = (name: string, fallback?: string, options?: InputOptions
   return val.trim();
 };
 
-/**
- * Writes info to log with console.log.
- * @param message info message
- */
-export function info(message: string): void {
-  process.stdout.write(message + EOL);
-}
+//-----------------------------------------------------------------------
+// Results
+//-----------------------------------------------------------------------
 
 /**
  * Sets the action status to failed.
@@ -56,8 +57,51 @@ export function info(message: string): void {
 export function setFailed(message: string | Error): void {
   process.exitCode = ExitCode.Failure;
 
-  info(message + EOL);
+  error(message);
 }
+
+//-----------------------------------------------------------------------
+// Logging Commands
+//-----------------------------------------------------------------------
+
+/**
+ * Gets whether Actions Step Debug is on or not
+ */
+export const isDebug = (): boolean => {
+  return process.env['RUNNER_DEBUG'] === '1';
+};
+
+/**
+ * Writes debug message to user log
+ * @param message debug message
+ */
+export const debug = (message: string): void => {
+  info(chalk.green(`::debug::${message}`));
+};
+
+/**
+ * Adds an error issue
+ * @param message error issue message. Errors will be converted to string via toString()
+ */
+export const error = (message: string | Error): void => {
+  info(chalk.red(`::error::${message instanceof Error ? message.toString() : message}`));
+};
+
+/**
+ * Adds an warning issue
+ * @param message warning issue message. Errors will be converted to string via toString()
+ */
+export const warning = (message: string | Error): void => {
+  info(chalk.yellow(`::warning::${message instanceof Error ? message.toString() : message}`));
+};
+
+/**
+ * Writes info to log with console.log.
+ * @param message info message
+ */
+export const info = (message: string): void => {
+  process.stdout.write(message + os.EOL);
+};
 
 /**
  * Begin an output group.
@@ -66,34 +110,87 @@ export function setFailed(message: string | Error): void {
  *
  * @param name The name of the output group
  */
-export function startGroup(name: string): void {
-  switch (ci.getProvider()) {
-    case ci.PROVIDER.github:
-      info(`::group::${name}`);
-      break;
-    case ci.PROVIDER.gitlab:
+export const startGroup = (name: string): void => {
+  switch (runnerProvider()) {
+    case RunnerProvider.GitLab:
       info('section_start:`date +%s`:' + name + '\re[0K');
       break;
+
+    case RunnerProvider.GitHub:
+    case RunnerProvider.Local:
     default:
-      info(name);
+      info(`::group::${name}`);
+      break;
   }
-}
+};
 
 /**
  * End an output group.
  */
-export function endGroup(name: string): void {
-  switch (ci.getProvider()) {
-    case ci.PROVIDER.github:
-      info('::endgroup::');
-      break;
-    case ci.PROVIDER.gitlab:
+export const endGroup = (name: string): void => {
+  switch (runnerProvider()) {
+    case RunnerProvider.GitLab:
       info('section_end:`date +%s`:' + name + '\re[0K');
       break;
+
+    case RunnerProvider.GitHub:
+    case RunnerProvider.Local:
     default:
-      info(name);
+      info('::endgroup::');
+      break;
   }
+};
+
+/**
+ * Wrap an asynchronous function call in a group.
+ *
+ * Returns the same type as the function itself.
+ *
+ * @param name The name of the group
+ * @param fn The function to wrap in the group
+ */
+export const group = async <T>(name: string, fn: () => Promise<T>): Promise<T> => {
+  startGroup(name);
+
+  let result: T;
+
+  try {
+    result = await fn();
+  } finally {
+    endGroup(name);
+  }
+
+  return result;
+};
+
+//-----------------------------------------------------------------------
+// Wrapper action state
+//-----------------------------------------------------------------------
+
+/**
+ * Saves state for current action, the state can only be retrieved by this action's post job execution.
+ *
+ * @param     name     name of the state to store
+ * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function saveState(name: string, value: any): void {
+  // issueCommand('save-state', { name }, value);
 }
+
+/**
+ * Gets the value of an state set by this action's main execution.
+ *
+ * @param     name     name of the state to get
+ * @returns   string
+ */
+export function getState(name: string): string {
+  return process.env[`STATE_${name}`] || '';
+}
+
+//-----------------------------------------------------------------------
+// Utils Commands
+//-----------------------------------------------------------------------
 
 export const asyncForEach = async (array, callback) => {
   for (let index = 0; index < array.length; index++) {

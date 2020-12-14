@@ -39,8 +39,3 @@ testem.log
 Thumbs.db
 
 .env
-
-.docker
-
-# E2E atifacts
-**/artifacts/**

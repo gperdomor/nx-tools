@@ -86,11 +86,10 @@ describe('Core', () => {
     });
   });
 
-  describe('Running on GitHub Actions', () => {
+  describe('Running on Local', () => {
     beforeAll(() => {
       originalWriteFunction = process.stdout.write;
-      process.env.GITHUB_ACTIONS = 'true';
-      process.env.GITLAB_CI = undefined;
+      process.env.RUN_LOCAL = 'true';
     });
 
     beforeEach(() => {
@@ -99,7 +98,41 @@ describe('Core', () => {
 
     afterAll(() => {
       process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-      process.env.GITHUB_ACTIONS = undefined;
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
+    });
+
+    describe('startGroup', () => {
+      it('should write to stdout with proper format', () => {
+        startGroup('group-name');
+        assertWriteCalls([`::group::group-name${EOL}`]);
+      });
+    });
+
+    describe('endGroup', () => {
+      it('should write to stdout with proper format', () => {
+        endGroup('group-name');
+        assertWriteCalls([`::endgroup::${EOL}`]);
+      });
+    });
+  });
+
+  describe('Running on GitHub Actions', () => {
+    beforeAll(() => {
+      originalWriteFunction = process.stdout.write;
+      process.env.GITHUB_ACTIONS = 'true';
+    });
+
+    beforeEach(() => {
+      process.stdout.write = jest.fn();
+    });
+
+    afterAll(() => {
+      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
     });
 
     describe('startGroup', () => {
@@ -121,7 +154,6 @@ describe('Core', () => {
     beforeAll(() => {
       originalWriteFunction = process.stdout.write;
       process.env.GITLAB_CI = 'true';
-      process.env.GITHUB_ACTIONS = undefined;
     });
 
     beforeEach(() => {
@@ -130,7 +162,9 @@ describe('Core', () => {
 
     afterAll(() => {
       process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-      process.env.GITLAB_CI = undefined;
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
     });
 
     describe('startGroup', () => {

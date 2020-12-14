@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "cli": "nx",
+  "$id": "https://json-schema.org/draft-07/schema",
+  "title": "Prisma Seed executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "script": {
+      "type": "string",
+      "description": "The path to the seeding script"
+    },
+    "tsConfig": {
+      "type": "string",
+      "description": "TypeScript config to use for seeding"
+    },
+    "silent": {
+      "type": "boolean",
+      "description": "Remove all terminal outputs the child process"
+    }
+  },
+  "required": ["script", "tsConfig"]
+}
