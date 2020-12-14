@@ -25,5 +25,5 @@ jobs:
 
       - run: npm run nx run-many -- --target=build --all
       # - run: npm run nx run-many -- --target=lint --all
-      - run: npm run nx run-many -- --target=test --all
-      - run: npm run nx run-many -- --target=e2e --all
+      - run: npm run nx run-many -- --target=test --all --skip-nx-cache
+      - run: npm run nx run-many -- --target=e2e --all --skip-nx-cache

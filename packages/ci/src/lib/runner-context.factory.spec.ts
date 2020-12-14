@@ -16,6 +16,7 @@ describe('RunnerContextProxyFactory', () => {
   describe('When is running on GitLabCI', () => {
     beforeEach(() => {
       process.env.GITLAB_CI = 'true';
+      process.env.GITHUB_ACTIONS = 'false';
       context = RunnerContextProxyFactory.create();
     });
 
@@ -38,6 +39,7 @@ describe('RunnerContextProxyFactory', () => {
   describe('When is running on Local', () => {
     beforeEach(() => {
       process.env.RUN_LOCAL = 'true';
+      process.env.GITHUB_ACTIONS = 'false';
       context = RunnerContextProxyFactory.create();
     });
 

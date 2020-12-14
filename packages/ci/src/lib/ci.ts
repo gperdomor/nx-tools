@@ -3,9 +3,9 @@ import { RunnerProvider } from './runner-provider.enum';
 let _provider: RunnerProvider;
 
 export const getRunnerProvider = () => {
-  if (process.env.GITHUB_ACTIONS === 'true') {
+  if (process.env.GITHUB_ACTIONS == 'true') {
     return RunnerProvider.GitHub;
-  } else if (process.env.GITLAB_CI === 'true') {
+  } else if (process.env.GITLAB_CI == 'true') {
     return RunnerProvider.GitLab;
   } else if (process.env.RUN_LOCAL) {
     return RunnerProvider.Local;
