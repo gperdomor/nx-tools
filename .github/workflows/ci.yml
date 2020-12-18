@@ -1,29 +1,56 @@
-name: CI
+name: ci
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
 
 env:
   NX_BRANCH: ${{ github.event.number }}
   NX_RUN_GROUP: ${{ github.run_id }}
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  ci:
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
+        os: [ubuntu-latest]
+        node: [14, 15]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v2.1.2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node }}
 
-      - run: npm install
+      - name: Cache node_modules 📦
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - run: npm run nx run-many -- --target=build --all
-      # - run: npm run nx run-many -- --target=lint --all
-      - run: npm run nx run-many -- --target=test --all --skip-nx-cache
-      - run: npm run nx run-many -- --target=e2e --all --skip-nx-cache
+      - name: Install dependencies 👨🏻‍💻
+        run: npm ci
+
+      # - name: Run linter 👀
+      #   run: npm run nx run-many -- --target=lint --all
+
+      - name: Run build 👷‍♂️
+        run: npm run nx run-many -- --target=build --all
+
+      - name: Run tests 🧪
+        run: npm run nx run-many -- --target=test --all --skip-nx-cache
+
+      - name: Run e2e tests 🧪🧪
+        run: npm run nx run-many -- --target=e2e --all --skip-nx-cache
