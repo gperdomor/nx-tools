@@ -37,7 +37,7 @@ export enum ExitCode {
  * @returns   string
  */
 export const getInput = (name: string, fallback?: string, options?: InputOptions): string => {
-  const val: string = process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] || fallback || '';
+  const val: string = process.env[`INPUT_${name.replace(/[ -]/g, '_').toUpperCase()}`] || fallback || '';
   if (options && options.required && !val) {
     throw new Error(`Input required and not supplied: ${name}`);
   }

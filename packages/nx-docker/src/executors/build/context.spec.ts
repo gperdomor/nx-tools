@@ -7,7 +7,7 @@ describe('context', () => {
     env = process.env;
     process.env = {
       ...env,
-      'INPUT_BUILD-ARGS': 'arg1=value1\narg2=value2\narg3=value3',
+      INPUT_BUILD_ARGS: 'arg1=value1\narg2=value2\narg3=value3',
     };
   });
 
