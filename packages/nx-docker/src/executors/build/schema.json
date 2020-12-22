@@ -1,7 +1,6 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema",
+  "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "https://json-schema.org/draft-07/schema",
   "title": "Build executor",
   "description": "",
   "type": "object",
@@ -107,7 +106,9 @@
     "meta": {
       "type": "object",
       "properties": {
-        "enabled": { "type": "boolean" },
+        "enabled": {
+          "type": "boolean"
+        },
         "mode": {
           "type": "string",
           "enum": ["prepend", "append"],
