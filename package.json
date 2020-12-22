@@ -51,7 +51,7 @@
     "@nrwl/nx-plugin": "11.0.18",
     "@nrwl/tao": "11.0.18",
     "@nrwl/workspace": "11.0.18",
-    "@prisma/cli": "2.13.0",
+    "@prisma/cli": "2.13.1",
     "@prisma/client": "2.13.0",
     "@types/jest": "26.0.19",
     "@types/luxon": "1.25.0",
