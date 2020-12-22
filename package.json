@@ -42,7 +42,7 @@
     "@angular/cli": "~11.0.5",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
-    "@nrwl/cli": "11.0.12",
+    "@nrwl/cli": "11.0.16",
     "@nrwl/devkit": "11.0.12",
     "@nrwl/eslint-plugin-nx": "11.0.12",
     "@nrwl/jest": "11.0.12",
