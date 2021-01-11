@@ -48,7 +48,7 @@
     "@nrwl/jest": "11.0.20",
     "@nrwl/node": "11.0.20",
     "@nrwl/nx-cloud": "10.1.10",
-    "@nrwl/nx-plugin": "11.0.20",
+    "@nrwl/nx-plugin": "11.1.1",
     "@nrwl/tao": "11.0.20",
     "@nrwl/workspace": "11.0.20",
     "@prisma/cli": "2.14.0",
