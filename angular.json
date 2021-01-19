@@ -50,22 +50,6 @@
         }
       }
     },
-    "nx-docker-e2e": {
-      "projectType": "application",
-      "root": "packages/nx-docker-e2e",
-      "sourceRoot": "packages/nx-docker-e2e/src",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/nx-plugin:e2e",
-          "options": {
-            "target": "nx-docker:build",
-            "npmPackageName": "@nx-tools/nx-docker",
-            "pluginOutputPath": "dist/packages/nx-docker",
-            "jestConfig": "packages/nx-docker-e2e/jest.config.js"
-          }
-        }
-      }
-    },
     "nx-prisma": {
       "root": "packages/nx-prisma",
       "sourceRoot": "packages/nx-prisma/src",

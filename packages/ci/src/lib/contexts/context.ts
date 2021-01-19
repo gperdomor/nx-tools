@@ -5,7 +5,7 @@ export abstract class RunnerContext {
   eventName: string;
   sha: string;
   ref: string;
-  // workflow: string;
+  workflow?: string;
   action: string;
   actor: string;
   job: string;

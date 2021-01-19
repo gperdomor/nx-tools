@@ -1,7 +1,5 @@
 import { RunnerProvider } from './runner-provider.enum';
 
-let _provider: RunnerProvider;
-
 export const getRunnerProvider = () => {
   if (process.env.GITHUB_ACTIONS == 'true') {
     return RunnerProvider.GitHub;
@@ -12,12 +10,4 @@ export const getRunnerProvider = () => {
   } else {
     throw new Error('Unknown runner provider');
   }
-};
-
-export const runnerProvider = (): RunnerProvider => {
-  return getRunnerProvider();
-  // if (!_provider) {
-  //   _provider = getRunnerProvider();
-  // }
-  // return _provider;
 };

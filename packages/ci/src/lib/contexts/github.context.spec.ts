@@ -6,6 +6,7 @@ describe('GitHubContext', () => {
     process.env.GITHUB_EVENT_NAME = 'github-event-name';
     process.env.GITHUB_SHA = 'github-sha';
     process.env.GITHUB_REF = 'github-ref';
+    process.env.GITHUB_WORKFLOW = 'github-workflow';
     process.env.GITHUB_ACTION = 'github-action';
     process.env.GITHUB_ACTOR = 'github-actor';
     process.env.GITHUB_JOB = 'github-job';
@@ -21,6 +22,7 @@ describe('GitHubContext', () => {
     expect(context.eventName).toEqual('github-event-name');
     expect(context.sha).toEqual('github-sha');
     expect(context.ref).toEqual('github-ref');
+    expect(context.workflow).toEqual('github-workflow');
     expect(context.action).toEqual('github-action');
     expect(context.actor).toEqual('github-actor');
     expect(context.job).toEqual('github-job');

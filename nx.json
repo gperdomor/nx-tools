@@ -29,10 +29,6 @@
     "nx-docker": {
       "tags": []
     },
-    "nx-docker-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-docker"]
-    },
     "nx-prisma": {
       "tags": []
     },

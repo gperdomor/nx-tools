@@ -21,6 +21,7 @@ describe('LocalContext', () => {
     expect(context.eventName).toEqual('local-event-name');
     expect(context.sha).toEqual('local-sha');
     expect(context.ref).toEqual('local-ref');
+    expect(context.workflow).toBeUndefined();
     expect(context.action).toEqual('local-action');
     expect(context.actor).toEqual('local-actor');
     expect(context.job).toEqual('local-job');

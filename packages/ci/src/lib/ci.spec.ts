@@ -12,7 +12,6 @@ describe('CI', () => {
     describe('When is GitLabCI', () => {
       beforeEach(() => {
         process.env.GITLAB_CI = 'true';
-        process.env.GITHUB_ACTIONS = 'false';
       });
 
       it('Should return gitlab', () => {
@@ -37,6 +36,13 @@ describe('CI', () => {
 
       it('Should return local', () => {
         expect(getRunnerProvider()).toEqual(RunnerProvider.Local);
+      });
+    });
+
+    describe('When is unknown', () => {
+      it('Should throw error', () => {
+        const f = () => getRunnerProvider();
+        expect(f).toThrowError('Unknown runner provider');
       });
     });
   });

@@ -1,12 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "name": "nx-docker",
-  "version": "1.0.0-alpha.12",
-  "generators": {
-    "nx-docker": {
-      "factory": "./src/generators/nx-docker/generator",
-      "schema": "./src/generators/nx-docker/schema.json",
-      "description": "nx-docker generator"
-    }
-  }
+  "version": "1.0.0-alpha.13",
+  "generators": {}
 }

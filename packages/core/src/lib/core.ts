@@ -1,6 +1,7 @@
-import { runnerProvider, RunnerProvider } from '@nx-tools/ci';
-import chalk from 'chalk';
+import { getRunnerProvider, RunnerProvider } from '@nx-tools/ci';
 import * as os from 'os';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const chalk = require('chalk');
 
 /**
  * Interface for getInput options
@@ -111,7 +112,7 @@ export const info = (message: string): void => {
  * @param name The name of the output group
  */
 export const startGroup = (name: string): void => {
-  switch (runnerProvider()) {
+  switch (getRunnerProvider()) {
     case RunnerProvider.GitLab:
       info('section_start:`date +%s`:' + name + '\re[0K');
       break;
@@ -128,7 +129,7 @@ export const startGroup = (name: string): void => {
  * End an output group.
  */
 export const endGroup = (name: string): void => {
-  switch (runnerProvider()) {
+  switch (getRunnerProvider()) {
     case RunnerProvider.GitLab:
       info('section_end:`date +%s`:' + name + '\re[0K');
       break;
@@ -162,31 +163,6 @@ export const group = async <T>(name: string, fn: () => Promise<T>): Promise<T> =
 
   return result;
 };
-
-//-----------------------------------------------------------------------
-// Wrapper action state
-//-----------------------------------------------------------------------
-
-/**
- * Saves state for current action, the state can only be retrieved by this action's post job execution.
- *
- * @param     name     name of the state to store
- * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function saveState(name: string, value: any): void {
-  // issueCommand('save-state', { name }, value);
-}
-
-/**
- * Gets the value of an state set by this action's main execution.
- *
- * @param     name     name of the state to get
- * @returns   string
- */
-export function getState(name: string): string {
-  return process.env[`STATE_${name}`] || '';
-}
 
 //-----------------------------------------------------------------------
 // Utils Commands
