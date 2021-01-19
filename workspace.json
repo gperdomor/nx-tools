@@ -1,19 +1,19 @@
 {
-  "version": 1,
+  "version": 2,
   "projects": {
     "nx-docker": {
       "root": "packages/nx-docker",
       "sourceRoot": "packages/nx-docker/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/packages/nx-docker"],
           "options": {
             "jestConfig": "packages/nx-docker/jest.config.js",
@@ -21,7 +21,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "executor": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/nx-docker",
@@ -50,51 +50,19 @@
         }
       }
     },
-    "core": {
-      "root": "packages/core",
-      "sourceRoot": "packages/core/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/core/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/core"],
-          "options": {
-            "jestConfig": "packages/core/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "builder": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/core",
-            "tsConfig": "packages/core/tsconfig.lib.json",
-            "packageJson": "packages/core/package.json",
-            "main": "packages/core/src/index.ts",
-            "assets": ["packages/core/*.md"]
-          }
-        }
-      }
-    },
     "ci": {
       "root": "packages/ci",
       "sourceRoot": "packages/ci/src",
       "projectType": "library",
-      "architect": {
+      "targets": {
         "lint": {
-          "builder": "@nrwl/linter:eslint",
+          "executor": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["packages/ci/**/*.ts"]
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/packages/ci"],
           "options": {
             "jestConfig": "packages/ci/jest.config.js",
@@ -102,7 +70,7 @@
           }
         },
         "build": {
-          "builder": "@nrwl/node:package",
+          "executor": "@nrwl/node:package",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/ci",
@@ -113,10 +81,41 @@
           }
         }
       }
+    },
+    "core": {
+      "root": "packages/core",
+      "sourceRoot": "packages/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/core"],
+          "options": {
+            "jestConfig": "packages/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/core",
+            "tsConfig": "packages/core/tsconfig.lib.json",
+            "packageJson": "packages/core/package.json",
+            "main": "packages/core/src/index.ts",
+            "assets": ["packages/core/*.md"]
+          }
+        }
+      }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/node"
-  },
-  "defaultProject": "nx-docker"
+    "defaultCollection": "@nrwl/workspace"
+  }
 }

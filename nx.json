@@ -1,14 +1,9 @@
 {
   "npmScope": "nx-tools",
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "workspace.json": "*",
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -26,18 +21,9 @@
     }
   },
   "projects": {
-    "nx-docker": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "ci": {
-      "tags": []
-    }
+    "nx-docker": { "tags": [] },
+    "ci": { "tags": [] },
+    "core": { "tags": [] }
   },
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  }
+  "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
 }
