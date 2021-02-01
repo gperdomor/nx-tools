@@ -39,7 +39,7 @@
     "semver": "7.3.4"
   },
   "devDependencies": {
-    "@angular/cli": "~11.0.5",
+    "@angular/cli": "~11.1.2",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "@nrwl/cli": "11.1.1",
