@@ -22,6 +22,7 @@
   },
   "projects": {
     "nx-docker": { "tags": [] },
+    "nx-prisma": { "tags": [] },
     "ci": { "tags": [] },
     "core": { "tags": [] }
   },
