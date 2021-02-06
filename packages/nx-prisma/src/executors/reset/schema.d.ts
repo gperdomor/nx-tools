@@ -4,7 +4,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface PrismaRollbackSchema {
+export interface PrismaResetSchema {
   /**
    * The path to the prisma schema eg. 'prisma/schema.prisma'
    */

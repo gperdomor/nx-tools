@@ -16,6 +16,7 @@
   },
   "peerDependencies": {
     "@prisma/cli": ">= 2",
+    "prisma": ">= 2",
     "ts-node": "*"
   }
 }

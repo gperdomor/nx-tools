@@ -7,6 +7,6 @@
     "types": ["node"],
     "esModuleInterop": true
   },
-  "exclude": ["**/*.spec.ts"],
+  "exclude": ["**/*.spec.ts", "test-suite.ts", "setup-test.ts"],
   "include": ["**/*.ts"]
 }

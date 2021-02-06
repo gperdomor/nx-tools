@@ -1,12 +1,12 @@
 import executor from './executor';
-import { PrismaMigrateSchema } from './schema';
+import { PrismaResetSchema } from './schema';
 
-const options: PrismaMigrateSchema = {
+const options: PrismaResetSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',
 };
 
-export const migrationsSuite = () =>
-  describe('Migrations Executor', () => {
+export const resetSuite = () =>
+  describe('Reset Executor', () => {
     it('can run', async () => {
       const output = await executor(options);
       expect(output.success).toBe(true);
