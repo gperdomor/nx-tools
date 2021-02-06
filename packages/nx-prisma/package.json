@@ -15,7 +15,6 @@
     "@nx-tools/core": "^1.0.0-alpha.12"
   },
   "peerDependencies": {
-    "@prisma/cli": ">= 2",
     "prisma": ">= 2",
     "ts-node": "*"
   }
