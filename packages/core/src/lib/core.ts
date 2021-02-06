@@ -192,7 +192,7 @@ export function getState(name: string): string {
 // Utils Commands
 //-----------------------------------------------------------------------
 
-export const asyncForEach = async (array, callback) => {
+export const asyncForEach = async <T>(array: T[], callback: (value: T, i: number, arr: T[]) => Promise<void>) => {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array);
   }
