@@ -2,8 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
     "types": ["node"]
   },
-  "exclude": ["**/*.spec.ts", "data"],
-  "include": ["**/*.ts"]
+  "exclude": ["**/*.spec.ts", "src"],
+  "include": ["data"]
 }

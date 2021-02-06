@@ -183,26 +183,26 @@
         "generate": {
           "builder": "./dist/packages/nx-prisma:generate",
           "options": {
-            "schema": "apps/example-prisma/data/schema.prisma"
+            "schema": "packages/example-prisma/data/schema.prisma"
           }
         },
         "migrations": {
           "builder": "./dist/packages/nx-prisma:migrations",
           "options": {
-            "schema": "apps/example-prisma/data/schema.prisma"
+            "schema": "packages/example-prisma/data/schema.prisma"
           }
         },
-        "rollback": {
-          "builder": "./dist/packages/nx-prisma:rollback",
+        "reset": {
+          "builder": "./dist/packages/nx-prisma:reset",
           "options": {
-            "schema": "apps/example-prisma/data/schema.prisma"
+            "schema": "packages/example-prisma/data/schema.prisma"
           }
         },
         "seed": {
           "builder": "./dist/packages/nx-prisma:seed",
           "options": {
-            "script": "apps/example-prisma/data/seed.ts",
-            "tsConfig": "apps/example-prisma/tsconfig.tools.json"
+            "script": "packages/example-prisma/data/seed.ts",
+            "tsConfig": "packages/example-prisma/tsconfig.tools.json"
           }
         }
       }
