@@ -27,14 +27,20 @@ export const runCommands = async <T extends PrismaBuilderOptions>(
 ) => {
   const commandArgs = extractArgs(commands.length, { args, argsFactory }, options);
 
+  let stdout = '';
+  let stderr = '';
+
   for (const baseCommand of commands) {
     core.info(`--> ${description}`);
     const command = `${baseCommand} --schema=${options.schema} ${commandArgs.join(' ')}`;
     const result = await exec.exec(command, null, options.silent, './');
+    stdout += `${result.stdout}\n`.trim();
+    stderr += `${result.stderr}\n`.trim();
+
     if (!result.success) {
-      return result;
+      return { success: false, stdout, stderr };
     }
   }
 
-  return { success: true };
+  return { success: true, stdout, stderr };
 };
