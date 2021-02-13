@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "generators": {},
+  "executors": {
+    "generate": {
+      "implementation": "./src/executors/generate/executor",
+      "schema": "./src/executors/generate/schema.json",
+      "description": "Generates Prisma artifacts (e.g. Prisma Client)"
+    },
+    "migrations": {
+      "implementation": "./src/executors/migrations/executor",
+      "schema": "./src/executors/migrations/schema.json",
+      "description": "Syncs Prisma Migrations"
+    },
+    "reset": {
+      "implementation": "./src/executors/reset/executor",
+      "schema": "./src/executors/reset/schema.json",
+      "description": "Resets the Prisma Database"
+    },
+    "seed": {
+      "implementation": "./src/executors/seed/executor",
+      "schema": "./src/executors/seed/schema.json",
+      "description": "Runs the seed script"
+    }
+  }
+}
