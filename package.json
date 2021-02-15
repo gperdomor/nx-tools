@@ -46,7 +46,7 @@
     "@nrwl/devkit": "11.1.1",
     "@nrwl/eslint-plugin-nx": "11.1.1",
     "@nrwl/jest": "11.1.1",
-    "@nrwl/node": "11.1.1",
+    "@nrwl/node": "11.2.12",
     "@nrwl/nx-cloud": "11.0.1",
     "@nrwl/nx-plugin": "11.1.1",
     "@nrwl/tao": "11.1.1",
