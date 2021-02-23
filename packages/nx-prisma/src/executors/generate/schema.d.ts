@@ -13,5 +13,5 @@ export interface PrismaGenerateSchema {
    * Remove all terminal outputs the child process
    */
   silent?: boolean;
-  [k: string]: any;
+  [k: string]: unknown;
 }

@@ -12,10 +12,10 @@
       "schema": "./src/executors/migrations/schema.json",
       "description": "Syncs Prisma Migrations"
     },
-    "rollback": {
-      "implementation": "./src/executors/rollback/executor",
-      "schema": "./src/executors/rollback/schema.json",
-      "description": "Reverts latest prisma migration"
+    "reset": {
+      "implementation": "./src/executors/reset/executor",
+      "schema": "./src/executors/reset/schema.json",
+      "description": "Resets the Prisma Database"
     },
     "seed": {
       "implementation": "./src/executors/seed/executor",

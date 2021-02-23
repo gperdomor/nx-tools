@@ -1,5 +1,13 @@
 import { EOL } from 'os';
-import { endGroup, getInput, info, startGroup } from './core';
+import { debug, endGroup, error, getInput, info, isDebug, startGroup, warning } from './core';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const chalk = require('chalk');
+
+jest.mock('chalk');
+
+chalk.green = jest.fn();
+chalk.red = jest.fn();
+chalk.yellow = jest.fn();
 
 function assertWriteCalls(calls: string[]): void {
   expect(process.stdout.write).toHaveBeenCalledWith(calls[0]);
@@ -178,6 +186,35 @@ describe('Core', () => {
       it('should write to stdout with proper format', () => {
         endGroup('group-name');
         assertWriteCalls(['section_end:`date +%s`:group-name\re[0K' + EOL]);
+      });
+    });
+
+    describe('isDebug', () => {
+      it('should return true if RUNNER_DEBUG is 1', () => {
+        process.env.RUNNER_DEBUG = '1';
+        expect(isDebug()).toBeTruthy();
+      });
+
+      it('should return false in other cases', () => {
+        delete process.env.RUNNER_DEBUG;
+        expect(isDebug()).toBeFalsy();
+      });
+    });
+
+    describe('loggers', () => {
+      it('debug', () => {
+        debug('this is a debug message');
+        expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
+      });
+
+      it('warning', () => {
+        warning('this is a warning message');
+        expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
+      });
+
+      it('error', () => {
+        error('this is a error message');
+        expect(chalk.red).toBeCalledWith('::error::this is a error message');
       });
     });
   });

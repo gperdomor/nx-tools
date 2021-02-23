@@ -1,0 +1,170 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-docker": {
+      "root": "packages/nx-docker",
+      "sourceRoot": "packages/nx-docker/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-docker"],
+          "options": {
+            "jestConfig": "packages/nx-docker/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-docker",
+            "tsConfig": "packages/nx-docker/tsconfig.lib.json",
+            "packageJson": "packages/nx-docker/package.json",
+            "main": "packages/nx-docker/src/index.ts",
+            "assets": [
+              "packages/nx-docker/*.md",
+              {
+                "input": "./packages/nx-docker/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-docker",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-docker",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-prisma": {
+      "root": "packages/nx-prisma",
+      "sourceRoot": "packages/nx-docker/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-prisma/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-prisma"],
+          "options": {
+            "jestConfig": "packages/nx-prisma/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-prisma",
+            "tsConfig": "packages/nx-prisma/tsconfig.lib.json",
+            "packageJson": "packages/nx-prisma/package.json",
+            "main": "packages/nx-prisma/src/index.ts",
+            "assets": [
+              "packages/nx-prisma/*.md",
+              {
+                "input": "./packages/nx-prisma/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-prisma",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-prisma",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "ci": {
+      "root": "packages/ci",
+      "sourceRoot": "packages/ci/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/ci/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/ci"],
+          "options": {
+            "jestConfig": "packages/ci/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/ci",
+            "tsConfig": "packages/ci/tsconfig.lib.json",
+            "packageJson": "packages/ci/package.json",
+            "main": "packages/ci/src/index.ts",
+            "assets": ["packages/ci/*.md"]
+          }
+        }
+      }
+    },
+    "core": {
+      "root": "packages/core",
+      "sourceRoot": "packages/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/core"],
+          "options": {
+            "jestConfig": "packages/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/core",
+            "tsConfig": "packages/core/tsconfig.lib.json",
+            "packageJson": "packages/core/package.json",
+            "main": "packages/core/src/index.ts",
+            "assets": ["packages/core/*.md"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}

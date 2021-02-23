@@ -16,9 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@nx-tools/nx-docker": ["packages/nx-docker/src/index.ts"],
-      "@nx-tools/nx-prisma": ["packages/nx-prisma/src/index.ts"],
-      "@nx-tools/core": ["packages/core/src/index.ts"],
-      "@nx-tools/ci": ["packages/ci/src/index.ts"]
+      "@nx-tools/ci": ["packages/ci/src/index.ts"],
+      "@nx-tools/core": ["packages/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Prisma Rollback executor",
+  "title": "Prisma Reset executor",
   "description": "",
   "type": "object",
   "properties": {

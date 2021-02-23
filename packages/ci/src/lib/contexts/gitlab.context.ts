@@ -12,7 +12,6 @@ export class GitLabContext extends RunnerContext {
     this.ref = process.env.CI_COMMIT_TAG
       ? `refs/tags/${process.env.CI_COMMIT_TAG as string}`
       : `refs/heads/${process.env.CI_COMMIT_REF_SLUG as string}`;
-    // this.workflow = process.env.GITHUB_WORKFLOW as string;
     this.action = process.env.CI_JOB_ID as string;
     this.actor = process.env.GITLAB_USER_LOGIN as string;
     this.job = process.env.CI_JOB_NAME as string;

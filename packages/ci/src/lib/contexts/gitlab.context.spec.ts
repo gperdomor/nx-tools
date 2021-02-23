@@ -21,6 +21,7 @@ describe('GitLabContext', () => {
     expect(context.eventName).toEqual('gitlab-event-name');
     expect(context.sha).toEqual('gitlab-sha');
     expect(context.ref).toEqual('refs/heads/gitlab-ref-slug');
+    expect(context.workflow).toBeUndefined();
     expect(context.action).toEqual('gitlab-action');
     expect(context.actor).toEqual('gitlab-actor');
     expect(context.job).toEqual('gitlab-job');

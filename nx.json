@@ -1,14 +1,9 @@
 {
   "npmScope": "nx-tools",
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "implicitDependencies": {
-    "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "workspace.json": "*",
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -26,32 +21,10 @@
     }
   },
   "projects": {
-    "nx-docker": {
-      "tags": []
-    },
-    "nx-docker-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-docker"]
-    },
-    "nx-prisma": {
-      "tags": []
-    },
-    "nx-prisma-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-prisma"]
-    },
-    "example-prisma": {
-      "tags": []
-    },
-    "core": {
-      "tags": []
-    },
-    "ci": {
-      "tags": []
-    }
+    "nx-docker": { "tags": [] },
+    "nx-prisma": { "tags": [] },
+    "ci": { "tags": [] },
+    "core": { "tags": [] }
   },
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  }
+  "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
 }

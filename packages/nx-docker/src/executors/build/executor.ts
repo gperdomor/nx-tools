@@ -1,4 +1,5 @@
 import * as core from '@nx-tools/core';
+import { config } from 'dotenv';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as buildx from './buildx';
@@ -8,7 +9,7 @@ import { extractMetadata } from './meta/main';
 import { BuildExecutorSchema } from './schema';
 
 export default async function runExecutor(options: BuildExecutorSchema): Promise<{ success: true }> {
-  core.dotenv();
+  config();
 
   if (os.platform() !== 'linux' && os.platform() !== 'darwin') {
     throw new Error(`Only supported on linux and darwin platform`);

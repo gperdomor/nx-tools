@@ -1,13 +1,13 @@
-import type { PrismaGenerateSchema } from './schema';
+import type { PrismaResetSchema } from './schema';
 
 import executor from './executor';
 
-const options: PrismaGenerateSchema = {
+const options: PrismaResetSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',
 };
 
-export const generateSuite = () =>
-  describe('Generate Executor', () => {
+export const resetSuite = () =>
+  describe('Reset Executor', () => {
     it('can run', async () => {
       const output = await executor(options);
       expect(output.stderr).toBeFalsy();

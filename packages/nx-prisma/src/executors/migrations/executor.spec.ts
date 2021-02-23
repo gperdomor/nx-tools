@@ -1,15 +1,16 @@
-// import executor from './executor';
-import { PrismaMigrateSchema } from './schema';
+import type { PrismaMigrateSchema } from './schema';
+
+import executor from './executor';
 
 const options: PrismaMigrateSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',
 };
 
-describe('Migrations Executor', () => {
-  test.todo('add tests');
-
-  // it('can run', async () => {
-  //   const output = await executor(options);
-  //   expect(output.success).toBe(true);
-  // });
-});
+export const migrationsSuite = () =>
+  describe('Migrations Executor', () => {
+    it('can run', async () => {
+      const output = await executor(options);
+      expect(output.stderr).toBeFalsy();
+      expect(output.success).toBeTruthy();
+    }, 10000);
+  });

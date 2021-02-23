@@ -51,7 +51,3 @@ ng <architect> <project>
 # ie
 nx migrations prisma
 ```
-
-## Example
-
-An example project can be found in [apps/examples/prisma](/apps/examples/prisma) using the [workspace.json](/workspace.json) configuration.

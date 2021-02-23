@@ -2,17 +2,20 @@ import { getRunnerProvider } from './ci';
 import { RunnerProvider } from './runner-provider.enum';
 
 describe('CI', () => {
+  let env: NodeJS.ProcessEnv;
   describe('getRunnerProvider', () => {
+    beforeEach(() => {
+      env = process.env;
+      process.env = {};
+    });
+
     afterEach(() => {
-      delete process.env.GITLAB_CI;
-      delete process.env.GITHUB_ACTIONS;
-      delete process.env.RUN_LOCAL;
+      process.env = env;
     });
 
     describe('When is GitLabCI', () => {
       beforeEach(() => {
         process.env.GITLAB_CI = 'true';
-        process.env.GITHUB_ACTIONS = 'false';
       });
 
       it('Should return gitlab', () => {
@@ -37,6 +40,13 @@ describe('CI', () => {
 
       it('Should return local', () => {
         expect(getRunnerProvider()).toEqual(RunnerProvider.Local);
+      });
+    });
+
+    describe('When is unknown', () => {
+      it('Should throw error', () => {
+        const f = () => getRunnerProvider();
+        expect(f).toThrowError('Unknown runner provider');
       });
     });
   });

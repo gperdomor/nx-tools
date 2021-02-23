@@ -1,5 +1,4 @@
 import * as core from '@nx-tools/core';
-import { asyncForEach } from '@nx-tools/core';
 import * as exec from './exec';
 
 export interface PrismaBuilderOptions {
@@ -8,6 +7,7 @@ export interface PrismaBuilderOptions {
 }
 
 export interface PrismaCommands<T extends PrismaBuilderOptions> {
+  description: string;
   commands: string[];
   args?: string[][];
   argsFactory?: (options: T) => string[][];
@@ -21,21 +21,26 @@ const extractArgs = <T extends PrismaBuilderOptions>(
   return Array.from({ length }, (_, i) => argsFactory?.(options)?.[i] ?? args?.[i] ?? []);
 };
 
-export const runCommands = <T extends PrismaBuilderOptions>(
-  { commands, args, argsFactory }: PrismaCommands<T>,
+export const runCommands = async <T extends PrismaBuilderOptions>(
+  { description, commands, args, argsFactory }: PrismaCommands<T>,
   options: T,
-): void => {
+) => {
   const commandArgs = extractArgs(commands.length, { args, argsFactory }, options);
 
-  core.startGroup('Running prisma commands');
-  asyncForEach(commands, async (baseCommand) => {
+  let stdout = '';
+  let stderr = '';
+
+  for (const baseCommand of commands) {
+    core.info(`--> ${description}`);
     const command = `${baseCommand} --schema=${options.schema} ${commandArgs.join(' ')}`;
-    core.info(`--> Running ${command}`);
-    try {
-      await exec.exec(command, null, options.silent, './');
-    } catch (error) {
-      core.error(error);
+    const result = await exec.exec(command, null, options.silent, './');
+    stdout += `${result.stdout}\n`.trim();
+    stderr += `${result.stderr}\n`.trim();
+
+    if (!result.success) {
+      return { success: false, stdout, stderr };
     }
-  });
-  core.endGroup('Running prisma commands');
+  }
+
+  return { success: true, stdout, stderr };
 };
