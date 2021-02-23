@@ -2,11 +2,15 @@ import { getRunnerProvider } from './ci';
 import { RunnerProvider } from './runner-provider.enum';
 
 describe('CI', () => {
+  let env: NodeJS.ProcessEnv;
   describe('getRunnerProvider', () => {
+    beforeEach(() => {
+      env = process.env;
+      process.env = {};
+    });
+
     afterEach(() => {
-      delete process.env.GITLAB_CI;
-      delete process.env.GITHUB_ACTIONS;
-      delete process.env.RUN_LOCAL;
+      process.env = env;
     });
 
     describe('When is GitLabCI', () => {

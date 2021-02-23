@@ -6,11 +6,15 @@ import { RunnerContextProxyFactory } from './runner-context.factory';
 
 describe('RunnerContextProxyFactory', () => {
   let context: RunnerContext;
+  let env: NodeJS.ProcessEnv;
+
+  beforeEach(() => {
+    env = process.env;
+    process.env = {};
+  });
 
   afterEach(() => {
-    delete process.env.GITLAB_CI;
-    delete process.env.GITHUB_ACTIONS;
-    delete process.env.RUN_LOCAL;
+    process.env = env;
   });
 
   describe('When is running on GitLabCI', () => {
