@@ -41,7 +41,7 @@ describe('RunnerContextProxyFactory', () => {
 
   describe('When is running on Local', () => {
     beforeEach(() => {
-      process.env.RUN_LOCAL = 'true';
+      process.env.PATH = 'true';
       context = RunnerContextProxyFactory.create();
     });
 

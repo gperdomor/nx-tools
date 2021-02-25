@@ -1,31 +1,39 @@
-import { RunnerProvider } from '../runner-provider.enum';
 import { LocalContext } from './local.context';
 
 describe('LocalContext', () => {
+  let env: NodeJS.ProcessEnv;
+
   beforeEach(() => {
-    process.env.COMMIT_EVENT_NAME = 'local-event-name';
-    process.env.COMMIT_SHA = 'local-sha';
-    process.env.COMMIT_REF = 'local-ref';
-    process.env.COMMIT_ACTION = 'local-action';
-    process.env.COMMIT_ACTOR = 'local-actor';
-    process.env.COMMIT_JOB = 'local-job';
-    process.env.COMMIT_RUN_NUMBER = '30';
-    process.env.COMMIT_RUN_ID = '300';
+    env = process.env;
+    process.env = {
+      PATH: 'true',
+      NXDOCKER_EVENT_NAME: 'local-event-name',
+      NXDOCKER_SHA: 'local-sha',
+      NXDOCKER_REF: 'local-ref',
+      NXDOCKER_ACTION: 'local-action',
+      NXDOCKER_ACTOR: 'local-actor',
+      NXDOCKER_JOB: 'local-job',
+      NXDOCKER_RUN_NUMBER: '30',
+      NXDOCKER_RUN_ID: '300',
+    };
+  });
+
+  afterEach(() => {
+    process.env = env;
   });
 
   it('Should be take proper values', () => {
     const context = new LocalContext();
 
     expect(context).toBeInstanceOf(LocalContext);
-    expect(context.provider).toEqual(RunnerProvider.Local);
-    expect(context.eventName).toEqual('local-event-name');
-    expect(context.sha).toEqual('local-sha');
-    expect(context.ref).toEqual('local-ref');
-    expect(context.workflow).toBeUndefined();
-    expect(context.action).toEqual('local-action');
-    expect(context.actor).toEqual('local-actor');
-    expect(context.job).toEqual('local-job');
-    expect(context.runNumber).toEqual(30);
-    expect(context.runId).toEqual(300);
+    expect(context).toMatchObject({
+      actor: 'local-actor',
+      eventName: 'local-event-name',
+      job: 'local-job',
+      ref: 'local-ref',
+      runId: 300,
+      runNumber: 30,
+      sha: 'local-sha',
+    });
   });
 });

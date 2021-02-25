@@ -17,8 +17,6 @@ export const extractMetadata = async (options: Partial<Inputs>) => {
     core.info(`eventName: ${context.eventName}`);
     core.info(`sha: ${context.sha}`);
     core.info(`ref: ${context.ref}`);
-    // core.info(`workflow: ${context.workflow}`);
-    core.info(`action: ${context.action}`);
     core.info(`actor: ${context.actor}`);
     core.info(`runNumber: ${context.runNumber}`);
     core.info(`runId: ${context.runId}`);
