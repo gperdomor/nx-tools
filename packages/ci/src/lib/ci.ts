@@ -7,7 +7,7 @@ interface Vendor {
   env: string | string[] | Record<string, string>;
 }
 
-const checkEnv = (obj: string | Record<string, any>, env) => {
+const checkEnv = (obj: string | Record<string, unknown>, env) => {
   if (typeof obj === 'string') return !!env[obj];
   return Object.keys(obj).every(function (k) {
     return env[k] === obj[k];

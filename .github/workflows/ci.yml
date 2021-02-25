@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: npm ci
 
-      # - name: Run linter 👀
-      #   run: npm run nx run-many -- --target=lint --all
+      - name: Run linter 👀
+        run: npm run nx run-many -- --target=lint --all
 
       - name: Run build 👷‍♂️
         run: npm run nx run-many -- --target=build --all
