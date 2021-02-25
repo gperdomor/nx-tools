@@ -8,12 +8,17 @@ import { RunnerProvider } from './runner-provider.enum';
 export class RunnerContextProxyFactory {
   public static create(): RunnerContext {
     switch (getRunnerProvider()) {
-      case RunnerProvider.GitLab:
+      case RunnerProvider.GITLAB:
         return new GitLabContext();
-      case RunnerProvider.Local:
-        return new LocalContext();
-      case RunnerProvider.GitHub:
+
+      case RunnerProvider.GITHUB_ACTIONS:
         return new GitHubContext();
+
+      case RunnerProvider.LOCAL_MACHINE:
+        return new LocalContext();
+
+      default:
+        throw new Error('Unsupported runner provider');
     }
   }
 }

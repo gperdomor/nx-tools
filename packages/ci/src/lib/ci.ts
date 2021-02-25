@@ -1,13 +1,27 @@
 import { RunnerProvider } from './runner-provider.enum';
+import * as vendors from './vendors.json';
+
+interface Vendor {
+  name: string;
+  constant: string;
+  env: string | string[] | Record<string, string>;
+}
+
+const checkEnv = (obj: string | Record<string, any>, env) => {
+  if (typeof obj === 'string') return !!env[obj];
+  return Object.keys(obj).every(function (k) {
+    return env[k] === obj[k];
+  });
+};
+
+export const getVendor = () => {
+  return vendors.find((vendor: Vendor) => {
+    const envs = Array.isArray(vendor.env) ? vendor.env : [vendor.env];
+    return envs.every((arr) => checkEnv(arr, process.env));
+  });
+};
 
 export const getRunnerProvider = () => {
-  if (process.env.GITHUB_ACTIONS == 'true') {
-    return RunnerProvider.GitHub;
-  } else if (process.env.GITLAB_CI == 'true') {
-    return RunnerProvider.GitLab;
-  } else if (process.env.RUN_LOCAL) {
-    return RunnerProvider.Local;
-  } else {
-    throw new Error('Unknown runner provider');
-  }
+  const vendor = getVendor();
+  return RunnerProvider[vendor?.constant];
 };

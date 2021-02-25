@@ -2,15 +2,13 @@ import { RunnerProvider } from '../runner-provider.enum';
 
 export abstract class RunnerContext {
   provider: RunnerProvider;
-  eventName: string;
-  sha: string;
-  ref: string;
-  workflow?: string;
-  action: string;
   actor: string;
+  eventName: string;
   job: string;
-  runNumber: number;
+  ref: string;
   runId: number;
+  runNumber: number;
+  sha: string;
 
   constructor(provider: RunnerProvider) {
     this.provider = provider;

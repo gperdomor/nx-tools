@@ -113,12 +113,11 @@ export const info = (message: string): void => {
  */
 export const startGroup = (name: string): void => {
   switch (getRunnerProvider()) {
-    case RunnerProvider.GitLab:
+    case RunnerProvider.GITLAB:
       info('section_start:`date +%s`:' + name + '\re[0K');
       break;
 
-    case RunnerProvider.GitHub:
-    case RunnerProvider.Local:
+    case RunnerProvider.GITHUB_ACTIONS:
     default:
       info(`::group::${name}`);
       break;
@@ -130,12 +129,11 @@ export const startGroup = (name: string): void => {
  */
 export const endGroup = (name: string): void => {
   switch (getRunnerProvider()) {
-    case RunnerProvider.GitLab:
+    case RunnerProvider.GITLAB:
       info('section_end:`date +%s`:' + name + '\re[0K');
       break;
 
-    case RunnerProvider.GitHub:
-    case RunnerProvider.Local:
+    case RunnerProvider.GITHUB_ACTIONS:
     default:
       info('::endgroup::');
       break;

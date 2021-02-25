@@ -1,32 +1,40 @@
-import { RunnerProvider } from '../runner-provider.enum';
 import { GitLabContext } from './gitlab.context';
 
 describe('GitLabContext', () => {
+  let env: NodeJS.ProcessEnv;
+
   beforeEach(() => {
-    process.env.CI_PIPELINE_SOURCE = 'gitlab-event-name';
-    process.env.CI_COMMIT_SHA = 'gitlab-sha';
-    process.env.CI_COMMIT_REF_SLUG = 'gitlab-ref-slug';
-    process.env.CI_JOB_ID = 'gitlab-action';
-    process.env.GITLAB_USER_LOGIN = 'gitlab-actor';
-    process.env.CI_JOB_NAME = 'gitlab-job';
-    process.env.CI_PIPELINE_ID = '10';
-    process.env.CI_PIPELINE_IID = '100';
+    env = process.env;
+    process.env = {
+      GITLAB_CI: 'true',
+      CI_PIPELINE_SOURCE: 'gitlab-event-name',
+      CI_COMMIT_SHA: 'gitlab-sha',
+      CI_COMMIT_REF_SLUG: 'gitlab-ref-slug',
+      CI_JOB_ID: 'gitlab-action',
+      GITLAB_USER_LOGIN: 'gitlab-actor',
+      CI_JOB_NAME: 'gitlab-job',
+      CI_PIPELINE_ID: '10',
+      CI_PIPELINE_IID: '100',
+    };
+  });
+
+  afterEach(() => {
+    process.env = env;
   });
 
   it('Should be take proper values', () => {
     const context = new GitLabContext();
 
     expect(context).toBeInstanceOf(GitLabContext);
-    expect(context.provider).toEqual(RunnerProvider.GitLab);
-    expect(context.eventName).toEqual('gitlab-event-name');
-    expect(context.sha).toEqual('gitlab-sha');
-    expect(context.ref).toEqual('refs/heads/gitlab-ref-slug');
-    expect(context.workflow).toBeUndefined();
-    expect(context.action).toEqual('gitlab-action');
-    expect(context.actor).toEqual('gitlab-actor');
-    expect(context.job).toEqual('gitlab-job');
-    expect(context.runNumber).toEqual(10);
-    expect(context.runId).toEqual(100);
+    expect(context).toMatchObject({
+      actor: 'gitlab-actor',
+      eventName: 'gitlab-event-name',
+      job: 'gitlab-job',
+      ref: 'refs/heads/gitlab-ref-slug',
+      runId: 100,
+      runNumber: 10,
+      sha: 'gitlab-sha',
+    });
   });
 
   describe('When git tag is present', () => {
@@ -38,15 +46,15 @@ describe('GitLabContext', () => {
       const context = new GitLabContext();
 
       expect(context).toBeInstanceOf(GitLabContext);
-      expect(context.provider).toEqual(RunnerProvider.GitLab);
-      expect(context.eventName).toEqual('gitlab-event-name');
-      expect(context.sha).toEqual('gitlab-sha');
-      expect(context.ref).toEqual('refs/tags/gitlab-tag');
-      expect(context.action).toEqual('gitlab-action');
-      expect(context.actor).toEqual('gitlab-actor');
-      expect(context.job).toEqual('gitlab-job');
-      expect(context.runNumber).toEqual(10);
-      expect(context.runId).toEqual(100);
+      expect(context).toMatchObject({
+        actor: 'gitlab-actor',
+        eventName: 'gitlab-event-name',
+        job: 'gitlab-job',
+        ref: 'refs/tags/gitlab-tag',
+        runId: 100,
+        runNumber: 10,
+        sha: 'gitlab-sha',
+      });
     });
   });
 });
