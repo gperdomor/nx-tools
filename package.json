@@ -42,7 +42,7 @@
     "@commitlint/config-conventional": "12.0.1",
     "@nrwl/cli": "11.3.2",
     "@nrwl/devkit": "11.3.2",
-    "@nrwl/eslint-plugin-nx": "11.3.2",
+    "@nrwl/eslint-plugin-nx": "11.4.0",
     "@nrwl/jest": "11.3.2",
     "@nrwl/nx-cloud": "11.1.4",
     "@nrwl/nx-plugin": "11.3.2",
