@@ -1,6 +1,6 @@
 {
   "npmScope": "nx-tools",
-  "affected": { "defaultBase": "master" },
+  "affected": { "defaultBase": "main" },
   "implicitDependencies": {
     "workspace.json": "*",
     "package.json": { "dependencies": "*", "devDependencies": "*" },
