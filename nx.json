@@ -1,14 +1,9 @@
 {
   "npmScope": "nx-tools",
-  "affected": {
-    "defaultBase": "main"
-  },
+  "affected": { "defaultBase": "main" },
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -26,14 +21,6 @@
       }
     }
   },
-  "projects": {
-    "nx-docker": { "tags": [] },
-    "nx-prisma": { "tags": [] },
-    "ci": { "tags": [] },
-    "core": { "tags": [] }
-  },
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "libs"
-  }
+  "projects": { "nx-docker": { "tags": ["plugin"] }, "nx-prisma": { "tags": ["plugin"] } },
+  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
 }

@@ -8,17 +8,12 @@
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["packages/nx-docker/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/packages/nx-docker"],
-          "options": {
-            "jestConfig": "packages/nx-docker/jest.config.js",
-            "passWithNoTests": true
-          }
+          "options": { "jestConfig": "packages/nx-docker/jest.config.js", "passWithNoTests": true }
         },
         "build": {
           "executor": "@nrwl/node:package",
@@ -30,21 +25,9 @@
             "main": "packages/nx-docker/src/index.ts",
             "assets": [
               "packages/nx-docker/*.md",
-              {
-                "input": "./packages/nx-docker/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-docker",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nx-docker",
-                "glob": "executors.json",
-                "output": "."
-              }
+              { "input": "./packages/nx-docker/src", "glob": "**/*.!(ts)", "output": "./src" },
+              { "input": "./packages/nx-docker", "glob": "generators.json", "output": "." },
+              { "input": "./packages/nx-docker", "glob": "executors.json", "output": "." }
             ]
           }
         }
@@ -52,22 +35,17 @@
     },
     "nx-prisma": {
       "root": "packages/nx-prisma",
-      "sourceRoot": "packages/nx-docker/src",
+      "sourceRoot": "packages/nx-prisma/src",
       "projectType": "library",
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/nx-prisma/**/*.ts"]
-          }
+          "options": { "lintFilePatterns": ["packages/nx-prisma/**/*.ts"] }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/packages/nx-prisma"],
-          "options": {
-            "jestConfig": "packages/nx-prisma/jest.config.js",
-            "passWithNoTests": true
-          }
+          "options": { "jestConfig": "packages/nx-prisma/jest.config.js", "passWithNoTests": true }
         },
         "build": {
           "executor": "@nrwl/node:package",
@@ -79,21 +57,9 @@
             "main": "packages/nx-prisma/src/index.ts",
             "assets": [
               "packages/nx-prisma/*.md",
-              {
-                "input": "./packages/nx-prisma/src",
-                "glob": "**/*.!(ts)",
-                "output": "./src"
-              },
-              {
-                "input": "./packages/nx-prisma",
-                "glob": "generators.json",
-                "output": "."
-              },
-              {
-                "input": "./packages/nx-prisma",
-                "glob": "executors.json",
-                "output": "."
-              }
+              { "input": "./packages/nx-prisma/src", "glob": "**/*.!(ts)", "output": "./src" },
+              { "input": "./packages/nx-prisma", "glob": "generators.json", "output": "." },
+              { "input": "./packages/nx-prisma", "glob": "executors.json", "output": "." }
             ]
           }
         }
@@ -164,7 +130,5 @@
       }
     }
   },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+  "cli": { "defaultCollection": "@nrwl/workspace" }
 }
