@@ -30,7 +30,6 @@
   },
   "private": true,
   "dependencies": {
-    "@actions/exec": "1.0.4",
     "chalk": "4.1.0",
     "csv-parse": "4.15.3",
     "handlebars": "4.7.7",
@@ -39,6 +38,7 @@
     "tslib": "^2.0.3"
   },
   "devDependencies": {
+    "@actions/exec": "1.0.4",
     "@commitlint/cli": "12.0.1",
     "@commitlint/config-conventional": "12.0.1",
     "@nrwl/cli": "11.6.0",

@@ -1,6 +1,5 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "generators": {},
   "executors": {
     "generate": {
       "implementation": "./src/executors/generate/executor",

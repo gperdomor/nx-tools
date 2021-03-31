@@ -102,19 +102,11 @@
       "sourceRoot": "packages/core/src",
       "projectType": "library",
       "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/core/**/*.ts"]
-          }
-        },
+        "lint": { "executor": "@nrwl/linter:eslint", "options": { "lintFilePatterns": ["packages/core/**/*.ts"] } },
         "test": {
           "executor": "@nrwl/jest:jest",
           "outputs": ["coverage/packages/core"],
-          "options": {
-            "jestConfig": "packages/core/jest.config.js",
-            "passWithNoTests": true
-          }
+          "options": { "jestConfig": "packages/core/jest.config.js", "passWithNoTests": true }
         },
         "build": {
           "executor": "@nrwl/node:package",

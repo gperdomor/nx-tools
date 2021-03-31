@@ -4,8 +4,7 @@
     "module": "commonjs",
     "outDir": "../../dist/out-tsc",
     "declaration": true,
-    "types": ["node"],
-    "esModuleInterop": true
+    "types": ["node"]
   },
   "exclude": ["**/*.spec.ts", "tests", "test-suite.ts", "setup-test.ts"],
   "include": ["**/*.ts"]

@@ -1,6 +1,5 @@
-import type { PrismaMigrateSchema } from './schema';
-
 import executor from './executor';
+import type { PrismaMigrateSchema } from './schema';
 
 const options: PrismaMigrateSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',

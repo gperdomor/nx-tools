@@ -1,5 +1,5 @@
-import * as exec from '../core/exec';
 import * as core from '@nx-tools/core';
+import * as exec from '../core/exec';
 import { PrismaSeedSchema } from './schema';
 
 export default async function runExecutor(options: PrismaSeedSchema) {

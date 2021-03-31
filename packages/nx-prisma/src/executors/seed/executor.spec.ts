@@ -1,6 +1,5 @@
-import type { PrismaSeedSchema } from './schema';
-
 import executor from './executor';
+import type { PrismaSeedSchema } from './schema';
 
 const options: PrismaSeedSchema = {
   script: 'packages/nx-prisma/tests/seed.ts',
