@@ -10,6 +10,7 @@
   "executors": "./executors.json",
   "dependencies": {
     "@nx-tools/core": "^1.0.0-alpha.13",
+    "@nx-tools/ci-context": "^1.0.0-alpha.13",
     "handlebars": "^4.7.6",
     "luxon": "^1.25.0",
     "csv-parse": "^4.15.0",

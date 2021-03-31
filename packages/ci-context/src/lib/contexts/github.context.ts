@@ -1,12 +1,12 @@
-import { RunnerProvider } from '../runner-provider.enum';
-import { RunnerContext } from './context';
+import { Vendor } from '../vendors';
+import { CIContext } from './context';
 
-export class GitHubContext extends RunnerContext {
+export class GitHubContext extends CIContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super(RunnerProvider.GITHUB_ACTIONS);
+    super(Vendor.GITHUB_ACTIONS);
     const { env } = process;
 
     this.eventName = env.GITHUB_EVENT_NAME;

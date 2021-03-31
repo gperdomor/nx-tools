@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'ci',
+  displayName: 'ci-context',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/packages/ci',
+  coverageDirectory: '../../coverage/packages/ci-context',
 };

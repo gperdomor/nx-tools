@@ -1,5 +1,5 @@
 {
-  "name": "@nx-tools/ci",
+  "name": "@nx-tools/ci-context",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",

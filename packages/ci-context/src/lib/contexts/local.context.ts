@@ -1,12 +1,12 @@
-import { RunnerProvider } from '../runner-provider.enum';
-import { RunnerContext } from './context';
+import { Vendor } from '../vendors';
+import { CIContext } from './context';
 
-export class LocalContext extends RunnerContext {
+export class LocalContext extends CIContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super(RunnerProvider.LOCAL_MACHINE);
+    super(Vendor.LOCAL_MACHINE);
     const { env } = process;
 
     this.eventName = env.NXDOCKER_EVENT_NAME;

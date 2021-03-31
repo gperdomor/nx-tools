@@ -24,7 +24,8 @@
   "projects": {
     "nx-docker": { "tags": ["plugin"] },
     "nx-prisma": { "tags": ["plugin"] },
-    "core": { "tags": ["shared"] }
+    "core": { "tags": ["shared"] },
+    "ci-context": { "tags": ["shared"] }
   },
   "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
 }

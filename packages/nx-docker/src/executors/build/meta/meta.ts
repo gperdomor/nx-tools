@@ -1,4 +1,4 @@
-import { RunnerContext } from '@nx-tools/ci';
+import { CIContext } from '@nx-tools/ci-context';
 import * as handlebars from 'handlebars';
 import { DateTime } from 'luxon';
 import { Inputs } from './context';
@@ -10,11 +10,11 @@ export interface Version {
 
 export class Meta {
   private readonly inputs: Inputs;
-  private readonly context: RunnerContext;
+  private readonly context: CIContext;
   // private readonly repo: ReposGetResponseData;
   private readonly date: Date;
 
-  constructor(inputs: Inputs, context: RunnerContext) {
+  constructor(inputs: Inputs, context: CIContext) {
     this.inputs = inputs;
     // if (!this.inputs.tagEdgeBranch) {
     //   this.inputs.tagEdgeBranch = repo.default_branch;

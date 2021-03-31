@@ -1,5 +1,5 @@
-import { getRunnerProvider } from './ci';
-import { RunnerProvider } from './runner-provider.enum';
+import { getVendor } from './ci';
+import { Vendor } from './vendors';
 
 describe('CI', () => {
   let env: NodeJS.ProcessEnv;
@@ -20,7 +20,7 @@ describe('CI', () => {
       });
 
       it('Should return GitLab context', () => {
-        expect(getRunnerProvider()).toEqual(RunnerProvider.GITLAB);
+        expect(getVendor()).toEqual(Vendor.GITLAB);
       });
     });
 
@@ -30,7 +30,7 @@ describe('CI', () => {
       });
 
       it('Should return GitHub context', () => {
-        expect(getRunnerProvider()).toEqual(RunnerProvider.GITHUB_ACTIONS);
+        expect(getVendor()).toEqual(Vendor.GITHUB_ACTIONS);
       });
     });
 
@@ -40,7 +40,7 @@ describe('CI', () => {
       });
 
       it('Should return Circle context', () => {
-        expect(getRunnerProvider()).toEqual(RunnerProvider.CIRCLE);
+        expect(getVendor()).toEqual(Vendor.CIRCLE);
       });
     });
 
@@ -50,13 +50,13 @@ describe('CI', () => {
       });
 
       it('Should return local context', () => {
-        expect(getRunnerProvider()).toEqual(RunnerProvider.LOCAL_MACHINE);
+        expect(getVendor()).toEqual(Vendor.LOCAL_MACHINE);
       });
     });
 
     describe('When is unknown', () => {
       it('Should throw error', () => {
-        expect(getRunnerProvider()).toBeUndefined();
+        expect(getVendor()).toBeUndefined();
       });
     });
   });

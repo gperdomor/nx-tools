@@ -1,12 +1,11 @@
 {
-  "extends": "../../.eslintrc.json",
+  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
-  "rules": {},
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["packages/ci/tsconfig.*?.json"]
+        "project": ["packages/ci-context/tsconfig.*?.json"]
       },
       "rules": {}
     },

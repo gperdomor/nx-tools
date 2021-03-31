@@ -1,12 +1,12 @@
-import { RunnerProvider } from '../runner-provider.enum';
-import { RunnerContext } from './context';
+import { Vendor } from '../vendors';
+import { CIContext } from './context';
 
-export class CircleContext extends RunnerContext {
+export class CircleContext extends CIContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super(RunnerProvider.CIRCLE);
+    super(Vendor.CIRCLE);
     const { env } = process;
 
     this.eventName = env.CI_PULL_REQUEST ? 'pull_request' : 'unknown';

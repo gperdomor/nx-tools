@@ -1,5 +1,4 @@
-import * as aexec from '@nx-tools/core';
-import { ExecOptions } from '@nx-tools/core';
+import { exec as aexec, ExecOptions } from '@nx-tools/core';
 
 export interface ExecResult {
   success: boolean;
@@ -24,7 +23,7 @@ export const exec = async (command: string, args: string[] = [], silent?: boolea
     },
   };
 
-  const returnCode: number = await aexec.exec(command, args, options);
+  const returnCode: number = await aexec(command, args, options);
 
   return {
     success: returnCode === 0,

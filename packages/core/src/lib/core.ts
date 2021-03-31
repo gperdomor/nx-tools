@@ -1,4 +1,3 @@
-import { GITHUB_ACTIONS, GITLAB } from 'ci-info';
 import * as os from 'os';
 
 const groups = [];
@@ -115,7 +114,9 @@ export const info = (message: string): void => {
  * @param name The name of the output group
  */
 export const startGroup = (name: string): void => {
-  if (GITLAB) {
+  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
+
+  if (GITLAB_CI) {
     const timestamp = Math.trunc(Date.now() / 1000);
     const groupName = name.toLocaleLowerCase().replace(/\s/g, '-');
     groups.push(groupName);
@@ -132,7 +133,9 @@ export const startGroup = (name: string): void => {
  * End an output group.
  */
 export const endGroup = (): void => {
-  if (GITLAB) {
+  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
+
+  if (GITLAB_CI) {
     const timestamp = Math.trunc(Date.now() / 1000);
     const groupName = groups.pop() || '';
     info(`\\e[0Ksection_end:${timestamp}:${groupName}\\r\\e[0K`);

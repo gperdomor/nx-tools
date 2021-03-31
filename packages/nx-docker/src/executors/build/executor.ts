@@ -1,4 +1,4 @@
-import * as core from '@nx-tools/core';
+import { debug, info } from '@nx-tools/core';
 import { config } from 'dotenv';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -21,10 +21,10 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
 
   const tmpDir = context.tmpDir();
 
-  core.info(`tmpDir ${tmpDir}`);
+  info(`tmpDir ${tmpDir}`);
 
   const buildxVersion = await buildx.getVersion();
-  core.info(`📣 Buildx version: ${buildxVersion}`);
+  info(`📣 Buildx version: ${buildxVersion}`);
 
   const defContext = context.defaultContext();
   const inputs: context.Inputs = await context.getInputs(defContext, options);
@@ -40,10 +40,10 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
     }
   }
 
-  core.info(`🏃 Starting build...`);
+  info(`🏃 Starting build...`);
   const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
 
-  core.debug(`executing -> docker ${args.join(' ')}`);
+  debug(`executing -> docker ${args.join(' ')}`);
   await exec.exec('docker', args).then((res) => {
     if (res.stderr != '' && !res.success) {
       throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]}`);
@@ -52,8 +52,8 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
 
   const imageID = await buildx.getImageID();
   if (imageID) {
-    core.info('🛒 Extracting digest...');
-    core.info(`${imageID}`);
+    info('🛒 Extracting digest...');
+    info(`${imageID}`);
   }
 
   cleanup();
@@ -63,6 +63,6 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
 
 const cleanup = async (): Promise<void> => {
   const tmpDir = context.tmpDir();
-  core.info(`🚿 Removing temp folder ${tmpDir}`);
+  info(`🚿 Removing temp folder ${tmpDir}`);
   fs.rmdirSync(tmpDir, { recursive: true });
 };

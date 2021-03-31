@@ -1,5 +1,5 @@
 import { EOL } from 'os';
-import { getInput, info } from './core';
+import { debug, endGroup, error, getInput, info, isDebug, startGroup, warning } from './core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chalk = require('chalk');
 
@@ -88,135 +88,130 @@ describe('Core', () => {
     });
   });
 
-  // describe('Running on Local', () => {
-  //   beforeAll(() => {
-  //     originalWriteFunction = process.stdout.write;
-  //     // process.env.RUN_LOCAL = 'true';
-  //   });
+  describe('Running on Local', () => {
+    beforeAll(() => {
+      originalWriteFunction = process.stdout.write;
+      // process.env.RUN_LOCAL = 'true';
+    });
 
-  //   beforeEach(() => {
-  //     process.stdout.write = jest.fn();
-  //   });
+    beforeEach(() => {
+      process.stdout.write = jest.fn();
+    });
 
-  //   afterAll(() => {
-  //     process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-  //     // delete process.env.GITLAB_CI;
-  //     // delete process.env.GITHUB_ACTIONS;
-  //     // delete process.env.RUN_LOCAL;
-  //   });
+    afterAll(() => {
+      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      // delete process.env.GITLAB_CI;
+      // delete process.env.GITHUB_ACTIONS;
+      // delete process.env.RUN_LOCAL;
+    });
 
-  //   describe('startGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       startGroup('group-name');
-  //       assertWriteCalls([`-->::group-name::${EOL}`]);
-  //     });
-  //   });
+    describe('startGroup', () => {
+      it('should write to stdout with proper format', () => {
+        startGroup('group-name');
+        assertWriteCalls([`-->::group-name::${EOL}`]);
+      });
+    });
 
-  //   describe('endGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       endGroup();
-  //       assertWriteCalls([`<--::group-name::${EOL}`]);
-  //     });
-  //   });
-  // });
+    describe('endGroup', () => {
+      it('should write to stdout with proper format', () => {
+        endGroup();
+        assertWriteCalls([`<--::group-name::${EOL}`]);
+      });
+    });
+  });
 
-  // describe('Running on GitHub Actions', () => {
-  //   const OLD_ENV = process.env;
+  describe('Running on GitHub Actions', () => {
+    beforeAll(() => {
+      originalWriteFunction = process.stdout.write;
+      process.env.GITHUB_ACTIONS = 'true';
+    });
 
-  //   beforeAll(() => {
-  //     originalWriteFunction = process.stdout.write;
-  //     // process.env.GITHUB_ACTIONS = 'true';
-  //   });
+    beforeEach(() => {
+      process.stdout.write = jest.fn();
+    });
 
-  //   beforeEach(() => {
-  //     process.stdout.write = jest.fn();
+    afterAll(() => {
+      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
+    });
 
-  //     jest.resetModules(); // Most important - it clears the cache
-  //     process.env = { ...OLD_ENV, GITHUB_ACTIONS: 'true' }; // Make a copy
-  //   });
+    describe('startGroup', () => {
+      it('should write to stdout with proper format', () => {
+        startGroup('group-name');
+        assertWriteCalls([`::group::group-name${EOL}`]);
+      });
+    });
 
-  //   afterAll(() => {
-  //     process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-  //     // delete process.env.GITLAB_CI;
-  //     // delete process.env.GITHUB_ACTIONS;
-  //     // delete process.env.RUN_LOCAL;
-  //     process.env = OLD_ENV;
-  //   });
+    describe('endGroup', () => {
+      it('should write to stdout with proper format', () => {
+        endGroup();
+        assertWriteCalls([`::endgroup::${EOL}`]);
+      });
+    });
+  });
 
-  //   describe('startGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       startGroup('group-name');
-  //       assertWriteCalls([`::group::group-name${EOL}`]);
-  //     });
-  //   });
+  describe('Running on GitLab CI', () => {
+    beforeAll(() => {
+      originalWriteFunction = process.stdout.write;
+      process.env.GITLAB_CI = 'true';
+    });
 
-  //   describe('endGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       endGroup();
-  //       assertWriteCalls([`::endgroup::${EOL}`]);
-  //     });
-  //   });
-  // });
+    beforeEach(() => {
+      process.stdout.write = jest.fn();
+    });
 
-  // describe('Running on GitLab CI', () => {
-  //   beforeAll(() => {
-  //     originalWriteFunction = process.stdout.write;
-  //     // process.env.GITLAB_CI = 'true';
-  //   });
+    afterAll(() => {
+      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      delete process.env.GITLAB_CI;
+      delete process.env.GITHUB_ACTIONS;
+      delete process.env.RUN_LOCAL;
+    });
 
-  //   beforeEach(() => {
-  //     process.stdout.write = jest.fn();
-  //   });
+    describe('startGroup', () => {
+      it('should write to stdout with proper format', () => {
+        jest.spyOn(Date, 'now').mockImplementation(() => 1487076708000);
+        startGroup('Group Name');
+        assertWriteCalls(['\\e[0Ksection_start:1487076708:group-name\\r\\e[0KGroup Name' + EOL]);
+      });
+    });
 
-  //   afterAll(() => {
-  //     process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-  //     // delete process.env.GITLAB_CI;
-  //     // delete process.env.GITHUB_ACTIONS;
-  //     // delete process.env.RUN_LOCAL;
-  //   });
+    describe('endGroup', () => {
+      it('should write to stdout with proper format', () => {
+        jest.spyOn(Date, 'now').mockImplementation(() => 1787076708000);
+        endGroup();
+        assertWriteCalls(['\\e[0Ksection_end:1787076708:group-name\\r\\e[0K' + EOL]);
+      });
+    });
 
-  //   describe('startGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       jest.spyOn(Date, 'now').mockImplementation(() => 1487076708);
-  //       startGroup('Group Name');
-  //       assertWriteCalls(['\\e[0Ksection_start:1487076708:group-name\\r\\e[0KGroup Name' + EOL]);
-  //     });
-  //   });
+    describe('isDebug', () => {
+      it('should return true if RUNNER_DEBUG is 1', () => {
+        process.env.RUNNER_DEBUG = '1';
+        expect(isDebug()).toBeTruthy();
+      });
 
-  //   describe('endGroup', () => {
-  //     it('should write to stdout with proper format', () => {
-  //       endGroup();
-  //       assertWriteCalls(['section_end:`date +%s`:group-name\re[0K' + EOL]);
-  //     });
-  //   });
+      it('should return false in other cases', () => {
+        delete process.env.RUNNER_DEBUG;
+        expect(isDebug()).toBeFalsy();
+      });
+    });
 
-  //   describe('isDebug', () => {
-  //     it('should return true if RUNNER_DEBUG is 1', () => {
-  //       process.env.RUNNER_DEBUG = '1';
-  //       expect(isDebug()).toBeTruthy();
-  //     });
+    describe('loggers', () => {
+      it('debug', () => {
+        debug('this is a debug message');
+        expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
+      });
 
-  //     it('should return false in other cases', () => {
-  //       delete process.env.RUNNER_DEBUG;
-  //       expect(isDebug()).toBeFalsy();
-  //     });
-  //   });
+      it('warning', () => {
+        warning('this is a warning message');
+        expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
+      });
 
-  //   describe('loggers', () => {
-  //     it('debug', () => {
-  //       debug('this is a debug message');
-  //       expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
-  //     });
-
-  //     it('warning', () => {
-  //       warning('this is a warning message');
-  //       expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
-  //     });
-
-  //     it('error', () => {
-  //       error('this is a error message');
-  //       expect(chalk.red).toBeCalledWith('::error::this is a error message');
-  //     });
-  //   });
-  // });
+      it('error', () => {
+        error('this is a error message');
+        expect(chalk.red).toBeCalledWith('::error::this is a error message');
+      });
+    });
+  });
 });

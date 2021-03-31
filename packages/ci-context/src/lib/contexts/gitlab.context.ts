@@ -1,12 +1,12 @@
-import { RunnerProvider } from '../runner-provider.enum';
-import { RunnerContext } from './context';
+import { Vendor } from '../vendors';
+import { CIContext } from './context';
 
-export class GitLabContext extends RunnerContext {
+export class GitLabContext extends CIContext {
   /**
    * Hydrate the context from the environment
    */
   constructor() {
-    super(RunnerProvider.GITLAB);
+    super(Vendor.GITLAB);
     const { env } = process;
 
     this.eventName = env.CI_PIPELINE_SOURCE;

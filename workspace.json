@@ -65,38 +65,6 @@
         }
       }
     },
-    "ci": {
-      "root": "packages/ci",
-      "sourceRoot": "packages/ci/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/ci/**/*.ts"]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/ci"],
-          "options": {
-            "jestConfig": "packages/ci/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/ci",
-            "tsConfig": "packages/ci/tsconfig.lib.json",
-            "packageJson": "packages/ci/package.json",
-            "main": "packages/ci/src/index.ts",
-            "assets": ["packages/ci/*.md"]
-          }
-        }
-      }
-    },
     "core": {
       "root": "packages/core",
       "sourceRoot": "packages/core/src",
@@ -117,6 +85,33 @@
             "packageJson": "packages/core/package.json",
             "main": "packages/core/src/index.ts",
             "assets": ["packages/core/*.md"]
+          }
+        }
+      }
+    },
+    "ci-context": {
+      "root": "packages/ci-context",
+      "sourceRoot": "packages/ci-context/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": { "lintFilePatterns": ["packages/ci-context/**/*.ts"] }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/ci-context"],
+          "options": { "jestConfig": "packages/ci-context/jest.config.js", "passWithNoTests": true }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/ci-context",
+            "tsConfig": "packages/ci-context/tsconfig.lib.json",
+            "packageJson": "packages/ci-context/package.json",
+            "main": "packages/ci-context/src/index.ts",
+            "assets": ["packages/ci-context/*.md"]
           }
         }
       }
