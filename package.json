@@ -57,6 +57,7 @@
     "@types/node": "14.14.37",
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
+    "ci-info": "3.1.1",
     "commitizen": "4.2.3",
     "cz-conventional-changelog": "3.3.0",
     "dotenv": "8.2.0",
