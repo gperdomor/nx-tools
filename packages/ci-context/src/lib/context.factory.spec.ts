@@ -11,7 +11,8 @@ describe('RunnerContextProxyFactory', () => {
 
   beforeEach(() => {
     jest.resetModules();
-    process.env = { ...env };
+    const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
+    process.env = { ...rest };
   });
 
   afterAll(() => {
