@@ -4,5 +4,6 @@ module.exports = {
     '<rootDir>/packages/nx-prisma',
     '<rootDir>/packages/core',
     '<rootDir>/packages/ci-context',
+    '<rootDir>/packages/docker-meta',
   ],
 };

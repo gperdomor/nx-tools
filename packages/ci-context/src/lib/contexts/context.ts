@@ -9,8 +9,16 @@ export abstract class CIContext {
   runId: number;
   runNumber: number;
   sha: string;
+  repo: {
+    name?: string;
+    description?: string;
+    html_url?: string;
+    default_branch?: string;
+    license?: string;
+  };
 
   constructor(provider: Vendor) {
     this.provider = provider;
+    this.repo = {};
   }
 }

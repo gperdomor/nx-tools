@@ -16,5 +16,7 @@ export class GitHubContext extends CIContext {
     this.job = env.GITHUB_JOB;
     this.runNumber = parseInt(env.GITHUB_RUN_NUMBER, 10);
     this.runId = parseInt(env.GITHUB_RUN_ID, 10);
+
+    this.repo = {};
   }
 }

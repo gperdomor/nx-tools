@@ -1,11 +1,11 @@
 import { asyncForEach, getInput, parseBoolean } from '@nx-tools/core';
+import { Inputs as MetaInputs } from '@nx-tools/docker-meta';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as semver from 'semver';
 import * as tmp from 'tmp';
 import * as buildx from './buildx';
-import { Inputs as MetaInputs } from './meta/context';
 import { BuildExecutorSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;

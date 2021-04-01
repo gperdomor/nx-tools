@@ -16,5 +16,11 @@ export class GitLabContext extends CIContext {
     this.job = env.CI_JOB_NAME;
     this.runNumber = parseInt(env.CI_PIPELINE_ID, 10);
     this.runId = parseInt(env.CI_PIPELINE_IID, 10);
+
+    this.repo = {
+      default_branch: env.CI_DEFAULT_BRANCH,
+      name: env.CI_PROJECT_NAME,
+      html_url: env.CI_PROJECT_URL,
+    };
   }
 }

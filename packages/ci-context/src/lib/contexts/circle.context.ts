@@ -16,5 +16,7 @@ export class CircleContext extends CIContext {
     this.job = env.CIRCLE_JOB;
     this.runNumber = parseInt(env.CIRCLE_BUILD_NUM, 10);
     this.runId = parseInt(env.CIRCLE_BUILD_NUM, 10);
+
+    this.repo = {};
   }
 }

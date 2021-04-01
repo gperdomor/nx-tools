@@ -1,11 +1,11 @@
 import { debug, info } from '@nx-tools/core';
+import { getMetadata } from '@nx-tools/docker-meta';
 import { config } from 'dotenv';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as buildx from './buildx';
 import * as context from './context';
 import * as exec from './exec';
-import { extractMetadata } from './meta/main';
 import { BuildExecutorSchema } from './schema';
 
 export default async function runExecutor(options: BuildExecutorSchema): Promise<{ success: true }> {
@@ -30,13 +30,13 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
   const inputs: context.Inputs = await context.getInputs(defContext, options);
 
   if (inputs.meta.enabled) {
-    const meta = await extractMetadata(options.meta);
+    const meta = await getMetadata(options.meta);
     if (inputs.meta.mode === context.MetaMode.prepend) {
-      inputs.labels = [...meta.labels(), ...inputs.labels];
-      inputs.tags = [...meta.tags(), ...inputs.tags];
+      inputs.labels = [...meta.getLabels(), ...inputs.labels];
+      inputs.tags = [...meta.getTags(), ...inputs.tags];
     } else {
-      inputs.labels = [...inputs.labels, ...meta.labels()];
-      inputs.tags = [...inputs.tags, ...meta.tags()];
+      inputs.labels = [...inputs.labels, ...meta.getLabels()];
+      inputs.tags = [...inputs.tags, ...meta.getTags()];
     }
   }
 

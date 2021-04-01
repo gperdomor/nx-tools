@@ -16,5 +16,7 @@ export class LocalContext extends CIContext {
     this.job = env.NXDOCKER_JOB;
     this.runNumber = parseInt(env.NXDOCKER_RUN_NUMBER, 10);
     this.runId = parseInt(env.NXDOCKER_RUN_ID, 10);
+
+    this.repo = {};
   }
 }
