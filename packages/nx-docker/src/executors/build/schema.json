@@ -96,6 +96,13 @@
       },
       "description": "List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)"
     },
+    "secretFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)"
+    },
     "ssh": {
       "type": "array",
       "items": {
@@ -113,6 +120,44 @@
           "type": "string",
           "enum": ["prepend", "append"],
           "description": "Behavior of extracted data. (default prepend)"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of Docker images to use as base name for tags"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of tags as key-value pair attributes"
+        },
+        "flavor": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Flavor to apply"
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of custom labels"
+        },
+        "sepTags": {
+          "type": "string",
+          "description": "Separator to use for tags output (default \n)",
+          "default": "\n"
+        },
+        "sepLabels": {
+          "type": "string",
+          "description": "Separator to use for labels output (default \n)",
+          "default": "\n"
         }
       },
       "description": "Extract metadata from CI context"

@@ -1,6 +1,5 @@
-import type { PrismaGenerateSchema } from './schema';
-
 import executor from './executor';
+import type { PrismaGenerateSchema } from './schema';
 
 const options: PrismaGenerateSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',

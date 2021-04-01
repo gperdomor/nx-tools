@@ -1,3 +1,9 @@
 module.exports = {
-  projects: ['<rootDir>/packages/nx-docker', '<rootDir>/packages/ci', '<rootDir>/packages/core'],
+  projects: [
+    '<rootDir>/packages/nx-docker',
+    '<rootDir>/packages/nx-prisma',
+    '<rootDir>/packages/core',
+    '<rootDir>/packages/ci-context',
+    '<rootDir>/packages/docker-meta',
+  ],
 };

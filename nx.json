@@ -13,18 +13,20 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "N2VhYzk1OGEtMjVkYi00NjU5LWE4YTYtMzNmYjA0NGYyMTU4fHJlYWQtd3JpdGU=",
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
-        "showUsageWarnings": true
+        "showUsageWarnings": true,
+        "scan": true
       }
     }
   },
   "projects": {
-    "nx-docker": { "tags": [] },
-    "nx-prisma": { "tags": [] },
-    "ci": { "tags": [] },
-    "core": { "tags": [] }
+    "nx-docker": { "tags": ["plugin"] },
+    "nx-prisma": { "tags": ["plugin"] },
+    "core": { "tags": ["shared"] },
+    "ci-context": { "tags": ["shared"] },
+    "docker-meta": { "tags": ["shared"] }
   },
-  "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" }
+  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
 }

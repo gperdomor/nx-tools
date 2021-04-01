@@ -1,5 +1,7 @@
-import { getRunnerProvider, RunnerProvider } from '@nx-tools/ci';
 import * as os from 'os';
+
+const groups = [];
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chalk = require('chalk');
 
@@ -112,31 +114,36 @@ export const info = (message: string): void => {
  * @param name The name of the output group
  */
 export const startGroup = (name: string): void => {
-  switch (getRunnerProvider()) {
-    case RunnerProvider.GITLAB:
-      info('section_start:`date +%s`:' + name + '\re[0K');
-      break;
+  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
 
-    case RunnerProvider.GITHUB_ACTIONS:
-    default:
-      info(`::group::${name}`);
-      break;
+  if (GITLAB_CI) {
+    const timestamp = Math.trunc(Date.now() / 1000);
+    const groupName = name.toLocaleLowerCase().replace(/\s/g, '-');
+    groups.push(groupName);
+    info(`\\e[0Ksection_start:${timestamp}:${groupName}\\r\\e[0K${name}`);
+  } else if (GITHUB_ACTIONS) {
+    info(`::group::${name}`);
+  } else {
+    groups.push(name);
+    info(`-->::${name}::`);
   }
 };
 
 /**
  * End an output group.
  */
-export const endGroup = (name: string): void => {
-  switch (getRunnerProvider()) {
-    case RunnerProvider.GITLAB:
-      info('section_end:`date +%s`:' + name + '\re[0K');
-      break;
+export const endGroup = (): void => {
+  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
 
-    case RunnerProvider.GITHUB_ACTIONS:
-    default:
-      info('::endgroup::');
-      break;
+  if (GITLAB_CI) {
+    const timestamp = Math.trunc(Date.now() / 1000);
+    const groupName = groups.pop() || '';
+    info(`\\e[0Ksection_end:${timestamp}:${groupName}\\r\\e[0K`);
+  } else if (GITHUB_ACTIONS) {
+    info('::endgroup::');
+  } else {
+    const groupName = groups.pop() || '';
+    info(`<--::${groupName}::`);
   }
 };
 
@@ -156,7 +163,7 @@ export const group = async <T>(name: string, fn: () => Promise<T>): Promise<T> =
   try {
     result = await fn();
   } finally {
-    endGroup(name);
+    endGroup();
   }
 
   return result;

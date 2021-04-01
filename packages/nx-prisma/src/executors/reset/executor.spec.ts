@@ -1,6 +1,5 @@
-import type { PrismaResetSchema } from './schema';
-
 import executor from './executor';
+import type { PrismaResetSchema } from './schema';
 
 const options: PrismaResetSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',
