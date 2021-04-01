@@ -1,4 +1,4 @@
-import { debug, info } from '@nx-tools/core';
+import * as core from '@nx-tools/core';
 import { getMetadata } from '@nx-tools/docker-meta';
 import { config } from 'dotenv';
 import * as fs from 'fs';
@@ -8,7 +8,7 @@ import * as context from './context';
 import * as exec from './exec';
 import { BuildExecutorSchema } from './schema';
 
-export default async function runExecutor(options: BuildExecutorSchema): Promise<{ success: true }> {
+export default async function run(options: BuildExecutorSchema): Promise<{ success: true }> {
   config();
 
   if (os.platform() !== 'linux' && os.platform() !== 'darwin') {
@@ -21,10 +21,10 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
 
   const tmpDir = context.tmpDir();
 
-  info(`tmpDir ${tmpDir}`);
+  core.info(`tmpDir ${tmpDir}`);
 
   const buildxVersion = await buildx.getVersion();
-  info(`📣 Buildx version: ${buildxVersion}`);
+  core.info(`📣 Buildx version: ${buildxVersion}`);
 
   const defContext = context.defaultContext();
   const inputs: context.Inputs = await context.getInputs(defContext, options);
@@ -40,20 +40,21 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
     }
   }
 
-  info(`🏃 Starting build...`);
+  core.info(`🏃 Starting build...`);
   const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
 
-  debug(`executing -> docker ${args.join(' ')}`);
+  core.debug(`executing -> docker ${args.join(' ')}`);
+
   await exec.exec('docker', args).then((res) => {
     if (res.stderr != '' && !res.success) {
-      throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]}`);
+      throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)![0]}`);
     }
   });
 
   const imageID = await buildx.getImageID();
   if (imageID) {
-    info('🛒 Extracting digest...');
-    info(`${imageID}`);
+    core.info('🛒 Extracting digest...');
+    core.info(`${imageID}`);
   }
 
   cleanup();
@@ -61,8 +62,8 @@ export default async function runExecutor(options: BuildExecutorSchema): Promise
   return { success: true };
 }
 
-const cleanup = async (): Promise<void> => {
+async function cleanup(): Promise<void> {
   const tmpDir = context.tmpDir();
-  info(`🚿 Removing temp folder ${tmpDir}`);
+  core.info(`🚿 Removing temp folder ${tmpDir}`);
   fs.rmdirSync(tmpDir, { recursive: true });
-};
+}

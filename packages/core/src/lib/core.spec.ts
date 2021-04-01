@@ -1,5 +1,5 @@
 import { EOL } from 'os';
-import { debug, endGroup, error, getInput, info, isDebug, startGroup, warning } from './core';
+import { debug, endGroup, error, getInput, info, startGroup, warning } from './core';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chalk = require('chalk');
 
@@ -17,23 +17,13 @@ let originalWriteFunction: (str: string) => boolean;
 
 describe('Core', () => {
   describe('getInput', () => {
-    let env: NodeJS.ProcessEnv;
-
     beforeAll(() => {
-      env = process.env;
-      process.env = {
-        ...env,
-        INPUT_REQUIRED_EXIST: 'Value 1',
-        INPUT_V1: 'Value 1',
-        INPUT_V2: '101',
-        INPUT_TL: '     TRIM LEFT',
-        INPUT_TR: 'TRIM RIGHT      ',
-        INPUT_TB: '  TRIM BOTH  ',
-      };
-    });
-
-    afterAll(() => {
-      process.env = env;
+      process.env.INPUT_REQUIRED_EXIST = 'Value 1';
+      process.env.INPUT_V1 = 'Value 1';
+      process.env.INPUT_V2 = '101';
+      process.env.INPUT_TL = '     TRIM LEFT';
+      process.env.INPUT_TR = 'TRIM RIGHT      ';
+      process.env.INPUT_TB = '  TRIM BOTH  ';
     });
 
     describe('When Input is required', () => {
@@ -88,10 +78,32 @@ describe('Core', () => {
     });
   });
 
+  describe('loggers', () => {
+    it('debug', () => {
+      debug('this is a debug message');
+      expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
+    });
+
+    it('warning', () => {
+      warning('this is a warning message');
+      expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
+    });
+
+    it('error', () => {
+      error('this is a error message');
+      expect(chalk.red).toBeCalledWith('::error::this is a error message');
+    });
+  });
+
   describe('Running on Local', () => {
+    const env: NodeJS.ProcessEnv = process.env;
+
     beforeAll(() => {
+      jest.resetModules();
+      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
+      process.env = { ...rest, RUN_LOCAL: 'true' };
+
       originalWriteFunction = process.stdout.write;
-      // process.env.RUN_LOCAL = 'true';
     });
 
     beforeEach(() => {
@@ -100,9 +112,7 @@ describe('Core', () => {
 
     afterAll(() => {
       process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-      // delete process.env.GITLAB_CI;
-      // delete process.env.GITHUB_ACTIONS;
-      // delete process.env.RUN_LOCAL;
+      process.env = env; // Restore old environment
     });
 
     describe('startGroup', () => {
@@ -121,9 +131,14 @@ describe('Core', () => {
   });
 
   describe('Running on GitHub Actions', () => {
+    const env: NodeJS.ProcessEnv = process.env;
+
     beforeAll(() => {
+      jest.resetModules();
+      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
+      process.env = { ...rest, GITHUB_ACTIONS: 'true' };
+
       originalWriteFunction = process.stdout.write;
-      process.env.GITHUB_ACTIONS = 'true';
     });
 
     beforeEach(() => {
@@ -132,9 +147,7 @@ describe('Core', () => {
 
     afterAll(() => {
       process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-      delete process.env.GITLAB_CI;
-      delete process.env.GITHUB_ACTIONS;
-      delete process.env.RUN_LOCAL;
+      process.env = env; // Restore old environment
     });
 
     describe('startGroup', () => {
@@ -153,9 +166,14 @@ describe('Core', () => {
   });
 
   describe('Running on GitLab CI', () => {
+    const env: NodeJS.ProcessEnv = process.env;
+
     beforeAll(() => {
+      jest.resetModules();
+      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
+      process.env = { ...rest, GITLAB_CI: 'true' };
+
       originalWriteFunction = process.stdout.write;
-      process.env.GITLAB_CI = 'true';
     });
 
     beforeEach(() => {
@@ -164,9 +182,7 @@ describe('Core', () => {
 
     afterAll(() => {
       process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
-      delete process.env.GITLAB_CI;
-      delete process.env.GITHUB_ACTIONS;
-      delete process.env.RUN_LOCAL;
+      process.env = env; // Restore old environment
     });
 
     describe('startGroup', () => {
@@ -184,33 +200,41 @@ describe('Core', () => {
         assertWriteCalls(['\\e[0Ksection_end:1787076708:group-name\\r\\e[0K' + EOL]);
       });
     });
+  });
 
-    describe('isDebug', () => {
-      it('should return true if RUNNER_DEBUG is 1', () => {
-        process.env.RUNNER_DEBUG = '1';
-        expect(isDebug()).toBeTruthy();
-      });
+  describe('Running on CircleCI', () => {
+    const env: NodeJS.ProcessEnv = process.env;
 
-      it('should return false in other cases', () => {
-        delete process.env.RUNNER_DEBUG;
-        expect(isDebug()).toBeFalsy();
+    beforeAll(() => {
+      jest.resetModules();
+      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
+      process.env = { ...rest, CIRCLECI: 'true' };
+
+      originalWriteFunction = process.stdout.write;
+    });
+
+    beforeEach(() => {
+      process.stdout.write = jest.fn();
+    });
+
+    afterAll(() => {
+      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.env = env; // Restore old environment
+    });
+
+    describe('startGroup', () => {
+      it('should write to stdout with proper format', () => {
+        jest.spyOn(Date, 'now').mockImplementation(() => 1487076708000);
+        startGroup('Group Name');
+        assertWriteCalls([`-->::Group Name::${EOL}`]);
       });
     });
 
-    describe('loggers', () => {
-      it('debug', () => {
-        debug('this is a debug message');
-        expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
-      });
-
-      it('warning', () => {
-        warning('this is a warning message');
-        expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
-      });
-
-      it('error', () => {
-        error('this is a error message');
-        expect(chalk.red).toBeCalledWith('::error::this is a error message');
+    describe('endGroup', () => {
+      it('should write to stdout with proper format', () => {
+        jest.spyOn(Date, 'now').mockImplementation(() => 1787076708000);
+        endGroup();
+        assertWriteCalls([`<--::Group Name::${EOL}`]);
       });
     });
   });

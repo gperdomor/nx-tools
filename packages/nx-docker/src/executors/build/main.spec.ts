@@ -1,5 +1,5 @@
 import { MetaMode } from './context';
-import executor from './executor';
+import executor from './main';
 import { BuildExecutorSchema } from './schema';
 
 const options: BuildExecutorSchema = {
