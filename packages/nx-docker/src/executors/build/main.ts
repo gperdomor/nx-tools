@@ -43,9 +43,11 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
   core.info(`🏃 Starting build...`);
   const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
 
-  core.debug(`executing -> docker ${args.join(' ')}`);
+  const dockerCmd = `docker ${args.join(' ')}`;
 
-  await exec.exec('docker', args).then((res) => {
+  core.debug(`executing -> sh -c "${dockerCmd}"`);
+
+  await exec.exec(`sh -c "${dockerCmd}"`).then((res) => {
     if (res.stderr != '' && !res.success) {
       throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)![0]}`);
     }
