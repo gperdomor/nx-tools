@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "name": "nx-docker",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "generators": {}
 }

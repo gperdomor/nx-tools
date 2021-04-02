@@ -1,5 +1,5 @@
 import { getInputs } from './context';
-import { Meta } from './meta';
+import { interpolate, Meta } from './meta';
 
 describe('Meta', () => {
   const env: NodeJS.ProcessEnv = process.env;
@@ -31,5 +31,40 @@ describe('Meta', () => {
       );
       expect(meta).toBeDefined();
     });
+  });
+});
+
+describe('interpolate', () => {
+  const env: NodeJS.ProcessEnv = process.env;
+
+  beforeEach(() => {
+    jest.resetModules();
+    process.env = {
+      ...env,
+      ENV_1: 'ABC',
+      ENV_2: 'DEF',
+      ENV_3: 'ghi',
+      ENV_4: 'JKL',
+      ENV_5: 'MnÑ',
+      ENV_6: 'OPQ',
+      IS: ' is ',
+      TST: ' test',
+    };
+  });
+
+  afterAll(() => {
+    process.env = env; // Restore old environment
+  });
+
+  test.each([
+    ['$ENV_1/$ENV_2/$ENV_3', 'ABC/DEF/ghi'],
+    ['$ENV_1-$ENV_2-$ENV_3', 'ABC-DEF-ghi'],
+    ['${ENV_4}/$ENV_5/${ENV_6}', 'JKL/MnÑ/OPQ'],
+    ['$ENV_6-${ENV_2}/$ENV_2', 'OPQ-DEF/DEF'],
+    ['$ENV_3${ENV_5}/some-text-$ENV_6', 'ghiMnÑ/some-text-OPQ'],
+    ['${ENV_1}${ENV_2}${ENV_3}', 'ABCDEFghi'],
+    ['this${IS}other${TST}', 'this is other test'],
+  ])('given %p, should returns %p', (input: string, expected: string) => {
+    expect(interpolate(input)).toEqual(expected);
   });
 });

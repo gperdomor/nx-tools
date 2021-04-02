@@ -327,7 +327,7 @@ export class Meta {
 
     const tags: Array<string> = [];
     for (const image of this.inputs.images) {
-      const imageLc = image.toLowerCase();
+      const imageLc = interpolate(image).toLowerCase();
       tags.push(`${imageLc}:${this.version.main}`);
       for (const partial of this.version.partial) {
         tags.push(`${imageLc}:${partial}`);
@@ -388,3 +388,28 @@ export class Meta {
     return bakeFile;
   }
 }
+
+export const interpolate = (envValue) => {
+  const matches = envValue.match(/(.?\${?(?:[a-zA-Z0-9_]+)?}?)/g) || [];
+
+  return matches.reduce((newEnv, match) => {
+    const parts = /(.?)\${?([a-zA-Z0-9_]+)?}?/g.exec(match);
+    const prefix = parts[1];
+
+    let value, replacePart;
+
+    if (prefix === '\\') {
+      replacePart = parts[0];
+      value = replacePart.replace('\\$', '$');
+    } else {
+      const key = parts[2];
+      replacePart = parts[0].substring(prefix.length);
+      value = process.env[key] ?? '';
+
+      // Resolve recursive interpolations
+      value = interpolate(value);
+    }
+
+    return newEnv.replace(replacePart, value);
+  }, envValue);
+};
