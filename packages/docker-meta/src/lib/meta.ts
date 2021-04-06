@@ -293,7 +293,7 @@ export class Meta {
       return version;
     }
 
-    const vraw = this.setFlavor(this.context.sha.substr(0, 7), tag);
+    const vraw = this.setFlavor(this.context.sha.substr(0, 8), tag);
     if (version.main == undefined) {
       version.main = vraw;
     } else if (vraw !== version.main) {
