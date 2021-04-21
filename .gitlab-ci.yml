@@ -1,0 +1,65 @@
+include:
+  - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+
+stages:
+  - prepare
+  - test
+  - build
+
+variables:
+  GIT_DEPTH: 0
+
+.node-job:
+  image: node:15.14.0
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - ~/.npm
+    policy: pull
+  before_script:
+    - npm ci --cache ~/.npm --prefer-offline
+
+.base-head-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables: # Override DEPLOY_VARIABLE defined
+        BASE: remotes/origin/${CI_DEFAULT_BRANCH}~1
+        HEAD: remotes/origin/${CI_DEFAULT_BRANCH}
+    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      variables: # Override DEPLOY_VARIABLE defined
+        BASE: remotes/origin/${CI_DEFAULT_BRANCH}
+        HEAD: HEAD
+
+initialise:
+  stage: prepare
+  extends: [.node-job]
+  cache:
+    key: !reference [.node-job, cache, key]
+    paths: !reference [.node-job, cache, paths]
+    policy: pull-push
+  script:
+    - echo "Done!..."
+
+affected:lint:
+  extends: [.node-job, .base-head-rules]
+  stage: test
+  needs: [initialise]
+  script:
+    - npx nx affected:lint --parallel --base=$BASE --head=$HEAD
+
+affected:test:
+  extends: [.node-job, .base-head-rules]
+  stage: test
+  needs: [initialise]
+  script:
+    - npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+
+affected:build:
+  extends: [.node-job, .base-head-rules]
+  stage: build
+  needs: [initialise]
+  script:
+    - npx nx affected:build --parallel --base=$BASE --head=$HEAD
