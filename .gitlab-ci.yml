@@ -41,20 +41,28 @@ initialise:
     policy: pull-push
   script:
     - echo "Done!..."
+  rules:
+    - changes:
+        - package-lock.json
 
 affected:lint:
   extends: [.node-job, .base-head-rules]
   stage: test
   needs: [initialise]
   script:
-    - npx nx affected:lint --parallel --base=$BASE --head=$HEAD
+    #- npx nx affected:lint --parallel --base=$BASE --head=$HEAD
+    - npm run nx affected:lint -- --parallel --base=$BASE --head=$HEAD
 
 affected:test:
   extends: [.node-job, .base-head-rules]
+  image: ghcr.io/gperdomor/nx-docker:14.16-alpine
   stage: test
   needs: [initialise]
+  services:
+    - docker:20.10.6-dind
   script:
-    - npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
+    #- npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
+    - npm run nx affected:test -- --parallel --code-coverage --base=$BASE --head=$HEAD
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
 
 affected:build:
@@ -62,4 +70,5 @@ affected:build:
   stage: build
   needs: [initialise]
   script:
-    - npx nx affected:build --parallel --base=$BASE --head=$HEAD
+    #- npx nx affected:build --parallel --base=$BASE --head=$HEAD
+    - npm run nx affected:build -- --parallel --base=$BASE --head=$HEAD
