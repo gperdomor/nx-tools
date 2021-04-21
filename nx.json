@@ -2,12 +2,8 @@
   "npmScope": "nx-tools",
   "affected": { "defaultBase": "main" },
   "implicitDependencies": {
-    "workspace.json": "*",
     "package.json": { "dependencies": "*", "devDependencies": "*" },
-    "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*",
-    "nx.json": "*"
+    ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
     "default": {
