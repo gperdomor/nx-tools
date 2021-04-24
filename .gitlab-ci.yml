@@ -76,5 +76,5 @@ affected:build:
     - job: initialise
       optional: true
   script:
-    #- npx nx affected:build --parallel --base=$BASE --head=$HEAD
-    - npm run nx affected:build -- --parallel --base=$BASE --head=$HEAD
+    #- npx nx affected:build --parallel --with-deps --base=$BASE --head=$HEAD
+    - npm run nx affected:build -- --parallel --with-deps --base=$BASE --head=$HEAD
