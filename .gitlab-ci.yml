@@ -16,10 +16,10 @@ variables:
       files:
         - package-lock.json
     paths:
-      - ~/.npm
+      - .npm
     policy: pull
   before_script:
-    - npm ci --cache ~/.npm --prefer-offline
+    - npm ci --cache .npm --prefer-offline
 
 .base-head-rules:
   rules:
