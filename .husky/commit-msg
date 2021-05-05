@@ -1,7 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# For npx 7
-#npx --no-install commitlint --edit $1
-
-npm run husky-commit-msg
+npx --no-install commitlint --edit $1

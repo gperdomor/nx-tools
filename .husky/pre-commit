@@ -1,7 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# For npx 7
-#npx --no-install lint-staged --concurrent false
-
-npm run husky-pre-commit
+npx --no-install lint-staged --concurrent false

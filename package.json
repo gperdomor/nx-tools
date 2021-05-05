@@ -26,9 +26,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "commit": "cz",
-    "prepare": "husky install",
-    "husky-commit-msg": "commitlint --edit $1",
-    "husky-pre-commit": "lint-staged --concurrent false"
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {

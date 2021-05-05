@@ -10,7 +10,7 @@ variables:
   GIT_DEPTH: 0
 
 .node-job:
-  image: node:14.16.1
+  image: node:16.0
   cache:
     key:
       files:
@@ -52,8 +52,7 @@ affected:lint:
     - job: initialise
       optional: true
   script:
-    #- npx nx affected:lint --parallel --base=$BASE --head=$HEAD
-    - npm run nx affected:lint -- --parallel --base=$BASE --head=$HEAD
+    - npx nx affected:lint --parallel --base=$BASE --head=$HEAD
 
 affected:test:
   extends: [.node-job, .base-head-rules]
@@ -65,8 +64,7 @@ affected:test:
   services:
     - docker:20.10.6-dind
   script:
-    #- npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
-    - npm run nx affected:test -- --parallel --code-coverage --base=$BASE --head=$HEAD
+    - npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
 
 affected:build:
@@ -76,5 +74,4 @@ affected:build:
     - job: initialise
       optional: true
   script:
-    #- npx nx affected:build --parallel --with-deps --base=$BASE --head=$HEAD
-    - npm run nx affected:build -- --parallel --with-deps --base=$BASE --head=$HEAD
+    - npx nx affected:build --parallel --with-deps --base=$BASE --head=$HEAD
