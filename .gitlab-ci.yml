@@ -10,7 +10,7 @@ variables:
   GIT_DEPTH: 0
 
 .node-job:
-  image: node:16.0
+  image: node:16.1
   cache:
     key:
       files:
