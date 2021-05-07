@@ -56,7 +56,7 @@ affected:lint:
 
 affected:test:
   extends: [.node-job, .base-head-rules]
-  image: ghcr.io/gperdomor/nx-docker:14.16-alpine
+  image: ghcr.io/gperdomor/nx-docker:16.0-alpine
   stage: test
   needs:
     - job: initialise
