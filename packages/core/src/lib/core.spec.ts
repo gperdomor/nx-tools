@@ -68,7 +68,7 @@ describe('Core', () => {
     });
 
     afterAll(() => {
-      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
     });
 
     it('should write to stdout', () => {
@@ -111,7 +111,7 @@ describe('Core', () => {
     });
 
     afterAll(() => {
-      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
       process.env = env; // Restore old environment
     });
 
@@ -146,7 +146,7 @@ describe('Core', () => {
     });
 
     afterAll(() => {
-      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
       process.env = env; // Restore old environment
     });
 
@@ -181,7 +181,7 @@ describe('Core', () => {
     });
 
     afterAll(() => {
-      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
       process.env = env; // Restore old environment
     });
 
@@ -218,7 +218,7 @@ describe('Core', () => {
     });
 
     afterAll(() => {
-      process.stdout.write = (originalWriteFunction as unknown) as (str: string) => boolean;
+      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
       process.env = env; // Restore old environment
     });
 
