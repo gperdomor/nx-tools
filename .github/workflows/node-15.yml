@@ -1,16 +1,15 @@
-name: Docker Builder - Node 12
+name: Docker Builder - Node 15
 
 on:
   push:
     paths:
-      - .github/workflows/node-12.yml
+      - .github/workflows/node-15.yml
   pull_request:
     paths:
-      - .github/workflows/node-12.yml
+      - .github/workflows/node-15.yml
 
 env:
-  NODE_VERSION: 12.22.1
-  ALPINE_VERSION: 3.12
+  NODE_VERSION: 15.14.0
 
 jobs:
   build:
