@@ -8,6 +8,7 @@ stages:
 
 variables:
   GIT_DEPTH: 0
+  NX_CLOUD_AUTH_TOKEN: $NX_CLOUD_AUTH_TOKEN
 
 .node-job:
   image: node:16.1

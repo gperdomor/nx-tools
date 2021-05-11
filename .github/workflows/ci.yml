@@ -2,55 +2,142 @@ name: ci
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main]
 
 env:
-  NX_BRANCH: ${{ github.event.number }}
+  NX_BRANCH: ${{ github.event.pull_request.head.ref }}
   NX_RUN_GROUP: ${{ github.run_id }}
+  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
+  initialise:
+    runs-on: 'ubuntu-20.04'
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [15]
-
+        node-version: [12.x, 14.x, 16.x]
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@master
-
-      - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.5
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node }}
-
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.5
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci --prefer-offline
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci
-
+  affected-lint:
+    runs-on: 'ubuntu-20.04'
+    needs: [initialise]
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci --prefer-offline
       - name: Run linter 👀
-        run: npm run nx run-many -- --target=lint --all
+        run: npm run nx affected -- --target=lint --base=remotes/origin/main
 
+  affected-build:
+    runs-on: 'ubuntu-20.04'
+    needs: [initialise]
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci --prefer-offline
       - name: Run build 👷‍♂️
-        run: npm run nx run-many -- --target=build --all
+        run: npm run nx affected -- --target=build --base=remotes/origin/main
 
+  affected-test:
+    runs-on: 'ubuntu-20.04'
+    needs: [initialise]
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci --prefer-offline
       - name: Run tests 🧪
-        run: npm run nx run-many -- --target=test --all --skip-nx-cache
+        run: npm run nx affected -- --target=test --base=remotes/origin/main
 
+  affected-e2e:
+    runs-on: 'ubuntu-20.04'
+    needs: [initialise]
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci --prefer-offline
       - name: Run e2e tests 🧪🧪
-        run: npm run nx run-many -- --target=e2e --all --skip-nx-cache
+        run: npm run nx affected -- --target=test --base=remotes/origin/main
