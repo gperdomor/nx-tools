@@ -1,0 +1,77 @@
+name: Docker Builder - Node 12
+
+on:
+  push:
+    paths:
+      - .github/workflows/node-12.yml
+  pull_request:
+    paths:
+      - .github/workflows/node-12.yml
+
+env:
+  NODE_VERSION: 12.22.1
+  ALPINE_VERSION: 3.12
+
+jobs:
+  build:
+    runs-on: 'ubuntu-20.04'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - run: echo "${{ env.NODE_VERSION }}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          image: tonistiigi/binfmt:latest
+          platforms: all
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: |
+            gperdomor/nx-docker
+            ghcr.io/gperdomor/nx-docker
+          flavor: |
+            latest=false
+            suffix=-alpine
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.NODE_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.NODE_VERSION }}
+            type=semver,pattern={{major}},value=${{ env.NODE_VERSION }}
+          labels: |
+            maintainer=gperdomor
+            org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PAT }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: ${{ github.ref == 'refs/heads/main' }}
+          context: ./docker
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NODE_VERSION=${{ env.NODE_VERSION }}
+            ALPINE_VERSION=${{ env.ALPINE_VERSION }}
+
+      - name: Image ditagsgest
+        run: echo ${{ steps.docker_build.outputs.digest }}
