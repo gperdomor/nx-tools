@@ -44,7 +44,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=${{ env.NODE_VERSION }}
             type=semver,pattern={{major}},value=${{ env.NODE_VERSION }}
           labels: |
-            maintainer=gperdomor
+            org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>
             org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package
 
       - name: Login to DockerHub
