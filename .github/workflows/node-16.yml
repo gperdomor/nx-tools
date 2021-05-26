@@ -8,17 +8,20 @@ on:
     paths:
       - .github/workflows/node-16.yml
 
-env:
-  NODE_VERSION: 16.1.0
+# env:
+#   NODE_VERSION: 16.1.0
 
 jobs:
   build:
     runs-on: 'ubuntu-20.04'
+    strategy:
+      matrix:
+        node-version: [16.0.0, 16.1.0, 16.2.0]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: echo "${{ env.NODE_VERSION }}"
+      - run: echo "${{ matrix.node-version }}"
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -40,9 +43,9 @@ jobs:
             latest=true
             suffix=-alpine
           tags: |
-            type=semver,pattern={{version}},value=${{ env.NODE_VERSION }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.NODE_VERSION }}
-            type=semver,pattern={{major}},value=${{ env.NODE_VERSION }}
+            type=semver,pattern={{version}},value=${{ matrix.node-version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ matrix.node-version }}
+            type=semver,pattern={{major}},value=${{ matrix.node-version }}
           labels: |
             org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>
             org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package
@@ -64,12 +67,12 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          push: ${{ github.ref == 'refs/heads/main' }}
+          push: true
           context: ./docker
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            NODE_VERSION=${{ env.NODE_VERSION }}
+            NODE_VERSION=${{ matrix.node-version }}
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
 
       - name: Image ditagsgest
