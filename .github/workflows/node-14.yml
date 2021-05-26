@@ -9,7 +9,7 @@ on:
       - .github/workflows/node-14.yml
 
 env:
-  NODE_VERSION: 14.16.1
+  NODE_VERSION: 14.17.0
 
 jobs:
   build:
