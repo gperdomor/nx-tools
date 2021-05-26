@@ -46,7 +46,7 @@
     "@nrwl/nx-plugin": "12.3.4",
     "@nrwl/tao": "12.3.4",
     "@nrwl/workspace": "12.3.4",
-    "@prisma/client": "2.22.1",
+    "@prisma/client": "2.23.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.6.1",
     "@typescript-eslint/eslint-plugin": "4.23.0",
