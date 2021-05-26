@@ -49,7 +49,7 @@
     "@prisma/client": "2.23.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.6.1",
-    "@typescript-eslint/eslint-plugin": "4.23.0",
+    "@typescript-eslint/eslint-plugin": "4.25.0",
     "@typescript-eslint/parser": "4.23.0",
     "chalk": "4.1.1",
     "commitizen": "4.2.4",
