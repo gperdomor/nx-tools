@@ -10,7 +10,6 @@ env:
   NX_BRANCH: ${{ github.event.pull_request.head.ref }}
   NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
-  PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 jobs:
   initialise:
@@ -95,6 +94,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
+    env:
+      PRISMA_HIDE_UPDATE_MESSAGE: 'true'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -122,6 +123,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x, 14.x, 16.x]
+    env:
+      PRISMA_HIDE_UPDATE_MESSAGE: 'true'
     steps:
       - uses: actions/checkout@v2
         with:
