@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@actions/exec": "1.0.4",
-    "@commitlint/cli": "12.1.1",
+    "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.1",
     "@nrwl/cli": "12.2.0",
     "@nrwl/devkit": "12.2.0",
