@@ -36,7 +36,7 @@
     "@actions/exec": "1.0.4",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
-    "@nrwl/cli": "12.2.0",
+    "@nrwl/cli": "12.3.4",
     "@nrwl/devkit": "12.2.0",
     "@nrwl/eslint-plugin-nx": "12.2.0",
     "@nrwl/jest": "12.2.0",
