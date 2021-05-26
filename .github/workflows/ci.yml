@@ -10,6 +10,7 @@ env:
   NX_BRANCH: ${{ github.event.pull_request.head.ref }}
   NX_RUN_GROUP: ${{ github.run_id }}
   NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+  PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 jobs:
   initialise:
