@@ -1,3 +1,3 @@
-export { getVendor } from './lib/ci';
 export { ContextProxyFactory } from './lib/context.factory';
-export { CIContext } from './lib/contexts/context';
+export { RepoMetadata, RunnerContext } from './lib/interfaces';
+export { RepoProxyFactory } from './lib/repo.factory';

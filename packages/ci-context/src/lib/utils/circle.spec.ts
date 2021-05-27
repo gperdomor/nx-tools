@@ -1,11 +1,14 @@
-import { CircleContext } from './circle.context';
+import { RunnerContext } from '../interfaces';
+import * as circle from './circle';
 
 describe('CircleCI Context', () => {
-  let env: NodeJS.ProcessEnv;
+  const ENV: NodeJS.ProcessEnv = process.env;
+  let context: RunnerContext;
 
   beforeEach(() => {
-    env = process.env;
+    jest.resetModules(); // Most important - it clears the cache
     process.env = {
+      ...ENV,
       CIRCLECI: 'true',
       CI_PULL_REQUEST: 'true',
       CIRCLE_SHA1: 'circleci-sha',
@@ -17,17 +20,17 @@ describe('CircleCI Context', () => {
   });
 
   afterEach(() => {
-    process.env = env;
+    process.env = ENV; // Restore old environment
   });
 
   it('Should be take proper values', () => {
-    const context = new CircleContext();
+    context = circle.context();
 
-    expect(context).toBeInstanceOf(CircleContext);
     expect(context).toMatchObject({
       actor: 'circleci-actor',
       eventName: 'pull_request',
       job: 'circleci-job',
+      payload: {},
       ref: 'refs/heads/circleci-ref-slug',
       runId: 40,
       runNumber: 40,
@@ -41,13 +44,13 @@ describe('CircleCI Context', () => {
     });
 
     it('Should be take proper values', () => {
-      const context = new CircleContext();
+      context = circle.context();
 
-      expect(context).toBeInstanceOf(CircleContext);
       expect(context).toMatchObject({
         actor: 'circleci-actor',
         eventName: 'pull_request',
         job: 'circleci-job',
+        payload: {},
         ref: 'refs/tags/circleci-tag',
         runId: 40,
         runNumber: 40,

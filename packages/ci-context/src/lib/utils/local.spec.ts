@@ -1,11 +1,14 @@
-import { LocalContext } from './local.context';
+import { RunnerContext } from '../interfaces';
+import * as local from './local';
 
 describe('LocalContext', () => {
-  let env: NodeJS.ProcessEnv;
+  const ENV: NodeJS.ProcessEnv = process.env;
+  let context: RunnerContext;
 
   beforeEach(() => {
-    env = process.env;
+    jest.resetModules(); // Most important - it clears the cache
     process.env = {
+      ...ENV,
       PATH: 'true',
       NXDOCKER_EVENT_NAME: 'local-event-name',
       NXDOCKER_SHA: 'local-sha',
@@ -19,17 +22,17 @@ describe('LocalContext', () => {
   });
 
   afterEach(() => {
-    process.env = env;
+    process.env = ENV; // Restore old environment
   });
 
   it('Should be take proper values', () => {
-    const context = new LocalContext();
+    context = local.context();
 
-    expect(context).toBeInstanceOf(LocalContext);
     expect(context).toMatchObject({
       actor: 'local-actor',
       eventName: 'local-event-name',
       job: 'local-job',
+      payload: {},
       ref: 'local-ref',
       runId: 300,
       runNumber: 30,
