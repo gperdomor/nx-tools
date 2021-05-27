@@ -1,4 +1,4 @@
-import { CIContext as Context } from '@nx-tools/ci-context';
+import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
@@ -20,13 +20,21 @@ export class Meta {
 
   private readonly inputs: Inputs;
   private readonly context: Context;
+  private readonly repo: RepoMetadata;
   private readonly tags: tcl.Tag[];
   private readonly flavor: fcl.Flavor;
   private readonly date: Date;
 
-  constructor(inputs: Inputs, context: Context) {
+  constructor(inputs: Inputs, context: Context, repo: RepoMetadata) {
+    // Needs to override Git reference with pr ref instead of upstream branch ref
+    // for pull_request_target event
+    if (/pull_request_target/.test(context.eventName)) {
+      context.ref = `refs/pull/${context.payload.number}/merge`;
+    }
+
     this.inputs = inputs;
     this.context = context;
+    this.repo = repo;
     this.tags = tcl.Transform(inputs.tags);
     this.flavor = fcl.Transform(inputs.flavor);
     this.date = new Date();
@@ -41,7 +49,7 @@ export class Meta {
     };
 
     for (const tag of this.tags) {
-      if (tag.attrs['enable'] == 'false') {
+      if (!/true/i.test(tag.attrs['enable'])) {
         continue;
       }
       switch (tag.type) {
@@ -96,22 +104,16 @@ export class Meta {
     }
 
     const currentDate = this.date;
-    const vraw = handlebars.compile(tag.attrs['pattern'])({
-      date: function (format) {
-        return moment(currentDate).utc().format(format);
-      },
-    });
+    const vraw = this.setValue(
+      handlebars.compile(tag.attrs['pattern'])({
+        date: function (format) {
+          return moment(currentDate).utc().format(format);
+        },
+      }),
+      tag,
+    );
 
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
-    }
-
-    return version;
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
   private procSemver(version: Version, tag: tcl.Tag): Version {
@@ -121,7 +123,7 @@ export class Meta {
 
     let vraw: string;
     if (tag.attrs['value'].length > 0) {
-      vraw = tag.attrs['value'];
+      vraw = this.setGlobalExp(tag.attrs['value']);
     } else {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
@@ -135,26 +137,13 @@ export class Meta {
       includePrerelease: true,
     });
     if (semver.prerelease(vraw)) {
-      vraw = handlebars.compile('{{version}}')(sver);
-      if (version.main == undefined) {
-        version.main = vraw;
-      } else if (vraw !== version.main) {
-        version.partial.push(vraw);
-      }
+      vraw = this.setValue(handlebars.compile('{{version}}')(sver), tag);
     } else {
-      vraw = handlebars.compile(tag.attrs['pattern'])(sver);
-      if (version.main == undefined) {
-        version.main = vraw;
-      } else if (vraw !== version.main) {
-        version.partial.push(vraw);
-      }
+      vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
       latest = true;
     }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? latest : this.flavor.latest == 'true';
-    }
 
-    return version;
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? latest : this.flavor.latest == 'true');
   }
 
   private procMatch(version: Version, tag: tcl.Tag): Version {
@@ -164,12 +153,11 @@ export class Meta {
 
     let vraw: string;
     if (tag.attrs['value'].length > 0) {
-      vraw = tag.attrs['value'];
+      vraw = this.setGlobalExp(tag.attrs['value']);
     } else {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
 
-    let latest = false;
     let tmatch;
     const isRegEx = tag.attrs['pattern'].match(/^\/(.+)\/(.*)$/);
     if (isRegEx) {
@@ -177,57 +165,33 @@ export class Meta {
     } else {
       tmatch = vraw.match(tag.attrs['pattern']);
     }
-    if (tmatch) {
-      vraw = tmatch[tag.attrs['group']];
-      latest = true;
+    if (!tmatch) {
+      core.warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
+      return version;
+    }
+    if (typeof tmatch[tag.attrs['group']] === 'undefined') {
+      core.warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
+      return version;
     }
 
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? latest : this.flavor.latest == 'true';
-    }
-
-    return version;
+    vraw = this.setValue(tmatch[tag.attrs['group']], tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
 
   private procRefBranch(version: Version, tag: tcl.Tag): Version {
     if (!/^refs\/heads\//.test(this.context.ref)) {
       return version;
     }
-
-    const vraw = this.setFlavor(this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-'), tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
-    }
-
-    return version;
+    const vraw = this.setValue(this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-'), tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
   private procRefTag(version: Version, tag: tcl.Tag): Version {
     if (!/^refs\/tags\//.test(this.context.ref)) {
       return version;
     }
-
-    const vraw = this.setFlavor(this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-'), tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true';
-    }
-
-    return version;
+    const vraw = this.setValue(this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-'), tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
 
   private procRefPr(version: Version, tag: tcl.Tag): Version {
@@ -235,17 +199,8 @@ export class Meta {
       return version;
     }
 
-    const vraw = this.setFlavor(this.context.ref.replace(/^refs\/pull\//g, '').replace(/\/merge$/g, ''), tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
-    }
-
-    return version;
+    const vraw = this.setValue(this.context.ref.replace(/^refs\/pull\//g, '').replace(/\/merge$/g, ''), tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
   private procEdge(version: Version, tag: tcl.Tag): Version {
@@ -255,37 +210,19 @@ export class Meta {
 
     let val = this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
     if (tag.attrs['branch'].length == 0) {
-      tag.attrs['branch'] = this.context.repo.default_branch;
+      tag.attrs['branch'] = this.repo.default_branch;
     }
     if (tag.attrs['branch'] === val) {
       val = 'edge';
     }
 
-    const vraw = this.setFlavor(val, tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
-    }
-
-    return version;
+    const vraw = this.setValue(val, tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
   private procRaw(version: Version, tag: tcl.Tag): Version {
-    const vraw = this.setFlavor(tag.attrs['value'], tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
-    }
-
-    return version;
+    const vraw = this.setValue(this.setGlobalExp(tag.attrs['value']), tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
   private procSha(version: Version, tag: tcl.Tag): Version {
@@ -293,31 +230,65 @@ export class Meta {
       return version;
     }
 
-    const vraw = this.setFlavor(this.context.sha.substr(0, 8), tag);
-    if (version.main == undefined) {
-      version.main = vraw;
-    } else if (vraw !== version.main) {
-      version.partial.push(vraw);
-    }
-    if (version.latest == undefined) {
-      version.latest = this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true';
+    let val = this.context.sha;
+    if (tag.attrs['format'] === tcl.ShaFormat.Short) {
+      val = this.context.sha.substr(0, 7);
     }
 
+    const vraw = this.setValue(val, tag);
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
+  }
+
+  private static setVersion(version: Version, val: string, latest: boolean): Version {
+    if (val.length == 0) {
+      return version;
+    }
+    if (version.main == undefined) {
+      version.main = val;
+    } else if (val !== version.main) {
+      version.partial.push(val);
+    }
+    if (version.latest == undefined) {
+      version.latest = latest;
+    }
     return version;
   }
 
-  private setFlavor(val: string, tag: tcl.Tag): string {
-    if (tag.attrs['prefix'].length > 0) {
-      val = `${tag.attrs['prefix']}${val}`;
+  private setValue(val: string, tag: tcl.Tag): string {
+    // eslint-disable-next-line no-prototype-builtins
+    if (tag.attrs.hasOwnProperty('prefix')) {
+      val = `${this.setGlobalExp(tag.attrs['prefix'])}${val}`;
     } else if (this.flavor.prefix.length > 0) {
-      val = `${this.flavor.prefix}${val}`;
+      val = `${this.setGlobalExp(this.flavor.prefix)}${val}`;
     }
-    if (tag.attrs['suffix'].length > 0) {
-      val = `${val}${tag.attrs['suffix']}`;
+    // eslint-disable-next-line no-prototype-builtins
+    if (tag.attrs.hasOwnProperty('suffix')) {
+      val = `${val}${this.setGlobalExp(tag.attrs['suffix'])}`;
     } else if (this.flavor.suffix.length > 0) {
-      val = `${val}${this.flavor.suffix}`;
+      val = `${val}${this.setGlobalExp(this.flavor.suffix)}`;
     }
     return val;
+  }
+
+  private setGlobalExp(val): string {
+    const ctx = this.context;
+    return handlebars.compile(val)({
+      branch: function () {
+        if (!/^refs\/heads\//.test(ctx.ref)) {
+          return '';
+        }
+        return ctx.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
+      },
+      tag: function () {
+        if (!/^refs\/tags\//.test(ctx.ref)) {
+          return '';
+        }
+        return ctx.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
+      },
+      sha: function () {
+        return ctx.sha.substr(0, 7);
+      },
+    });
   }
 
   public getTags(): Array<string> {
@@ -341,38 +312,50 @@ export class Meta {
 
   public getLabels(): Array<string> {
     const labels: Array<string> = [
-      `org.opencontainers.image.title=${this.context.repo?.name || ''}`,
-      `org.opencontainers.image.description=${this.context.repo?.description || ''}`,
-      `org.opencontainers.image.url=${this.context.repo?.html_url || ''}`,
-      `org.opencontainers.image.source=${this.context.repo?.html_url || ''}`,
+      `org.opencontainers.image.title=${this.repo.name || ''}`,
+      `org.opencontainers.image.description=${this.repo.description || ''}`,
+      `org.opencontainers.image.url=${this.repo.html_url || ''}`,
+      `org.opencontainers.image.source=${this.repo.html_url || ''}`,
       `org.opencontainers.image.version=${this.version.main || ''}`,
       `org.opencontainers.image.created=${this.date.toISOString()}`,
       `org.opencontainers.image.revision=${this.context.sha || ''}`,
-      `org.opencontainers.image.licenses=${this.context.repo?.license || ''}`,
+      `org.opencontainers.image.licenses=${this.repo.license?.spdx_id || ''}`,
     ];
     labels.push(...this.inputs.labels);
     return labels;
   }
 
-  public getBakeFile(): string {
-    const jsonLabels = {};
-    for (const label of this.getLabels()) {
-      const matches = label.match(/([^=]*)=(.*)/);
-      if (!matches) {
-        continue;
-      }
-      jsonLabels[matches[1]] = matches[2];
-    }
+  public getJSON(): Record<string, unknown> {
+    return {
+      tags: this.getTags(),
+      labels: this.getLabels().reduce((res, label) => {
+        const matches = label.match(/([^=]*)=(.*)/);
+        if (!matches) {
+          return res;
+        }
+        res[matches[1]] = matches[2];
+        return res;
+      }, {}),
+    };
+  }
 
-    const bakeFile = path.join(tmpDir(), 'ghaction-docker-meta-bake.json').split(path.sep).join(path.posix.sep);
+  public getBakeFile(): string {
+    const bakeFile = path.join(tmpDir(), 'docker-metadata-action-bake.json').split(path.sep).join(path.posix.sep);
     fs.writeFileSync(
       bakeFile,
       JSON.stringify(
         {
           target: {
-            'ghaction-docker-meta': {
+            [this.inputs.bakeTarget]: {
               tags: this.getTags(),
-              labels: jsonLabels,
+              labels: this.getLabels().reduce((res, label) => {
+                const matches = label.match(/([^=]*)=(.*)/);
+                if (!matches) {
+                  return res;
+                }
+                res[matches[1]] = matches[2];
+                return res;
+              }, {}),
               args: {
                 DOCKER_META_IMAGES: this.inputs.images.join(','),
                 DOCKER_META_VERSION: this.version.main,
@@ -393,7 +376,7 @@ export const interpolate = (envValue) => {
   const matches = envValue.match(/(.?\${?(?:[a-zA-Z0-9_]+)?}?)/g) || [];
 
   return matches.reduce((newEnv, match) => {
-    const parts = /(.?)\${?([a-zA-Z0-9_]+)?}?/g.exec(match);
+    const parts = /(.?)\${?([a-zA-Z0-9_]+)?}?/g.exec(match)!;
     const prefix = parts[1];
 
     let value, replacePart;

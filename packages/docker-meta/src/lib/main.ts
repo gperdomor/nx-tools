@@ -1,19 +1,18 @@
-import { CIContext as Context, ContextProxyFactory } from '@nx-tools/ci-context';
+import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as fs from 'fs';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
 
-export const getMetadata = async (options: Partial<Inputs>) => {
+async function run(options: Partial<Inputs>): Promise<Meta | void> {
   try {
     const inputs: Inputs = await getInputs(options);
-
     if (inputs.images.length == 0) {
       throw new Error(`images input required`);
     }
 
     const context: Context = ContextProxyFactory.create();
-    // const repo: ReposGetResponseData = await github.repo(inputs.githubToken);
+    const repo: RepoMetadata = await RepoProxyFactory.create(inputs.githubToken);
     core.startGroup(`Context info`);
     core.info(`eventName: ${context.eventName}`);
     core.info(`sha: ${context.sha}`);
@@ -23,7 +22,7 @@ export const getMetadata = async (options: Partial<Inputs>) => {
     core.info(`runId: ${context.runId}`);
     core.endGroup();
 
-    const meta: Meta = new Meta(inputs, context);
+    const meta: Meta = new Meta(inputs, context, repo);
 
     const version: Version = meta.version;
     if (meta.version.main == undefined || meta.version.main.length == 0) {
@@ -33,7 +32,6 @@ export const getMetadata = async (options: Partial<Inputs>) => {
       core.info(version.main || '');
       core.endGroup();
     }
-    // core.setOutput('version', version.main || '');
 
     // Docker tags
     const tags: Array<string> = meta.getTags();
@@ -46,7 +44,6 @@ export const getMetadata = async (options: Partial<Inputs>) => {
       }
       core.endGroup();
     }
-    // core.setOutput('tags', tags.join(inputs.sepTags));
 
     // Docker labels
     const labels: Array<string> = meta.getLabels();
@@ -55,17 +52,23 @@ export const getMetadata = async (options: Partial<Inputs>) => {
       core.info(label);
     }
     core.endGroup();
-    // core.setOutput('labels', labels.join(inputs.sepLabels));
+
+    // JSON
+    const jsonOutput = meta.getJSON();
+    core.startGroup(`JSON output`);
+    core.info(JSON.stringify(jsonOutput, null, 2));
+    core.endGroup();
 
     // Bake definition file
     const bakeFile: string = meta.getBakeFile();
     core.startGroup(`Bake definition file`);
     core.info(fs.readFileSync(bakeFile, 'utf8'));
     core.endGroup();
-    // core.setOutput('bake-file', bakeFile);
 
     return meta;
   } catch (error) {
     core.setFailed(error.message);
   }
-};
+}
+
+export const getMetadata = run;
