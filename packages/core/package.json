@@ -4,10 +4,9 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-rc.1",
   "dependencies": {
-    "@actions/exec": "1.0.4",
-    "ci-info": "3.1.1",
-    "chalk": "4.1.1"
+    "@actions/core": "1.3.0",
+    "@actions/exec": "1.0.4"
   }
 }

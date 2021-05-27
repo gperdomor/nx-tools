@@ -1,31 +1,10 @@
-import * as os from 'os';
-
-const groups = [];
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chalk = require('chalk');
+import { getInput as acGetInput, InputOptions as acInputOptions } from '@actions/core';
 
 /**
  * Interface for getInput options
  */
-export interface InputOptions {
-  /** Optional. Whether the input is required. If required and not present, will throw. Defaults to false */
-  required?: boolean;
-}
-
-/**
- * The code to exit an action
- */
-export enum ExitCode {
-  /**
-   * A code indicating that the action was successful
-   */
-  Success = 0,
-
-  /**
-   * A code indicating that the action was a failure
-   */
-  Failure = 1,
+export interface InputOptions extends acInputOptions {
+  fallback?: string;
 }
 
 //-----------------------------------------------------------------------
@@ -33,141 +12,59 @@ export enum ExitCode {
 //-----------------------------------------------------------------------
 
 /**
- * Gets the value of an input.  The value is also trimmed.
+ * Gets the value of an input.
+ * Unless trimWhitespace is set to false in InputOptions, the value is also trimmed.
+ * Returns an empty string if the value is not defined.
  *
  * @param     name     name of the input to get
  * @param     options  optional. See InputOptions.
  * @returns   string
  */
-export const getInput = (name: string, fallback?: string, options?: InputOptions): string => {
-  const val: string = process.env[`INPUT_${name.replace(/[ -]/g, '_').toUpperCase()}`] || fallback || '';
+export function getInput(name: string, options?: InputOptions): string {
+  let val: string;
+
+  try {
+    val = acGetInput(name, options);
+
+    if (!val && options?.fallback) {
+      val = options.fallback;
+    }
+  } catch (error) {
+    val = options?.fallback || '';
+  }
+
   if (options && options.required && !val) {
     throw new Error(`Input required and not supplied: ${name}`);
   }
 
+  if (options && options.trimWhitespace === false) {
+    return val;
+  }
+
   return val.trim();
-};
-
-//-----------------------------------------------------------------------
-// Results
-//-----------------------------------------------------------------------
-
-/**
- * Sets the action status to failed.
- * When the action exits it will be with an exit code of 1
- * @param message add error issue message
- */
-export function setFailed(message: string | Error): void {
-  process.exitCode = ExitCode.Failure;
-
-  error(message);
 }
 
-//-----------------------------------------------------------------------
-// Logging Commands
-//-----------------------------------------------------------------------
-
 /**
- * Gets whether Actions Step Debug is on or not
- */
-export const isDebug = (): boolean => {
-  return process.env['RUNNER_DEBUG'] === '1';
-};
-
-/**
- * Writes debug message to user log
- * @param message debug message
- */
-export const debug = (message: string): void => {
-  info(chalk.green(`::debug::${message}`));
-};
-
-/**
- * Adds an error issue
- * @param message error issue message. Errors will be converted to string via toString()
- */
-export const error = (message: string | Error): void => {
-  info(chalk.red(`::error::${message instanceof Error ? message.toString() : message}`));
-};
-
-/**
- * Adds an warning issue
- * @param message warning issue message. Errors will be converted to string via toString()
- */
-export const warning = (message: string | Error): void => {
-  info(chalk.yellow(`::warning::${message instanceof Error ? message.toString() : message}`));
-};
-
-/**
- * Writes info to log with console.log.
- * @param message info message
- */
-export const info = (message: string): void => {
-  process.stdout.write(message + os.EOL);
-};
-
-/**
- * Begin an output group.
+ * Gets the input value of the boolean type in the YAML 1.2 "core schema" specification.
+ * Support boolean input list: `true | True | TRUE | false | False | FALSE` .
+ * The return value is also in boolean type.
+ * ref: https://yaml.org/spec/1.2/spec.html#id2804923
  *
- * Output until the next `groupEnd` will be foldable in this group
- *
- * @param name The name of the output group
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   boolean
  */
-export const startGroup = (name: string): void => {
-  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
-
-  if (GITLAB_CI) {
-    const timestamp = Math.trunc(Date.now() / 1000);
-    const groupName = name.toLocaleLowerCase().replace(/\s/g, '-');
-    groups.push(groupName);
-    info(`\\e[0Ksection_start:${timestamp}:${groupName}\\r\\e[0K${name}`);
-  } else if (GITHUB_ACTIONS) {
-    info(`::group::${name}`);
-  } else {
-    groups.push(name);
-    info(`-->::${name}::`);
-  }
-};
-
-/**
- * End an output group.
- */
-export const endGroup = (): void => {
-  const { GITHUB_ACTIONS, GITLAB_CI } = process.env;
-
-  if (GITLAB_CI) {
-    const timestamp = Math.trunc(Date.now() / 1000);
-    const groupName = groups.pop() || '';
-    info(`\\e[0Ksection_end:${timestamp}:${groupName}\\r\\e[0K`);
-  } else if (GITHUB_ACTIONS) {
-    info('::endgroup::');
-  } else {
-    const groupName = groups.pop() || '';
-    info(`<--::${groupName}::`);
-  }
-};
-
-/**
- * Wrap an asynchronous function call in a group.
- *
- * Returns the same type as the function itself.
- *
- * @param name The name of the group
- * @param fn The function to wrap in the group
- */
-export const group = async <T>(name: string, fn: () => Promise<T>): Promise<T> => {
-  startGroup(name);
-
-  let result: T;
-
-  try {
-    result = await fn();
-  } finally {
-    endGroup();
-  }
-
-  return result;
-};
+export function getBooleanInput(name: string, options?: InputOptions): boolean {
+  const trueValue = ['true', 'True', 'TRUE'];
+  const falseValue = ['false', 'False', 'FALSE'];
+  const val = getInput(name, options);
+  if (trueValue.includes(val)) return true;
+  if (falseValue.includes(val)) return false;
+  throw new TypeError(
+    `Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` +
+      `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``,
+  );
+}
 
 //-----------------------------------------------------------------------
 // Utils Commands
@@ -178,6 +75,3 @@ export const asyncForEach = async <T>(array: T[], callback: (value: T, i: number
     await callback(array[index], index, array);
   }
 };
-
-export const parseBoolean = (value?: boolean): 'true' | 'false' | undefined =>
-  value === undefined ? undefined : value ? 'true' : 'false';

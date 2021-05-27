@@ -1,21 +1,17 @@
-import { EOL } from 'os';
-import { debug, endGroup, error, getInput, info, startGroup, warning } from './core';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chalk = require('chalk');
-
-jest.mock('chalk');
-
-chalk.green = jest.fn();
-chalk.red = jest.fn();
-chalk.yellow = jest.fn();
-
-function assertWriteCalls(calls: string[]): void {
-  expect(process.stdout.write).toHaveBeenCalledWith(calls[0]);
-}
-
-let originalWriteFunction: (str: string) => boolean;
+import { asyncForEach, getBooleanInput, getInput } from './core';
 
 describe('Core', () => {
+  const ENV: NodeJS.ProcessEnv = process.env;
+
+  beforeEach(() => {
+    jest.resetModules(); // Most important - it clears the cache
+    process.env = { ...ENV }; // Make a copy
+  });
+
+  afterEach(() => {
+    process.env = ENV; // Restore old environment
+  });
+
   describe('getInput', () => {
     beforeAll(() => {
       process.env.INPUT_REQUIRED_EXIST = 'Value 1';
@@ -26,216 +22,193 @@ describe('Core', () => {
       process.env.INPUT_TB = '  TRIM BOTH  ';
     });
 
-    describe('When Input is required', () => {
-      it('should return the input if exists', () => {
-        expect(getInput('REQUIRED_EXIST', undefined, { required: true })).toEqual('Value 1');
-        expect(getInput('REQUIRED_EXIST__', 'fb', { required: true })).toEqual('fb');
+    describe('When env variable is defined', () => {
+      describe('and no fallback value is provided', () => {
+        test.each([
+          ['REQUIRED_EXIST', 'Value 1'],
+          ['V1', 'Value 1'],
+          ['V2', '101'],
+          ['TL', 'TRIM LEFT'],
+          ['TR', 'TRIM RIGHT'],
+          ['TB', 'TRIM BOTH'],
+        ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: string) => {
+          expect(getInput(name)).toEqual(expected);
+          expect(getInput(name, { required: true })).toEqual(expected);
+        });
       });
 
-      it('env variables take priority', () => {
-        expect(getInput('REQUIRED_EXIST', 'fallback', { required: true })).toEqual('Value 1');
-        expect(getInput('REQUIRED_EXIST___', '   fallback', { required: true })).toEqual('fallback');
-      });
-
-      it('should thrown error if not exists', () => {
-        expect(() => getInput('REQUIRED_NOT_EXIST', undefined, { required: true })).toThrow(
-          /Input required and not supplied: REQUIRED_NOT_EXIST/,
+      describe('and fallback value is provided', () => {
+        test.each([
+          ['REQUIRED_EXIST', 'fallbalck-1', 'Value 1'],
+          ['V1', 'fallbalck-2', 'Value 1'],
+          ['V2', 'fallbalck-3', '101'],
+          ['TL', 'fallbalck-4', 'TRIM LEFT'],
+          ['TR', 'fallbalck-5', 'TRIM RIGHT'],
+          ['TB', 'fallbalck-6', 'TRIM BOTH'],
+        ])(
+          'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
+          (name: string, fallback: string, expected: string) => {
+            expect(getInput(name, { fallback })).toEqual(expected);
+            expect(getInput(name, { fallback, required: true })).toEqual(expected);
+          },
         );
       });
     });
 
-    it('should return the a trimmed string', () => {
-      expect(getInput('TL')).toEqual('TRIM LEFT');
-      expect(getInput('TR')).toEqual('TRIM RIGHT');
-      expect(getInput('TB')).toEqual('TRIM BOTH');
+    describe('When env variable not exists', () => {
+      describe('and no fallback value is provided', () => {
+        test.each([['__A'], ['__B'], ['__C']])(
+          'given a not existing env variable named INPUT_%s, should return an empty string',
+          (name: string) => {
+            expect(getInput(name)).toEqual('');
+          },
+        );
 
-      expect(getInput('V1')).toEqual('Value 1');
-      expect(getInput('V2')).toEqual('101');
-    });
+        test.each([['__A'], ['__B'], ['__C']])(
+          'given a not existing env variable named INPUT_%s, and required is true, should throw an error',
+          (name: string) => {
+            function getInputValue() {
+              getInput(name, { required: true });
+            }
 
-    it('should return empty string if not exist', () => {
-      expect(getInput('INPUT_ASDFGHJK')).toEqual('');
+            expect(getInputValue).toThrowError(new Error(`Input required and not supplied: ${name}`));
+          },
+        );
+      });
+
+      describe('and fallback value is provided', () => {
+        test.each([
+          ['__O', 'fallbalck-1'],
+          ['__P', 'fallbalck-2'],
+          ['__Q', 'fallbalck-3'],
+        ])(
+          'given a not existing env variable named INPUT_%s, fallback: %s, should return the fallback value',
+          (name: string, fallback: string) => {
+            expect(getInput(name, { fallback })).toEqual(fallback);
+            expect(getInput(name, { required: true, fallback })).toEqual(fallback);
+          },
+        );
+      });
     });
   });
 
-  describe('info', () => {
+  describe('getBooleanInput', () => {
     beforeAll(() => {
-      originalWriteFunction = process.stdout.write;
+      process.env.INPUT_T1 = 'true';
+      process.env.INPUT_T2 = 'True';
+      process.env.INPUT_T3 = 'TRUE';
+      process.env.INPUT_T4 = '  TRUE  ';
+      process.env.INPUT_TX = 'invalid';
+      process.env.INPUT_F1 = 'false';
+      process.env.INPUT_F2 = 'False';
+      process.env.INPUT_F3 = 'FALSE';
+      process.env.INPUT_F4 = '  FALSE  ';
+      process.env.INPUT_FX = 'invalid';
     });
 
-    beforeEach(() => {
-      process.stdout.write = jest.fn();
-    });
+    describe('When env variable is defined', () => {
+      describe('and no fallback value is provided', () => {
+        test.each([
+          ['T1', true],
+          ['T2', true],
+          ['T3', true],
+          ['T4', true],
+          ['F1', false],
+          ['F2', false],
+          ['F3', false],
+          ['F4', false],
+        ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: boolean) => {
+          expect(getBooleanInput(name)).toEqual(expected);
+          expect(getBooleanInput(name, { required: true })).toEqual(expected);
+        });
+      });
 
-    afterAll(() => {
-      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
-    });
+      describe('and fallback value is provided', () => {
+        test.each([
+          ['T1', 'fallback-1', true],
+          ['T2', 'fallback-2', true],
+          ['T3', 'fallback-3', true],
+          ['T4', 'fallback-3', true],
+          ['F1', 'fallback-4', false],
+          ['F2', 'fallback-5', false],
+          ['F3', 'fallback-6', false],
+          ['F4', 'fallback-6', false],
+        ])(
+          'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
+          (name: string, fallback: string, expected: boolean) => {
+            expect(getBooleanInput(name, { fallback })).toEqual(expected);
+            expect(getBooleanInput(name, { fallback, required: true })).toEqual(expected);
+          },
+        );
+      });
 
-    it('should write to stdout', () => {
-      info('value to be written');
+      describe('and value is not boolean', () => {
+        test.each([['TX'], ['FX']])(
+          'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
+          (name: string) => {
+            function getBooleanValue() {
+              getBooleanInput(name);
+            }
 
-      assertWriteCalls([`value to be written${EOL}`]);
-    });
-  });
-
-  describe('loggers', () => {
-    it('debug', () => {
-      debug('this is a debug message');
-      expect(chalk.green).toBeCalledWith('::debug::this is a debug message');
-    });
-
-    it('warning', () => {
-      warning('this is a warning message');
-      expect(chalk.yellow).toBeCalledWith('::warning::this is a warning message');
-    });
-
-    it('error', () => {
-      error('this is a error message');
-      expect(chalk.red).toBeCalledWith('::error::this is a error message');
-    });
-  });
-
-  describe('Running on Local', () => {
-    const env: NodeJS.ProcessEnv = process.env;
-
-    beforeAll(() => {
-      jest.resetModules();
-      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
-      process.env = { ...rest, RUN_LOCAL: 'true' };
-
-      originalWriteFunction = process.stdout.write;
-    });
-
-    beforeEach(() => {
-      process.stdout.write = jest.fn();
-    });
-
-    afterAll(() => {
-      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
-      process.env = env; // Restore old environment
-    });
-
-    describe('startGroup', () => {
-      it('should write to stdout with proper format', () => {
-        startGroup('group-name');
-        assertWriteCalls([`-->::group-name::${EOL}`]);
+            expect(getBooleanValue).toThrowError(TypeError);
+          },
+        );
       });
     });
 
-    describe('endGroup', () => {
-      it('should write to stdout with proper format', () => {
-        endGroup();
-        assertWriteCalls([`<--::group-name::${EOL}`]);
+    describe('When env variable not exists', () => {
+      describe('and no fallback value is provided', () => {
+        test.each([['__A'], ['__B'], ['__C']])(
+          'given a not existing env variable named INPUT_%s, should throw an error',
+          (name: string) => {
+            function getBooleanValue() {
+              getBooleanInput(name);
+            }
+
+            expect(getBooleanValue).toThrowError(TypeError);
+          },
+        );
       });
-    });
-  });
 
-  describe('Running on GitHub Actions', () => {
-    const env: NodeJS.ProcessEnv = process.env;
+      describe('and fallback value is provided', () => {
+        test.each([
+          ['__O', 'true', true],
+          ['__P', 'FALSE', false],
+          ['__Q', '    True', true],
+        ])(
+          'given a not existing env variable named INPUT_%s, fallback: %s, should return: %s',
+          (name: string, fallback: string, expected) => {
+            expect(getBooleanInput(name, { fallback })).toEqual(expected);
+          },
+        );
 
-    beforeAll(() => {
-      jest.resetModules();
-      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
-      process.env = { ...rest, GITHUB_ACTIONS: 'true' };
+        test.each([
+          ['__O', 'asdff'],
+          ['__P', 'invalid'],
+        ])(
+          'given a not existing env variable named INPUT_%s, fallback: %s, should throw an error',
+          (name: string, fallback: string) => {
+            function getBooleanValue() {
+              getBooleanInput(name, { fallback });
+            }
 
-      originalWriteFunction = process.stdout.write;
-    });
-
-    beforeEach(() => {
-      process.stdout.write = jest.fn();
-    });
-
-    afterAll(() => {
-      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
-      process.env = env; // Restore old environment
-    });
-
-    describe('startGroup', () => {
-      it('should write to stdout with proper format', () => {
-        startGroup('group-name');
-        assertWriteCalls([`::group::group-name${EOL}`]);
-      });
-    });
-
-    describe('endGroup', () => {
-      it('should write to stdout with proper format', () => {
-        endGroup();
-        assertWriteCalls([`::endgroup::${EOL}`]);
-      });
-    });
-  });
-
-  describe('Running on GitLab CI', () => {
-    const env: NodeJS.ProcessEnv = process.env;
-
-    beforeAll(() => {
-      jest.resetModules();
-      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
-      process.env = { ...rest, GITLAB_CI: 'true' };
-
-      originalWriteFunction = process.stdout.write;
-    });
-
-    beforeEach(() => {
-      process.stdout.write = jest.fn();
-    });
-
-    afterAll(() => {
-      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
-      process.env = env; // Restore old environment
-    });
-
-    describe('startGroup', () => {
-      it('should write to stdout with proper format', () => {
-        jest.spyOn(Date, 'now').mockImplementation(() => 1487076708000);
-        startGroup('Group Name');
-        assertWriteCalls(['\\e[0Ksection_start:1487076708:group-name\\r\\e[0KGroup Name' + EOL]);
-      });
-    });
-
-    describe('endGroup', () => {
-      it('should write to stdout with proper format', () => {
-        jest.spyOn(Date, 'now').mockImplementation(() => 1787076708000);
-        endGroup();
-        assertWriteCalls(['\\e[0Ksection_end:1787076708:group-name\\r\\e[0K' + EOL]);
+            expect(getBooleanValue).toThrowError(TypeError);
+          },
+        );
       });
     });
   });
 
-  describe('Running on CircleCI', () => {
-    const env: NodeJS.ProcessEnv = process.env;
+  describe('asyncForEach', () => {
+    it('executes async tasks sequentially', async () => {
+      const testValues = [1, 2, 3, 4, 5];
+      const results: number[] = [];
 
-    beforeAll(() => {
-      jest.resetModules();
-      const { RUN_LOCAL, GITLAB_CI, CIRCLECI, GITHUB_ACTIONS, ...rest } = env;
-      process.env = { ...rest, CIRCLECI: 'true' };
-
-      originalWriteFunction = process.stdout.write;
-    });
-
-    beforeEach(() => {
-      process.stdout.write = jest.fn();
-    });
-
-    afterAll(() => {
-      process.stdout.write = originalWriteFunction as unknown as (str: string) => boolean;
-      process.env = env; // Restore old environment
-    });
-
-    describe('startGroup', () => {
-      it('should write to stdout with proper format', () => {
-        jest.spyOn(Date, 'now').mockImplementation(() => 1487076708000);
-        startGroup('Group Name');
-        assertWriteCalls([`-->::Group Name::${EOL}`]);
+      await asyncForEach(testValues, async (value) => {
+        results.push(value);
       });
-    });
 
-    describe('endGroup', () => {
-      it('should write to stdout with proper format', () => {
-        jest.spyOn(Date, 'now').mockImplementation(() => 1787076708000);
-        endGroup();
-        assertWriteCalls([`<--::Group Name::${EOL}`]);
-      });
+      expect(results).toEqual(testValues);
     });
   });
 });
