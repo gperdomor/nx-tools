@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as context from './context';

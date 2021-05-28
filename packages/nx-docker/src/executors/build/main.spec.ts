@@ -1,3 +1,5 @@
+import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
+import * as path from 'path';
 import { MetaMode } from './context';
 import executor from './main';
 import { BuildExecutorSchema } from './schema';
@@ -16,6 +18,11 @@ const options: BuildExecutorSchema = {
 };
 
 jest.setTimeout(60 * 1000);
+
+jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  return <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'));
+});
 
 describe('Build Executor', () => {
   const env: NodeJS.ProcessEnv = process.env;

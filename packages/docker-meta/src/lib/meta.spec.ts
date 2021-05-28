@@ -2736,7 +2736,7 @@ describe('json', () => {
         }
       }
     ]
-  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: {}) => {
+  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: Record<string,unknown>) => {
     process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
     const context = ContextProxyFactory.create();
     console.log(process.env, context);
@@ -3043,7 +3043,7 @@ describe('bake', () => {
         }
       }
     ]
-  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: {}) => {
+  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: Record<string,unknown>) => {
     process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
     const context = ContextProxyFactory.create();
     console.log(process.env, context);
