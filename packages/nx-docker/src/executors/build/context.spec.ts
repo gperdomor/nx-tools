@@ -1,9 +1,9 @@
-/* eslint-disable no-useless-escape */
 import * as fs from 'fs';
 import * as path from 'path';
 import * as context from './context';
 
 const pgp = `-----BEGIN PGP PRIVATE KEY BLOCK-----
+
 lQdGBF6tzaABEACjFbX7PFEG6vDPN2MPyxYW7/3o/sonORj4HXUFjFxxJxktJ3x3
 N1ayHPJ1lqIeoiY7jVbq0ZdEVGkd3YsKG9ZMdZkzGzY6PQPC/+M8OnzOiOPwUdWc
 +Tdhh115LvVz0MMKYiab6Sn9cgxj9On3LCQKpjvMDpPo9Ttf6v2GQIw8h2ACvdzQ
@@ -110,7 +110,7 @@ PejgXO0uIRolYQ3sz2tMGhx1MfBqH64=
 -----END PGP PRIVATE KEY BLOCK-----`;
 
 jest.spyOn(context, 'defaultContext').mockImplementation((): string => {
-  return 'https://github.com/docker/build-push-action.git#test-jest';
+  return 'https://github.com/docker/build-push-action.git#refs/heads/test-jest';
 });
 
 jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
@@ -125,7 +125,7 @@ jest.spyOn(context, 'tmpNameSync').mockImplementation((): string => {
   return path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
 });
 
-fdescribe('getArgs', () => {
+describe('getArgs', () => {
   beforeEach(() => {
     process.env = Object.keys(process.env).reduce((object, key) => {
       if (!key.startsWith('INPUT_')) {
@@ -160,7 +160,7 @@ fdescribe('getArgs', () => {
         '--build-arg', 'MY_ARG=val1,val2,val3',
         '--build-arg', 'ARG=val',
         '--iidfile', '/tmp/.docker-build-push-jest/iidfile',
-        'https://github.com/docker/build-push-action.git#test-jest'
+        'https://github.com/docker/build-push-action.git#refs/heads/test-jest'
       ]
     ],
     [
@@ -174,7 +174,7 @@ fdescribe('getArgs', () => {
         '--tag', 'name/app:7.4',
         '--tag', 'name/app:latest',
         '--iidfile', '/tmp/.docker-build-push-jest/iidfile',
-        'https://github.com/docker/build-push-action.git#test-jest'
+        'https://github.com/docker/build-push-action.git#refs/heads/test-jest'
       ]
     ],
     [
@@ -243,13 +243,13 @@ fdescribe('getArgs', () => {
         'build',
         '--output', '.',
         '--secret', 'id=GIT_AUTH_TOKEN,src=/tmp/.docker-build-push-jest/.tmpname-jest',
-        'https://github.com/docker/build-push-action.git#test-jest'
+        'https://github.com/docker/build-push-action.git#refs/heads/test-jest'
       ]
     ],
     [
       '0.4.2',
       new Map<string, string>([
-        ['context', 'https://github.com/docker/build-push-action.git#heads/master'],
+        ['context', 'https://github.com/docker/build-push-action.git#refs/heads/master'],
         ['tag', 'localhost:5000/name/app:latest'],
         ['platforms', 'linux/amd64,linux/arm64'],
         ['secrets', 'GIT_AUTH_TOKEN=abcdefghijklmno=0123456789'],
@@ -266,13 +266,13 @@ fdescribe('getArgs', () => {
         '--file', './test/Dockerfile',
         '--builder', 'builder-git-context-2',
         '--push',
-        'https://github.com/docker/build-push-action.git#heads/master'
+        'https://github.com/docker/build-push-action.git#refs/heads/master'
       ]
     ],
     [
       '0.4.2',
       new Map<string, string>([
-        ['context', 'https://github.com/docker/build-push-action.git#heads/master'],
+        ['context', 'https://github.com/docker/build-push-action.git#refs/heads/master'],
         ['tag', 'localhost:5000/name/app:latest'],
         ['platforms', 'linux/amd64,linux/arm64'],
         ['secrets', `GIT_AUTH_TOKEN=abcdefghi,jklmno=0123456789
@@ -281,6 +281,7 @@ bbbbbbb
 ccccccccc"
 FOO=bar
 "EMPTYLINE=aaaa
+
 bbbb
 ccc"`],
         ['file', './test/Dockerfile'],
@@ -299,13 +300,13 @@ ccc"`],
         '--file', './test/Dockerfile',
         '--builder', 'builder-git-context-2',
         '--push',
-        'https://github.com/docker/build-push-action.git#heads/master'
+        'https://github.com/docker/build-push-action.git#refs/heads/master'
       ]
     ],
     [
       '0.4.2',
       new Map<string, string>([
-        ['context', 'https://github.com/docker/build-push-action.git#heads/master'],
+        ['context', 'https://github.com/docker/build-push-action.git#refs/heads/master'],
         ['tag', 'localhost:5000/name/app:latest'],
         ['platforms', 'linux/amd64,linux/arm64'],
         ['secrets', `GIT_AUTH_TOKEN=abcdefghi,jklmno=0123456789
@@ -314,6 +315,7 @@ bbbbbbb
 ccccccccc
 FOO=bar
 EMPTYLINE=aaaa
+
 bbbb
 ccc`],
         ['file', './test/Dockerfile'],
@@ -332,17 +334,18 @@ ccc`],
         '--file', './test/Dockerfile',
         '--builder', 'builder-git-context-2',
         '--push',
-        'https://github.com/docker/build-push-action.git#heads/master'
+        'https://github.com/docker/build-push-action.git#refs/heads/master'
       ]
     ],
     [
       '0.5.1',
       new Map<string, string>([
-        ['context', 'https://github.com/docker/build-push-action.git#heads/master'],
+        ['context', 'https://github.com/docker/build-push-action.git#refs/heads/master'],
         ['tag', 'localhost:5000/name/app:latest'],
         ['secret-files', `MY_SECRET=${path.join(__dirname, 'fixtures', 'secret.txt').split(path.sep).join(path.posix.sep)}`],
         ['file', './test/Dockerfile'],
         ['builder', 'builder-git-context-2'],
+        ['network', 'host'],
         ['push', 'true']
       ]),
       [
@@ -352,8 +355,25 @@ ccc`],
         '--secret', 'id=MY_SECRET,src=/tmp/.docker-build-push-jest/.tmpname-jest',
         '--file', './test/Dockerfile',
         '--builder', 'builder-git-context-2',
+        '--network', 'host',
         '--push',
-        'https://github.com/docker/build-push-action.git#heads/master'
+        'https://github.com/docker/build-push-action.git#refs/heads/master'
+      ]
+    ],
+    [
+      '0.4.2',
+      new Map<string, string>([
+        ['context', '.'],
+        ['labels', 'org.opencontainers.image.title=filter_results_top_n\norg.opencontainers.image.description=Reference implementation of operation "filter results (top-n)"'],
+        ['outputs', 'type=local,dest=./release-out']
+      ]),
+      [
+        'buildx',
+        'build',
+        '--label', 'org.opencontainers.image.title=filter_results_top_n',
+        '--label', 'org.opencontainers.image.description=Reference implementation of operation "filter results (top-n)"',
+        '--output', 'type=local,dest=./release-out',
+        '.'
       ]
     ]
   ])(
@@ -364,7 +384,9 @@ ccc`],
       });
       const defContext = context.defaultContext();
       const inp = await context.getInputs(defContext, {});
+      console.log(inp);
       const res = await context.getArgs(inp, defContext, buildxVersion);
+      console.log(res);
       expect(res).toEqual(expected);
     }
   );
@@ -374,54 +396,63 @@ describe('getInputList', () => {
   it('single line correctly', async () => {
     await setInput('foo', 'bar');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar']);
   });
 
   it('multiline correctly', async () => {
     setInput('foo', 'bar\nbaz');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz']);
   });
 
   it('empty lines correctly', async () => {
     setInput('foo', 'bar\n\nbaz');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz']);
   });
 
   it('comma correctly', async () => {
     setInput('foo', 'bar,baz');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz']);
   });
 
   it('empty result correctly', async () => {
     setInput('foo', 'bar,baz,');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz']);
   });
 
   it('different new lines correctly', async () => {
     setInput('foo', 'bar\r\nbaz');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz']);
   });
 
   it('different new lines and comma correctly', async () => {
     setInput('foo', 'bar\r\nbaz,bat');
     const res = await context.getInputList('foo');
+    console.log(res);
     expect(res).toEqual(['bar', 'baz', 'bat']);
   });
 
   it('multiline and ignoring comma correctly', async () => {
     setInput('cache-from', 'user/app:cache\ntype=local,src=path/to/dir');
     const res = await context.getInputList('cache-from', undefined, true);
+    console.log(res);
     expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
   });
 
   it('different new lines and ignoring comma correctly', async () => {
     setInput('cache-from', 'user/app:cache\r\ntype=local,src=path/to/dir');
     const res = await context.getInputList('cache-from', undefined, true);
+    console.log(res);
     expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
   });
 
@@ -435,6 +466,7 @@ ccccccccc"
 FOO=bar`,
     );
     const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
     expect(res).toEqual([
       'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
       `MYSECRET=aaaaaaaa
@@ -453,10 +485,12 @@ bbbbbbb
 ccccccccc"
 FOO=bar
 "EMPTYLINE=aaaa
+
 bbbb
 ccc"`,
     );
     const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
     expect(res).toEqual([
       'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
       `MYSECRET=aaaaaaaa
@@ -464,6 +498,7 @@ bbbbbbb
 ccccccccc`,
       'FOO=bar',
       `EMPTYLINE=aaaa
+
 bbbb
 ccc`,
     ]);
@@ -479,6 +514,7 @@ ccccccccc
 FOO=bar`,
     );
     const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
     expect(res).toEqual([
       'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
       'MYSECRET=aaaaaaaa',
@@ -495,6 +531,7 @@ FOO=bar`,
 FOO=bar`,
     );
     const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
     expect(res).toEqual([`GPG_KEY=${pgp}`, 'FOO=bar']);
   });
 
@@ -508,6 +545,7 @@ ccccccccc"
 FOO=bar`,
     );
     const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
     expect(res).toEqual([
       'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
       `MYSECRET=aaaaaaaa
@@ -520,7 +558,7 @@ ccccccccc`,
 
 // See: https://github.com/actions/toolkit/blob/master/packages/core/src/core.ts#L67
 function getInputName(name: string): string {
-  return `INPUT_${name.replace(/[ -]/g, '_').toUpperCase()}`;
+  return `INPUT_${name.replace(/ /g, '_').toUpperCase()}`;
 }
 
 function setInput(name: string, value: string): void {

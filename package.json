@@ -57,7 +57,7 @@
     "commitizen": "4.2.4",
     "csv-parse": "4.15.4",
     "cz-conventional-changelog": "3.3.0",
-    "dotenv": "9.0.2",
+    "dotenv": "10.0.0",
     "eslint": "7.27.0",
     "eslint-config-prettier": "8.3.0",
     "handlebars": "4.7.7",
