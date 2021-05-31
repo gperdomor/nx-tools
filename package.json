@@ -45,7 +45,7 @@
     "@nrwl/nx-cloud": "12.1.2",
     "@nrwl/nx-plugin": "12.3.4",
     "@nrwl/tao": "12.3.4",
-    "@nrwl/workspace": "12.3.4",
+    "@nrwl/workspace": "12.3.5",
     "@prisma/client": "2.23.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.6.1",
