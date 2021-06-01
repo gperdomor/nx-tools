@@ -313,7 +313,7 @@ export class Meta {
   public getLabels(): Array<string> {
     const labels: Array<string> = [
       `org.opencontainers.image.title=${this.repo.name || ''}`,
-      `org.opencontainers.image.description=${this.repo.description || ''}`,
+      `org.opencontainers.image.description=${quoteStr(this.repo.description || '')}`,
       `org.opencontainers.image.url=${this.repo.html_url || ''}`,
       `org.opencontainers.image.source=${this.repo.html_url || ''}`,
       `org.opencontainers.image.version=${this.version.main || ''}`,
@@ -395,4 +395,18 @@ export const interpolate = (envValue) => {
 
     return newEnv.replace(replacePart, value);
   }, envValue);
+};
+
+const quoteStr = (value: string | undefined) => {
+  if (!value) {
+    return '';
+  }
+
+  const trimed = value.trim();
+
+  if (trimed.length > 0 && trimed.indexOf(' ') >= 0) {
+    return `"${value}"`;
+  } else {
+    return value;
+  }
 };
