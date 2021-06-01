@@ -1,4 +1,4 @@
-import { asyncForEach, getBooleanInput, getInput } from './core';
+import { asyncForEach, getBooleanInput, getInput, interpolate } from './core';
 
 describe('Core', () => {
   const ENV: NodeJS.ProcessEnv = process.env;
@@ -209,6 +209,34 @@ describe('Core', () => {
       });
 
       expect(results).toEqual(testValues);
+    });
+  });
+
+  describe('interpolate', () => {
+    beforeAll(() => {
+      process.env.T1 = 'v1';
+      process.env.T2 = 'v2';
+    });
+
+    test.each([
+      [
+        'docker build --tag nx-docker/node:$T1 --tag nx-docker/node:$T2',
+        'docker build --tag nx-docker/node:v1 --tag nx-docker/node:v2',
+      ],
+      [
+        'docker build --tag nx-docker/node:$T1 --tag nx-docker/node:$T3',
+        'docker build --tag nx-docker/node:v1 --tag nx-docker/node:$T3',
+      ],
+      [
+        'docker build --tag nx-docker/node:$T1$T2 --tag nx-docker/node:$T2$T1',
+        'docker build --tag nx-docker/node:v1v2 --tag nx-docker/node:v2v1',
+      ],
+      [
+        'docker build --tag nx-docker/node:$T1$T3 --tag nx-docker/node:$T3$T1',
+        'docker build --tag nx-docker/node:v1$T3 --tag nx-docker/node:$T3v1',
+      ],
+    ])('given command %s, should return %s', (command: string, expected: string) => {
+      expect(interpolate(command)).toEqual(expected);
     });
   });
 });

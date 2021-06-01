@@ -298,7 +298,7 @@ export class Meta {
 
     const tags: Array<string> = [];
     for (const image of this.inputs.images) {
-      const imageLc = interpolate(image).toLowerCase();
+      const imageLc = core.interpolate(image).toLowerCase();
       tags.push(`${imageLc}:${this.version.main}`);
       for (const partial of this.version.partial) {
         tags.push(`${imageLc}:${partial}`);
@@ -313,7 +313,7 @@ export class Meta {
   public getLabels(): Array<string> {
     const labels: Array<string> = [
       `org.opencontainers.image.title=${this.repo.name || ''}`,
-      `org.opencontainers.image.description=${quoteStr(this.repo.description || '')}`,
+      `org.opencontainers.image.description=${this.repo.description || ''}`,
       `org.opencontainers.image.url=${this.repo.html_url || ''}`,
       `org.opencontainers.image.source=${this.repo.html_url || ''}`,
       `org.opencontainers.image.version=${this.version.main || ''}`,
@@ -371,42 +371,3 @@ export class Meta {
     return bakeFile;
   }
 }
-
-export const interpolate = (envValue) => {
-  const matches = envValue.match(/(.?\${?(?:[a-zA-Z0-9_]+)?}?)/g) || [];
-
-  return matches.reduce((newEnv, match) => {
-    const parts = /(.?)\${?([a-zA-Z0-9_]+)?}?/g.exec(match)!;
-    const prefix = parts[1];
-
-    let value, replacePart;
-
-    if (prefix === '\\') {
-      replacePart = parts[0];
-      value = replacePart.replace('\\$', '$');
-    } else {
-      const key = parts[2];
-      replacePart = parts[0].substring(prefix.length);
-      value = process.env[key] ?? '';
-
-      // Resolve recursive interpolations
-      value = interpolate(value);
-    }
-
-    return newEnv.replace(replacePart, value);
-  }, envValue);
-};
-
-const quoteStr = (value: string | undefined) => {
-  if (!value) {
-    return '';
-  }
-
-  const trimed = value.trim();
-
-  if (trimed.length > 0 && trimed.indexOf(' ') >= 0) {
-    return `"${value}"`;
-  } else {
-    return value;
-  }
-};
