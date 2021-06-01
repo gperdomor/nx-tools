@@ -75,3 +75,10 @@ export const asyncForEach = async <T>(array: T[], callback: (value: T, i: number
     await callback(array[index], index, array);
   }
 };
+
+export const interpolate = (str: string) => {
+  const replaced = str.replace(/\${?([a-zA-Z0-9_]+)?}?/g, (m1, g1) => {
+    return process.env[g1] || m1;
+  });
+  return replaced;
+};
