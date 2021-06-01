@@ -1,11 +1,19 @@
-import { GitHubContext } from './github.context';
+import { Context } from '@actions/github/lib/context';
+import { RunnerContext } from '../interfaces';
+import * as github from './github';
 
-describe('GitHubContext', () => {
-  let env: NodeJS.ProcessEnv;
+jest.spyOn(github, 'context').mockImplementation((): Context => {
+  return new Context();
+});
+
+describe('GitHub Context', () => {
+  const ENV: NodeJS.ProcessEnv = process.env;
+  let context: RunnerContext;
 
   beforeEach(() => {
-    env = process.env;
+    jest.resetModules(); // Most important - it clears the cache
     process.env = {
+      ...ENV,
       GITHUB_ACTIONS: 'true',
       GITHUB_EVENT_NAME: 'github-event-name',
       GITHUB_SHA: 'github-sha',
@@ -18,15 +26,13 @@ describe('GitHubContext', () => {
   });
 
   afterEach(() => {
-    process.env = env;
+    process.env = ENV; // Restore old environment
   });
 
   it('Should be take proper values', () => {
-    const context = new GitHubContext();
+    context = github.context();
 
-    expect(context).toBeInstanceOf(GitHubContext);
     expect(context).toMatchObject({
-      provider: 'GitHub Actions',
       actor: 'github-actor',
       eventName: 'github-event-name',
       job: 'github-job',

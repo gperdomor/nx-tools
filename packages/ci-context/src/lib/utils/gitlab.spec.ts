@@ -1,11 +1,14 @@
-import { GitLabContext } from './gitlab.context';
+import { RunnerContext } from '../interfaces';
+import * as gitlab from './gitlab';
 
-describe('GitLabContext', () => {
-  let env: NodeJS.ProcessEnv;
+describe('GitLab Context', () => {
+  const ENV: NodeJS.ProcessEnv = process.env;
+  let context: RunnerContext;
 
   beforeEach(() => {
-    env = process.env;
+    jest.resetModules(); // Most important - it clears the cache
     process.env = {
+      ...ENV,
       GITLAB_CI: 'true',
       CI_PIPELINE_SOURCE: 'gitlab-event-name',
       CI_COMMIT_SHA: 'gitlab-sha',
@@ -19,17 +22,17 @@ describe('GitLabContext', () => {
   });
 
   afterEach(() => {
-    process.env = env;
+    process.env = ENV; // Restore old environment
   });
 
   it('Should be take proper values', () => {
-    const context = new GitLabContext();
+    context = gitlab.context();
 
-    expect(context).toBeInstanceOf(GitLabContext);
     expect(context).toMatchObject({
       actor: 'gitlab-actor',
       eventName: 'gitlab-event-name',
       job: 'gitlab-job',
+      payload: {},
       ref: 'refs/heads/gitlab-ref-slug',
       runId: 100,
       runNumber: 10,
@@ -43,9 +46,8 @@ describe('GitLabContext', () => {
     });
 
     it('Should be take proper values', () => {
-      const context = new GitLabContext();
+      context = gitlab.context();
 
-      expect(context).toBeInstanceOf(GitLabContext);
       expect(context).toMatchObject({
         actor: 'gitlab-actor',
         eventName: 'gitlab-event-name',

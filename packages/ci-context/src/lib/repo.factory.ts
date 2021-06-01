@@ -6,24 +6,24 @@ import * as local from './utils/local';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
 
-export class ContextProxyFactory {
-  public static create() {
+export class RepoProxyFactory {
+  public static async create(token: string) {
     if (!ci.isCI) {
-      return local.context();
+      return local.repo(token);
     }
 
     if (ci.CIRCLE) {
-      return circle.context();
+      return circle.repo(token);
     }
 
     if (ci.GITHUB_ACTIONS) {
-      return github.context();
+      return github.repo(token);
     }
 
     if (ci.GITLAB) {
-      return gitlab.context();
+      return gitlab.repo(token);
     }
 
-    throw new Error('Unsupported runner provider');
+    throw new Error('Unsupported repository provider');
   }
 }

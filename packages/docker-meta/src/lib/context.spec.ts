@@ -1,63 +1,174 @@
-import { getInputs } from './context';
+/* eslint-disable no-useless-escape */
+import * as fs from 'fs';
+import * as path from 'path';
+import * as context from './context';
 
-describe('Context', () => {
-  const env: NodeJS.ProcessEnv = process.env;
+jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
+  const tmpDir = path.join('/tmp/.docker-metadata-action-jest').split(path.sep).join(path.posix.sep);
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir, { recursive: true });
+  }
+  return tmpDir;
+});
 
-  beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...env };
+describe('getInputList', () => {
+  it('single line correctly', async () => {
+    await setInput('foo', 'bar');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar']);
   });
 
-  afterAll(() => {
-    process.env = env; // Restore old environment
+  it('multiline correctly', async () => {
+    setInput('foo', 'bar\nbaz');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz']);
   });
 
-  describe('getInputs', () => {
-    it('Should return default values', () => {
-      const inputs = getInputs({});
-      expect(inputs).toMatchObject({ images: [], tags: [], flavor: [], labels: [], sepTags: '\n', sepLabels: '\n' });
-    });
+  it('empty lines correctly', async () => {
+    setInput('foo', 'bar\n\nbaz');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz']);
+  });
 
-    it('Should handle env variables', () => {
-      process.env.INPUT_IMAGES = `
-        env/image1
-        env/image2
-      `;
+  it('comma correctly', async () => {
+    setInput('foo', 'bar,baz');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz']);
+  });
 
-      process.env.INPUT_TAGS = `
-        type=schedule
-        type=ref,event=branch
-        type=ref,event=pr
-      `;
+  it('empty result correctly', async () => {
+    setInput('foo', 'bar,baz,');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz']);
+  });
 
-      const inputs = getInputs({});
+  it('different new lines correctly', async () => {
+    setInput('foo', 'bar\r\nbaz');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz']);
+  });
 
-      expect(inputs).toMatchObject({
-        images: ['env/image1', 'env/image2'],
-        tags: ['type=schedule', 'type=ref,event=branch', 'type=ref,event=pr'],
-        flavor: [],
-        labels: [],
-        sepTags: '\n',
-        sepLabels: '\n',
-      });
-    });
+  it('different new lines and comma correctly', async () => {
+    setInput('foo', 'bar\r\nbaz,bat');
+    const res = await context.getInputList('foo');
+    console.log(res);
+    expect(res).toEqual(['bar', 'baz', 'bat']);
+  });
 
-    it('Should handle fallback variables', () => {
-      process.env.INPUT_IMAGES = `
-        env/image1
-        env/image2
-      `;
+  it('multiline and ignoring comma correctly', async () => {
+    setInput('cache-from', 'user/app:cache\ntype=local,src=path/to/dir');
+    const res = await context.getInputList('cache-from', undefined, true);
+    console.log(res);
+    expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
+  });
 
-      const inputs = getInputs({ tags: ['type=schedule'], labels: ['l1', 'l2'] });
+  it('different new lines and ignoring comma correctly', async () => {
+    setInput('cache-from', 'user/app:cache\r\ntype=local,src=path/to/dir');
+    const res = await context.getInputList('cache-from', undefined, true);
+    console.log(res);
+    expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
+  });
 
-      expect(inputs).toMatchObject({
-        images: ['env/image1', 'env/image2'],
-        tags: ['type=schedule'],
-        flavor: [],
-        labels: ['l1', 'l2'],
-        sepTags: '\n',
-        sepLabels: '\n',
-      });
-    });
+  it('multiline values', async () => {
+    setInput(
+      'secrets',
+      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
+"MYSECRET=aaaaaaaa
+bbbbbbb
+ccccccccc"
+FOO=bar`,
+    );
+    const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
+    expect(res).toEqual([
+      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
+      `MYSECRET=aaaaaaaa
+bbbbbbb
+ccccccccc`,
+      'FOO=bar',
+    ]);
+  });
+
+  it('multiline values with empty lines', async () => {
+    setInput(
+      'secrets',
+      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
+"MYSECRET=aaaaaaaa
+bbbbbbb
+ccccccccc"
+FOO=bar
+"EMPTYLINE=aaaa
+
+bbbb
+ccc"`,
+    );
+    const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
+    expect(res).toEqual([
+      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
+      `MYSECRET=aaaaaaaa
+bbbbbbb
+ccccccccc`,
+      'FOO=bar',
+      `EMPTYLINE=aaaa
+
+bbbb
+ccc`,
+    ]);
+  });
+
+  it('multiline values without quotes', async () => {
+    setInput(
+      'secrets',
+      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
+MYSECRET=aaaaaaaa
+bbbbbbb
+ccccccccc
+FOO=bar`,
+    );
+    const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
+    expect(res).toEqual([
+      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
+      'MYSECRET=aaaaaaaa',
+      'bbbbbbb',
+      'ccccccccc',
+      'FOO=bar',
+    ]);
+  });
+
+  it('multiline values escape quotes', async () => {
+    setInput(
+      'secrets',
+      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
+"MYSECRET=aaaaaaaa
+bbbb""bbb
+ccccccccc"
+FOO=bar`,
+    );
+    const res = await context.getInputList('secrets', undefined, true);
+    console.log(res);
+    expect(res).toEqual([
+      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
+      `MYSECRET=aaaaaaaa
+bbbb\"bbb
+ccccccccc`,
+      'FOO=bar',
+    ]);
   });
 });
+
+// See: https://github.com/actions/toolkit/blob/master/packages/core/src/core.ts#L67
+function getInputName(name: string): string {
+  return `INPUT_${name.replace(/ /g, '_').toUpperCase()}`;
+}
+
+function setInput(name: string, value: string): void {
+  process.env[getInputName(name)] = value;
+}

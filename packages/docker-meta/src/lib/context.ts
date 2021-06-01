@@ -7,29 +7,33 @@ import * as path from 'path';
 let _tmpDir: string;
 
 export interface Inputs {
-  images: string[];
-  tags: string[];
+  bakeTarget: string;
   flavor: string[];
+  githubToken: string;
+  images: string[];
   labels: string[];
-  sepTags: string;
   sepLabels: string;
+  sepTags: string;
+  tags: string[];
 }
 
 export function tmpDir(): string {
   if (!_tmpDir) {
-    _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ghaction-docker-meta-')).split(path.sep).join(path.posix.sep);
+    _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'docker-metadata-action-')).split(path.sep).join(path.posix.sep);
   }
   return _tmpDir;
 }
 
 export function getInputs(options: Partial<Inputs>): Inputs {
   return {
-    images: getInputList('images', options.images),
-    tags: getInputList('tags', options.tags, true),
+    bakeTarget: core.getInput('bake-target', { fallback: options.bakeTarget || 'docker-metadata-action' }),
     flavor: getInputList('flavor', options.flavor, true),
+    githubToken: core.getInput('github-token', { fallback: options.githubToken }),
+    images: getInputList('images', options.images),
     labels: getInputList('labels', options.labels, true),
-    sepTags: core.getInput('sep-tags', options.sepTags) || `\n`,
-    sepLabels: core.getInput('sep-labels', options.sepLabels) || `\n`,
+    sepLabels: core.getInput('sep-labels', { fallback: options.sepLabels || `\n` }),
+    sepTags: core.getInput('sep-tags', { fallback: options.sepTags || `\n` }),
+    tags: getInputList('tags', options.tags, true),
   };
 }
 
@@ -58,9 +62,3 @@ export function getInputList(name: string, fallback?: string[], ignoreComma?: bo
 
   return res.filter((item) => item).map((pat) => pat.trim());
 }
-
-export const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-};

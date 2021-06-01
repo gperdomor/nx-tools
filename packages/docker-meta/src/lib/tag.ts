@@ -1,4 +1,5 @@
 /* eslint-disable no-prototype-builtins */
+import * as core from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 
 export enum Type {
@@ -17,9 +18,26 @@ export enum RefEvent {
   PR = 'pr',
 }
 
-export interface Tag {
-  type: Type;
-  attrs: Record<string, string>;
+export enum ShaFormat {
+  Short = 'short',
+  Long = 'long',
+}
+
+export class Tag {
+  public type?: Type;
+  public attrs: Record<string, string>;
+
+  constructor() {
+    this.attrs = {};
+  }
+
+  public toString(): string {
+    const out: string[] = [`type=${this.type}`];
+    for (const attr in this.attrs) {
+      out.push(`${attr}=${this.attrs[attr]}`);
+    }
+    return out.join(',');
+  }
 }
 
 export const DefaultPriorities: Record<Type, string> = {
@@ -43,10 +61,11 @@ export function Transform(inputs: string[]): Tag[] {
       `type=ref,event=${RefEvent.PR}`
     ];
   }
+
   for (const input of inputs) {
     tags.push(Parse(input));
   }
-  return tags.sort((tag1, tag2) => {
+  const sorted = tags.sort((tag1, tag2) => {
     if (Number(tag1.attrs['priority']) < Number(tag2.attrs['priority'])) {
       return 1;
     }
@@ -55,6 +74,14 @@ export function Transform(inputs: string[]): Tag[] {
     }
     return 0;
   });
+
+  core.startGroup(`Processing tags input`);
+  for (const tag of sorted) {
+    core.info(tag.toString());
+  }
+  core.endGroup();
+
+  return sorted;
 }
 
 export function Parse(s: string): Tag {
@@ -63,10 +90,7 @@ export function Parse(s: string): Tag {
     skipLinesWithEmptyValues: true,
   })[0];
 
-  const tag = {
-    attrs: {},
-  } as Tag;
-
+  const tag = new Tag();
   for (const field of fields) {
     const parts = field.toString().split('=', 2);
     if (parts.length == 1) {
@@ -157,6 +181,16 @@ export function Parse(s: string): Tag {
       if (!tag.attrs.hasOwnProperty('prefix')) {
         tag.attrs['prefix'] = 'sha-';
       }
+      if (!tag.attrs.hasOwnProperty('format')) {
+        tag.attrs['format'] = ShaFormat.Short;
+      }
+      if (
+        !Object.keys(ShaFormat)
+          .map((k) => ShaFormat[k])
+          .includes(tag.attrs['format'])
+      ) {
+        throw new Error(`Invalid format for ${s}`);
+      }
       break;
     }
   }
@@ -166,12 +200,6 @@ export function Parse(s: string): Tag {
   }
   if (!tag.attrs.hasOwnProperty('priority')) {
     tag.attrs['priority'] = DefaultPriorities[tag.type];
-  }
-  if (!tag.attrs.hasOwnProperty('prefix')) {
-    tag.attrs['prefix'] = '';
-  }
-  if (!tag.attrs.hasOwnProperty('suffix')) {
-    tag.attrs['suffix'] = '';
   }
   if (!['true', 'false'].includes(tag.attrs['enable'])) {
     throw new Error(`Invalid value for enable attribute: ${tag.attrs['enable']}`);

@@ -4,15 +4,15 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "^1.0.0-beta.4",
-    "@nx-tools/docker-meta": "^1.0.0-beta.4",
-    "csv-parse": "^4.15.0",
-    "semver": "^7.3.4",
-    "dotenv": "^8.2.0"
+    "@nx-tools/core": "^1.0.0-rc.1",
+    "@nx-tools/docker-meta": "^1.0.0-beta.5",
+    "csv-parse": "^4.15.4",
+    "semver": "^7.3.5",
+    "dotenv": "^10.0.0"
   }
 }
