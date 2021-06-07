@@ -41,7 +41,7 @@
     "@nrwl/cli": "12.3.5",
     "@nrwl/devkit": "12.3.5",
     "@nrwl/eslint-plugin-nx": "12.3.5",
-    "@nrwl/jest": "12.3.5",
+    "@nrwl/jest": "12.3.6",
     "@nrwl/linter": "12.3.5",
     "@nrwl/node": "12.3.5",
     "@nrwl/nx-cloud": "12.1.3",
