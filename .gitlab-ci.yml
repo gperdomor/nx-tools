@@ -10,6 +10,8 @@ variables:
   NX_BRANCH: $CI_COMMIT_BRANCH
   NX_RUN_GROUP: $CI_PIPELINE_ID
   NX_CLOUD_ACCESS_TOKEN: $NX_CLOUD_AUTH_TOKEN
+  NX_CLOUD_DISTRIBUTED_EXECUTION: 'true'
+  PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 .node-job:
   image: node:16.3.0
@@ -30,13 +32,13 @@ variables:
       start_in: 15 seconds
       variables:
         NX_BASE: remotes/origin/${CI_DEFAULT_BRANCH}~1
-        NX_HEAD: remotes/origin/${CI_DEFAULT_BRANCH}
+        # NX_HEAD: remotes/origin/${CI_DEFAULT_BRANCH}
     - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: delayed
       start_in: 15 seconds
       variables:
         NX_BASE: remotes/origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
-        NX_HEAD: HEAD
+        # NX_HEAD: HEAD
 
 .require-setup:
   needs:
@@ -59,22 +61,21 @@ setup:
 agent:
   stage: test
   extends: [.node-job, .require-setup]
-  parallel: 3
+  parallel: 2
   image: ghcr.io/gperdomor/nx-docker:16.2-alpine
   services:
     - docker:20.10.7-dind
   script:
-    - npx nx-cloud start-agent
+    - npx @nrwl/nx-cloud start-agent
 
-affected:
+verify-mr:
   extends: [.node-job, .base-head-rules, .require-setup]
   stage: test
-  variables:
-    NX_CLOUD_DISTRIBUTED_EXECUTION: 'true'
   script:
-    - npx nx affected --target=build --parallel --base=$NX_BASE --head=$NX_HEAD
-    - npx nx affected --target=test --parallel --base=$NX_BASE --head=$NX_HEAD
-    - npx nx affected --target=lint --parallel --base=$NX_BASE --head=$NX_HEAD
+    - npx nx affected --target=build --parallel --base=$NX_BASE
+    - npx nx affected --target=lint --parallel --base=$NX_BASE
+    - npx nx affected --target=test --parallel --base=$NX_BASE
+    - npx nx affected --target=e2e --parallel --base=$NX_BASE
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   after_script:
-    - npx nx-cloud stop-all-agents
+    - npx @nrwl/nx-cloud stop-all-agents
