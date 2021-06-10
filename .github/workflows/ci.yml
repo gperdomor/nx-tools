@@ -1,45 +1,18 @@
 name: ci
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+on: [pull_request]
 
 env:
-  NX_BRANCH: ${{ github.event.pull_request.head.ref }}
+  NX_BRANCH: ${{ github.event.number }}
   NX_RUN_GROUP: ${{ github.run_id }}
-  NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+  NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+  NX_CLOUD_DISTRIBUTED_EXECUTION: 'true'
+  PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 jobs:
-  initialise:
-    runs-on: 'ubuntu-20.04'
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-
-  affected-lint:
-    runs-on: 'ubuntu-20.04'
-    needs: [initialise]
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
+  build:
+    runs-on: ubuntu-20.04
+    name: 'Verify PR'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -47,101 +20,186 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
+          node-version: 16.x
+      - uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
             ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-      - name: Run linter 👀
-        run: npm run nx affected -- --target=lint --base=remotes/origin/main
+      - run: npm ci --prefer-offline
+      - run: npm run nx affected -- --target=build --parallel --base=remotes/origin/main
+      - run: npm run nx affected -- --target=lint --parallel --base=remotes/origin/main
+      - run: npm run nx affected -- --target=test --parallel --base=remotes/origin/main
+      - run: npx @nrwl/nx-cloud stop-all-agents
 
-  affected-build:
-    runs-on: 'ubuntu-20.04'
-    needs: [initialise]
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
+  agent1:
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
+          node-version: 16.x
+      - uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
             ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-      - name: Run build 👷‍♂️
-        run: npm run nx affected -- --target=build --with-deps --base=remotes/origin/main
+      - run: npm ci --prefer-offline
+      - run: npx @nrwl/nx-cloud start-agent
 
-  affected-test:
-    runs-on: 'ubuntu-20.04'
-    needs: [initialise]
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-    env:
-      PRISMA_HIDE_UPDATE_MESSAGE: 'true'
+  agent2:
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
+          node-version: 16.x
+      - uses: actions/cache@v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
             ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-      - name: Run tests 🧪
-        run: npm run nx affected -- --target=test --base=remotes/origin/main
+      - run: npm ci --prefer-offline
+      - run: npx @nrwl/nx-cloud start-agent
 
-  affected-e2e:
-    runs-on: 'ubuntu-20.04'
-    needs: [initialise]
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-    env:
-      PRISMA_HIDE_UPDATE_MESSAGE: 'true'
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-            ${{ runner.os }}-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-      - name: Run e2e tests 🧪🧪
-        run: npm run nx affected -- --target=e2e --base=remotes/origin/main
+  # initialise:
+  #   runs-on: 'ubuntu-20.04'
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #           ${{ runner.os }}-
+  #     - name: Install dependencies
+  #       run: npm ci --prefer-offline
+
+  # affected-lint:
+  #   runs-on: 'ubuntu-20.04'
+  #   needs: [initialise]
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #           ${{ runner.os }}-
+  #     - name: Install dependencies
+  #       run: npm ci --prefer-offline
+  #     - name: Run linter 👀
+  #       run: npm run nx affected -- --target=lint --base=remotes/origin/main
+
+  # affected-build:
+  #   runs-on: 'ubuntu-20.04'
+  #   needs: [initialise]
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #           ${{ runner.os }}-
+  #     - name: Install dependencies
+  #       run: npm ci --prefer-offline
+  #     - name: Run build 👷‍♂️
+  #       run: npm run nx affected -- --target=build --with-deps --base=remotes/origin/main
+
+  # affected-test:
+  #   runs-on: 'ubuntu-20.04'
+  #   needs: [initialise]
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+  #   env:
+  #     PRISMA_HIDE_UPDATE_MESSAGE: 'true'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #           ${{ runner.os }}-
+  #     - name: Install dependencies
+  #       run: npm ci --prefer-offline
+  #     - name: Run tests 🧪
+  #       run: npm run nx affected -- --target=test --base=remotes/origin/main
+
+  # affected-e2e:
+  #   runs-on: 'ubuntu-20.04'
+  #   needs: [initialise]
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+  #   env:
+  #     PRISMA_HIDE_UPDATE_MESSAGE: 'true'
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+  #     - name: Cache Node.js modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-node-
+  #           ${{ runner.os }}-
+  #     - name: Install dependencies
+  #       run: npm ci --prefer-offline
+  #     - name: Run e2e tests 🧪🧪
+  #       run: npm run nx affected -- --target=e2e --base=remotes/origin/main
