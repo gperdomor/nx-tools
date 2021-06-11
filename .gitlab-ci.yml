@@ -2,16 +2,19 @@ include:
   - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
 
 stages:
-  - prepare
+  - setup
   - test
-  - build
 
 variables:
   GIT_DEPTH: 0
-  NX_CLOUD_AUTH_TOKEN: $NX_CLOUD_AUTH_TOKEN
+  NX_BRANCH: $CI_COMMIT_BRANCH
+  NX_RUN_GROUP: $CI_PIPELINE_ID
+  NX_CLOUD_ACCESS_TOKEN: $NX_CLOUD_AUTH_TOKEN
+  NX_CLOUD_DISTRIBUTED_EXECUTION: 'true'
+  PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 .node-job:
-  image: node:16.1
+  image: node:16.3.0
   cache:
     key:
       files:
@@ -20,21 +23,28 @@ variables:
       - .npm/
     policy: pull
   before_script:
-    - npm ci --cache .npm --prefer-offline
+    - npm ci --cache .npm --prefer-offline --ignore-scripts
 
 .base-head-rules:
   rules:
+    - if: $CI_MERGE_REQUEST_IID
+      when: delayed
+      start_in: 15 seconds
+      variables:
+        NX_BASE: remotes/origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      variables: # Override DEPLOY_VARIABLE defined
-        BASE: remotes/origin/${CI_DEFAULT_BRANCH}~1
-        HEAD: remotes/origin/${CI_DEFAULT_BRANCH}
-    - if: $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
-      variables: # Override DEPLOY_VARIABLE defined
-        BASE: remotes/origin/${CI_DEFAULT_BRANCH}
-        HEAD: HEAD
+      when: delayed
+      start_in: 15 seconds
+      variables:
+        NX_BASE: HEAD~1
 
-initialise:
-  stage: prepare
+.require-setup:
+  needs:
+    - job: setup
+      optional: true
+
+setup:
+  stage: setup
   extends: [.node-job]
   cache:
     key: !reference [.node-job, cache, key]
@@ -46,33 +56,39 @@ initialise:
     - changes:
         - package-lock.json
 
-affected:lint:
-  extends: [.node-job, .base-head-rules]
+agent:
   stage: test
-  needs:
-    - job: initialise
-      optional: true
-  script:
-    - npx nx affected:lint --parallel --base=$BASE --head=$HEAD
-
-affected:test:
-  extends: [.node-job, .base-head-rules]
-  image: ghcr.io/gperdomor/nx-docker:16.0-alpine
-  stage: test
-  needs:
-    - job: initialise
-      optional: true
+  extends: [.node-job, .require-setup]
+  parallel: 2
+  image: ghcr.io/gperdomor/nx-docker:16.2-alpine
   services:
-    - docker:20.10.6-dind
+    - docker:20.10.7-dind
   script:
-    - npx nx affected:test --parallel --code-coverage --base=$BASE --head=$HEAD
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+    - npx @nrwl/nx-cloud start-agent
 
-affected:build:
-  extends: [.node-job, .base-head-rules]
-  stage: build
-  needs:
-    - job: initialise
-      optional: true
+verify:
+  extends: [.node-job, .base-head-rules, .require-setup]
+  stage: test
   script:
-    - npx nx affected:build --parallel --with-deps --base=$BASE --head=$HEAD
+    - npx nx affected --target=build --base=$NX_BASE --parallel --max-parallel=3
+    - npx nx affected --target=lint  --base=$NX_BASE --parallel --max-parallel=3
+    - npx nx affected --target=test  --base=$NX_BASE --parallel --max-parallel=2
+    - npx nx affected --target=e2e   --base=$NX_BASE --parallel --max-parallel=2
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  after_script:
+    - npx @nrwl/nx-cloud stop-all-agents
+
+verify-tag:
+  extends: [.node-job, .require-setup]
+  stage: test
+  script:
+    - npx nx affected --target=build --all --parallel --max-parallel=3
+    - npx nx affected --target=lint  --all --parallel --max-parallel=3
+    - npx nx affected --target=test  --all --parallel --max-parallel=2
+    - npx nx affected --target=e2e   --all --parallel --max-parallel=2
+  coverage: !reference [verify, coverage]
+  after_script: !reference [verify, after_script]
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: delayed
+      start_in: 15 seconds
