@@ -106,11 +106,6 @@ You can build your apps for multiple platform, like linux/amd64, linux/arm64, li
 
 You can enable metadata extraction to extract metadata (tags, labels) for Docker. We have two modes to build labels and tags
 
-Mode:
-
-- prepend: take care of the extracted medatada and later append the labels/tags from the angular.json builder config ((or env vars))
-- append: take care of your labels/tags from the angular.json builder config (or env vars) and then append the extracted medatada.
-
 <details>
   <summary><b>Show config</b></summary>
 
@@ -123,7 +118,6 @@ Mode:
     "tags": ["user/app:latest"],
     "meta": {
       "enabled": true,
-      "mode": "prepend"
     }
   }
 }
@@ -141,35 +135,34 @@ This builder can be customized using environment variables and values in your `a
 
 Following inputs can be used as `step.with` keys
 
-| Name             | Type           | Description                                                                                                                                                                       |
-| ---------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `builder`        | String         | Builder instance (see [setup-buildx](https://github.com/docker/setup-buildx-action) action)                                                                                       |
-| `context`        | String         | Build's context is the set of files located in the specified [`PATH` or `URL`](https://docs.docker.com/engine/reference/commandline/build/) (default [Git context](#git-context)) |
-| `file`           | String         | Path to the Dockerfile (default `./Dockerfile`)                                                                                                                                   |
-| `build-args`     | List           | List of build-time variables                                                                                                                                                      |
-| `labels`         | List           | List of metadata for an image                                                                                                                                                     |
-| `tags`           | List/CSV       | List of tags                                                                                                                                                                      |
-| `pull`           | Bool           | Always attempt to pull a newer version of the image (default `false`)                                                                                                             |
-| `target`         | String         | Sets the target stage to build                                                                                                                                                    |
-| `allow`          | List/CSV       | List of [extra privileged entitlement](https://github.com/docker/buildx#--allowentitlement) (eg. `network.host,security.insecure`)                                                |
-| `no-cache`       | Bool           | Do not use cache when building the image (default `false`)                                                                                                                        |
-| `platforms`      | List/CSV       | List of [target platforms](https://github.com/docker/buildx#---platformvaluevalue) for build                                                                                      |
-| `load`           | Bool           | [Load](https://github.com/docker/buildx#--load) is a shorthand for `--output=type=docker` (default `false`)                                                                       |
-| `push`           | Bool           | [Push](https://github.com/docker/buildx#--push) is a shorthand for `--output=type=registry` (default `false`)                                                                     |
-| `outputs`        | List           | List of [output destinations](https://github.com/docker/buildx#-o---outputpath-typetypekeyvalue) (format: `type=local,dest=path`)                                                 |
-| `cache-from`     | List           | List of [external cache sources](https://github.com/docker/buildx#--cache-fromnametypetypekeyvalue) (eg. `type=local,src=path/to/dir`)                                            |
-| `cache-to`       | List           | List of [cache export destinations](https://github.com/docker/buildx#--cache-tonametypetypekeyvalue) (eg. `type=local,dest=path/to/dir`)                                          |
-| `secrets`        | List           | List of secrets to expose to the build (eg. `key=value`, `GIT_AUTH_TOKEN=mytoken`)                                                                                                |
-| `secret-files`   | List           | List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)                                                                                            |
-| `ssh`            | List           | List of SSH agent socket or keys to expose to the build                                                                                                                           |
-| `meta.enabled`   | Bool           | Enable metadata extraction from git context. (default `false`)                                                                                                                    |
-| `meta.mode`      | prepend/append | Mwtadata extraction mode. (default `prepend`)                                                                                                                                     |
-| `meta.images`    | List           | List of Docker images to use as base name for tags                                                                                                                                |
-| `meta.tags`      | List           | List of tags as key-value pair attributes                                                                                                                                         |
-| `meta.flavor`    | List           | Flavor to apply                                                                                                                                                                   |
-| `meta.labels`    | List           | List of custom labels                                                                                                                                                             |
-| `meta.sepTags`   | String         | Separator to use for tags output (default \n)                                                                                                                                     |
-| `meta.sepLabels` | String         | Separator to use for labels output (default \n)                                                                                                                                   |
+| Name             | Type     | Description                                                                                                                                                                       |
+| ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `builder`        | String   | Builder instance (see [setup-buildx](https://github.com/docker/setup-buildx-action) action)                                                                                       |
+| `context`        | String   | Build's context is the set of files located in the specified [`PATH` or `URL`](https://docs.docker.com/engine/reference/commandline/build/) (default [Git context](#git-context)) |
+| `file`           | String   | Path to the Dockerfile (default `./Dockerfile`)                                                                                                                                   |
+| `build-args`     | List     | List of build-time variables                                                                                                                                                      |
+| `labels`         | List     | List of metadata for an image                                                                                                                                                     |
+| `tags`           | List/CSV | List of tags                                                                                                                                                                      |
+| `pull`           | Bool     | Always attempt to pull a newer version of the image (default `false`)                                                                                                             |
+| `target`         | String   | Sets the target stage to build                                                                                                                                                    |
+| `allow`          | List/CSV | List of [extra privileged entitlement](https://github.com/docker/buildx#--allowentitlement) (eg. `network.host,security.insecure`)                                                |
+| `no-cache`       | Bool     | Do not use cache when building the image (default `false`)                                                                                                                        |
+| `platforms`      | List/CSV | List of [target platforms](https://github.com/docker/buildx#---platformvaluevalue) for build                                                                                      |
+| `load`           | Bool     | [Load](https://github.com/docker/buildx#--load) is a shorthand for `--output=type=docker` (default `false`)                                                                       |
+| `push`           | Bool     | [Push](https://github.com/docker/buildx#--push) is a shorthand for `--output=type=registry` (default `false`)                                                                     |
+| `outputs`        | List     | List of [output destinations](https://github.com/docker/buildx#-o---outputpath-typetypekeyvalue) (format: `type=local,dest=path`)                                                 |
+| `cache-from`     | List     | List of [external cache sources](https://github.com/docker/buildx#--cache-fromnametypetypekeyvalue) (eg. `type=local,src=path/to/dir`)                                            |
+| `cache-to`       | List     | List of [cache export destinations](https://github.com/docker/buildx#--cache-tonametypetypekeyvalue) (eg. `type=local,dest=path/to/dir`)                                          |
+| `secrets`        | List     | List of secrets to expose to the build (eg. `key=value`, `GIT_AUTH_TOKEN=mytoken`)                                                                                                |
+| `secret-files`   | List     | List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)                                                                                            |
+| `ssh`            | List     | List of SSH agent socket or keys to expose to the build                                                                                                                           |
+| `meta.enabled`   | Bool     | Enable metadata extraction from git context. (default `false`)                                                                                                                    |
+| `meta.images`    | List     | List of Docker images to use as base name for tags                                                                                                                                |
+| `meta.tags`      | List     | List of tags as key-value pair attributes                                                                                                                                         |
+| `meta.flavor`    | List     | Flavor to apply                                                                                                                                                                   |
+| `meta.labels`    | List     | List of custom labels                                                                                                                                                             |
+| `meta.sepTags`   | String   | Separator to use for tags output (default \n)                                                                                                                                     |
+| `meta.sepLabels` | String   | Separator to use for labels output (default \n)                                                                                                                                   |
 
 To check all possible options please check this [schema.json](src/builders/nx-docker/schema.json) file
 

@@ -25,14 +25,9 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
   const inputs: context.Inputs = await context.getInputs(defContext, options);
 
   if (inputs.meta.enabled) {
-    const meta = await getMetadata(options.meta);
-    if (inputs.meta.mode === context.MetaMode.prepend) {
-      inputs.labels = [...meta.getLabels(), ...inputs.labels];
-      inputs.tags = [...meta.getTags(), ...inputs.tags];
-    } else {
-      inputs.labels = [...inputs.labels, ...meta.getLabels()];
-      inputs.tags = [...inputs.tags, ...meta.getTags()];
-    }
+    const meta = await getMetadata(inputs.meta);
+    inputs.labels = meta.getLabels();
+    inputs.tags = meta.getTags();
   }
 
   core.info(`Starting build...`);

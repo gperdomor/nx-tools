@@ -125,11 +125,6 @@
           "type": "boolean",
           "default": "true"
         },
-        "mode": {
-          "type": "string",
-          "enum": ["prepend", "append"],
-          "description": "Behavior of extracted data. (default prepend)"
-        },
         "images": {
           "type": "array",
           "items": {

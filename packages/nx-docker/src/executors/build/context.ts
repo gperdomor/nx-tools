@@ -11,11 +11,6 @@ import { BuildExecutorSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;
 
-export enum MetaMode {
-  prepend = 'prepend',
-  append = 'append',
-}
-
 export interface Inputs {
   allow: string[];
   buildArgs: string[];
@@ -40,7 +35,6 @@ export interface Inputs {
   target: string;
   meta: {
     enabled: boolean;
-    mode: MetaMode;
   } & Partial<MetaInputs>;
 }
 
@@ -61,17 +55,6 @@ export function tmpDir(): string {
 export function tmpNameSync(options?: tmp.TmpNameOptions): string {
   return tmp.tmpNameSync(options);
 }
-
-const parseMetaMode = (value?: string): MetaMode | undefined => {
-  switch (value) {
-    case 'prepend':
-      return MetaMode.prepend;
-    case 'append':
-      return MetaMode.append;
-    default:
-      return undefined;
-  }
-};
 
 export async function getInputs(defaultContext: string, options: BuildExecutorSchema): Promise<Inputs> {
   return {
@@ -98,7 +81,6 @@ export async function getInputs(defaultContext: string, options: BuildExecutorSc
     target: core.getInput('target', { fallback: options.target }),
     meta: {
       enabled: core.getBooleanInput('meta-enabled', { fallback: `${options.meta?.enabled || true}` }),
-      mode: parseMetaMode(core.getInput('meta-mode', { fallback: options.meta?.mode || MetaMode.prepend })),
     },
   };
 }

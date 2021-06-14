@@ -1,6 +1,5 @@
 import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import * as path from 'path';
-import { MetaMode } from './context';
 import executor from './main';
 import { BuildExecutorSchema } from './schema';
 
@@ -11,7 +10,6 @@ const options: BuildExecutorSchema = {
   tags: ['nx-docker/node:latest'],
   meta: {
     enabled: true,
-    mode: MetaMode.prepend,
     images: ['app/name'],
     tags: ['type=sha'],
   },
