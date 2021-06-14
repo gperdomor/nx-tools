@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@actions/core": "1.3.0",
-    "@actions/exec": "1.0.4",
+    "@actions/exec": "1.1.0",
     "@actions/github": "5.0.0",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
