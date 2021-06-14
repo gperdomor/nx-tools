@@ -55,7 +55,7 @@
     "@typescript-eslint/parser": "4.26.0",
     "ci-info": "3.2.0",
     "commitizen": "4.2.4",
-    "csv-parse": "4.15.4",
+    "csv-parse": "4.16.0",
     "cz-conventional-changelog": "3.3.0",
     "dotenv": "10.0.0",
     "eslint": "7.28.0",
