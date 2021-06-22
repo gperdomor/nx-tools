@@ -5,7 +5,7 @@ ARG NODE_VERSION
 #############
 
 # --> getting buildx binary
-FROM alpine:3.13 AS buildx-fetcher
+FROM alpine:3.14 AS buildx-fetcher
 ENV BUILDX_VERSION 0.5.1
 RUN apk add --no-cache curl
 RUN curl -L \
