@@ -6,12 +6,12 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
+  testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  globalSetup: './setup-test.ts',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/nx-prisma',
+  globalSetup: './setup-test.ts',
   testMatch: ['**/test-suite.ts'],
-  testEnvironment: 'node',
 };

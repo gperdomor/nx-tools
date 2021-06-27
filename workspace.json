@@ -6,6 +6,17 @@
       "sourceRoot": "packages/ci-context/src",
       "projectType": "library",
       "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/ci-context",
+            "tsConfig": "packages/ci-context/tsconfig.lib.json",
+            "packageJson": "packages/ci-context/package.json",
+            "main": "packages/ci-context/src/index.ts",
+            "assets": ["packages/ci-context/*.md"]
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
@@ -19,17 +30,6 @@
             "jestConfig": "packages/ci-context/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/ci-context",
-            "tsConfig": "packages/ci-context/tsconfig.lib.json",
-            "packageJson": "packages/ci-context/package.json",
-            "main": "packages/ci-context/src/index.ts",
-            "assets": ["packages/ci-context/*.md"]
-          }
         }
       }
     },
@@ -38,6 +38,17 @@
       "sourceRoot": "packages/core/src",
       "projectType": "library",
       "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/core",
+            "tsConfig": "packages/core/tsconfig.lib.json",
+            "packageJson": "packages/core/package.json",
+            "main": "packages/core/src/index.ts",
+            "assets": ["packages/core/*.md"]
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
@@ -51,17 +62,6 @@
             "jestConfig": "packages/core/jest.config.js",
             "passWithNoTests": true
           }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/core",
-            "tsConfig": "packages/core/tsconfig.lib.json",
-            "packageJson": "packages/core/package.json",
-            "main": "packages/core/src/index.ts",
-            "assets": ["packages/core/*.md"]
-          }
         }
       }
     },
@@ -70,6 +70,17 @@
       "sourceRoot": "packages/docker-meta/src",
       "projectType": "library",
       "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/docker-meta",
+            "tsConfig": "packages/docker-meta/tsconfig.lib.json",
+            "packageJson": "packages/docker-meta/package.json",
+            "main": "packages/docker-meta/src/index.ts",
+            "assets": ["packages/docker-meta/*.md"]
+          }
+        },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
@@ -82,17 +93,6 @@
           "options": {
             "jestConfig": "packages/docker-meta/jest.config.js",
             "passWithNoTests": true
-          }
-        },
-        "build": {
-          "executor": "@nrwl/node:package",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/packages/docker-meta",
-            "tsConfig": "packages/docker-meta/tsconfig.lib.json",
-            "packageJson": "packages/docker-meta/package.json",
-            "main": "packages/docker-meta/src/index.ts",
-            "assets": ["packages/docker-meta/*.md"]
           }
         }
       }
@@ -177,7 +177,12 @@
               "packages/nx-prisma/*.md",
               {
                 "input": "./packages/nx-prisma/src",
-                "glob": "**/*.!(ts)",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-prisma/src",
+                "glob": "**/*.d.ts",
                 "output": "./src"
               },
               {

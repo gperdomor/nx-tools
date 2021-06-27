@@ -4,7 +4,7 @@ This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
-🔎 **Powerful, Extensible Dev Tools**
+🔎 **Smart, Extensible Build Framework**
 
 ## Adding capabilities to your workspace
 
@@ -79,7 +79,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 
 ## ☁ Nx Cloud
 
-### Computation Memoization in the Cloud
+### Distributed Computation Caching & Distributed Task Execution
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
 
