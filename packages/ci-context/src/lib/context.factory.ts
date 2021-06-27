@@ -1,3 +1,4 @@
+import { RunnerContext } from './interfaces';
 import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
@@ -7,7 +8,7 @@ import * as local from './utils/local';
 const ci = require('ci-info');
 
 export class ContextProxyFactory {
-  public static create() {
+  public static async create(): Promise<RunnerContext> {
     if (!ci.isCI) {
       return local.context();
     }

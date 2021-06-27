@@ -1,7 +1,7 @@
 import * as github from '@actions/github';
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export function context(): RunnerContext {
+export async function context(): Promise<RunnerContext> {
   const { actor, eventName, job, ref, runId, runNumber, sha, payload } = github.context;
 
   return {

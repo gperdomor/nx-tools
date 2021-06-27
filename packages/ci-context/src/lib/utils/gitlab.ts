@@ -1,6 +1,6 @@
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export function context(): RunnerContext {
+export async function context(): Promise<RunnerContext> {
   return {
     actor: process.env.GITLAB_USER_LOGIN,
     eventName: process.env.CI_PIPELINE_SOURCE,

@@ -10,14 +10,6 @@ describe('LocalContext', () => {
     process.env = {
       ...ENV,
       PATH: 'true',
-      NXDOCKER_EVENT_NAME: 'local-event-name',
-      NXDOCKER_SHA: 'local-sha',
-      NXDOCKER_REF: 'local-ref',
-      NXDOCKER_ACTION: 'local-action',
-      NXDOCKER_ACTOR: 'local-actor',
-      NXDOCKER_JOB: 'local-job',
-      NXDOCKER_RUN_NUMBER: '30',
-      NXDOCKER_RUN_ID: '300',
     };
   });
 
@@ -25,17 +17,21 @@ describe('LocalContext', () => {
     process.env = ENV; // Restore old environment
   });
 
-  it('Should be take proper values', () => {
-    context = local.context();
+  it('Should be take proper values', async () => {
+    jest.spyOn(local, 'getSha').mockResolvedValue('local-sha');
+    jest.spyOn(local, 'getRef').mockResolvedValue('local-ref');
+    jest.spyOn(local, 'getCommitUserEmail').mockResolvedValue('local-actor');
+
+    context = await local.context();
 
     expect(context).toMatchObject({
       actor: 'local-actor',
-      eventName: 'local-event-name',
-      job: 'local-job',
+      eventName: 'push',
+      job: 'build',
       payload: {},
       ref: 'local-ref',
-      runId: 300,
-      runNumber: 30,
+      runId: 0,
+      runNumber: 0,
       sha: 'local-sha',
     });
   });

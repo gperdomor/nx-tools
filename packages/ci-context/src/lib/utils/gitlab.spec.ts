@@ -25,8 +25,8 @@ describe('GitLab Context', () => {
     process.env = ENV; // Restore old environment
   });
 
-  it('Should be take proper values', () => {
-    context = gitlab.context();
+  it('Should be take proper values', async () => {
+    context = await gitlab.context();
 
     expect(context).toMatchObject({
       actor: 'gitlab-actor',
@@ -45,8 +45,8 @@ describe('GitLab Context', () => {
       process.env.CI_COMMIT_TAG = 'gitlab-tag';
     });
 
-    it('Should be take proper values', () => {
-      context = gitlab.context();
+    it('Should be take proper values', async () => {
+      context = await gitlab.context();
 
       expect(context).toMatchObject({
         actor: 'gitlab-actor',

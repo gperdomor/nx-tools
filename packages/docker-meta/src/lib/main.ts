@@ -11,7 +11,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
     throw new Error(`images input required`);
   }
 
-  const context: Context = ContextProxyFactory.create();
+  const context: Context = await ContextProxyFactory.create();
   const repo: RepoMetadata = await RepoProxyFactory.create(inputs.githubToken);
   core.startGroup(`Context info`);
   core.info(`eventName: ${context.eventName}`);

@@ -1,15 +1,31 @@
+import { getExecOutput } from '@nx-tools/core';
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export function context(): RunnerContext {
+export const getRef = async () => {
+  const output = await getExecOutput('git symbolic-ref HEAD');
+  return output.stdout.trim();
+};
+
+export const getCommitUserEmail = async () => {
+  const output = await getExecOutput('git log -1 --pretty=format:%ae');
+  return output.stdout.trim();
+};
+
+export const getSha = async () => {
+  const output = await getExecOutput('git rev-parse HEAD');
+  return output.stdout.trim();
+};
+
+export async function context(): Promise<RunnerContext> {
   return {
-    actor: process.env.NXDOCKER_ACTOR,
-    eventName: process.env.NXDOCKER_EVENT_NAME,
-    job: process.env.NXDOCKER_JOB,
+    actor: await getCommitUserEmail(),
+    eventName: 'push',
+    job: 'build',
     payload: {},
-    ref: process.env.NXDOCKER_REF,
-    runId: parseInt(process.env.NXDOCKER_RUN_ID, 10),
-    runNumber: parseInt(process.env.NXDOCKER_RUN_NUMBER, 10),
-    sha: process.env.NXDOCKER_SHA,
+    ref: await getRef(),
+    runId: 0,
+    runNumber: 0,
+    sha: await getSha(),
   };
 }
 

@@ -2,8 +2,8 @@ import { Context } from '@actions/github/lib/context';
 import { RunnerContext } from '../interfaces';
 import * as github from './github';
 
-jest.spyOn(github, 'context').mockImplementation((): Context => {
-  return new Context();
+jest.spyOn(github, 'context').mockImplementation((): Promise<Context> => {
+  return Promise.resolve(new Context());
 });
 
 describe('GitHub Context', () => {
@@ -29,8 +29,8 @@ describe('GitHub Context', () => {
     process.env = ENV; // Restore old environment
   });
 
-  it('Should be take proper values', () => {
-    context = github.context();
+  it('Should be take proper values', async () => {
+    context = await github.context();
 
     expect(context).toMatchObject({
       actor: 'github-actor',
