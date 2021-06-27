@@ -23,8 +23,8 @@ describe('CircleCI Context', () => {
     process.env = ENV; // Restore old environment
   });
 
-  it('Should be take proper values', () => {
-    context = circle.context();
+  it('Should be take proper values', async () => {
+    context = await circle.context();
 
     expect(context).toMatchObject({
       actor: 'circleci-actor',
@@ -43,8 +43,8 @@ describe('CircleCI Context', () => {
       process.env.CIRCLE_TAG = 'circleci-tag';
     });
 
-    it('Should be take proper values', () => {
-      context = circle.context();
+    it('Should be take proper values', async () => {
+      context = await circle.context();
 
       expect(context).toMatchObject({
         actor: 'circleci-actor',

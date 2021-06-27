@@ -11,8 +11,8 @@ jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetada
   return <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'));
 });
 
-jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): RunnerContext => {
-  return new Context();
+jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+  return Promise.resolve(new Context());
 });
 
 jest.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {
@@ -40,7 +40,7 @@ const tagsLabelsTest = async (
   exLabels: Array<string>,
 ) => {
   process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
-  const context = ContextProxyFactory.create();
+  const context = await ContextProxyFactory.create();
   console.log(process.env, context);
 
   const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
@@ -2738,7 +2738,7 @@ describe('json', () => {
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: Record<string,unknown>) => {
     process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
-    const context = ContextProxyFactory.create();
+    const context = await ContextProxyFactory.create();
     console.log(process.env, context);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
@@ -3045,7 +3045,7 @@ describe('bake', () => {
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: Record<string,unknown>) => {
     process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
-    const context = ContextProxyFactory.create();
+    const context = await ContextProxyFactory.create();
     console.log(process.env, context);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');

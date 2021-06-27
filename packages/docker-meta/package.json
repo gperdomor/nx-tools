@@ -4,14 +4,14 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.0.0-beta.6",
+  "version": "1.0.0",
   "main": "src/index.js",
   "dependencies": {
-    "@nx-tools/ci-context": "1.0.0-beta.5",
-    "@nx-tools/core": "1.0.0-rc.2",
-    "csv-parse": "^4.16.0",
-    "handlebars": "^4.7.7",
-    "moment": "^2.29.1",
-    "semver": "^7.3.5"
+    "@nx-tools/ci-context": "^1.0.1",
+    "@nx-tools/core": "^1.0.0",
+    "csv-parse": "4.16.0",
+    "handlebars": "4.7.7",
+    "moment": "2.29.1",
+    "semver": "7.3.5"
   }
 }

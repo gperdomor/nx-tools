@@ -1,8 +1,13 @@
 {
   "npmScope": "nx-tools",
-  "affected": { "defaultBase": "main" },
+  "affected": {
+    "defaultBase": "main"
+  },
   "implicitDependencies": {
-    "package.json": { "dependencies": "*", "devDependencies": "*" },
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     ".eslintrc.json": "*"
   },
   "tasksRunnerOptions": {
@@ -18,11 +23,24 @@
     }
   },
   "projects": {
-    "nx-docker": { "tags": ["plugin"] },
-    "nx-prisma": { "tags": ["plugin"] },
-    "core": { "tags": ["shared"] },
-    "ci-context": { "tags": ["shared"] },
-    "docker-meta": { "tags": ["shared"] }
+    "ci-context": {
+      "tags": ["shared"]
+    },
+    "core": {
+      "tags": ["shared"]
+    },
+    "docker-meta": {
+      "tags": ["shared"]
+    },
+    "nx-docker": {
+      "tags": ["plugin"]
+    },
+    "nx-prisma": {
+      "tags": ["plugin"]
+    }
   },
-  "workspaceLayout": { "appsDir": "packages", "libsDir": "packages" }
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  }
 }

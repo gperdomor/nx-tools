@@ -1,6 +1,6 @@
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export function context(): RunnerContext {
+export async function context(): Promise<RunnerContext> {
   return {
     actor: process.env.CIRCLE_USERNAME,
     eventName: process.env.CI_PULL_REQUEST ? 'pull_request' : 'unknown',

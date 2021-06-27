@@ -1,12 +1,16 @@
 include:
   - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+  - .gitlab/node-12.yml
+  - .gitlab/node-14.yml
+  - .gitlab/node-15.yml
+  - .gitlab/node-16.yml
 
 stages:
   - setup
   - test
+  - build
 
 variables:
-  GIT_DEPTH: 0
   NX_BRANCH: $CI_COMMIT_BRANCH
   NX_RUN_GROUP: $CI_PIPELINE_ID
   NX_CLOUD_ACCESS_TOKEN: $NX_CLOUD_AUTH_TOKEN
@@ -25,23 +29,22 @@ variables:
   before_script:
     - npm ci --cache .npm --prefer-offline --ignore-scripts
 
-.base-head-rules:
-  rules:
-    - if: $CI_MERGE_REQUEST_IID
-      when: delayed
-      start_in: 15 seconds
-      variables:
-        NX_BASE: remotes/origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: delayed
-      start_in: 15 seconds
-      variables:
-        NX_BASE: HEAD~1
-
 .require-setup:
   needs:
     - job: setup
       optional: true
+
+.docker-build:
+  extends: [.node-job, .require-setup]
+  stage: build
+  image: ghcr.io/gperdomor/nx-docker:16.2-alpine
+  services:
+    - docker:20.10.7-dind
+  script:
+    - echo $GH_PAT | docker login ghcr.io --username gperdomor --password-stdin
+    - echo $DH_PAT | docker login --username gperdomor --password-stdin
+    - docker buildx create --use
+    - node ./tools/build.js
 
 setup:
   stage: setup
@@ -64,31 +67,42 @@ agent:
   services:
     - docker:20.10.7-dind
   script:
+    - echo "Start Nx Agent $CI_NODE_INDEX of $CI_NODE_TOTAL"
     - npx @nrwl/nx-cloud start-agent
 
-verify:
-  extends: [.node-job, .base-head-rules, .require-setup]
+main:
+  extends: [.node-job, .require-setup]
   stage: test
+  variables:
+    GIT_DEPTH: 0
   script:
-    - npx nx affected --target=build --base=$NX_BASE --parallel --max-parallel=3
-    - npx nx affected --target=lint  --base=$NX_BASE --parallel --max-parallel=3
-    - npx nx affected --target=test  --base=$NX_BASE --parallel --max-parallel=2
-    - npx nx affected --target=e2e   --base=$NX_BASE --parallel --max-parallel=2
+    - pids=()
+    - eval "npx nx affected:build --base=$NX_BASE --parallel --max-parallel=3 --with-deps" & pids+=($!)
+    - eval "npx nx affected:lint  --base=$NX_BASE --parallel --max-parallel=3" & pids+=($!)
+    - eval "npx nx affected:test  --base=$NX_BASE --parallel --max-parallel=2" & pids+=($!)
+    - eval "npx nx affected:e2e   --base=$NX_BASE --parallel --max-parallel=2" & pids+=($!)
+    - |
+      for pid in ${pids[*]}; do
+        if ! wait $pid; then
+          exit 1
+        fi
+      done
+    - exit 0
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   after_script:
     - npx @nrwl/nx-cloud stop-all-agents
-
-verify-tag:
-  extends: [.node-job, .require-setup]
-  stage: test
-  script:
-    - npx nx affected --target=build --all --parallel --max-parallel=3
-    - npx nx affected --target=lint  --all --parallel --max-parallel=3
-    - npx nx affected --target=test  --all --parallel --max-parallel=2
-    - npx nx affected --target=e2e   --all --parallel --max-parallel=2
-  coverage: !reference [verify, coverage]
-  after_script: !reference [verify, after_script]
   rules:
-    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        NX_BASE: HEAD~1
+      when: delayed
+      start_in: 15 seconds
+
+mr:
+  extends: [main]
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+      variables:
+        NX_BASE: remotes/origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
       when: delayed
       start_in: 15 seconds
