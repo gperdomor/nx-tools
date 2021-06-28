@@ -1,4 +1,5 @@
 import * as core from '@nx-tools/core';
+import { interpolate } from '@nx-tools/core';
 import { getMetadata } from '@nx-tools/docker-meta';
 import { config } from 'dotenv';
 import * as fs from 'fs';
@@ -35,11 +36,16 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
 
   core.debug(`executing -> docker ${args.join(' ')}`);
 
-  await exec.exec('docker', args).then((res) => {
-    if (res.stderr != '' && !res.success) {
-      throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)![0]}`);
-    }
-  });
+  await exec
+    .exec(
+      'docker',
+      args.map((arg) => interpolate(arg)),
+    )
+    .then((res) => {
+      if (res.stderr != '' && !res.success) {
+        throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)![0]}`);
+      }
+    });
 
   const imageID = await buildx.getImageID();
   if (imageID) {
