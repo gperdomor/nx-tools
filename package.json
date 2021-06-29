@@ -46,7 +46,7 @@
     "@nrwl/node": "12.4.0",
     "@nrwl/nx-cloud": "12.2.7",
     "@nrwl/nx-plugin": "12.4.0",
-    "@nrwl/tao": "12.4.0",
+    "@nrwl/tao": "12.5.0",
     "@nrwl/workspace": "12.4.0",
     "@nx-tools/nx-docker": "^1.0.1",
     "@prisma/client": "2.25.0",
