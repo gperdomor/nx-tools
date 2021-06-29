@@ -39,7 +39,7 @@
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
     "@nrwl/cli": "12.4.0",
-    "@nrwl/devkit": "12.4.0",
+    "@nrwl/devkit": "12.5.0",
     "@nrwl/eslint-plugin-nx": "12.4.0",
     "@nrwl/jest": "12.4.0",
     "@nrwl/linter": "12.4.0",
