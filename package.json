@@ -52,7 +52,7 @@
     "@prisma/client": "2.25.0",
     "@types/jest": "26.0.23",
     "@types/node": "15.12.5",
-    "@typescript-eslint/eslint-plugin": "4.28.0",
+    "@typescript-eslint/eslint-plugin": "4.28.1",
     "@typescript-eslint/parser": "4.28.0",
     "ci-info": "3.2.0",
     "commitizen": "4.2.4",
