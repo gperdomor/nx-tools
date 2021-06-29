@@ -63,7 +63,7 @@ agent:
   stage: test
   extends: [.node-job, .require-setup]
   parallel: 2
-  image: ghcr.io/gperdomor/nx-docker:16.2-alpine
+  image: ghcr.io/gperdomor/nx-docker:16.3-alpine
   services:
     - docker:20.10.7-dind
   script:
