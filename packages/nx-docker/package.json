@@ -4,7 +4,7 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",

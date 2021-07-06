@@ -80,7 +80,7 @@ export async function getInputs(defaultContext: string, options: BuildExecutorSc
     tags: await getInputList('tags', options.tags),
     target: core.getInput('target', { fallback: options.target }),
     meta: {
-      enabled: core.getBooleanInput('meta-enabled', { fallback: `${options.meta?.enabled || true}` }),
+      enabled: core.getBooleanInput('meta-enabled', { fallback: `${options.meta?.enabled || false}` }),
     },
   };
 }

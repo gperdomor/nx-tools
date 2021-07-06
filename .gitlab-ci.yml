@@ -96,7 +96,7 @@ main:
       variables:
         NX_BASE: HEAD~1
       when: delayed
-      start_in: 15 seconds
+      start_in: 20 seconds
 
 mr:
   extends: [main]
@@ -105,4 +105,4 @@ mr:
       variables:
         NX_BASE: remotes/origin/${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}
       when: delayed
-      start_in: 15 seconds
+      start_in: 20 seconds

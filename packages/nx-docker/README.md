@@ -22,9 +22,6 @@ Then configure the builder in your `angular.json` or `workspace.json`, so add so
       "file": "apps/api/Dockerfile",
       "push": true,
       "tags": ["your-org/api:latest", "your-org/api:v1"],
-      "meta": {
-        "enabled": false,
-      }
     }
   }
 ```
@@ -49,9 +46,6 @@ image to these registries.
     "file": "apps/api/Dockerfile",
     "push": true,
     "tags": ["your-org/api:latest", "your-org/api:v1"],
-    "meta": {
-      "enabled": false,
-    }
   }
 }
 ```
@@ -73,9 +67,6 @@ in another step of your workflow:
     "file": "apps/api/Dockerfile",
     "load": true,
     "tags": ["your-org/api:latest", "your-org/api:v1"],
-    "meta": {
-      "enabled": false,
-    }
   }
 }
 ```
@@ -97,9 +88,6 @@ You can build multi-platform images using the platforms input as described below
     "platforms": ["linux/amd64", "linux/arm64"],
     "push": true,
     "tags": ["your-org/api:latest", "your-org/api:v1"],
-    "meta": {
-      "enabled": false,
-    }
   }
 }
 ```
@@ -120,6 +108,7 @@ The following configuration handle tags and labels based on Git metadata and it'
     "file": "apps/api/Dockerfile",
     "push": true,
     "meta": {
+      "enabled": true,
       "images": ["gperdomor/api"],
       "tags": [
         "type=schedule",
@@ -170,7 +159,7 @@ Following inputs can be used as `step.with` keys
 | `ssh`            | List     | List of SSH agent socket or keys to expose to the build                                                                                                                           |
 | `tags`           | List/CSV | List of tags                                                                                                                                                                      |
 | `target`         | String   | Sets the target stage to build                                                                                                                                                    |
-| `meta.enabled`   | Bool     | Enable metadata extraction from git context. (default `true`)                                                                                                                     |
+| `meta.enabled`   | Bool     | Enable metadata extraction from git context. (default `false`)                                                                                                                    |
 | `meta.images`    | List     | List of Docker images to use as base name for tags                                                                                                                                |
 | `meta.tags`      | List     | List of tags as key-value pair attributes                                                                                                                                         |
 | `meta.flavor`    | List     | Flavor to apply                                                                                                                                                                   |

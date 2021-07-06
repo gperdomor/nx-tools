@@ -12,5 +12,5 @@ export const seedSuite = () =>
       const output = await executor(options);
       expect(output.stderr).toBeFalsy();
       expect(output.success).toBeTruthy();
-    }, 20000);
+    }, 40000);
   });
