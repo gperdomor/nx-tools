@@ -24,6 +24,7 @@ This repository provides a docker image to use with [@nx-tools/nx-docker](https:
 | 14.16.0-alpine | 14.16.0-alpine |    20.10.6    | 0.5.1  |
 | 14.16.1-alpine | 14.16.1-alpine |    20.10.6    | 0.5.1  |
 | 14.17.0-alpine | 14.17.0-alpine |    20.10.6    | 0.5.1  |
+| 14.17.1-alpine | 14.17.1-alpine |    20.10.7    | 0.5.1  |
 
 > The images are also taged with their corresponding 14-alpine and 14.16-alpine format.
 
