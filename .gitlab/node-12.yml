@@ -1,7 +1,7 @@
 builder-12:
   extends: [.docker-build]
   variables:
-    NODE_VERSION: '12.22.1'
+    NODE_VERSION: '12.22.2'
     ALPINE_VERSION: '3.12'
   rules:
     - changes:
