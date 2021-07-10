@@ -62,7 +62,7 @@
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
     "handlebars": "4.7.7",
-    "husky": "6.0.0",
+    "husky": "7.0.1",
     "jest": "27.0.6",
     "lint-staged": "11.0.0",
     "moment": "2.29.1",
