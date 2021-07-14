@@ -18,7 +18,7 @@ variables:
   PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 .node-job:
-  image: node:16.4.2
+  image: node:16.5.0
   cache:
     key:
       files:
