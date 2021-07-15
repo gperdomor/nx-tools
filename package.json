@@ -64,7 +64,7 @@
     "handlebars": "4.7.7",
     "husky": "6.0.0",
     "jest": "27.0.6",
-    "lint-staged": "11.0.0",
+    "lint-staged": "11.0.1",
     "moment": "2.29.1",
     "prettier": "2.3.2",
     "prisma": "2.26.0",
