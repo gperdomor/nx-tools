@@ -1,8 +1,8 @@
 builder-16:
   extends: [.docker-build]
   variables:
-    NODE_VERSION: '16.4.2'
-    ALPINE_VERSION: '3.13'
+    NODE_VERSION: '16.5.0'
+    ALPINE_VERSION: '3.14'
   rules:
     - changes:
         - .gitlab/node-16.yml
