@@ -1,8 +1,8 @@
 builder-14:
   extends: [.docker-build]
   variables:
-    NODE_VERSION: '14.17.2'
-    ALPINE_VERSION: '3.13'
+    NODE_VERSION: '14.17.3'
+    ALPINE_VERSION: '3.14'
   rules:
     - changes:
         - .gitlab/node-14.yml
