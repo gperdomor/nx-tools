@@ -105,7 +105,6 @@ describe('Core', () => {
       process.env.INPUT_F4 = '  FALSE  ';
       process.env.INPUT_FX = 'invalid';
       process.env.INPUT_META_ENABLED = 'true';
-      process.env['INPUT_META-ENABLED'] = 'false';
     });
 
     describe('When env variable is defined', () => {
@@ -120,7 +119,7 @@ describe('Core', () => {
           ['F3', false],
           ['F4', false],
           ['META_ENABLED', true],
-          ['meta-enabled', false],
+          ['meta-enabled', true],
         ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: boolean) => {
           expect(getBooleanInput(name)).toEqual(expected);
           expect(getBooleanInput(name, { required: true })).toEqual(expected);

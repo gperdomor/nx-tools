@@ -24,7 +24,7 @@ export function getInput(name: string, options?: InputOptions): string {
   let val: string;
 
   try {
-    val = acGetInput(name, options);
+    val = acGetInput(name.replace(/[ -]/g, '_'), options);
 
     if (!val && options?.fallback) {
       val = options.fallback;
