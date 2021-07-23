@@ -1,9 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/packages/ci-context',
-    '<rootDir>/packages/core',
-    '<rootDir>/packages/docker-meta',
-    '<rootDir>/packages/nx-docker',
-    '<rootDir>/packages/nx-prisma',
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
