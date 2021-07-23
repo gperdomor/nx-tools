@@ -1,0 +1,50 @@
+{
+  "root": "packages/nx-docker",
+  "sourceRoot": "packages/nx-docker/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nx-docker"],
+      "options": {
+        "jestConfig": "packages/nx-docker/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-docker",
+        "tsConfig": "packages/nx-docker/tsconfig.lib.json",
+        "packageJson": "packages/nx-docker/package.json",
+        "main": "packages/nx-docker/src/index.ts",
+        "assets": [
+          "packages/nx-docker/*.md",
+          {
+            "input": "./packages/nx-docker/src",
+            "glob": "**/*.!(ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-docker",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx-docker",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": ["plugin"]
+}

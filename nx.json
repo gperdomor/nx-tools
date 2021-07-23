@@ -22,23 +22,7 @@
       }
     }
   },
-  "projects": {
-    "ci-context": {
-      "tags": ["shared"]
-    },
-    "core": {
-      "tags": ["shared"]
-    },
-    "docker-meta": {
-      "tags": ["shared"]
-    },
-    "nx-docker": {
-      "tags": ["plugin"]
-    },
-    "nx-prisma": {
-      "tags": ["plugin"]
-    }
-  },
+  "projects": {},
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
