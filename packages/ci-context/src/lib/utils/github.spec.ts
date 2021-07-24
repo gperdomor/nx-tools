@@ -1,4 +1,5 @@
 import { Context } from '@actions/github/lib/context';
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as github from './github';
 
@@ -7,13 +8,11 @@ jest.spyOn(github, 'context').mockImplementation((): Promise<Context> => {
 });
 
 describe('GitHub Context', () => {
-  const ENV: NodeJS.ProcessEnv = process.env;
+  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = {
-      ...ENV,
+    restore = mockedEnv({
       GITHUB_ACTIONS: 'true',
       GITHUB_EVENT_NAME: 'github-event-name',
       GITHUB_SHA: 'github-sha',
@@ -22,11 +21,11 @@ describe('GitHub Context', () => {
       GITHUB_JOB: 'github-job',
       GITHUB_RUN_NUMBER: '20',
       GITHUB_RUN_ID: '200',
-    };
+    });
   });
 
   afterEach(() => {
-    process.env = ENV; // Restore old environment
+    restore();
   });
 
   it('Should be take proper values', async () => {

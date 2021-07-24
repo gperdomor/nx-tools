@@ -10,11 +10,11 @@ const ci = require('ci-info');
 export class RepoProxyFactory {
   public static async create(token: string): Promise<RepoMetadata> {
     if (!ci.isCI) {
-      return local.repo(token);
+      return local.repo();
     }
 
     if (ci.CIRCLE) {
-      return circle.repo(token);
+      return circle.repo();
     }
 
     if (ci.GITHUB_ACTIONS) {
@@ -22,7 +22,7 @@ export class RepoProxyFactory {
     }
 
     if (ci.GITLAB) {
-      return gitlab.repo(token);
+      return gitlab.repo();
     }
 
     throw new Error('Unsupported repository provider');

@@ -138,6 +138,8 @@ describe('getBooleanInput', () => {
         ['F4', false],
         ['META_ENABLED', true],
         ['meta-enabled', true],
+        ['meta enabled', true],
+        ['META ENABLED', true],
       ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: boolean) => {
         expect(getBooleanInput(name)).toEqual(expected);
         expect(getBooleanInput(name, { required: true })).toEqual(expected);

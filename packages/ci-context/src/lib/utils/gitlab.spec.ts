@@ -1,14 +1,13 @@
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as gitlab from './gitlab';
 
 describe('GitLab Context', () => {
-  const ENV: NodeJS.ProcessEnv = process.env;
+  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = {
-      ...ENV,
+    restore = mockedEnv({
       GITLAB_CI: 'true',
       CI_PIPELINE_SOURCE: 'gitlab-event-name',
       CI_COMMIT_SHA: 'gitlab-sha',
@@ -18,11 +17,11 @@ describe('GitLab Context', () => {
       CI_JOB_NAME: 'gitlab-job',
       CI_PIPELINE_ID: '10',
       CI_PIPELINE_IID: '100',
-    };
+    });
   });
 
   afterEach(() => {
-    process.env = ENV; // Restore old environment
+    restore();
   });
 
   it('Should be take proper values', async () => {
@@ -41,8 +40,16 @@ describe('GitLab Context', () => {
   });
 
   describe('When git tag is present', () => {
+    let restore: RestoreFn;
+
     beforeEach(() => {
-      process.env.CI_COMMIT_TAG = 'gitlab-tag';
+      restore = mockedEnv({
+        CI_COMMIT_TAG: 'gitlab-tag',
+      });
+    });
+
+    afterEach(() => {
+      restore();
     });
 
     it('Should be take proper values', async () => {

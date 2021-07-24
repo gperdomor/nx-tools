@@ -29,7 +29,7 @@ export async function context(): Promise<RunnerContext> {
   };
 }
 
-export async function repo(token: string): Promise<RepoMetadata> {
+export async function repo(): Promise<RepoMetadata> {
   return {
     default_branch: '',
     description: '',

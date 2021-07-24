@@ -32,10 +32,11 @@
   "dependencies": {
     "@actions/core": "1.4.0",
     "@actions/exec": "1.1.0",
+    "@actions/github": "5.0.0",
+    "ci-info": "3.2.0",
     "tslib": "2.3.0"
   },
   "devDependencies": {
-    "@actions/github": "5.0.0",
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
     "@nrwl/cli": "12.6.2",
@@ -54,7 +55,6 @@
     "@types/node": "15.12.5",
     "@typescript-eslint/eslint-plugin": "4.28.4",
     "@typescript-eslint/parser": "4.28.4",
-    "ci-info": "3.2.0",
     "commitizen": "4.2.4",
     "csv-parse": "4.16.0",
     "cz-conventional-changelog": "3.3.0",
