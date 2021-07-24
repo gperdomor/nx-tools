@@ -7,10 +7,6 @@ export interface InputOptions extends acInputOptions {
   fallback?: string;
 }
 
-//-----------------------------------------------------------------------
-// Variables
-//-----------------------------------------------------------------------
-
 /**
  * Gets the value of an input.
  * Unless trimWhitespace is set to false in InputOptions, the value is also trimmed.
@@ -65,20 +61,3 @@ export function getBooleanInput(name: string, options?: InputOptions): boolean {
       `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``,
   );
 }
-
-//-----------------------------------------------------------------------
-// Utils Commands
-//-----------------------------------------------------------------------
-
-export const asyncForEach = async <T>(array: T[], callback: (value: T, i: number, arr: T[]) => Promise<void>) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-};
-
-export const interpolate = (str: string) => {
-  const replaced = str.replace(/\${?([a-zA-Z0-9_]+)?}?/g, (m1, g1) => {
-    return process.env[g1] || m1;
-  });
-  return replaced;
-};
