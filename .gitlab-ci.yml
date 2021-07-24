@@ -79,7 +79,7 @@ main:
     - pids=()
     - eval "npx nx affected:build --base=$NX_BASE --parallel --max-parallel=3 --with-deps" & pids+=($!)
     - eval "npx nx affected:lint  --base=$NX_BASE --parallel --max-parallel=3" & pids+=($!)
-    - eval "npx nx affected:test  --base=$NX_BASE --parallel --max-parallel=2" & pids+=($!)
+    - eval "npx nx affected:test  --base=$NX_BASE --parallel --max-parallel=2" --code-coverage & pids+=($!)
     - eval "npx nx affected:e2e   --base=$NX_BASE --parallel --max-parallel=2" & pids+=($!)
     - |
       for pid in ${pids[*]}; do
@@ -88,9 +88,17 @@ main:
         fi
       done
     - exit 0
-  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   after_script:
     - npx @nrwl/nx-cloud stop-all-agents
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    when: always
+    paths:
+      - coverage
+    expire_in: 10 days
+    reports:
+      cobertura:
+        - coverage/packages/**/cobertura-coverage.xml
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       variables:

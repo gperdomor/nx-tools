@@ -22,11 +22,6 @@
       }
     }
   },
-  "projects": {},
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  },
   "targetDependencies": {
     "build": [
       {
@@ -34,5 +29,10 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "projects": {},
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
   }
 }
