@@ -1,14 +1,13 @@
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as circle from './circle';
 
 describe('CircleCI Context', () => {
-  const ENV: NodeJS.ProcessEnv = process.env;
+  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = {
-      ...ENV,
+    restore = mockedEnv({
       CIRCLECI: 'true',
       CI_PULL_REQUEST: 'true',
       CIRCLE_SHA1: 'circleci-sha',
@@ -16,11 +15,11 @@ describe('CircleCI Context', () => {
       CIRCLE_USERNAME: 'circleci-actor',
       CIRCLE_JOB: 'circleci-job',
       CIRCLE_BUILD_NUM: '40',
-    };
+    });
   });
 
   afterEach(() => {
-    process.env = ENV; // Restore old environment
+    restore();
   });
 
   it('Should be take proper values', async () => {
@@ -39,8 +38,16 @@ describe('CircleCI Context', () => {
   });
 
   describe('When git tag is present', () => {
+    let restore: RestoreFn;
+
     beforeEach(() => {
-      process.env.CIRCLE_TAG = 'circleci-tag';
+      restore = mockedEnv({
+        CIRCLE_TAG: 'circleci-tag',
+      });
+    });
+
+    afterEach(() => {
+      restore();
     });
 
     it('Should be take proper values', async () => {
