@@ -38,7 +38,7 @@ variables:
   stage: build
   image: ghcr.io/gperdomor/nx-docker:16.5-alpine
   services:
-    - docker:20.10.7-dind
+    - docker:20.10.8-dind
   script:
     - echo $GH_PAT | docker login ghcr.io --username gperdomor --password-stdin
     - echo $DH_PAT | docker login --username gperdomor --password-stdin
@@ -64,7 +64,7 @@ agent:
   parallel: 2
   image: ghcr.io/gperdomor/nx-docker:16.5-alpine
   services:
-    - docker:20.10.7-dind
+    - docker:20.10.8-dind
   script:
     - echo "Start Nx Agent $CI_NODE_INDEX of $CI_NODE_TOTAL"
     - npx @nrwl/nx-cloud start-agent
