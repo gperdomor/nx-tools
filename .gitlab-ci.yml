@@ -36,7 +36,7 @@ variables:
 .docker-build:
   extends: [.node-job, .require-setup]
   stage: build
-  image: ghcr.io/gperdomor/nx-docker:16.5-alpine
+  image: ghcr.io/gperdomor/nx-docker:16.6.0-alpine
   services:
     - docker:20.10.8-dind
   script:
@@ -62,7 +62,7 @@ agent:
   stage: test
   extends: [.node-job, .require-setup]
   parallel: 2
-  image: ghcr.io/gperdomor/nx-docker:16.5-alpine
+  image: ghcr.io/gperdomor/nx-docker:16.6.0-alpine
   services:
     - docker:20.10.8-dind
   script:
