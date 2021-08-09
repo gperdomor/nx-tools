@@ -2,7 +2,6 @@ include:
   - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
   - .gitlab/node-12.yml
   - .gitlab/node-14.yml
-  - .gitlab/node-15.yml
   - .gitlab/node-16.yml
 
 stages:
@@ -18,7 +17,7 @@ variables:
   PRISMA_HIDE_UPDATE_MESSAGE: 'true'
 
 .node-job:
-  image: node:16.5.0
+  image: node:16.6.1
   cache:
     key:
       files:

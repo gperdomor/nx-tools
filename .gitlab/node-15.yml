@@ -1,8 +1,0 @@
-builder-15:
-  extends: [.docker-build]
-  variables:
-    NODE_VERSION: '15.14.0'
-    ALPINE_VERSION: '3.13'
-  rules:
-    - changes:
-        - .gitlab/node-15.yml
