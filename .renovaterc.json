@@ -9,7 +9,12 @@
     {
       "matchUpdateTypes": ["patch"],
       "matchCurrentVersion": "!/^0/",
-      "automerge": true
+      "automerge": true,
+      "labels": ["update-type::patch"]
+    },
+    {
+      "matchPackagePatterns": ["^@nrwl"],
+      "automerge": false
     }
   ]
 }
