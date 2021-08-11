@@ -12,6 +12,8 @@ describe('getInput', () => {
       INPUT_TL: '     TRIM LEFT',
       INPUT_TR: 'TRIM RIGHT      ',
       INPUT_TB: '  TRIM BOTH  ',
+      INPUT_CACHE_FROM: 'cache-from-value',
+      INPUT_BUILD_ARGS: 'MY_ARG=val1,val2,val3\nARG=val',
     });
   });
 
@@ -28,6 +30,17 @@ describe('getInput', () => {
         ['TL', 'TRIM LEFT'],
         ['TR', 'TRIM RIGHT'],
         ['TB', 'TRIM BOTH'],
+        ['TB', 'TRIM BOTH'],
+        ['cache from', 'cache-from-value'],
+        ['cache-from', 'cache-from-value'],
+        ['cache_from', 'cache-from-value'],
+        ['Cache_From', 'cache-from-value'],
+        ['CACHE-FROM', 'cache-from-value'],
+        ['build args', 'MY_ARG=val1,val2,val3\nARG=val'],
+        ['build-args', 'MY_ARG=val1,val2,val3\nARG=val'],
+        ['build_args', 'MY_ARG=val1,val2,val3\nARG=val'],
+        ['Build_Args', 'MY_ARG=val1,val2,val3\nARG=val'],
+        ['BUILD-ARGS', 'MY_ARG=val1,val2,val3\nARG=val'],
       ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: string) => {
         expect(getInput(name)).toEqual(expected);
         expect(getInput(name, { required: true })).toEqual(expected);
