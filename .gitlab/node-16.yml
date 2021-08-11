@@ -1,7 +1,7 @@
 builder-16:
   extends: [.docker-build]
   variables:
-    NODE_VERSION: '16.6.1'
+    NODE_VERSION: '16.6.2'
     ALPINE_VERSION: '3.14'
   rules:
     - changes:

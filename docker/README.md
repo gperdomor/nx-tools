@@ -14,6 +14,7 @@ This repository provides a docker image to use with [@nx-tools/nx-docker](https:
 | 12.22.2-alpine | 12.22.2-alpine |    20.10.7    | 0.5.1  |
 | 12.22.3-alpine | 12.22.3-alpine |    20.10.7    | 0.6.0  |
 | 12.22.4-alpine | 12.22.4-alpine |    20.10.8    | 0.6.1  |
+| 12.22.5-alpine | 12.22.5-alpine |    20.10.8    | 0.6.1  |
 
 > The images are also taged with their corresponding 12-alpine and 12.22-alpine format.
 >
@@ -31,6 +32,7 @@ This repository provides a docker image to use with [@nx-tools/nx-docker](https:
 | 14.17.2-alpine | 14.17.2-alpine |    20.10.7    | 0.5.1  |
 | 14.17.3-alpine | 14.17.3-alpine |    20.10.7    | 0.6.0  |
 | 14.17.4-alpine | 14.17.4-alpine |    20.10.8    | 0.6.1  |
+| 14.17.5-alpine | 14.17.5-alpine |    20.10.8    | 0.6.1  |
 
 > The images are also taged with their corresponding 14-alpine and 14.16-alpine format.
 
@@ -57,5 +59,6 @@ This repository provides a docker image to use with [@nx-tools/nx-docker](https:
 | 16.5.0-alpine | 16.5.0-alpine |    20.10.7    | 0.6.0  |
 | 16.6.0-alpine | 16.6.0-alpine |    20.10.8    | 0.6.1  |
 | 16.6.1-alpine | 16.6.1-alpine |    20.10.8    | 0.6.1  |
+| 16.6.2-alpine | 16.6.2-alpine |    20.10.8    | 0.6.1  |
 
 > The images are also taged with their corresponding 16-alpine and 16.0-alpine format.
