@@ -2,6 +2,7 @@ import { RepoMetadata } from './interfaces';
 import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
+import * as jenkins from './utils/jenkins';
 import * as local from './utils/local';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -23,6 +24,10 @@ export class RepoProxyFactory {
 
     if (ci.GITLAB) {
       return gitlab.repo();
+    }
+
+    if (ci.JENKINS) {
+      return jenkins.repo();
     }
 
     throw new Error('Unsupported repository provider');
