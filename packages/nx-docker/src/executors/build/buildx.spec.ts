@@ -1,9 +1,10 @@
+import * as exec from '@actions/exec';
+import * as core from '@nx-tools/core';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as semver from 'semver';
 import * as buildx from './buildx';
 import * as context from './context';
-import * as docker from './docker';
 
 const tmpNameSync = path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
 const digest = 'sha256:bfb45ab72e46908183546477a08f8867fc40cebadd00af54b071b097aed127a9';
@@ -91,9 +92,26 @@ describe('isLocalOrTarExporter', () => {
   );
 });
 
+describe('isAvailable', () => {
+  const execSpy: jest.SpyInstance = jest.spyOn(exec, 'getExecOutput');
+  buildx.isAvailable();
+
+  expect(execSpy).toHaveBeenCalledWith(`docker`, ['buildx'], {
+    silent: true,
+    ignoreReturnCode: true,
+  });
+});
+
 describe('getVersion', () => {
   async function isDaemonRunning() {
-    return await docker.isDaemonRunning();
+    return await core
+      .getExecOutput(`docker`, ['version', '--format', '{{.Server.Os}}'], {
+        ignoreReturnCode: true,
+        silent: true,
+      })
+      .then((res) => {
+        return !res.stdout.includes(' ') && res.exitCode == 0;
+      });
   }
   (isDaemonRunning() ? it : it.skip)(
     'valid',
@@ -111,8 +129,19 @@ describe('parseVersion', () => {
     ['github.com/docker/buildx 0.4.1+azure bda4882a65349ca359216b135896bddc1d92461c', '0.4.1'],
     ['github.com/docker/buildx v0.4.1 bda4882a65349ca359216b135896bddc1d92461c', '0.4.1'],
     ['github.com/docker/buildx v0.4.2 fb7b670b764764dc4716df3eba07ffdae4cc47b2', '0.4.2'],
+    ['github.com/docker/buildx f117971 f11797113e5a9b86bd976329c5dbb8a8bfdfadfa', 'f117971'],
   ])('given %p', async (stdout, expected) => {
-    expect(await buildx.parseVersion(stdout)).toEqual(expected);
+    expect(buildx.parseVersion(stdout)).toEqual(expected);
+  });
+});
+
+describe('satisfies', () => {
+  test.each([
+    ['0.4.1', '>=0.3.2', true],
+    ['bda4882a65349ca359216b135896bddc1d92461c', '>0.1.0', false],
+    ['f117971', '>0.6.0', true],
+  ])('given %p', async (version, range, expected) => {
+    expect(buildx.satisfies(version, range)).toBe(expected);
   });
 });
 

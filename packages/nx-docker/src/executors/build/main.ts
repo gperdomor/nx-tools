@@ -1,19 +1,15 @@
+import 'dotenv/config';
 import * as core from '@nx-tools/core';
-import { interpolate } from '@nx-tools/core';
 import { getMetadata } from '@nx-tools/docker-meta';
-import { config } from 'dotenv';
 import * as fs from 'fs';
 import * as buildx from './buildx';
 import * as context from './context';
-import * as exec from './exec';
 import { BuildExecutorSchema } from './schema';
 
 export default async function run(options: BuildExecutorSchema): Promise<{ success: true }> {
-  config();
-
   core.startGroup(`Docker info`);
-  await exec.exec('docker', ['version']);
-  await exec.exec('docker', ['info']);
+  await core.exec('docker', ['version']);
+  await core.exec('docker', ['info']);
   core.endGroup();
 
   if (!(await buildx.isAvailable())) {
@@ -33,17 +29,17 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
 
   core.info(`Starting build...`);
   const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
-
-  core.debug(`executing -> docker ${args.join(' ')}`);
-
-  await exec
-    .exec(
+  await core
+    .getExecOutput(
       'docker',
-      args.map((arg) => interpolate(arg)),
+      args.map((arg) => core.interpolate(arg)),
+      {
+        ignoreReturnCode: true,
+      },
     )
     .then((res) => {
-      if (res.stderr != '' && !res.success) {
-        throw new Error(`buildx call failed with: ${res.stderr.match(/(.*)\s*$/)![0]}`);
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
       }
     });
 
