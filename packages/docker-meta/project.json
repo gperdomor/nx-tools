@@ -3,17 +3,6 @@
   "sourceRoot": "packages/docker-meta/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/node:package",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/docker-meta",
-        "tsConfig": "packages/docker-meta/tsconfig.lib.json",
-        "packageJson": "packages/docker-meta/package.json",
-        "main": "packages/docker-meta/src/index.ts",
-        "assets": ["packages/docker-meta/*.md"]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
@@ -26,6 +15,17 @@
       "options": {
         "jestConfig": "packages/docker-meta/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/docker-meta",
+        "tsConfig": "packages/docker-meta/tsconfig.lib.json",
+        "packageJson": "packages/docker-meta/package.json",
+        "main": "packages/docker-meta/src/index.ts",
+        "assets": ["packages/docker-meta/*.md"]
       }
     }
   },

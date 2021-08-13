@@ -1,5 +1,4 @@
 import * as core from '@nx-tools/core';
-import { interpolate } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -28,13 +27,13 @@ export function tmpDir(): string {
 export function getInputs(options: Partial<Inputs>): Inputs {
   return {
     bakeTarget: core.getInput('bake-target', { fallback: options.bakeTarget || 'docker-metadata-action' }),
-    flavor: getInputList('flavor', options.flavor, true).map((f) => interpolate(f)),
+    flavor: getInputList('flavor', options.flavor, true).map((flavor) => core.interpolate(flavor)),
     githubToken: core.getInput('github-token', { fallback: options.githubToken }),
-    images: getInputList('images', options.images).map((image) => interpolate(image)),
-    labels: getInputList('labels', options.labels, true).map((label) => interpolate(label)),
+    images: getInputList('images', options.images).map((image) => core.interpolate(image)),
+    labels: getInputList('labels', options.labels, true).map((label) => core.interpolate(label)),
     sepLabels: core.getInput('sep-labels', { fallback: options.sepLabels || `\n` }),
     sepTags: core.getInput('sep-tags', { fallback: options.sepTags || `\n` }),
-    tags: getInputList('tags', options.tags, true).map((tag) => interpolate(tag)),
+    tags: getInputList('tags', options.tags, true).map((tag) => core.interpolate(tag)),
   };
 }
 

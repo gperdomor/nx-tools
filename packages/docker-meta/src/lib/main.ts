@@ -1,13 +1,11 @@
+import 'dotenv/config';
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
-import { config } from 'dotenv';
 import * as fs from 'fs';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
 
 async function run(options: Partial<Inputs>): Promise<Meta> {
-  config();
-
   // try {
   const inputs: Inputs = await getInputs(options);
   if (inputs.images.length == 0) {
