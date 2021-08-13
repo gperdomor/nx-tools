@@ -1,5 +1,7 @@
+/* eslint-disable no-prototype-builtins */
 import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
+import * as pep440 from '@renovate/pep440';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
 import moment from 'moment';
@@ -59,6 +61,10 @@ export class Meta {
         }
         case tcl.Type.Semver: {
           version = this.procSemver(version, tag);
+          break;
+        }
+        case tcl.Type.Pep440: {
+          version = this.procPep440(version, tag);
           break;
         }
         case tcl.Type.Match: {
@@ -146,6 +152,53 @@ export class Meta {
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? latest : this.flavor.latest == 'true');
   }
 
+  private procPep440(version: Version, tag: tcl.Tag): Version {
+    if (!/^refs\/tags\//.test(this.context.ref) && tag.attrs['value'].length == 0) {
+      return version;
+    }
+
+    let vraw: string;
+    if (tag.attrs['value'].length > 0) {
+      vraw = this.setGlobalExp(tag.attrs['value']);
+    } else {
+      vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
+    }
+    if (!pep440.valid(vraw)) {
+      core.warning(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
+      return version;
+    }
+
+    let latest = false;
+    const pver = pep440.explain(vraw);
+    if (pver.is_prerelease || pver.is_postrelease || pver.is_devrelease) {
+      vraw = this.setValue(pep440.clean(vraw), tag);
+    } else {
+      vraw = this.setValue(
+        handlebars.compile(tag.attrs['pattern'])({
+          raw: function () {
+            return vraw;
+          },
+          version: function () {
+            return pep440.clean(vraw);
+          },
+          major: function () {
+            return pep440.major(vraw);
+          },
+          minor: function () {
+            return pep440.minor(vraw);
+          },
+          patch: function () {
+            return pep440.patch(vraw);
+          },
+        }),
+        tag,
+      );
+      latest = true;
+    }
+
+    return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? latest : this.flavor.latest == 'true');
+  }
+
   private procMatch(version: Version, tag: tcl.Tag): Version {
     if (!/^refs\/tags\//.test(this.context.ref) && tag.attrs['value'].length == 0) {
       return version;
@@ -208,15 +261,15 @@ export class Meta {
       return version;
     }
 
-    let val = this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
+    const val = this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
     if (tag.attrs['branch'].length == 0) {
       tag.attrs['branch'] = this.repo.default_branch;
     }
-    if (tag.attrs['branch'] === val) {
-      val = 'edge';
+    if (tag.attrs['branch'] != val) {
+      return version;
     }
 
-    const vraw = this.setValue(val, tag);
+    const vraw = this.setValue('edge', tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
@@ -255,13 +308,11 @@ export class Meta {
   }
 
   private setValue(val: string, tag: tcl.Tag): string {
-    // eslint-disable-next-line no-prototype-builtins
     if (tag.attrs.hasOwnProperty('prefix')) {
       val = `${this.setGlobalExp(tag.attrs['prefix'])}${val}`;
     } else if (this.flavor.prefix.length > 0) {
       val = `${this.setGlobalExp(this.flavor.prefix)}${val}`;
     }
-    // eslint-disable-next-line no-prototype-builtins
     if (tag.attrs.hasOwnProperty('suffix')) {
       val = `${val}${this.setGlobalExp(tag.attrs['suffix'])}`;
     } else if (this.flavor.suffix.length > 0) {
@@ -304,7 +355,11 @@ export class Meta {
         tags.push(`${imageLc}:${partial}`);
       }
       if (this.version.latest) {
-        tags.push(`${imageLc}:latest`);
+        tags.push(
+          `${imageLc}:${this.flavor.prefixLatest ? this.flavor.prefix : ''}latest${
+            this.flavor.suffixLatest ? this.flavor.suffix : ''
+          }`,
+        );
       }
     }
     return tags;

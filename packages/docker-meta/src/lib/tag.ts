@@ -5,6 +5,7 @@ import csvparse from 'csv-parse/lib/sync';
 export enum Type {
   Schedule = 'schedule',
   Semver = 'semver',
+  Pep440 = 'pep440',
   Match = 'match',
   Edge = 'edge',
   Ref = 'ref',
@@ -43,6 +44,7 @@ export class Tag {
 export const DefaultPriorities: Record<Type, string> = {
   [Type.Schedule]: '1000',
   [Type.Semver]: '900',
+  [Type.Pep440]: '900',
   [Type.Match]: '800',
   [Type.Edge]: '700',
   [Type.Ref]: '600',
@@ -101,7 +103,7 @@ export function Parse(s: string): Tag {
       switch (key) {
         case 'type': {
           if (!Object.values(Type).includes(value)) {
-            throw new Error(`Unknown type attribute: ${value}`);
+            throw new Error(`Unknown tag type attribute: ${value}`);
           }
           tag.type = value;
           break;
@@ -125,7 +127,8 @@ export function Parse(s: string): Tag {
       }
       break;
     }
-    case Type.Semver: {
+    case Type.Semver:
+    case Type.Pep440: {
       if (!tag.attrs.hasOwnProperty('pattern')) {
         throw new Error(`Missing pattern attribute for ${s}`);
       }
