@@ -29,7 +29,12 @@
           "packages/nx-docker/*.md",
           {
             "input": "./packages/nx-docker/src",
-            "glob": "**/*.!(ts)",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-docker/src",
+            "glob": "**/*.d.ts",
             "output": "./src"
           },
           {

@@ -1,14 +1,13 @@
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as jenkins from './jenkins';
 
 describe('Jenkins Context', () => {
-  const ENV: NodeJS.ProcessEnv = process.env;
+  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = {
-      ...ENV,
+    restore = mockedEnv({
       CI: 'true',
       CHANGE_FORK: 'pull_request',
       GIT_COMMIT: 'jenkins-sha',
@@ -16,11 +15,11 @@ describe('Jenkins Context', () => {
       CHANGE_AUTHOR: 'jenkins-actor',
       JOB_NAME: 'jenkins-job',
       BUILD_NUMBER: '40',
-    };
+    });
   });
 
   afterEach(() => {
-    process.env = ENV; // Restore old environment
+    restore();
   });
 
   it('Should be take proper values', async () => {

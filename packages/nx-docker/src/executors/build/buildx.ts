@@ -1,9 +1,9 @@
+import * as core from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import fs from 'fs';
 import path from 'path';
 import * as semver from 'semver';
 import * as context from './context';
-import * as exec from './exec';
 
 export async function getImageIDFile(): Promise<string> {
   return path.join(context.tmpDir(), 'iidfile').split(path.sep).join(path.posix.sep);
@@ -79,27 +79,41 @@ export function hasGitAuthToken(secrets: string[]): boolean {
 }
 
 export async function isAvailable(): Promise<boolean> {
-  return await exec.exec(`docker`, ['buildx'], true).then((res) => {
-    if (res.stderr != '' && !res.success) {
-      return false;
-    }
-    return res.success;
-  });
+  return await core
+    .getExecOutput('docker', ['buildx'], {
+      ignoreReturnCode: true,
+      silent: true,
+    })
+    .then((res) => {
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        return false;
+      }
+      return res.exitCode == 0;
+    });
 }
 
 export async function getVersion(): Promise<string> {
-  return await exec.exec(`docker`, ['buildx', 'version'], true).then((res) => {
-    if (res.stderr != '' && !res.success) {
-      throw new Error(res.stderr);
-    }
-    return parseVersion(res.stdout);
-  });
+  return await core
+    .getExecOutput('docker', ['buildx', 'version'], {
+      ignoreReturnCode: true,
+      silent: true,
+    })
+    .then((res) => {
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(res.stderr.trim());
+      }
+      return parseVersion(res.stdout.trim());
+    });
 }
 
-export async function parseVersion(stdout: string): Promise<string> {
-  const matches = /\sv?([0-9.]+)/.exec(stdout);
+export function parseVersion(stdout: string): string {
+  const matches = /\sv?([0-9a-f]{7}|[0-9.]+)/.exec(stdout);
   if (!matches) {
     throw new Error(`Cannot parse buildx version`);
   }
-  return semver.clean(matches[1]);
+  return matches[1];
+}
+
+export function satisfies(version: string, range: string): boolean {
+  return semver.satisfies(version, range) || /^[0-9a-f]{7}$/.exec(version) !== null;
 }

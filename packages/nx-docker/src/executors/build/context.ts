@@ -1,10 +1,10 @@
+/* eslint-disable prefer-spread */
 import * as core from '@nx-tools/core';
 import { Inputs as MetaInputs } from '@nx-tools/docker-meta';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import * as semver from 'semver';
 import * as tmp from 'tmp';
 import * as buildx from './buildx';
 import { BuildExecutorSchema } from './schema';
@@ -87,9 +87,7 @@ export async function getInputs(defaultContext: string, options: BuildExecutorSc
 
 export async function getArgs(inputs: Inputs, defaultContext: string, buildxVersion: string): Promise<Array<string>> {
   const args: Array<string> = ['buildx'];
-  // eslint-disable-next-line prefer-spread
   args.push.apply(args, await getBuildArgs(inputs, defaultContext, buildxVersion));
-  // eslint-disable-next-line prefer-spread
   args.push.apply(args, await getCommonArgs(inputs));
   args.push(inputs.context);
   return args;
@@ -120,7 +118,7 @@ async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersio
   });
   if (
     !buildx.isLocalOrTarExporter(inputs.outputs) &&
-    (inputs.platforms.length == 0 || semver.satisfies(buildxVersion, '>=0.4.2'))
+    (inputs.platforms.length == 0 || buildx.satisfies(buildxVersion, '>=0.4.2'))
   ) {
     args.push('--iidfile', await buildx.getImageIDFile());
   }

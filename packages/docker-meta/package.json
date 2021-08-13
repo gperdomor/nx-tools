@@ -7,8 +7,8 @@
   "version": "1.1.0",
   "main": "src/index.js",
   "dependencies": {
-    "@nx-tools/ci-context": "1.1.0",
-    "@nx-tools/core": "1.1.0",
+    "@nx-tools/ci-context": "^1.1.0",
+    "@nx-tools/core": "^1.1.0",
     "@renovate/pep440": "1.0.0",
     "csv-parse": "4.16.0",
     "handlebars": "4.7.7",
