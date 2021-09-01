@@ -1,20 +1,3 @@
 {
-  "extends": ["gitlab>gperdomor/renovate-config"],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "automerge": true,
-    "extends": ["schedule:monthly"]
-  },
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "labels": ["update-type::patch"]
-    },
-    {
-      "matchPackagePatterns": ["^@nrwl"],
-      "automerge": false
-    }
-  ]
+  "extends": ["gitlab>gperdomor/renovate-config"]
 }
