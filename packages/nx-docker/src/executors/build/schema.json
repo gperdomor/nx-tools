@@ -12,10 +12,6 @@
       },
       "description": "List of extra privileged entitlement (eg. network.host,security.insecure)"
     },
-    "builder": {
-      "type": "string",
-      "description": "Builder instance (see setup-buildx action)"
-    },
     "build-args": {
       "type": "array",
       "items": {
@@ -23,19 +19,23 @@
       },
       "description": "List of build-time variables"
     },
+    "builder": {
+      "type": "string",
+      "description": "Builder instance (see setup-buildx action)"
+    },
     "cache-from": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of external cache sources (eg. type=local,src=path/to/dir)"
+      "description": "List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)"
     },
     "cache-to": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of cache export destinations (eg. type=local,dest=path/to/dir)"
+      "description": "List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)"
     },
     "context": {
       "type": "string",
@@ -43,7 +43,8 @@
     },
     "file": {
       "type": "string",
-      "description": "Path to the Dockerfile (default Dockerfile)"
+      "description": "Path to the Dockerfile (default Dockerfile)",
+      "default": "Dockerfile"
     },
     "labels": {
       "type": "array",
@@ -54,7 +55,8 @@
     },
     "load": {
       "type": "boolean",
-      "description": "Load is a shorthand for --output=type=docker (default false)"
+      "description": "Load is a shorthand for --output=type=docker (default false)",
+      "default": false
     },
     "network": {
       "type": "string",
@@ -62,7 +64,8 @@
     },
     "no-cache": {
       "type": "boolean",
-      "description": "Do not use cache when building the image (default false)"
+      "description": "Do not use cache when building the image (default false)",
+      "default": false
     },
     "outputs": {
       "type": "array",
@@ -80,18 +83,20 @@
     },
     "pull": {
       "type": "boolean",
-      "description": "Sets the target stage to build"
+      "description": "Always attempt to pull a newer version of the image (default false)",
+      "default": false
     },
     "push": {
       "type": "boolean",
-      "description": "Push is a shorthand for --output=type=registry (default false)"
+      "description": "Push is a shorthand for --output=type=registry (default false)",
+      "default": false
     },
     "secrets": {
       "type": "array",
       "items": {
         "type": "string"
       },
-      "description": "List of secrets to expose to the build (eg. key=value, GIT_AUTH_TOKEN=mytoken)"
+      "description": "List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)"
     },
     "secretFiles": {
       "type": "array",
@@ -116,7 +121,7 @@
     },
     "target": {
       "type": "string",
-      "description": "Path to the Dockerfile (default Dockerfile)"
+      "description": "Sets the target stage to build"
     },
     "meta": {
       "type": "object",

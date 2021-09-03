@@ -59,17 +59,17 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
 export async function getInputs(defaultContext: string, options: BuildExecutorSchema): Promise<Inputs> {
   return {
     allow: await getInputList('allow', options.allow),
-    buildArgs: await getInputList('build-args', options.buildArgs, true),
+    buildArgs: await getInputList('build-args', options['build-args'], true),
     builder: core.getInput('builder', { fallback: options.builder }),
-    cacheFrom: await getInputList('cache-from', options.cacheFrom, true),
-    cacheTo: await getInputList('cache-to', options.cacheTo, true),
+    cacheFrom: await getInputList('cache-from', options['cache-from'], true),
+    cacheTo: await getInputList('cache-to', options['cache-to'], true),
     context: core.getInput('context', { fallback: options.context || defaultContext }),
     file: core.getInput('file', { fallback: options.file }),
-    githubToken: core.getInput('github-token', { fallback: options.githubToken }),
+    githubToken: core.getInput('github-token'),
     labels: await getInputList('labels', options.labels, true),
     load: core.getBooleanInput('load', { fallback: `${options.load || false}` }),
     network: core.getInput('network', { fallback: options.network }),
-    noCache: core.getBooleanInput('no-cache', { fallback: `${options.noCache || false}` }),
+    noCache: core.getBooleanInput('no-cache', { fallback: `${options['no-cache'] || false}` }),
     outputs: await getInputList('outputs', options.outputs, true),
     platforms: await getInputList('platforms', options.platforms),
     pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
@@ -121,6 +121,9 @@ async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersio
     (inputs.platforms.length == 0 || buildx.satisfies(buildxVersion, '>=0.4.2'))
   ) {
     args.push('--iidfile', await buildx.getImageIDFile());
+  }
+  if (buildx.satisfies(buildxVersion, '>=0.6.0')) {
+    args.push('--metadata-file', await buildx.getMetadataFile());
   }
   await core.asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
     args.push('--cache-from', cacheFrom);
