@@ -7,12 +7,12 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.1.0-alpha.2",
+  "version": "1.1.0-alpha.3",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "1.1.0-alpha.2"
+    "@nx-tools/core": "1.1.0-alpha.3"
   },
   "peerDependencies": {
     "prisma": ">= 2",

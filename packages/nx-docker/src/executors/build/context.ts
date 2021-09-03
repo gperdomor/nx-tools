@@ -74,7 +74,7 @@ export async function getInputs(defaultContext: string, options: BuildExecutorSc
     platforms: await getInputList('platforms', options.platforms),
     pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
     push: core.getBooleanInput('push', { fallback: `${options.push || false}` }),
-    secretFiles: await getInputList('secret-files', options.secretFiles, true),
+    secretFiles: await getInputList('secret-files', options['secret-files'], true),
     secrets: await getInputList('secrets', options.secrets, true),
     ssh: await getInputList('ssh', options.ssh),
     tags: await getInputList('tags', options.tags),

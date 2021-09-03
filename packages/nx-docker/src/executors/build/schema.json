@@ -98,7 +98,7 @@
       },
       "description": "List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)"
     },
-    "secretFiles": {
+    "secret-files": {
       "type": "array",
       "items": {
         "type": "string"
@@ -149,7 +149,7 @@
           "items": {
             "type": "string"
           },
-          "description": "Flavor to apply"
+          "description": "Flavors to apply"
         },
         "labels": {
           "type": "array",
@@ -158,15 +158,20 @@
           },
           "description": "List of custom labels"
         },
-        "sepTags": {
+        "sep-tags": {
           "type": "string",
-          "description": "Separator to use for tags output (default \n)",
+          "description": "Separator to use for tags output (default '\\n')",
           "default": "\n"
         },
-        "sepLabels": {
+        "sep-labels": {
           "type": "string",
-          "description": "Separator to use for labels output (default \n)",
+          "description": "Separator to use for labels output (default '\\n')",
           "default": "\n"
+        },
+        "bake-target": {
+          "type": "string",
+          "description": "Bake target name (default docker-metadata-action)",
+          "default": "docker-metadata-action"
         }
       },
       "description": "Extract metadata from CI context"

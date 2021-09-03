@@ -73,7 +73,7 @@ export interface BuildExecutorSchema {
   /**
    * List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)
    */
-  secretFiles?: string[];
+  'secret-files'?: string[];
   /**
    * List of SSH agent socket or keys to expose to the build
    */
@@ -100,7 +100,7 @@ export interface BuildExecutorSchema {
      */
     tags?: string[];
     /**
-     * Flavor to apply
+     * Flavors to apply
      */
     flavor?: string[];
     /**
@@ -108,12 +108,16 @@ export interface BuildExecutorSchema {
      */
     labels?: string[];
     /**
-     * Separator to use for tags output (default)
+     * Separator to use for tags output (default '\n')
      */
-    sepTags?: string;
+    'sep-tags'?: string;
     /**
-     * Separator to use for labels output (default)
+     * Separator to use for labels output (default '\n')
      */
-    sepLabels?: string;
+    'sep-labels'?: string;
+    /**
+     * Bake target name (default docker-metadata-action)
+     */
+    'bake-target'?: string;
   };
 }

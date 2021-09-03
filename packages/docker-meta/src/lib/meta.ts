@@ -323,6 +323,7 @@ export class Meta {
 
   private setGlobalExp(val): string {
     const ctx = this.context;
+    const currentDate = this.date;
     return handlebars.compile(val)({
       branch: function () {
         if (!/^refs\/heads\//.test(ctx.ref)) {
@@ -338,6 +339,9 @@ export class Meta {
       },
       sha: function () {
         return ctx.sha.substr(0, 7);
+      },
+      date: function (format) {
+        return moment(currentDate).utc().format(format);
       },
     });
   }
@@ -401,7 +405,7 @@ export class Meta {
       JSON.stringify(
         {
           target: {
-            [this.inputs.bakeTarget]: {
+            [this.inputs['bake-target']]: {
               tags: this.getTags(),
               labels: this.getLabels().reduce((res, label) => {
                 const matches = label.match(/([^=]*)=(.*)/);

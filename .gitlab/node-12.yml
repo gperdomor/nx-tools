@@ -6,3 +6,4 @@ builder-12:
   rules:
     - changes:
         - .gitlab/node-12.yml
+        - docker/docker-entrypoint.sh
