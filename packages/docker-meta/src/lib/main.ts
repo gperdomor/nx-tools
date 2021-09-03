@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as fs from 'fs';
@@ -13,7 +12,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
   }
 
   const context: Context = await ContextProxyFactory.create();
-  const repo: RepoMetadata = await RepoProxyFactory.create(inputs.githubToken);
+  const repo: RepoMetadata = await RepoProxyFactory.create(inputs['github-token']);
   core.startGroup(`Context info`);
   core.info(`eventName: ${context.eventName}`);
   core.info(`sha: ${context.sha}`);
@@ -33,6 +32,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
     core.info(version.main || '');
     core.endGroup();
   }
+  core.setOutput('version', version.main || '');
 
   // Docker tags
   const tags: Array<string> = meta.getTags();
@@ -45,6 +45,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
     }
     core.endGroup();
   }
+  core.setOutput('tags', tags.join(inputs['sep-tags']));
 
   // Docker labels
   const labels: Array<string> = meta.getLabels();
@@ -53,18 +54,21 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
     core.info(label);
   }
   core.endGroup();
+  core.setOutput('labels', labels.join(inputs['sep-labels']));
 
   // JSON
   const jsonOutput = meta.getJSON();
   core.startGroup(`JSON output`);
   core.info(JSON.stringify(jsonOutput, null, 2));
   core.endGroup();
+  core.setOutput('json', jsonOutput);
 
   // Bake definition file
   const bakeFile: string = meta.getBakeFile();
   core.startGroup(`Bake definition file`);
   core.info(fs.readFileSync(bakeFile, 'utf8'));
   core.endGroup();
+  core.setOutput('bake-file', bakeFile);
 
   return meta;
   // } catch (error) {

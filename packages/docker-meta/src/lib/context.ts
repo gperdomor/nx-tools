@@ -7,13 +7,13 @@ import * as path from 'path';
 let _tmpDir: string;
 
 export interface Inputs {
-  bakeTarget: string;
+  'bake-target': string;
+  'github-token': string;
+  'sep-labels': string;
+  'sep-tags': string;
   flavor: string[];
-  githubToken: string;
   images: string[];
   labels: string[];
-  sepLabels: string;
-  sepTags: string;
   tags: string[];
 }
 
@@ -26,13 +26,13 @@ export function tmpDir(): string {
 
 export function getInputs(options: Partial<Inputs>): Inputs {
   return {
-    bakeTarget: core.getInput('bake-target', { fallback: options.bakeTarget || 'docker-metadata-action' }),
+    'bake-target': core.getInput('bake-target', { fallback: options['bake-target'] || 'docker-metadata-action' }),
     flavor: getInputList('flavor', options.flavor, true).map((flavor) => core.interpolate(flavor)),
-    githubToken: core.getInput('github-token', { fallback: options.githubToken }),
+    'github-token': core.getInput('github-token'),
     images: getInputList('images', options.images).map((image) => core.interpolate(image)),
     labels: getInputList('labels', options.labels, true).map((label) => core.interpolate(label)),
-    sepLabels: core.getInput('sep-labels', { fallback: options.sepLabels || `\n` }),
-    sepTags: core.getInput('sep-tags', { fallback: options.sepTags || `\n` }),
+    'sep-labels': core.getInput('sep-labels', { fallback: options['sep-labels'] || '\n' }),
+    'sep-tags': core.getInput('sep-tags', { fallback: options['sep-tags'] || '\n' }),
     tags: getInputList('tags', options.tags, true).map((tag) => core.interpolate(tag)),
   };
 }

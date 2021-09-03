@@ -1,1 +1,3 @@
-FROM alpine:3.13
+FROM alpine
+
+RUN echo "Hello world!"

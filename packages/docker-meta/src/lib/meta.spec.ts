@@ -2924,7 +2924,7 @@ describe('json', () => {
           `type=raw,custom`,
           `type=raw,tags`
         ],
-        bakeTarget: "meta"
+        "bake-target": "meta"
       } as Inputs,
       {
         "tags": [
@@ -3192,7 +3192,7 @@ describe('bake', () => {
           `type=raw,custom`,
           `type=raw,tags`
         ],
-        bakeTarget: "meta"
+        "bake-target": "meta"
       } as Inputs,
       {
         "target": {

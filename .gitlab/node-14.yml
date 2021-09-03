@@ -6,3 +6,4 @@ builder-14:
   rules:
     - changes:
         - .gitlab/node-14.yml
+        - docker/docker-entrypoint.sh

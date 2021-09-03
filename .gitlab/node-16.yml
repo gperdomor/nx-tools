@@ -6,3 +6,4 @@ builder-16:
   rules:
     - changes:
         - .gitlab/node-16.yml
+        - docker/docker-entrypoint.sh

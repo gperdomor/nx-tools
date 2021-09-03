@@ -43,12 +43,18 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
       }
     });
 
-  const imageID = await buildx.getImageID();
-  if (imageID) {
-    core.startGroup(`Extracting digest`);
-    core.info(`${imageID}`);
-    core.endGroup();
-  }
+  await core.group(`Setting outputs`, async () => {
+    const imageID = await buildx.getImageID();
+    const metadata = await buildx.getMetadata();
+    if (imageID) {
+      core.info(`digest=${imageID}`);
+      // context.setOutput('digest', imageID);
+    }
+    if (metadata) {
+      core.info(`metadata=${metadata}`);
+      // context.setOutput('metadata', metadata);
+    }
+  });
 
   cleanup(tmpDir);
 
