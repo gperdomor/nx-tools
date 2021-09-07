@@ -8,7 +8,8 @@ const build = async () => {
   await run({
     file: './docker/Dockerfile',
     context: './docker',
-    push: CI_COMMIT_BRANCH === CI_DEFAULT_BRANCH,
+    // push: CI_COMMIT_BRANCH === CI_DEFAULT_BRANCH,
+    push: false,
     buildArgs: [`NODE_VERSION=${NODE_VERSION}`, `ALPINE_VERSION=${ALPINE_VERSION}`],
     meta: {
       enabled: true,
@@ -18,7 +19,7 @@ const build = async () => {
         `type=semver,pattern={{major}}.{{minor}},value=${NODE_VERSION}`,
         `type=semver,pattern={{major}},value=${NODE_VERSION}`,
       ],
-      flavor: ['latest=true', 'suffix=-alpine'],
+      flavor: ['latest=false', 'suffix=-alpine'],
       labels: [
         'org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>',
         'org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package',
