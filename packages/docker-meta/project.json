@@ -28,6 +28,13 @@
         "main": "packages/docker-meta/src/index.ts",
         "assets": ["packages/docker-meta/*.md"]
       }
+    },
+    "version": {
+      "builder": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "main",
+        "versionTagPrefix": "${target}@"
+      }
     }
   },
   "tags": ["shared"]
