@@ -1,9 +1,0 @@
-builder-12:
-  extends: [.docker-build]
-  variables:
-    NODE_VERSION: '12.22.6'
-    ALPINE_VERSION: '3.14'
-  rules:
-    - changes:
-        - .gitlab/node-12.yml
-        - docker/docker-entrypoint.sh
