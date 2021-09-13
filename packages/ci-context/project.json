@@ -28,6 +28,13 @@
         "main": "packages/ci-context/src/index.ts",
         "assets": ["packages/ci-context/*.md"]
       }
+    },
+    "version": {
+      "builder": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "main",
+        "versionTagPrefix": "${target}@"
+      }
     }
   },
   "tags": ["shared"]

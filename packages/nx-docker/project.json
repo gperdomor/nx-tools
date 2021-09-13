@@ -50,6 +50,13 @@
           }
         ]
       }
+    },
+    "version": {
+      "builder": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "main",
+        "versionTagPrefix": "${target}@"
+      }
     }
   },
   "tags": ["plugin"]
