@@ -3,7 +3,7 @@ import { PrismaResetSchema } from './schema';
 
 const runExecutor = createPrismaBuilder<PrismaResetSchema>({
   description: 'Resetting Database...',
-  commands: ['npx prisma migrate reset --force --preview-feature'],
+  commands: ['npx prisma migrate reset --force --preview-feature --skip-seed'],
 });
 
 export default runExecutor;

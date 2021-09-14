@@ -447,7 +447,7 @@ ccc`],
     ],
   ])(
     'given %p with %p as inputs, returns %p',
-    async (buildxVersion: string, inputs: Map<string, any>, expected: Array<string>) => {
+    async (buildxVersion: string, inputs: Map<string, unknown>, expected: Array<string>) => {
       await inputs.forEach((value: string, name: string) => {
         setInput(name, value);
       });
