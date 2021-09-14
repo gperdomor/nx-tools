@@ -39,7 +39,7 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
     )
     .then((res) => {
       if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
+        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0].trim()}`);
       }
     });
 
