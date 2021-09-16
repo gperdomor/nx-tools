@@ -15,18 +15,18 @@ updates:
     labels:
       - 'github-actions dependencies'
 
-  - package-ecosystem: npm
-    directory: '/'
-    schedule:
-      interval: daily
-      time: '09:00'
-      timezone: 'America/Santiago'
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: fix
-      prefix-development: chore
-      include: scope
-    labels:
-      - 'npm dependencies'
-    ignore:
-      - dependency-name: '@nrwl/*'
+  # - package-ecosystem: npm
+  #   directory: '/'
+  #   schedule:
+  #     interval: daily
+  #     time: '09:00'
+  #     timezone: 'America/Santiago'
+  #   open-pull-requests-limit: 5
+  #   commit-message:
+  #     prefix: fix
+  #     prefix-development: chore
+  #     include: scope
+  #   labels:
+  #     - 'npm dependencies'
+  #   ignore:
+  #     - dependency-name: '@nrwl/*'
