@@ -80,7 +80,7 @@ jobs:
     needs: pr
     runs-on: ubuntu-latest
     steps:
-      - uses: fastify/github-action-merge-dependabot@v2.4.0
+      - uses: fastify/github-action-merge-dependabot@v2.5.0
         with:
           target: patch
           github-token: ${{ secrets.GITHUB_TOKEN }}
