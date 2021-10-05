@@ -1,11 +1,17 @@
-import { getInput as acGetInput, InputOptions as acInputOptions } from '@actions/core';
-
+import { names } from '@nrwl/devkit';
 /**
  * Interface for getInput options
  */
-export interface InputOptions extends acInputOptions {
+export interface InputOptions {
+  /** Optional. Whether the input is required. If required and not present, will throw. Defaults to false */
+  required?: boolean;
+  /** Optional. Whether leading/trailing whitespace will be trimmed for the input. Defaults to true */
+  trimWhitespace?: boolean;
+  /** Optional. Default value */
   fallback?: string;
 }
+
+export const getPosixName = (name: string) => names(`INPUT_${name}`).constantName;
 
 /**
  * Gets the value of an input.
@@ -17,16 +23,10 @@ export interface InputOptions extends acInputOptions {
  * @returns   string
  */
 export function getInput(name: string, options?: InputOptions): string {
-  let val: string;
+  let val: string = process.env[getPosixName(name)] || '';
 
-  try {
-    val = acGetInput(name.replace(/[ -]/g, '_'), options);
-
-    if (!val && options?.fallback) {
-      val = options.fallback;
-    }
-  } catch (error) {
-    val = options?.fallback || '';
+  if (!val && options?.fallback) {
+    val = options.fallback;
   }
 
   if (options && options.required && !val) {

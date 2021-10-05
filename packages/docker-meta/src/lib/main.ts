@@ -20,7 +20,6 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
   core.info(`actor: ${context.actor}`);
   core.info(`runNumber: ${context.runNumber}`);
   core.info(`runId: ${context.runId}`);
-  core.endGroup();
 
   const meta: Meta = new Meta(inputs, context, repo);
 
@@ -30,9 +29,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
   } else {
     core.startGroup(`Docker image version`);
     core.info(version.main || '');
-    core.endGroup();
   }
-  core.setOutput('version', version.main || '');
 
   // Docker tags
   const tags: Array<string> = meta.getTags();
@@ -43,9 +40,7 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
     for (const tag of tags) {
       core.info(tag);
     }
-    core.endGroup();
   }
-  core.setOutput('tags', tags.join(inputs['sep-tags']));
 
   // Docker labels
   const labels: Array<string> = meta.getLabels();
@@ -53,22 +48,16 @@ async function run(options: Partial<Inputs>): Promise<Meta> {
   for (const label of labels) {
     core.info(label);
   }
-  core.endGroup();
-  core.setOutput('labels', labels.join(inputs['sep-labels']));
 
   // JSON
   const jsonOutput = meta.getJSON();
   core.startGroup(`JSON output`);
   core.info(JSON.stringify(jsonOutput, null, 2));
-  core.endGroup();
-  core.setOutput('json', jsonOutput);
 
   // Bake definition file
   const bakeFile: string = meta.getBakeFile();
   core.startGroup(`Bake definition file`);
   core.info(fs.readFileSync(bakeFile, 'utf8'));
-  core.endGroup();
-  core.setOutput('bake-file', bakeFile);
 
   return meta;
   // } catch (error) {
