@@ -1,6 +1,7 @@
 /* eslint-disable no-prototype-builtins */
-import * as core from '@nx-tools/core';
+import { info, startGroup } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
+import { GROUP_PREFIX } from './constants';
 
 export enum Type {
   Schedule = 'schedule',
@@ -77,9 +78,9 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  core.startGroup(`Processing tags input`);
+  startGroup(`Processing tags input`, GROUP_PREFIX);
   for (const tag of sorted) {
-    core.info(tag.toString());
+    info(tag.toString());
   }
 
   return sorted;

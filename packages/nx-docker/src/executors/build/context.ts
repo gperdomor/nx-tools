@@ -1,6 +1,6 @@
 /* eslint-disable prefer-spread */
 import * as core from '@nx-tools/core';
-import { Inputs as MetaInputs } from '@nx-tools/docker-meta';
+import { Inputs as MetaInputs } from '@nx-tools/docker-metadata';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';

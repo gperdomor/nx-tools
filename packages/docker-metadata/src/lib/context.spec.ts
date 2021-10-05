@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import { names } from '@nrwl/devkit';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as context from './context';
@@ -165,7 +166,7 @@ ccccccccc`,
 });
 
 function getInputName(name: string): string {
-  return `INPUT_${name.replace(/[ -]/g, '_').toUpperCase()}`;
+  return names(`INPUT_${name}`).constantName;
 }
 
 function setInput(name: string, value: string): void {
