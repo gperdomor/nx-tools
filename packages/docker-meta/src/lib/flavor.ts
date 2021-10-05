@@ -76,7 +76,6 @@ export function Transform(inputs: string[]): Flavor {
   core.info(`prefixLatest=${flavor.prefixLatest}`);
   core.info(`suffix=${flavor.suffix}`);
   core.info(`suffixLatest=${flavor.suffixLatest}`);
-  core.endGroup();
 
   return flavor;
 }

@@ -10,7 +10,6 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
   core.startGroup(`Docker info`);
   await core.exec('docker', ['version']);
   await core.exec('docker', ['info']);
-  core.endGroup();
 
   if (!(await buildx.isAvailable())) {
     throw new Error(`Docker buildx is required. See https://github.com/docker/setup-buildx-action to set up buildx.`);
@@ -43,18 +42,17 @@ export default async function run(options: BuildExecutorSchema): Promise<{ succe
       }
     });
 
-  await core.group(`Setting outputs`, async () => {
-    const imageID = await buildx.getImageID();
-    const metadata = await buildx.getMetadata();
-    if (imageID) {
-      core.info(`digest=${imageID}`);
-      // context.setOutput('digest', imageID);
-    }
-    if (metadata) {
-      core.info(`metadata=${metadata}`);
-      // context.setOutput('metadata', metadata);
-    }
-  });
+  core.startGroup(`Setting outputs`);
+  const imageID = await buildx.getImageID();
+  const metadata = await buildx.getMetadata();
+  if (imageID) {
+    core.info(`digest=${imageID}`);
+    // context.setOutput('digest', imageID);
+  }
+  if (metadata) {
+    core.info(`metadata=${metadata}`);
+    // context.setOutput('metadata', metadata);
+  }
 
   cleanup(tmpDir);
 
@@ -65,6 +63,5 @@ async function cleanup(tmpDir: string): Promise<void> {
   if (tmpDir.length > 0) {
     core.startGroup(`Removing temp folder ${tmpDir}`);
     fs.rmdirSync(tmpDir, { recursive: true });
-    core.endGroup();
   }
 }

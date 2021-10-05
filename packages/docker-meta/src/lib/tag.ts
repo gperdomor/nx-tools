@@ -81,7 +81,6 @@ export function Transform(inputs: string[]): Tag[] {
   for (const tag of sorted) {
     core.info(tag.toString());
   }
-  core.endGroup();
 
   return sorted;
 }

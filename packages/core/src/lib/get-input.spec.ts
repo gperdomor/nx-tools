@@ -1,5 +1,5 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
-import { getBooleanInput, getInput } from './get-input';
+import { getBooleanInput, getInput, getPosixName } from './get-input';
 
 describe('getInput', () => {
   let restore: RestoreFn;
@@ -19,6 +19,18 @@ describe('getInput', () => {
 
   afterAll(() => {
     restore();
+  });
+
+  describe('getPosixName', () => {
+    test.each([
+      ['allow', 'INPUT_ALLOW'],
+      ['build-args', 'INPUT_BUILD_ARGS'],
+      ['builder', 'INPUT_BUILDER'],
+      ['cache_from', 'INPUT_CACHE_FROM'],
+      ['no-Cache', 'INPUT_NO_CACHE'],
+    ])('given %s, should return %s', (name: string, expected: string) => {
+      expect(getPosixName(name)).toEqual(expected);
+    });
   });
 
   describe('When env variable is defined', () => {
