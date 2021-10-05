@@ -1,10 +1,11 @@
-name: CI
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: 'Build'
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
+    branches: [main]
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
@@ -40,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     steps:
-      - name: Checkout [main]
+      - name: Checkout [pr]
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -75,12 +76,3 @@ jobs:
       - run: npm ci
       - name: Start Nx Agent ${{ matrix.agent }}
         run: npx nx-cloud start-agent
-
-  automerge:
-    needs: pr
-    runs-on: ubuntu-latest
-    steps:
-      - uses: fastify/github-action-merge-dependabot@v2.4.0
-        with:
-          target: patch
-          github-token: ${{ secrets.GITHUB_TOKEN }}
