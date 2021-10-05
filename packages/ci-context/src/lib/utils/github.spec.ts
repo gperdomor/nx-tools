@@ -12,16 +12,19 @@ describe('GitHub Context', () => {
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv({
-      GITHUB_ACTIONS: 'true',
-      GITHUB_EVENT_NAME: 'github-event-name',
-      GITHUB_SHA: 'github-sha',
-      GITHUB_REF: 'github-ref',
-      GITHUB_ACTOR: 'github-actor',
-      GITHUB_JOB: 'github-job',
-      GITHUB_RUN_NUMBER: '20',
-      GITHUB_RUN_ID: '200',
-    });
+    restore = mockedEnv(
+      {
+        GITHUB_ACTIONS: 'true',
+        GITHUB_EVENT_NAME: 'github-event-name',
+        GITHUB_SHA: 'github-sha',
+        GITHUB_REF: 'github-ref',
+        GITHUB_ACTOR: 'github-actor',
+        GITHUB_JOB: 'github-job',
+        GITHUB_RUN_NUMBER: '20',
+        GITHUB_RUN_ID: '200',
+      },
+      { clear: true },
+    );
   });
 
   afterEach(() => {

@@ -7,15 +7,18 @@ describe('Jenkins Context', () => {
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv({
-      CI: 'true',
-      CHANGE_FORK: 'pull_request',
-      GIT_COMMIT: 'jenkins-sha',
-      BRANCH_NAME: 'jenkins-ref-slug',
-      CHANGE_AUTHOR: 'jenkins-actor',
-      JOB_NAME: 'jenkins-job',
-      BUILD_NUMBER: '40',
-    });
+    restore = mockedEnv(
+      {
+        CI: 'true',
+        CHANGE_FORK: 'pull_request',
+        GIT_COMMIT: 'jenkins-sha',
+        BRANCH_NAME: 'jenkins-ref-slug',
+        CHANGE_AUTHOR: 'jenkins-actor',
+        JOB_NAME: 'jenkins-job',
+        BUILD_NUMBER: '40',
+      },
+      { clear: true },
+    );
   });
 
   afterEach(() => {

@@ -7,17 +7,20 @@ describe('GitLab Context', () => {
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv({
-      GITLAB_CI: 'true',
-      CI_PIPELINE_SOURCE: 'gitlab-event-name',
-      CI_COMMIT_SHA: 'gitlab-sha',
-      CI_COMMIT_REF_SLUG: 'gitlab-ref-slug',
-      CI_JOB_ID: 'gitlab-action',
-      GITLAB_USER_LOGIN: 'gitlab-actor',
-      CI_JOB_NAME: 'gitlab-job',
-      CI_PIPELINE_ID: '10',
-      CI_PIPELINE_IID: '100',
-    });
+    restore = mockedEnv(
+      {
+        GITLAB_CI: 'true',
+        CI_PIPELINE_SOURCE: 'gitlab-event-name',
+        CI_COMMIT_SHA: 'gitlab-sha',
+        CI_COMMIT_REF_SLUG: 'gitlab-ref-slug',
+        CI_JOB_ID: 'gitlab-action',
+        GITLAB_USER_LOGIN: 'gitlab-actor',
+        CI_JOB_NAME: 'gitlab-job',
+        CI_PIPELINE_ID: '10',
+        CI_PIPELINE_IID: '100',
+      },
+      { clear: true },
+    );
   });
 
   afterEach(() => {

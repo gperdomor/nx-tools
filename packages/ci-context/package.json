@@ -1,12 +1,13 @@
 {
   "name": "@nx-tools/ci-context",
+  "version": "2.0.0-alpha.1",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "version": "1.1.0-alpha.3",
   "dependencies": {
-    "ci-info": "3.2.0",
-    "@actions/github": "5.0.0"
+    "@actions/github": "^5.0.0",
+    "@nx-tools/core": "^2.0.0-alpha.1",
+    "ci-info": "^3.2.0"
   }
 }

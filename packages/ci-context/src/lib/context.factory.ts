@@ -1,4 +1,5 @@
 import { RunnerContext } from './interfaces';
+import * as bitbucket from './utils/bitbucket';
 import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
@@ -12,6 +13,10 @@ export class ContextProxyFactory {
   public static async create(): Promise<RunnerContext> {
     if (!ci.isCI) {
       return local.context();
+    }
+
+    if (ci.BITBUCKET) {
+      return bitbucket.context();
     }
 
     if (ci.CIRCLE) {
@@ -30,6 +35,6 @@ export class ContextProxyFactory {
       return jenkins.context();
     }
 
-    throw new Error('Unsupported runner provider');
+    throw new Error('Unsupported CI provider');
   }
 }

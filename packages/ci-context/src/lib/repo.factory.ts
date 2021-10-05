@@ -1,4 +1,5 @@
 import { RepoMetadata } from './interfaces';
+import * as bitbucket from './utils/bitbucket';
 import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
@@ -12,6 +13,10 @@ export class RepoProxyFactory {
   public static async create(token: string): Promise<RepoMetadata> {
     if (!ci.isCI) {
       return local.repo();
+    }
+
+    if (ci.BITBUCKET) {
+      return bitbucket.repo();
     }
 
     if (ci.CIRCLE) {
@@ -30,6 +35,6 @@ export class RepoProxyFactory {
       return jenkins.repo();
     }
 
-    throw new Error('Unsupported repository provider');
+    throw new Error('Unsupported CI provider');
   }
 }

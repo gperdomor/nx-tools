@@ -1,6 +1,6 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
-import * as circle from './circle';
+import * as bitbucket from './bitbucket';
 
 describe('CircleCI Context', () => {
   let restore: RestoreFn;
@@ -9,13 +9,12 @@ describe('CircleCI Context', () => {
   beforeEach(() => {
     restore = mockedEnv(
       {
-        CIRCLECI: 'true',
-        CI_PULL_REQUEST: 'true',
-        CIRCLE_SHA1: 'circleci-sha',
-        CIRCLE_BRANCH: 'circleci-ref-slug',
-        CIRCLE_USERNAME: 'circleci-actor',
-        CIRCLE_JOB: 'circleci-job',
-        CIRCLE_BUILD_NUM: '30',
+        BITBUCKET_PR_ID: 'pr-id',
+        BITBUCKET_COMMIT: 'bitbucket-sha',
+        BITBUCKET_BRANCH: 'bitbucket-ref-slug',
+        BITBUCKET_STEP_TRIGGERER_UUID: 'bitbucket-actor-uuid',
+        BITBUCKET_STEP_UUID: 'bitbucket-job-uuid',
+        BITBUCKET_BUILD_NUMBER: '50',
       },
       { clear: true },
     );
@@ -26,17 +25,17 @@ describe('CircleCI Context', () => {
   });
 
   it('Should be take proper values', async () => {
-    context = await circle.context();
+    context = await bitbucket.context();
 
     expect(context).toMatchObject({
-      actor: 'circleci-actor',
+      actor: 'bitbucket-actor-uuid',
       eventName: 'pull_request',
-      job: 'circleci-job',
+      job: 'bitbucket-job-uuid',
       payload: {},
-      ref: 'refs/heads/circleci-ref-slug',
-      runId: 30,
-      runNumber: 30,
-      sha: 'circleci-sha',
+      ref: 'refs/heads/bitbucket-ref-slug',
+      runId: 50,
+      runNumber: 50,
+      sha: 'bitbucket-sha',
     });
   });
 
@@ -45,7 +44,7 @@ describe('CircleCI Context', () => {
 
     beforeEach(() => {
       restore = mockedEnv({
-        CIRCLE_TAG: 'circleci-tag',
+        BITBUCKET_TAG: 'bitbucket-tag',
       });
     });
 
@@ -54,17 +53,17 @@ describe('CircleCI Context', () => {
     });
 
     it('Should be take proper values', async () => {
-      context = await circle.context();
+      context = await bitbucket.context();
 
       expect(context).toMatchObject({
-        actor: 'circleci-actor',
+        actor: 'bitbucket-actor-uuid',
         eventName: 'pull_request',
-        job: 'circleci-job',
+        job: 'bitbucket-job-uuid',
         payload: {},
-        ref: 'refs/tags/circleci-tag',
-        runId: 30,
-        runNumber: 30,
-        sha: 'circleci-sha',
+        ref: 'refs/tags/bitbucket-tag',
+        runId: 50,
+        runNumber: 50,
+        sha: 'bitbucket-sha',
       });
     });
   });
