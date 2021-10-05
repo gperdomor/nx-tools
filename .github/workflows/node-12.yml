@@ -60,9 +60,11 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache
+          cache-to: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache,mode=max
           build-args: |
             NODE_VERSION=${{ env.NODE_VERSION }}
             ALPINE_VERSION=${{ env.ALPINE_VERSION }}
 
       - name: Image ditagsgest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+        run: echo "${{ steps.docker_build.outputs.digest }}"
