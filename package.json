@@ -11,6 +11,7 @@
     "dep-graph": "nx dep-graph",
     "help": "nx help",
     "commit": "cz",
+    "check-lock-files": "node ./tools/scripts/check-lock-files.js",
     "prepare": "is-ci || husky install"
   },
   "private": true,
