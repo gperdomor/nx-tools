@@ -12,7 +12,7 @@ on:
       - docker/docker-entrypoint.sh
 
 env:
-  NODE_VERSION: 14.17.6
+  NODE_VERSION: 14.18.0
   ALPINE_VERSION: 3.14
 
 jobs:
