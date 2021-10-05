@@ -1,6 +1,6 @@
-import 'dotenv/config';
 import * as core from '@nx-tools/core';
-import { getMetadata } from '@nx-tools/docker-meta';
+import { getMetadata } from '@nx-tools/docker-metadata';
+import 'dotenv/config';
 import * as fs from 'fs';
 import * as buildx from './buildx';
 import * as context from './context';

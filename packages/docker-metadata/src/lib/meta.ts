@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
-import * as core from '@nx-tools/core';
+import { interpolate, warning } from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
@@ -134,7 +134,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!semver.valid(vraw)) {
-      core.warning(`${vraw} is not a valid semver. More info: https://semver.org/`);
+      warning(`${vraw} is not a valid semver. More info: https://semver.org/`);
       return version;
     }
 
@@ -164,7 +164,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!pep440.valid(vraw)) {
-      core.warning(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
+      warning(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
       return version;
     }
 
@@ -219,11 +219,11 @@ export class Meta {
       tmatch = vraw.match(tag.attrs['pattern']);
     }
     if (!tmatch) {
-      core.warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
+      warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
     if (typeof tmatch[tag.attrs['group']] === 'undefined') {
-      core.warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
+      warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 
@@ -353,7 +353,7 @@ export class Meta {
 
     const tags: Array<string> = [];
     for (const image of this.inputs.images) {
-      const imageLc = core.interpolate(image).toLowerCase();
+      const imageLc = interpolate(image).toLowerCase();
       tags.push(`${imageLc}:${this.version.main}`);
       for (const partial of this.version.partial) {
         tags.push(`${imageLc}:${partial}`);

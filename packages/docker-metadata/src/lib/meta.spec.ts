@@ -8,7 +8,7 @@ import { Meta, Version } from './meta';
 
 jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'));
+  return <Promise<RepoMetadata>>require(path.join(__dirname, '..', '..', 'tests', 'fixtures', 'repo.json'));
 });
 
 jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
@@ -39,9 +39,9 @@ const tagsLabelsTest = async (
   exTags: Array<string>,
   exLabels: Array<string>,
 ) => {
-  process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
+  process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
   const context = await ContextProxyFactory.create();
-  console.log(process.env, context);
+  // console.log(process.env, context);
 
   const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
   const meta = new Meta({ ...getInputs({}), ...inputs }, context, repo);
@@ -592,16 +592,18 @@ describe('push', () => {
         images: ['user/app'],
         tags: [
           `type=raw,value=mytag-{{branch}}`,
+          `type=raw,value=mytag-{{date 'YYYYMMDD'}}`,
           `type=raw,value=mytag-{{tag}}`
         ],
       } as Inputs,
       {
         main: 'mytag-master',
-        partial: ['mytag-'],
+        partial: ['mytag-20200110', 'mytag-'],
         latest: false
       } as Version,
       [
         'user/app:mytag-master',
+        'user/app:mytag-20200110',
         'user/app:mytag-'
       ],
       [
@@ -3088,9 +3090,9 @@ describe('json', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: Record<string,unknown>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests','fixtures', envFile)));
     const context = await ContextProxyFactory.create();
-    console.log(process.env, context);
+    // console.log(process.env, context);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
@@ -3395,9 +3397,9 @@ describe('bake', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: Record<string,unknown>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, 'fixtures', envFile)));
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests','fixtures', envFile)));
     const context = await ContextProxyFactory.create();
-    console.log(process.env, context);
+    // console.log(process.env, context);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);

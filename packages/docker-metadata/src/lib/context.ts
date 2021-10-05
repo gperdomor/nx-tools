@@ -1,4 +1,4 @@
-import * as core from '@nx-tools/core';
+import { getInput, interpolate } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -26,21 +26,21 @@ export function tmpDir(): string {
 
 export function getInputs(options: Partial<Inputs>): Inputs {
   return {
-    'bake-target': core.getInput('bake-target', { fallback: options['bake-target'] || 'docker-metadata-action' }),
-    flavor: getInputList('flavor', options.flavor, true).map((flavor) => core.interpolate(flavor)),
-    'github-token': core.getInput('github-token'),
-    images: getInputList('images', options.images).map((image) => core.interpolate(image)),
-    labels: getInputList('labels', options.labels, true).map((label) => core.interpolate(label)),
-    'sep-labels': core.getInput('sep-labels', { fallback: options['sep-labels'] || '\n' }),
-    'sep-tags': core.getInput('sep-tags', { fallback: options['sep-tags'] || '\n' }),
-    tags: getInputList('tags', options.tags, true).map((tag) => core.interpolate(tag)),
+    'bake-target': getInput('bake-target', { fallback: options['bake-target'] || 'docker-metadata-action' }),
+    'github-token': getInput('github-token'),
+    'sep-labels': getInput('sep-labels', { fallback: options['sep-labels'] || '\n' }),
+    'sep-tags': getInput('sep-tags', { fallback: options['sep-tags'] || '\n' }),
+    flavor: getInputList('flavor', options.flavor, true).map((flavor) => interpolate(flavor)),
+    images: getInputList('images', options.images).map((image) => interpolate(image)),
+    labels: getInputList('labels', options.labels, true).map((label) => interpolate(label)),
+    tags: getInputList('tags', options.tags, true).map((tag) => interpolate(tag)),
   };
 }
 
 export function getInputList(name: string, fallback?: string[], ignoreComma?: boolean): string[] {
   const res: Array<string> = [];
 
-  const items = core.getInput(name);
+  const items = getInput(name);
   if (items == '') {
     return fallback ?? res;
   }

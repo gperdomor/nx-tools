@@ -3,7 +3,7 @@
   "projects": {
     "ci-context": "packages/ci-context",
     "core": "packages/core",
-    "docker-meta": "packages/docker-meta",
+    "docker-metadata": "packages/docker-metadata",
     "nx-docker": "packages/nx-docker",
     "nx-prisma": "packages/nx-prisma"
   },
