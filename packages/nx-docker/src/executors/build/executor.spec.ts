@@ -1,16 +1,15 @@
 import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'path';
-import executor from './main';
-import { BuildExecutorSchema } from './schema';
+import executor from './executor';
+import { DockerBuildSchema } from './schema';
 
-const options: BuildExecutorSchema = {
+const options: DockerBuildSchema = {
   push: false,
   file: 'packages/nx-docker/tests/Dockerfile',
   load: true,
   tags: ['nx-docker/node:latest'],
-  meta: {
-    enabled: true,
+  metadata: {
     images: ['app/name'],
     tags: ['type=sha'],
   },

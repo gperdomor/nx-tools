@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Build executor",
+  "title": "Docker Build executor",
   "description": "",
   "type": "object",
   "properties": {
@@ -43,8 +43,7 @@
     },
     "file": {
       "type": "string",
-      "description": "Path to the Dockerfile (default Dockerfile)",
-      "default": "Dockerfile"
+      "description": "Path to the Dockerfile (default Dockerfile)"
     },
     "labels": {
       "type": "array",
@@ -123,19 +122,16 @@
       "type": "string",
       "description": "Sets the target stage to build"
     },
-    "meta": {
+    "metadata": {
       "type": "object",
+      "description": "Extract metadata from CI context",
       "properties": {
-        "enabled": {
-          "type": "boolean",
-          "default": false
-        },
         "images": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of Docker images to use as base name for tags"
+          "description": "List of Docker images to use as base name for tags. Required."
         },
         "tags": {
           "type": "array",
@@ -173,8 +169,7 @@
           "description": "Bake target name (default docker-metadata-action)",
           "default": "docker-metadata-action"
         }
-      },
-      "description": "Extract metadata from CI context"
+      }
     }
   },
   "required": []
