@@ -1,0 +1,69 @@
+name: Docker Builder
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node version to use'
+        required: true
+        type: string
+      alpine-version:
+        description: 'Alpine version to use'
+        default: 3.14
+        required: false
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          version: v0.6.3
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/gperdomor/nx-docker
+          flavor: |
+            latest=false
+            suffix=-alpine
+          tags: |
+            type=semver,pattern={{version}},value=${{ inputs.node-version }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ inputs.node-version }}
+            type=semver,pattern={{major}},value=${{ inputs.node-version }}
+          labels: |
+            org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>
+            org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.token }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache
+          cache-to: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache,mode=max
+          build-args: |
+            NODE_VERSION=${{ inputs.node-version }}
+            ALPINE_VERSION=${{ inputs.alpine-version }}
+
+      - name: Image ditagsgest
+        run: echo "${{ steps.docker_build.outputs.digest }}"

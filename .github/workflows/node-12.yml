@@ -7,64 +7,17 @@ on:
       - .github/workflows/node-12.yml
       - docker/docker-entrypoint.sh
   pull_request:
+    branches: [main]
     paths:
       - .github/workflows/node-12.yml
       - docker/docker-entrypoint.sh
-
-env:
-  NODE_VERSION: 12.22.6
-  ALPINE_VERSION: 3.14
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - run: echo "NODE_VERSION=${{ env.NODE_VERSION }}"
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - uses: gperdomor/nx-tools/.github/workflows/.node-template.yml@feature/reuse-workflow
         with:
-          version: v0.6.3
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ghcr.io/gperdomor/nx-docker
-          flavor: |
-            latest=false
-            suffix=-alpine
-          tags: |
-            type=semver,pattern={{version}},value=${{ env.NODE_VERSION }}
-            type=semver,pattern={{major}}.{{minor}},value=${{ env.NODE_VERSION }}
-            type=semver,pattern={{major}},value=${{ env.NODE_VERSION }}
-          labels: |
-            org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>
-            org.opencontainers.image.description=Builder companion for @nx-tools/nx-docker npm package
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./docker
-          push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache
-          cache-to: type=registry,ref=ghcr.io/gperdomor/nx-docker:12-buildcache,mode=max
-          build-args: |
-            NODE_VERSION=${{ env.NODE_VERSION }}
-            ALPINE_VERSION=${{ env.ALPINE_VERSION }}
-
-      - name: Image ditagsgest
-        run: echo "${{ steps.docker_build.outputs.digest }}"
+          node-version: 12.22.6
+        secrets:
+          token: ${{ secrets.GITHUB_TOKEN }}
