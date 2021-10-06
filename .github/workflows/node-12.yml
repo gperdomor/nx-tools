@@ -16,7 +16,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: gperdomor/nx-tools/.github/workflows/.node-template.yml@feature/reuse-workflow
+      - uses: gperdomor/nx-tools/.github/workflows/.node-template.yml@1fb4eb34d401fda7ee59f2283bed56978207e5ac
         with:
           node-version: 12.22.6
         secrets:
