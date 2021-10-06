@@ -1,11 +1,13 @@
-import { PrismaBuilderOptions, PrismaCommands, runCommands } from './run-commands';
+import { ExecutorContext } from '@nrwl/devkit';
+import { join } from 'path';
+import { PrismaBuilderOptions, PrismaCommands, runCommand } from './run-commands';
 
 export const createPrismaBuilder =
-  <T extends PrismaBuilderOptions>(commands: PrismaCommands<T>) =>
-  async (options: T) => {
+  <T extends PrismaBuilderOptions>(command: PrismaCommands<T>) =>
+  async (options: T, context?: ExecutorContext) => {
     if (!options.schema) {
-      throw new Error('ERROR: Bad builder config for @nx-tools/nx-prisma - "schema" option is required');
+      options.schema = join(context?.workspace.projects[context.projectName].root, 'schema.prisma');
     }
 
-    return runCommands(commands, options);
+    return runCommand(command, options);
   };

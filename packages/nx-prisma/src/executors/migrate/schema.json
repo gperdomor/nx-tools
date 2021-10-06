@@ -1,21 +1,25 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Prisma Reset executor",
-  "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts",
+  "title": "Prisma Migrate executor",
+  "description": "Updates your database using migrations during development and creates the database if it does not exist",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
       "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
     },
+    "name": {
+      "type": "string",
+      "description": "The name of the migration. If no name is provided, the CLI will prompt you."
+    },
     "options": {
       "type": "object",
       "description": "Optional flags",
       "properties": {
-        "force": {
+        "create-only": {
           "type": "boolean",
-          "description": "Skip the confirmation prompt."
+          "description": "Creates a new migration based on the changes in the schema but does not apply that migration."
         },
         "skip-seed": {
           "type": "boolean",

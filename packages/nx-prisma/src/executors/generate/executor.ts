@@ -3,7 +3,7 @@ import { PrismaGenerateSchema } from './schema';
 
 const runExecutor = createPrismaBuilder<PrismaGenerateSchema>({
   description: 'Generating Client...',
-  commands: ['npx prisma generate'],
+  command: 'npx prisma generate',
 });
 
 export default runExecutor;

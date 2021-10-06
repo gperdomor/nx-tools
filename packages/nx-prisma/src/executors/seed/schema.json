@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
   "title": "Prisma Seed executor",
-  "description": "",
+  "description": "Runs the seed script",
   "type": "object",
   "properties": {
     "script": {
@@ -12,10 +12,6 @@
     "tsConfig": {
       "type": "string",
       "description": "TypeScript config to use for seeding"
-    },
-    "silent": {
-      "type": "boolean",
-      "description": "Remove all terminal outputs the child process"
     }
   },
   "required": ["script", "tsConfig"]

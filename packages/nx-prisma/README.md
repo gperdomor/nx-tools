@@ -11,22 +11,40 @@ You will need at least one project per each prisma schema you make. The prisma s
 Each CLI command uses it's own architect so add the ones you need from the examples bellow.
 
 ```json
+"deploy": {
+  "builder": "@nx-tools/nx-prisma:generate",
+  "options": {
+    "schema": "apps/api/schema.prisma"
+  }
+},
 "generate": {
   "builder": "@nx-tools/nx-prisma:generate",
   "options": {
-    "schema": "apps/examples/prisma/data/schema.prisma"
+    "schema": "apps/api/schema.prisma"
   }
 },
-"migrations": {
-  "builder": "@nx-tools/nx-prisma:migrations",
+"migrate": {
+  "builder": "@nx-tools/nx-prisma:migrate",
   "options": {
-    "schema": "apps/examples/prisma/data/schema.prisma"
+    "schema": "apps/api/schema.prisma"
   }
 },
-"rollback": {
+"pull": {
   "builder": "@nx-tools/nx-prisma:rollback",
   "options": {
-    "schema": "apps/examples/prisma/data/schema.prisma"
+    "schema": "apps/api/schema.prisma"
+  }
+},
+"push": {
+  "builder": "@nx-tools/nx-prisma:seed",
+  "options": {
+    "schema": "apps/api/schema.prisma"
+  }
+},
+"reset": {
+  "builder": "@nx-tools/nx-prisma:seed",
+  "options": {
+    "schema": "apps/api/schema.prisma"
   }
 },
 "seed": {
@@ -34,6 +52,12 @@ Each CLI command uses it's own architect so add the ones you need from the examp
   "options": {
     "script": "apps/examples/prisma/data/seed.ts",
     "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
+  }
+},
+"status": {
+  "builder": "@nx-tools/nx-prisma:seed",
+  "options": {
+    "schema": "apps/api/schema.prisma"
   }
 }
 ```

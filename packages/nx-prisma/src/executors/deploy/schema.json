@@ -1,18 +1,14 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Prisma Migrations executor",
-  "description": "",
+  "title": "Prisma Deploy executor",
+  "description": "Applies all pending migrations, and creates the database if it does not exist",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
       "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
-    },
-    "silent": {
-      "type": "boolean",
-      "description": "Remove all terminal outputs the child process"
     }
   },
-  "required": ["schema"]
+  "required": []
 }

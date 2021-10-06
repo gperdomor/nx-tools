@@ -1,12 +1,12 @@
 import executor from './executor';
-import { PrismaGenerateSchema } from './schema';
+import { PrismaPushSchema } from './schema';
 
-const options: PrismaGenerateSchema = {
+const options: PrismaPushSchema = {
   schema: 'packages/nx-prisma/tests/schema.prisma',
 };
 
-export const generateSuite = () =>
-  describe('Generate Executor', () => {
+export const pushSuite = () =>
+  describe('Push Executor', () => {
     it('can run', async () => {
       const output = await executor(options);
       expect(output.success).toBeTruthy();

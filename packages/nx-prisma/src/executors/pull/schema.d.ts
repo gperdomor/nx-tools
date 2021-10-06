@@ -6,9 +6,9 @@
  */
 
 /**
- * Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts
+ * Connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema.
  */
-export interface PrismaResetSchema {
+export interface PrismaPullSchema {
   /**
    * The path to the prisma schema eg. 'prisma/schema.prisma'
    */
@@ -18,16 +18,12 @@ export interface PrismaResetSchema {
    */
   options?: {
     /**
-     * Skip the confirmation prompt.
+     * Force overwrite of manual changes made to schema.
      */
     force?: boolean;
     /**
-     * Skip triggering seed.
+     * Prints the created schema.prisma to the screen instead of writing it to the filesystem.
      */
-    'skip-seed'?: boolean;
-    /**
-     * Skip triggering generators (for example, Prisma Client).
-     */
-    'skip-generate'?: boolean;
+    print?: boolean;
   };
 }
