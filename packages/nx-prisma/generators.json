@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "name": "nx-prisma",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "generators": {}
 }

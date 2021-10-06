@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Prisma Reset executor",
-  "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts",
+  "title": "Prisma Pull executor",
+  "description": "Connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema.",
   "type": "object",
   "properties": {
     "schema": {
@@ -15,15 +15,11 @@
       "properties": {
         "force": {
           "type": "boolean",
-          "description": "Skip the confirmation prompt."
+          "description": "Force overwrite of manual changes made to schema."
         },
-        "skip-seed": {
+        "print": {
           "type": "boolean",
-          "description": "Skip triggering seed."
-        },
-        "skip-generate": {
-          "type": "boolean",
-          "description": "Skip triggering generators (for example, Prisma Client)."
+          "description": "Prints the created schema.prisma to the screen instead of writing it to the filesystem."
         }
       }
     }

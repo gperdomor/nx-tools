@@ -5,22 +5,23 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-/**
- * Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts
- */
-export interface PrismaResetSchema {
+export interface PrismaMigrateSchema {
   /**
    * The path to the prisma schema eg. 'prisma/schema.prisma'
    */
   schema?: string;
   /**
+   * The name of the migration. If no name is provided, the CLI will prompt you.
+   */
+  name?: string;
+  /**
    * Optional flags
    */
   options?: {
     /**
-     * Skip the confirmation prompt.
+     * Creates a new migration based on the changes in the schema but does not apply that migration.
      */
-    force?: boolean;
+    'create-only'?: boolean;
     /**
      * Skip triggering seed.
      */

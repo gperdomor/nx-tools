@@ -6,20 +6,40 @@
       "schema": "./src/executors/generate/schema.json",
       "description": "Generates Prisma artifacts (e.g. Prisma Client)"
     },
-    "migrations": {
-      "implementation": "./src/executors/migrations/executor",
-      "schema": "./src/executors/migrations/schema.json",
+    "migrate": {
+      "implementation": "./src/executors/migrate/executor",
+      "schema": "./src/executors/migrate/schema.json",
       "description": "Syncs Prisma Migrations"
+    },
+    "pull": {
+      "implementation": "./src/executors/pull/executor",
+      "schema": "./src/executors/pull/schema.json",
+      "description": "Adds Prisma models to your Prisma schema that reflect the current database schema"
+    },
+    "push": {
+      "implementation": "./src/executors/push/executor",
+      "schema": "./src/executors/push/schema.json",
+      "description": "Pushes the state of your Prisma schema file to the database without using migrations. It creates the database if the database does not exist."
     },
     "reset": {
       "implementation": "./src/executors/reset/executor",
       "schema": "./src/executors/reset/schema.json",
-      "description": "Resets the Prisma Database"
+      "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts"
     },
     "seed": {
       "implementation": "./src/executors/seed/executor",
       "schema": "./src/executors/seed/schema.json",
-      "description": "Runs the seed script"
+      "description": "Seed your database using Prisma Client"
+    },
+    "status": {
+      "implementation": "./src/executors/status/executor",
+      "schema": "./src/executors/status/schema.json",
+      "description": "Looks up the migrations and shows the DB status"
+    },
+    "deploy": {
+      "implementation": "./src/executors/deploy/executor",
+      "schema": "./src/executors/deploy/schema.json",
+      "description": "Applies all pending migrations, and creates the database if it does not exist"
     }
   }
 }

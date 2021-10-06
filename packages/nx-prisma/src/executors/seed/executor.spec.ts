@@ -10,7 +10,6 @@ export const seedSuite = () =>
   describe('Seed Executor', () => {
     it('can run', async () => {
       const output = await executor(options);
-      expect(output.stderr).toBeFalsy();
       expect(output.success).toBeTruthy();
     }, 40000);
   });

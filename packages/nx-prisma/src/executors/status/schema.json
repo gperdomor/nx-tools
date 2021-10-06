@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "title": "Prisma Generate executor",
-  "description": "",
+  "title": "Prisma Status executor",
+  "description": "Looks up the migrations in /prisma/migrations/* folder and the entries in the _prisma_migrations table and compiles information about the state of the migrations in your database.",
   "type": "object",
   "properties": {
     "schema": {

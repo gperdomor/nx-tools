@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "title": "Push executor",
+  "description": "Pushes the state of your Prisma schema file to the database without using migrations.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+    },
+    "options": {
+      "type": "object",
+      "description": "Optional flags",
+      "properties": {
+        "skip-generate": {
+          "type": "boolean",
+          "description": "Skip generation of artifacts such as Prisma Client."
+        },
+        "force-reset": {
+          "type": "boolean",
+          "description": "Resets the database and then updates the schema - useful if you need to start from scratch due to unexecutable migrations."
+        },
+        "accept-data-loss": {
+          "type": "boolean",
+          "description": "Ignore data loss warnings. This option is required if as a result of making the schema changes, data may be lost."
+        }
+      }
+    }
+  },
+  "required": []
+}

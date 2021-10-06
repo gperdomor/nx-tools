@@ -5,11 +5,9 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface PrismaGenerateSchema {
+export interface PrismaStatusSchema {
   /**
    * The path to the prisma schema eg. 'prisma/schema.prisma'
    */
   schema?: string;
-
-  [k: string]: unknown;
 }

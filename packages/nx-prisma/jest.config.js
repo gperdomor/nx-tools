@@ -13,5 +13,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/packages/nx-prisma',
   globalSetup: './setup-test.ts',
-  testMatch: ['**/test-suite.ts'],
+  testMatch: ['**/test-suite.spec.ts'],
 };
