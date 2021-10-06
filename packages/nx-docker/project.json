@@ -52,7 +52,7 @@
       }
     },
     "version": {
-      "builder": "@jscutlery/semver:version",
+      "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "main",
         "versionTagPrefix": "${target}@"

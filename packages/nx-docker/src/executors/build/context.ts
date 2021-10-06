@@ -1,13 +1,12 @@
 /* eslint-disable prefer-spread */
-import * as core from '@nx-tools/core';
-import { Inputs as MetaInputs } from '@nx-tools/docker-metadata';
+import { asyncForEach, getBooleanInput, getInput, warning } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as tmp from 'tmp';
 import * as buildx from './buildx';
-import { BuildExecutorSchema } from './schema';
+import { DockerBuildSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;
 
@@ -33,9 +32,6 @@ export interface Inputs {
   ssh: string[];
   tags: string[];
   target: string;
-  meta: {
-    enabled: boolean;
-  } & Partial<MetaInputs>;
 }
 
 export function defaultContext(): string {
@@ -56,32 +52,29 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
   return tmp.tmpNameSync(options);
 }
 
-export async function getInputs(defaultContext: string, options: BuildExecutorSchema): Promise<Inputs> {
+export async function getInputs(defaultContext: string, options: DockerBuildSchema): Promise<Inputs> {
   return {
     allow: await getInputList('allow', options.allow),
     buildArgs: await getInputList('build-args', options['build-args'], true),
-    builder: core.getInput('builder', { fallback: options.builder }),
+    builder: getInput('builder', { fallback: options.builder }),
     cacheFrom: await getInputList('cache-from', options['cache-from'], true),
     cacheTo: await getInputList('cache-to', options['cache-to'], true),
-    context: core.getInput('context', { fallback: options.context || defaultContext }),
-    file: core.getInput('file', { fallback: options.file }),
-    githubToken: core.getInput('github-token'),
+    context: getInput('context', { fallback: options.context || defaultContext }),
+    file: getInput('file', { fallback: options.file }),
+    githubToken: getInput('github-token'),
     labels: await getInputList('labels', options.labels, true),
-    load: core.getBooleanInput('load', { fallback: `${options.load || false}` }),
-    network: core.getInput('network', { fallback: options.network }),
-    noCache: core.getBooleanInput('no-cache', { fallback: `${options['no-cache'] || false}` }),
+    load: getBooleanInput('load', { fallback: `${options.load || false}` }),
+    network: getInput('network', { fallback: options.network }),
+    noCache: getBooleanInput('no-cache', { fallback: `${options['no-cache'] || false}` }),
     outputs: await getInputList('outputs', options.outputs, true),
     platforms: await getInputList('platforms', options.platforms),
-    pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
-    push: core.getBooleanInput('push', { fallback: `${options.push || false}` }),
+    pull: getBooleanInput('pull', { fallback: `${options.pull || false}` }),
+    push: getBooleanInput('push', { fallback: `${options.push || false}` }),
     secretFiles: await getInputList('secret-files', options['secret-files'], true),
     secrets: await getInputList('secrets', options.secrets, true),
     ssh: await getInputList('ssh', options.ssh),
     tags: await getInputList('tags', options.tags),
-    target: core.getInput('target', { fallback: options.target }),
-    meta: {
-      enabled: core.getBooleanInput('meta-enabled', { fallback: `${options.meta?.enabled || false}` }),
-    },
+    target: getInput('target', { fallback: options.target }),
   };
 }
 
@@ -95,13 +88,13 @@ export async function getArgs(inputs: Inputs, defaultContext: string, buildxVers
 
 async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersion: string): Promise<Array<string>> {
   const args: Array<string> = ['build'];
-  await core.asyncForEach(inputs.buildArgs, async (buildArg) => {
+  await asyncForEach(inputs.buildArgs, async (buildArg) => {
     args.push('--build-arg', buildArg);
   });
-  await core.asyncForEach(inputs.labels, async (label) => {
+  await asyncForEach(inputs.labels, async (label) => {
     args.push('--label', label);
   });
-  await core.asyncForEach(inputs.tags, async (tag) => {
+  await asyncForEach(inputs.tags, async (tag) => {
     args.push('--tag', tag);
   });
   if (inputs.target) {
@@ -113,7 +106,7 @@ async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersio
   if (inputs.platforms.length > 0) {
     args.push('--platform', inputs.platforms.join(','));
   }
-  await core.asyncForEach(inputs.outputs, async (output) => {
+  await asyncForEach(inputs.outputs, async (output) => {
     args.push('--output', output);
   });
   if (
@@ -125,30 +118,30 @@ async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersio
   if (buildx.satisfies(buildxVersion, '>=0.6.0')) {
     args.push('--metadata-file', await buildx.getMetadataFile());
   }
-  await core.asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
+  await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
     args.push('--cache-from', cacheFrom);
   });
-  await core.asyncForEach(inputs.cacheTo, async (cacheTo) => {
+  await asyncForEach(inputs.cacheTo, async (cacheTo) => {
     args.push('--cache-to', cacheTo);
   });
-  await core.asyncForEach(inputs.secrets, async (secret) => {
+  await asyncForEach(inputs.secrets, async (secret) => {
     try {
       args.push('--secret', await buildx.getSecretString(secret));
     } catch (err) {
-      core.warning(err.message);
+      warning(err.message);
     }
   });
-  await core.asyncForEach(inputs.secretFiles, async (secretFile) => {
+  await asyncForEach(inputs.secretFiles, async (secretFile) => {
     try {
       args.push('--secret', await buildx.getSecretFile(secretFile));
     } catch (err) {
-      core.warning(err.message);
+      warning(err.message);
     }
   });
   if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && inputs.context == defaultContext) {
     args.push('--secret', await buildx.getSecretString(`GIT_AUTH_TOKEN=${inputs.githubToken}`));
   }
-  await core.asyncForEach(inputs.ssh, async (ssh) => {
+  await asyncForEach(inputs.ssh, async (ssh) => {
     args.push('--ssh', ssh);
   });
   if (inputs.file) {
@@ -183,7 +176,7 @@ async function getCommonArgs(inputs: Inputs): Promise<Array<string>> {
 export async function getInputList(name: string, fallback?: string[], ignoreComma?: boolean): Promise<string[]> {
   const res: Array<string> = [];
 
-  const items = core.getInput(name);
+  const items = getInput(name);
   if (items == '') {
     return fallback ?? res;
   }

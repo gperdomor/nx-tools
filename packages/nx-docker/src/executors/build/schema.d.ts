@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface BuildExecutorSchema {
+export interface DockerBuildSchema {
   /**
    * List of extra privileged entitlement (eg. network.host,security.insecure)
    */
@@ -89,10 +89,9 @@ export interface BuildExecutorSchema {
   /**
    * Extract metadata from CI context
    */
-  meta?: {
-    enabled?: boolean;
+  metadata?: {
     /**
-     * List of Docker images to use as base name for tags
+     * List of Docker images to use as base name for tags. Required.
      */
     images?: string[];
     /**
