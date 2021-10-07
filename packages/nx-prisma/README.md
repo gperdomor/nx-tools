@@ -1,4 +1,4 @@
-# nx-prisma
+# `@nx-tools/nx-prisma`
 
 This builder provides a wrapper around the [Prisma CLI](https://www.npmjs.com/package/@prisma/cli)
 
