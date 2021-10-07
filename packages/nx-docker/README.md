@@ -20,6 +20,7 @@ build, secrets, remote cache, etc. and different builder deployment/namespacing 
 - [Usage with CI](#usage-with-ci)
   - [GitLab CI](#gitlab-ci)
   - [GitHub Actions](#github-actions)
+- [Troubleshooting](#troubleshooting)
 
 ## Usage
 
@@ -159,3 +160,7 @@ jobs:
       - name: 'nx build'
         run: npx nx affected --target=docker
 ```
+
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
