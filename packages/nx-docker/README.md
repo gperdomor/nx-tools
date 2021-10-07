@@ -1,4 +1,12 @@
-## About
+# `@nx-tools/nx-docker`
+
+## Upgrade from v1
+
+`v2` of this plugin (2.0.0-alpha.1) includes significant updates but minimal changes in the configuration schema to facilitate the migration process.
+
+[Upgrade notes](UPGRADE.md) with many [usage examples](#advanced-usage) have been added to handle most use cases.
+
+## About
 
 This builder provides the tools needed to build and push Docker images with [Buildx](https://github.com/docker/buildx) with full support of the
 features provided by [Moby BuildKit](https://github.com/moby/buildkit) builder toolkit. This includes multi-platform
@@ -20,6 +28,7 @@ build, secrets, remote cache, etc. and different builder deployment/namespacing 
 - [Usage with CI](#usage-with-ci)
   - [GitLab CI](#gitlab-ci)
   - [GitHub Actions](#github-actions)
+- [Troubleshooting](#troubleshooting)
 
 ## Usage
 
@@ -159,3 +168,7 @@ jobs:
       - name: 'nx build'
         run: npx nx affected --target=docker
 ```
+
+## Troubleshooting
+
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md)

@@ -18,6 +18,7 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 ### BREAKING CHANGES
 
 - **nx-docker:** Changes in configuration schema
+- **@nx-tools/docker-metadata:** is now an optional dependency
 
 ## 1.0.0 (2021-06-14)
 
