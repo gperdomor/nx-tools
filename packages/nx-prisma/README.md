@@ -8,56 +8,60 @@ This builder provides a wrapper around the [Prisma CLI](https://www.npmjs.com/pa
 
 The first step is configure the builder in your `angular.json` or `workspace.json`.
 You will need at least one project per each prisma schema you make. The prisma schemas can be in already existing backend/frontend projects OR in their own libraries.
-Each CLI command uses it's own architect so add the ones you need from the examples bellow.
+Each CLI command uses it's own architect so add the ones you need from the examples below.
 
 ```json
-"deploy": {
-  "builder": "@nx-tools/nx-prisma:generate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"generate": {
-  "builder": "@nx-tools/nx-prisma:generate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"migrate": {
-  "builder": "@nx-tools/nx-prisma:migrate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"pull": {
-  "builder": "@nx-tools/nx-prisma:rollback",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"push": {
-  "builder": "@nx-tools/nx-prisma:seed",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"reset": {
-  "builder": "@nx-tools/nx-prisma:seed",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"seed": {
-  "builder": "@nx-tools/nx-prisma:seed",
-  "options": {
-    "script": "apps/examples/prisma/data/seed.ts",
-    "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
-  }
-},
-"status": {
-  "builder": "@nx-tools/nx-prisma:seed",
-  "options": {
-    "schema": "apps/api/schema.prisma"
+// project.json
+{
+"targets": {
+  "deploy": {
+    "builder": "@nx-tools/nx-prisma:generate",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "generate": {
+    "builder": "@nx-tools/nx-prisma:generate",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "migrations": {
+    "builder": "@nx-tools/nx-prisma:migrations",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "pull": {
+    "builder": "@nx-tools/nx-prisma:rollback",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "push": {
+    "builder": "@nx-tools/nx-prisma:seed",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "reset": {
+    "builder": "@nx-tools/nx-prisma:seed",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
+  },
+  "seed": {
+    "builder": "@nx-tools/nx-prisma:seed",
+    "options": {
+      "script": "apps/examples/prisma/data/seed.ts",
+      "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
+    }
+  },
+  "status": {
+    "builder": "@nx-tools/nx-prisma:seed",
+    "options": {
+      "schema": "apps/api/schema.prisma"
+    }
   }
 }
 ```
@@ -73,5 +77,5 @@ nx <architect> <project>
 # OR
 ng <architect> <project>
 # ie
-nx migrations prisma
+nx migrations api
 ```
