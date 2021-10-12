@@ -38,7 +38,7 @@
     "@renovate/pep440": "1.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.10.2",
-    "@typescript-eslint/eslint-plugin": "4.31.2",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.31.2",
     "ci-info": "3.2.0",
     "commitizen": "4.2.4",
