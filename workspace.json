@@ -6,8 +6,5 @@
     "docker-metadata": "packages/docker-metadata",
     "nx-docker": "packages/nx-docker",
     "nx-prisma": "packages/nx-prisma"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   }
 }

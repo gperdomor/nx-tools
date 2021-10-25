@@ -112,7 +112,7 @@ export class Meta {
     const currentDate = this.date;
     const vraw = this.setValue(
       handlebars.compile(tag.attrs['pattern'])({
-        date: function (format) {
+        date: function (format: string) {
           return moment(currentDate).utc().format(format);
         },
       }),
@@ -222,12 +222,12 @@ export class Meta {
       warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
-    if (typeof tmatch[tag.attrs['group']] === 'undefined') {
+    if (typeof tmatch[tag.attrs['group'] as string] === 'undefined') {
       warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 
-    vraw = this.setValue(tmatch[tag.attrs['group']], tag);
+    vraw = this.setValue(tmatch[tag.attrs['group'] as string], tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
 
@@ -285,7 +285,7 @@ export class Meta {
 
     let val = this.context.sha;
     if (tag.attrs['format'] === tcl.ShaFormat.Short) {
-      val = this.context.sha.substr(0, parseInt(process.env.NX_DOCKER_SHORT_SHA_LENGTH, 10) || 7);
+      val = this.context.sha.substr(0, parseInt(process.env.NX_DOCKER_SHORT_SHA_LENGTH || '7', 10));
     }
 
     const vraw = this.setValue(val, tag);
@@ -321,7 +321,7 @@ export class Meta {
     return val;
   }
 
-  private setGlobalExp(val): string {
+  private setGlobalExp(val: string): string {
     const ctx = this.context;
     const currentDate = this.date;
     return handlebars.compile(val)({
@@ -340,7 +340,7 @@ export class Meta {
       sha: function () {
         return ctx.sha.substr(0, 7);
       },
-      date: function (format) {
+      date: function (format: string) {
         return moment(currentDate).utc().format(format);
       },
     });
@@ -387,7 +387,7 @@ export class Meta {
   public getJSON(): Record<string, unknown> {
     return {
       tags: this.getTags(),
-      labels: this.getLabels().reduce((res, label) => {
+      labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
         const matches = label.match(/([^=]*)=(.*)/);
         if (!matches) {
           return res;
@@ -407,7 +407,7 @@ export class Meta {
           target: {
             [this.inputs['bake-target']]: {
               tags: this.getTags(),
-              labels: this.getLabels().reduce((res, label) => {
+              labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
                 const matches = label.match(/([^=]*)=(.*)/);
                 if (!matches) {
                   return res;
