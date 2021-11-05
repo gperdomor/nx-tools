@@ -1,4 +1,5 @@
 /* eslint-disable prefer-spread */
+import { ExecutorContext, names } from '@nrwl/devkit';
 import { asyncForEach, getBooleanInput, getInput, warning } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
@@ -52,29 +53,35 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
   return tmp.tmpNameSync(options);
 }
 
-export async function getInputs(defaultContext: string, options: DockerBuildSchema): Promise<Inputs> {
+export async function getInputs(
+  defaultContext: string,
+  options: DockerBuildSchema,
+  ctx?: ExecutorContext,
+): Promise<Inputs> {
+  const prefix = names(ctx?.projectName || '').constantName;
+
   return {
-    allow: await getInputList('allow', options.allow),
-    buildArgs: await getInputList('build-args', options['build-args'], true),
-    builder: getInput('builder', { fallback: options.builder }),
-    cacheFrom: await getInputList('cache-from', options['cache-from'], true),
-    cacheTo: await getInputList('cache-to', options['cache-to'], true),
-    context: getInput('context', { fallback: options.context || defaultContext }),
-    file: getInput('file', { fallback: options.file }),
+    allow: await getInputList('allow', prefix, options.allow),
+    buildArgs: await getInputList('build-args', prefix, options['build-args'], true),
+    builder: getInput('builder', { prefix, fallback: options.builder }),
+    cacheFrom: await getInputList('cache-from', prefix, options['cache-from'], true),
+    cacheTo: await getInputList('cache-to', prefix, options['cache-to'], true),
+    context: getInput('context', { prefix, fallback: options.context || defaultContext }),
+    file: getInput('file', { prefix, fallback: options.file }),
     githubToken: getInput('github-token'),
-    labels: await getInputList('labels', options.labels, true),
+    labels: await getInputList('labels', prefix, options.labels, true),
     load: getBooleanInput('load', { fallback: `${options.load || false}` }),
-    network: getInput('network', { fallback: options.network }),
+    network: getInput('network', { prefix, fallback: options.network }),
     noCache: getBooleanInput('no-cache', { fallback: `${options['no-cache'] || false}` }),
-    outputs: await getInputList('outputs', options.outputs, true),
-    platforms: await getInputList('platforms', options.platforms),
+    outputs: await getInputList('outputs', prefix, options.outputs, true),
+    platforms: await getInputList('platforms', prefix, options.platforms),
     pull: getBooleanInput('pull', { fallback: `${options.pull || false}` }),
     push: getBooleanInput('push', { fallback: `${options.push || false}` }),
-    secretFiles: await getInputList('secret-files', options['secret-files'], true),
-    secrets: await getInputList('secrets', options.secrets, true),
-    ssh: await getInputList('ssh', options.ssh),
-    tags: await getInputList('tags', options.tags),
-    target: getInput('target', { fallback: options.target }),
+    secretFiles: await getInputList('secret-files', prefix, options['secret-files'], true),
+    secrets: await getInputList('secrets', prefix, options.secrets, true),
+    ssh: await getInputList('ssh', prefix, options.ssh),
+    tags: await getInputList('tags', prefix, options.tags),
+    target: getInput('target', { prefix, fallback: options.target }),
   };
 }
 
@@ -173,10 +180,15 @@ async function getCommonArgs(inputs: Inputs): Promise<Array<string>> {
   return args;
 }
 
-export async function getInputList(name: string, fallback?: string[], ignoreComma?: boolean): Promise<string[]> {
+export async function getInputList(
+  name: string,
+  prefix: string,
+  fallback?: string[],
+  ignoreComma?: boolean,
+): Promise<string[]> {
   const res: Array<string> = [];
 
-  const items = getInput(name);
+  const items = getInput(name, { prefix });
   if (items == '') {
     return fallback ?? res;
   }

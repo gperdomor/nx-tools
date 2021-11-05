@@ -23,17 +23,21 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
 
     const buildxVersion = await buildx.getVersion();
     const defContext = context.defaultContext();
-    const inputs: context.Inputs = await context.getInputs(defContext, {
-      ...options,
-      file: options.file || join(ctx?.workspace.projects[ctx.projectName].root, 'Dockerfile'),
-    });
+    const inputs: context.Inputs = await context.getInputs(
+      defContext,
+      {
+        ...options,
+        file: options.file || join(ctx?.workspace.projects[ctx.projectName].root, 'Dockerfile'),
+      },
+      ctx,
+    );
 
     if (options.metadata?.images) {
       const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor', () =>
         require('@nx-tools/docker-metadata'),
       );
       startGroup('Generating metadata', GROUP_PREFIX);
-      const meta = await getMetadata(options.metadata);
+      const meta = await getMetadata(options.metadata, ctx);
       inputs.labels = meta.getLabels();
       inputs.tags = meta.getTags();
     }
