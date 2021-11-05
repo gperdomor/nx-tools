@@ -9,6 +9,8 @@ export interface InputOptions {
   trimWhitespace?: boolean;
   /** Optional. Default value */
   fallback?: string;
+  /** Optional. Default value */
+  prefix?: string;
 }
 
 export const getPosixName = (name: string) => names(`INPUT_${name}`).constantName;
@@ -23,7 +25,16 @@ export const getPosixName = (name: string) => names(`INPUT_${name}`).constantNam
  * @returns   string
  */
 export function getInput(name: string, options?: InputOptions): string {
-  let val: string = process.env[getPosixName(name)] || '';
+  let val = '';
+  const prefix = options?.prefix;
+
+  if (prefix) {
+    val = process.env[getPosixName(`${prefix}_${name}`)] || '';
+  }
+
+  if (!val) {
+    val = process.env[getPosixName(name)] || '';
+  }
 
   if (!val && options?.fallback) {
     val = options.fallback;

@@ -8,6 +8,7 @@ describe('getInput', () => {
     restore = mockedEnv({
       INPUT_REQUIRED_EXIST: 'Value 1',
       INPUT_V1: 'Value 1',
+      INPUT_APP_V1: 'APP 1',
       INPUT_V2: '101',
       INPUT_TL: '     TRIM LEFT',
       INPUT_TR: 'TRIM RIGHT      ',
@@ -56,6 +57,13 @@ describe('getInput', () => {
       ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: string) => {
         expect(getInput(name)).toEqual(expected);
         expect(getInput(name, { required: true })).toEqual(expected);
+      });
+    });
+
+    describe('when prefix is provided', () => {
+      it('should return proper value', () => {
+        expect(getInput('v1', { prefix: 'app' })).toEqual('APP 1');
+        expect(getInput('v1')).toEqual('Value 1');
       });
     });
 
