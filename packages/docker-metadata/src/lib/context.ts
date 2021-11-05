@@ -1,3 +1,4 @@
+import { ExecutorContext, names } from '@nrwl/devkit';
 import { getInput, interpolate } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
@@ -24,23 +25,25 @@ export function tmpDir(): string {
   return _tmpDir;
 }
 
-export function getInputs(options: Partial<Inputs>): Inputs {
+export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inputs {
+  const prefix = names(ctx?.projectName || '').constantName;
+
   return {
-    'bake-target': getInput('bake-target', { fallback: options['bake-target'] || 'docker-metadata-action' }),
+    'bake-target': getInput('bake-target', { prefix, fallback: options['bake-target'] || 'docker-metadata-action' }),
     'github-token': getInput('github-token'),
-    'sep-labels': getInput('sep-labels', { fallback: options['sep-labels'] || '\n' }),
-    'sep-tags': getInput('sep-tags', { fallback: options['sep-tags'] || '\n' }),
-    flavor: getInputList('flavor', options.flavor, true).map((flavor) => interpolate(flavor)),
-    images: getInputList('images', options.images).map((image) => interpolate(image)),
-    labels: getInputList('labels', options.labels, true).map((label) => interpolate(label)),
-    tags: getInputList('tags', options.tags, true).map((tag) => interpolate(tag)),
+    'sep-labels': getInput('sep-labels', { prefix, fallback: options['sep-labels'] || '\n' }),
+    'sep-tags': getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n' }),
+    flavor: getInputList('flavor', prefix, options.flavor, true).map((flavor) => interpolate(flavor)),
+    images: getInputList('images', prefix, options.images).map((image) => interpolate(image)),
+    labels: getInputList('labels', prefix, options.labels, true).map((label) => interpolate(label)),
+    tags: getInputList('tags', prefix, options.tags, true).map((tag) => interpolate(tag)),
   };
 }
 
-export function getInputList(name: string, fallback?: string[], ignoreComma?: boolean): string[] {
+export function getInputList(name: string, prefix: string, fallback?: string[], ignoreComma?: boolean): string[] {
   const res: Array<string> = [];
 
-  const items = getInput(name);
+  const items = getInput(name, { prefix });
   if (items == '') {
     return fallback ?? res;
   }

@@ -1,3 +1,4 @@
+import { ExecutorContext } from '@nrwl/devkit';
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
 import { info, startGroup, warning } from '@nx-tools/core';
 import * as fs from 'fs';
@@ -5,8 +6,8 @@ import { GROUP_PREFIX } from './constants';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
 
-export default async function run(options: Partial<Inputs>): Promise<Meta> {
-  const inputs: Inputs = await getInputs(options);
+export default async function run(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
+  const inputs: Inputs = await getInputs(options, ctx);
   if (inputs.images.length == 0) {
     throw new Error(`images input required`);
   }
