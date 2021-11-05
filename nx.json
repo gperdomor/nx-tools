@@ -18,5 +18,13 @@
         "scan": true
       }
     }
+  },
+  "targetDependencies": {
+    "version": [
+      {
+        "target": "version",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
