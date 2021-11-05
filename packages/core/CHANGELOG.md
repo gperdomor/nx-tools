@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0-alpha.2](https://github.com/gperdomor/nx-tools/compare/core@2.0.0-alpha.1...core@2.0.0-alpha.2) (2021-11-05)
+
+### Features
+
+- **core:** added support for prefixed env variable names ([cb75f40](https://github.com/gperdomor/nx-tools/commit/cb75f40c47783cc7bd96896e7bdef27ee9f39ac5))
+- update nx to 13 and minor packages ([5689f10](https://github.com/gperdomor/nx-tools/commit/5689f10271777520294a6958f65b8004726412ec))
+
 ## 2.0.0-alpha.1 (2021-10-06)
 
 ### Bug Fixes
