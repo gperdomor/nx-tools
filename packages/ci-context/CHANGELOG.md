@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.2...ci-context@2.0.0-alpha.3) (2021-11-08)
+
+### Features
+
+- azure devops pipeline support ([cfe1a59](https://github.com/gperdomor/nx-tools/commit/cfe1a59265873d6d1c95bf1aa1a72e4b75e27a79))
+
 # [2.0.0-alpha.2](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.1...ci-context@2.0.0-alpha.2) (2021-11-05)
 
 ### Features
