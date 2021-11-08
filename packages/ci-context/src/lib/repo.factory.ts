@@ -4,6 +4,7 @@ import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
 import * as jenkins from './utils/jenkins';
+import * as azure from './utils/azure-devops';
 import * as local from './utils/local';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -33,6 +34,10 @@ export class RepoProxyFactory {
 
     if (ci.JENKINS) {
       return jenkins.repo();
+    }
+
+    if (ci.AZURE_PIPELINES) {
+      return azure.repo();
     }
 
     throw new Error('Unsupported CI provider');
