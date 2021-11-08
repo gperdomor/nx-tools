@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-docker",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -15,7 +15,7 @@
     "semver": "^7.3.5"
   },
   "optionalDependencies": {
-    "@nx-tools/docker-metadata": "^2.0.0-alpha.2"
+    "@nx-tools/docker-metadata": "^2.0.0-alpha.3"
   },
   "peerDependencies": {
     "dotenv": "^10.0.0",
