@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0-alpha.4](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.3...ci-context@2.0.0-alpha.4) (2021-11-10)
+
+### Features
+
+- **ci-context:** added option to fallback to local environment ([4124f2d](https://github.com/gperdomor/nx-tools/commit/4124f2d4f4117cdab064756410fd992394c7b261))
+
 # [2.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.2...ci-context@2.0.0-alpha.3) (2021-11-08)
 
 ### Features
