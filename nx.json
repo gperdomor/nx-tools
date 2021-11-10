@@ -20,6 +20,12 @@
     }
   },
   "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ],
     "version": [
       {
         "target": "version",

@@ -1,7 +1,12 @@
 # Troubleshooting
 
+- [Unsupported CI Provider](#Unsupported-CI-Provider)
 - [INPUT_BUILD_ARGS is not working](#INPUT_BUILD_ARGS-is-not-working)
 - [INPUT_TAGS is not working with docker-metadata](#INPUT_TAGS-is-not-working-with-docker-metadata)
+
+## Unsupported CI Provider
+
+If you're running your build in an unsupported provider, you can fallback to the local environment setting the environment variable `CI_CONTEXT_FALLBACK_TO_LOCAL=true`. With this change your build will run using the local git context, so `git` command is required to work.
 
 ## INPUT_BUILD_ARGS is not working
 
