@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0-alpha.4](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.0.0-alpha.3...docker-metadata@2.0.0-alpha.4) (2021-11-10)
+
+### Features
+
+- **docker-metadata:** base_ref global expression and trim tags and flavor inputs ([2f125cb](https://github.com/gperdomor/nx-tools/commit/2f125cb78f08893b7bf24fe8e7ddb6028f5d6526))
+- bump @nx-tools/ci-context to 2.0.0-alpha.4
+
 # [2.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.0.0-alpha.2...docker-metadata@2.0.0-alpha.3) (2021-11-08)
 
 - bump @nx-tools/ci-context to 2.0.0-alpha.3
