@@ -9,7 +9,7 @@ export interface RunnerContext {
   actor: string;
   eventName: string;
   job: string;
-  payload: Record<string, unknown>;
+  payload: Record<string, any>;
   ref: string;
   runId: number;
   runNumber: number;
