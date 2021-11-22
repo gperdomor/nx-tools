@@ -34,7 +34,7 @@
     "@nrwl/nx-plugin": "13.2.2",
     "@nrwl/tao": "13.2.2",
     "@nrwl/workspace": "13.2.2",
-    "@prisma/client": "3.4.1",
+    "@prisma/client": "3.5.0",
     "@renovate/pep440": "1.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.6",
