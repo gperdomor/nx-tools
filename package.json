@@ -22,7 +22,7 @@
     "@actions/exec": "1.1.0",
     "@actions/github": "5.0.0",
     "@commitlint/cli": "14.1.0",
-    "@commitlint/config-conventional": "13.2.0",
+    "@commitlint/config-conventional": "15.0.0",
     "@jscutlery/semver": "2.13.0",
     "@nrwl/cli": "13.2.2",
     "@nrwl/devkit": "13.2.2",
