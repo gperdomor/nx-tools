@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.4...ci-context@2.0.0) (2021-11-23)
+
+- No changes from alpha.4
+
 # [2.0.0-alpha.4](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.0-alpha.3...ci-context@2.0.0-alpha.4) (2021-11-10)
 
 ### Features

@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.0-alpha.3...nx-docker@2.0.0) (2021-11-23)
+
+- No changes from alpha.3
+
 # [2.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.0-alpha.2...nx-docker@2.0.0-alpha.3) (2021-11-08)
 
 - bump @nx-tools/docker-metadata to 2.0.0-alpha.3

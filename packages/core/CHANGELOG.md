@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0](https://github.com/gperdomor/nx-tools/compare/core@2.0.0-alpha.2...core@2.0.0) (2021-11-23)
+
+- No changes from alpha.2
+
 # [2.0.0-alpha.2](https://github.com/gperdomor/nx-tools/compare/core@2.0.0-alpha.1...core@2.0.0-alpha.2) (2021-11-05)
 
 ### Features
