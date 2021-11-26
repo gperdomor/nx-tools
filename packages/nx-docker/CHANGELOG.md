@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.2](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.1...nx-docker@2.0.2) (2021-11-25)
+
+- Set tslib@^2.1.0 as peerDependencies
+
 # [2.0.1](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.0...nx-docker@2.0.1) (2021-11-25)
 
 - Removed tslib from peerDependencies

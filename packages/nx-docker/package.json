@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-docker",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -10,14 +10,15 @@
   "executors": "./executors.json",
   "dependencies": {
     "tmp": "^0.2.1",
-    "@nx-tools/core": "^2.0.0",
+    "@nx-tools/core": "^2.0.1",
     "csv-parse": "^4.16.3",
     "semver": "^7.3.5"
   },
   "optionalDependencies": {
-    "@nx-tools/docker-metadata": "^2.0.0"
+    "@nx-tools/docker-metadata": "^2.0.1"
   },
   "peerDependencies": {
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "tslib": "^2.1.0"
   }
 }
