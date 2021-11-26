@@ -2,6 +2,10 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.1](https://github.com/gperdomor/nx-tools/compare/core@2.0.0...core@2.0.1) (2021-11-25)
+
+- Set tslib@^2.1.0 as peerDependencies
+
 # [2.0.0](https://github.com/gperdomor/nx-tools/compare/core@2.0.0-alpha.2...core@2.0.0) (2021-11-23)
 
 - No changes from alpha.2

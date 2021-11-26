@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -9,6 +9,7 @@
     "@actions/exec": "^1.1.0"
   },
   "peerDependencies": {
-    "@nrwl/devkit": "^12.0.0"
+    "@nrwl/devkit": "^12.0.0",
+    "tslib": "^2.1.0"
   }
 }
