@@ -23,7 +23,7 @@
     "@actions/github": "5.0.0",
     "@commitlint/cli": "15.0.0",
     "@commitlint/config-conventional": "15.0.0",
-    "@jscutlery/semver": "2.13.3",
+    "@jscutlery/semver": "2.14.0",
     "@nrwl/cli": "13.2.2",
     "@nrwl/devkit": "13.2.2",
     "@nrwl/eslint-plugin-nx": "13.2.2",
