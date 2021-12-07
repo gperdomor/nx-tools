@@ -12,7 +12,7 @@ on:
       - docker/docker-entrypoint.sh
 
 env:
-  NODE_VERSION: 14.18.1
+  NODE_VERSION: 14.18.2
   ALPINE_VERSION: 3.14
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
         with:
-          version: v0.6.3
+          version: v0.7.1
 
       - name: Docker meta
         id: meta
