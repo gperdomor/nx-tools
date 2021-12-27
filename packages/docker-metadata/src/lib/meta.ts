@@ -31,7 +31,7 @@ export class Meta {
     // Needs to override Git reference with pr ref instead of upstream branch ref
     // for pull_request_target event
     if (/pull_request_target/.test(context.eventName)) {
-      context.ref = `refs/pull/${context.payload.number}/merge`;
+      context.ref = `refs/pull/${context.payload['number']}/merge`;
     }
 
     this.inputs = inputs;
@@ -116,7 +116,7 @@ export class Meta {
           return moment(currentDate).utc().format(format);
         },
       }),
-      tag,
+      tag
     );
 
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
@@ -191,7 +191,7 @@ export class Meta {
             return pep440.patch(vraw);
           },
         }),
-        tag,
+        tag
       );
       latest = true;
     }
@@ -222,12 +222,15 @@ export class Meta {
       warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
-    if (typeof tmatch[tag.attrs['group'] as string] === 'undefined') {
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (typeof tmatch[tag.attrs['group'] as any] === 'undefined') {
       warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 
-    vraw = this.setValue(tmatch[tag.attrs['group'] as string], tag);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vraw = this.setValue(tmatch[tag.attrs['group'] as any], tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
 
@@ -285,7 +288,7 @@ export class Meta {
 
     let val = this.context.sha;
     if (tag.attrs['format'] === tcl.ShaFormat.Short) {
-      val = this.context.sha.substr(0, parseInt(process.env.NX_DOCKER_SHORT_SHA_LENGTH || '7', 10));
+      val = this.context.sha.substr(0, parseInt(process.env['NX_DOCKER_SHORT_SHA_LENGTH'] || '7', 10));
     }
 
     const vraw = this.setValue(val, tag);
@@ -342,10 +345,10 @@ export class Meta {
       },
       base_ref: function () {
         if (/^refs\/tags\//.test(ctx.ref)) {
-          return ctx.payload?.base_ref?.replace(/^refs\/heads\//g, '').replace(/\//g, '-');
+          return ctx.payload?.['base_ref']?.replace(/^refs\/heads\//g, '').replace(/\//g, '-');
         }
         if (/^refs\/pull\//.test(ctx.ref)) {
-          return ctx.payload?.pull_request?.base?.ref;
+          return ctx.payload?.['pull_request']?.base?.ref;
         }
         return '';
       },
@@ -371,7 +374,7 @@ export class Meta {
         tags.push(
           `${imageLc}:${this.flavor.prefixLatest ? this.flavor.prefix : ''}latest${
             this.flavor.suffixLatest ? this.flavor.suffix : ''
-          }`,
+          }`
         );
       }
     }
@@ -432,8 +435,8 @@ export class Meta {
           },
         },
         null,
-        2,
-      ),
+        2
+      )
     );
 
     return bakeFile;

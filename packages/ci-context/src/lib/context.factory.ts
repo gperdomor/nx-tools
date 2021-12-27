@@ -45,7 +45,7 @@ export class ContextProxyFactory {
       return azure.context();
     }
 
-    if (!ci.isCI || process.env.CI_CONTEXT_FALLBACK_TO_LOCAL?.toLowerCase() === 'true') {
+    if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {
       info(`Unsupported CI Provider... Using Local Environment as fallback`);
       return local.context();
     }

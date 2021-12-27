@@ -37,13 +37,13 @@ const tagsLabelsTest = async (
   inputs: Inputs,
   exVersion: Version,
   exTags: Array<string>,
-  exLabels: Array<string>,
+  exLabels: Array<string>
 ) => {
   process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
   const context = await ContextProxyFactory.create();
   // console.log(process.env, context);
 
-  const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
+  const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
   const meta = new Meta({ ...getInputs({}), ...inputs }, context, repo);
 
   const version = meta.version;
@@ -3161,7 +3161,7 @@ describe('json', () => {
     const context = await ContextProxyFactory.create();
     // console.log(process.env, context);
 
-    const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
+    const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
 
     const jsonOutput = meta.getJSON();
@@ -3468,7 +3468,7 @@ describe('bake', () => {
     const context = await ContextProxyFactory.create();
     // console.log(process.env, context);
 
-    const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
+    const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
 
     const bakeFile = meta.getBakeFile();
