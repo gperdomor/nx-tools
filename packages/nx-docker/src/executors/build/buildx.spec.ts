@@ -135,7 +135,7 @@ describe('getVersion', () => {
       console.log(`version: ${version}`);
       expect(semver.valid(version)).not.toBeNull();
     },
-    100000,
+    100000
   );
 });
 
