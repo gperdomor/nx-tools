@@ -14,7 +14,7 @@ describe('Azure DevOps Context', () => {
         AGENT_JOBNAME: 'devops-job',
         BUILD_BUILDID: '40',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 
@@ -24,8 +24,8 @@ describe('Azure DevOps Context', () => {
 
   describe('When building pull requests', () => {
     beforeEach(() => {
-      process.env.SYSTEM_PULLREQUEST_SOURCEBRANCH = 'refs/heads/devops-ref-slug';
-      process.env.SYSTEM_PULLREQUEST_PULLREQUESTID = '123';
+      process.env['SYSTEM_PULLREQUEST_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
+      process.env['SYSTEM_PULLREQUEST_PULLREQUESTID'] = '123';
     });
 
     it('Should be take proper values', async () => {
@@ -46,7 +46,7 @@ describe('Azure DevOps Context', () => {
 
   describe('When building branches', () => {
     beforeEach(() => {
-      process.env.BUILD_SOURCEBRANCH = 'refs/heads/devops-ref-slug';
+      process.env['BUILD_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
     });
 
     it('Should be take proper values', async () => {
