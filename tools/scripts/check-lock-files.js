@@ -12,7 +12,7 @@ function checkLockFiles() {
     const content = fs.readFileSync('package-lock.json', 'utf-8');
     if (content.match(/localhost:487/)) {
       errors.push(
-        'The "package-lock.json" has reference to local yarn repository ("localhost:4873"). Please use "registry.npmjs.org" in "package-lock.json"',
+        'The "package-lock.json" has reference to local yarn repository ("localhost:4873"). Please use "registry.npmjs.org" in "package-lock.json"'
       );
     }
   } catch {

@@ -5,7 +5,7 @@ describe('loadPackage', () => {
     it('should return package', () => {
       expect(loadPackage('@nrwl/node', 'ctx')).toEqual(
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        require('@nrwl/node'),
+        require('@nrwl/node')
       );
     });
   });

@@ -3,6 +3,16 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/core",
+        "main": "packages/core/src/index.ts",
+        "tsConfig": "packages/core/tsconfig.lib.json",
+        "assets": ["packages/core/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -16,17 +26,6 @@
       "options": {
         "jestConfig": "packages/core/jest.config.js",
         "passWithNoTests": true
-      }
-    },
-    "build": {
-      "executor": "@nrwl/node:package",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/core",
-        "tsConfig": "packages/core/tsconfig.lib.json",
-        "packageJson": "packages/core/package.json",
-        "main": "packages/core/src/index.ts",
-        "assets": ["packages/core/*.md"]
       }
     },
     "version": {
