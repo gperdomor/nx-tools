@@ -11,6 +11,7 @@ updates:
 
   - package-ecosystem: npm
     directory: '/'
+    versioning-strategy: 'increase'
     schedule:
       interval: 'daily'
       timezone: 'America/Santiago'
