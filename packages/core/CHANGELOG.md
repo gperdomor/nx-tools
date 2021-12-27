@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.1.0](https://github.com/gperdomor/nx-tools/compare/core@2.0.1...core@2.1.0) (2021-12-27)
+
+### Features
+
+- **core:** migrate to swc compiler ([6aa9ede](https://github.com/gperdomor/nx-tools/commit/6aa9ede9462ca01ef1b2062c81488b437db11e40))
+- **docker-metadata:** migrate to swc compiler ([655bf20](https://github.com/gperdomor/nx-tools/commit/655bf202cc0661588b34f54357253fd290c4cabb))
+
 # [2.0.1](https://github.com/gperdomor/nx-tools/compare/core@2.0.0...core@2.0.1) (2021-11-25)
 
 - Set tslib@^2.1.0 as peerDependencies
