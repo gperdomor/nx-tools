@@ -12,7 +12,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "2.0.0-alpha.1"
+    "@nx-tools/core": "2.0.0"
   },
   "peerDependencies": {
     "prisma": "^3.0.1",
