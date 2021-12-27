@@ -23,7 +23,7 @@ describe('GitHub Context', () => {
         GITHUB_RUN_NUMBER: '20',
         GITHUB_RUN_ID: '200',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 

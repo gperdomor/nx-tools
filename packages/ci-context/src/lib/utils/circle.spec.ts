@@ -17,7 +17,7 @@ describe('CircleCI Context', () => {
         CIRCLE_JOB: 'circleci-job',
         CIRCLE_BUILD_NUM: '30',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 

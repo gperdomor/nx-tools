@@ -17,7 +17,7 @@ describe('Jenkins Context', () => {
         JOB_NAME: 'jenkins-job',
         BUILD_NUMBER: '40',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 
@@ -42,7 +42,7 @@ describe('Jenkins Context', () => {
 
   describe('When git tag is present', () => {
     beforeEach(() => {
-      process.env.TAG_NAME = 'jenkins-tag';
+      process.env['TAG_NAME'] = 'jenkins-tag';
     });
 
     it('Should be take proper values', async () => {

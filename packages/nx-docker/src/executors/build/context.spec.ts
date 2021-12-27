@@ -536,7 +536,7 @@ describe('getInputList', () => {
 "MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc"
-FOO=bar`,
+FOO=bar`
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     console.log(res);
@@ -560,7 +560,7 @@ FOO=bar
 "EMPTYLINE=aaaa
 
 bbbb
-ccc"`,
+ccc"`
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     console.log(res);
@@ -584,7 +584,7 @@ ccc`,
 MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc
-FOO=bar`,
+FOO=bar`
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     console.log(res);
@@ -601,7 +601,7 @@ FOO=bar`,
     setInput(
       'secrets',
       `"GPG_KEY=${pgp}"
-FOO=bar`,
+FOO=bar`
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     console.log(res);
@@ -615,7 +615,7 @@ FOO=bar`,
 "MYSECRET=aaaaaaaa
 bbbb""bbb
 ccccccccc"
-FOO=bar`,
+FOO=bar`
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     console.log(res);

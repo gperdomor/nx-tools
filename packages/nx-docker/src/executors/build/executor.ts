@@ -29,12 +29,12 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
         ...options,
         file: options.file || join(ctx?.workspace.projects[ctx.projectName].root, 'Dockerfile'),
       },
-      ctx,
+      ctx
     );
 
     if (options.metadata?.images) {
       const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor', () =>
-        require('@nx-tools/docker-metadata'),
+        require('@nx-tools/docker-metadata')
       );
       startGroup('Generating metadata', GROUP_PREFIX);
       const meta = await getMetadata(options.metadata, ctx);
@@ -49,7 +49,7 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
       args.map((arg) => interpolate(arg)),
       {
         ignoreReturnCode: true,
-      },
+      }
     ).then((res) => {
       if (res.stderr.length > 0 && res.exitCode != 0) {
         throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);

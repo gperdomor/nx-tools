@@ -3,6 +3,16 @@
   "sourceRoot": "packages/ci-context/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ci-context",
+        "main": "packages/ci-context/src/index.ts",
+        "tsConfig": "packages/ci-context/tsconfig.lib.json",
+        "assets": ["packages/ci-context/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -16,17 +26,6 @@
       "options": {
         "jestConfig": "packages/ci-context/jest.config.js",
         "passWithNoTests": true
-      }
-    },
-    "build": {
-      "executor": "@nrwl/node:package",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/ci-context",
-        "tsConfig": "packages/ci-context/tsconfig.lib.json",
-        "packageJson": "packages/ci-context/package.json",
-        "main": "packages/ci-context/src/index.ts",
-        "assets": ["packages/ci-context/*.md"]
       }
     },
     "version": {

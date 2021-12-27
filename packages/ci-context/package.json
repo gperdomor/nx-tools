@@ -1,6 +1,7 @@
 {
   "name": "@nx-tools/ci-context",
   "version": "2.0.1",
+  "type": "commonjs",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",

@@ -36,7 +36,7 @@ export class RepoProxyFactory {
       return jenkins.repo();
     }
 
-    if (!ci.isCI || process.env.CI_CONTEXT_FALLBACK_TO_LOCAL?.toLowerCase() === 'true') {
+    if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {
       return local.repo();
     }
 

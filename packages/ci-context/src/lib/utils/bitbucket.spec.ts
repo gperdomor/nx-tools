@@ -16,7 +16,7 @@ describe('CircleCI Context', () => {
         BITBUCKET_STEP_UUID: 'bitbucket-job-uuid',
         BITBUCKET_BUILD_NUMBER: '50',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 

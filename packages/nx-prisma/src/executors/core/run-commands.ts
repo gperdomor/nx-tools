@@ -37,7 +37,7 @@ const extractFlags = <T extends PrismaBuilderOptions>(options: Record<string, bo
 
 export const runCommand = async <T extends PrismaBuilderOptions>(
   { description, command }: PrismaCommands<T>,
-  options: T,
+  options: T
 ): Promise<{ success: true }> => {
   startGroup(description, 'Nx Prisma');
 

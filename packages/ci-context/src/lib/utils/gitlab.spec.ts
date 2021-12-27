@@ -19,7 +19,7 @@ describe('GitLab Context', () => {
         CI_PIPELINE_ID: '10',
         CI_PIPELINE_IID: '100',
       },
-      { clear: true },
+      { clear: true }
     );
   });
 

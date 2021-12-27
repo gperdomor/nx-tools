@@ -29,7 +29,7 @@ export function Transform(inputs: string[]): Flavor {
       const parts = field
         .toString()
         .split('=')
-        .map((item) => item.trim());
+        .map((item: string) => item.trim());
       if (parts.length == 1) {
         throw new Error(`Invalid flavor entry: ${input}`);
       }

@@ -80,7 +80,7 @@ describe('getInput', () => {
         (name: string, fallback: string, expected: string) => {
           expect(getInput(name, { fallback })).toEqual(expected);
           expect(getInput(name, { fallback, required: true })).toEqual(expected);
-        },
+        }
       );
     });
 
@@ -104,7 +104,7 @@ describe('getInput', () => {
         'given a not existing env variable named INPUT_%s, should return an empty string',
         (name: string) => {
           expect(getInput(name)).toEqual('');
-        },
+        }
       );
 
       test.each([['__A'], ['__B'], ['__C']])(
@@ -115,7 +115,7 @@ describe('getInput', () => {
           }
 
           expect(getInputValue).toThrowError(new Error(`Input required and not supplied: ${name}`));
-        },
+        }
       );
     });
 
@@ -129,7 +129,7 @@ describe('getInput', () => {
         (name: string, fallback: string) => {
           expect(getInput(name, { fallback })).toEqual(fallback);
           expect(getInput(name, { required: true, fallback })).toEqual(fallback);
-        },
+        }
       );
     });
   });
@@ -194,7 +194,7 @@ describe('getBooleanInput', () => {
         (name: string, fallback: string, expected: boolean) => {
           expect(getBooleanInput(name, { fallback })).toEqual(expected);
           expect(getBooleanInput(name, { fallback, required: true })).toEqual(expected);
-        },
+        }
       );
     });
 
@@ -207,7 +207,7 @@ describe('getBooleanInput', () => {
           }
 
           expect(getBooleanValue).toThrowError(TypeError);
-        },
+        }
       );
     });
   });
@@ -222,7 +222,7 @@ describe('getBooleanInput', () => {
           }
 
           expect(getBooleanValue).toThrowError(TypeError);
-        },
+        }
       );
     });
 
@@ -235,7 +235,7 @@ describe('getBooleanInput', () => {
         'given a not existing env variable named INPUT_%s, fallback: %s, should return: %s',
         (name: string, fallback: string, expected) => {
           expect(getBooleanInput(name, { fallback })).toEqual(expected);
-        },
+        }
       );
 
       test.each([
@@ -249,7 +249,7 @@ describe('getBooleanInput', () => {
           }
 
           expect(getBooleanValue).toThrowError(TypeError);
-        },
+        }
       );
     });
   });

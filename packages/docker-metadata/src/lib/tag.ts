@@ -97,7 +97,7 @@ export function Parse(s: string): Tag {
     const parts = field
       .toString()
       .split('=')
-      .map((item) => item.trim());
+      .map((item: string) => item.trim());
     if (parts.length == 1) {
       tag.attrs['value'] = parts[0];
     } else {
@@ -167,8 +167,8 @@ export function Parse(s: string): Tag {
       }
       if (
         !Object.keys(RefEvent)
-          .map((k) => RefEvent[k])
-          .includes(tag.attrs['event'])
+          .map((k) => RefEvent[k as keyof typeof RefEvent])
+          .includes(tag.attrs['event'] as RefEvent)
       ) {
         throw new Error(`Invalid event for ${s}`);
       }
@@ -192,8 +192,8 @@ export function Parse(s: string): Tag {
       }
       if (
         !Object.keys(ShaFormat)
-          .map((k) => ShaFormat[k])
-          .includes(tag.attrs['format'])
+          .map((k) => ShaFormat[k as keyof typeof ShaFormat])
+          .includes(tag.attrs['format'] as ShaFormat)
       ) {
         throw new Error(`Invalid format for ${s}`);
       }
