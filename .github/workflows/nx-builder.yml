@@ -1,18 +1,15 @@
-name: Docker Builder - Node 16
+name: Docker Builder
 
 on:
   push:
     branches: [main]
     paths:
-      - .github/workflows/node-16.yml
+      - .github/workflows/nx-builder.yml
       - docker/docker-entrypoint.sh
   pull_request:
     paths:
-      - .github/workflows/node-16.yml
+      - .github/workflows/nx-builder.yml
       - docker/docker-entrypoint.sh
-
-env:
-  ALPINE_VERSION: 3.14
 
 jobs:
   build:
@@ -20,7 +17,9 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        NODE_VERSION: ['16.13.1']
+        NODE_VERSION:
+          - '17.0.0'
+          - '17.3.0'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -38,7 +37,7 @@ jobs:
         with:
           images: ghcr.io/gperdomor/nx-docker
           flavor: |
-            latest=true
+            latest=${{ matrix.NODE_VERSION == '16.13.1' }}
             suffix=-alpine
           tags: |
             type=semver,pattern={{version}},value=${{ matrix.NODE_VERSION }}

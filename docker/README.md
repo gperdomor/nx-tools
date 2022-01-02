@@ -75,3 +75,12 @@ This repository provides a docker image to use with [@nx-tools/nx-docker](https:
 | 16.13.1-alpine | 16.13.1-alpine |   20.10.11    | 0.7.1  |
 
 > The images are also taged with their corresponding 16-alpine and 16.0-alpine format.
+
+### Node 17
+
+|   Image Tag   | Node Version  | Docker Engine | Buildx |
+| :-----------: | :-----------: | :-----------: | ------ |
+| 17.0.0-alpine | 17.0.0-alpine |   20.10.12    | 0.7.1  |
+| 17.3.0-alpine | 17.3.0-alpine |   20.10.12    | 0.7.1  |
+
+> The images are also taged with their corresponding 17-alpine and 17.0-alpine format.
