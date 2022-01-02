@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.2.0](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.1.0...docker-metadata@2.2.0) (2022-01-02)
+
+### Features
+
+- **docker-metadata:** switch from swc to tsc again ([cd8a01c](https://github.com/gperdomor/nx-tools/commit/cd8a01c655f7a4567af83f9bd08957c91af1b00f))
+
 # [2.1.0](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.0.1...docker-metadata@2.1.0) (2022-01-02)
 
 ### Bug Fixes
