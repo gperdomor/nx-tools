@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.2.0](https://github.com/gperdomor/nx-tools/compare/ci-context@2.1.1...ci-context@2.2.0) (2022-01-02)
+
+### Features
+
+- **ci-context:** switch from swc to tsc again ([aa98db4](https://github.com/gperdomor/nx-tools/commit/aa98db4180218da5cd2f8c949bd8582d86a4db32))
+
 ## [2.1.1](https://github.com/gperdomor/nx-tools/compare/ci-context@2.1.0...ci-context@2.1.1) (2022-01-02)
 
 ### Bug Fixes
