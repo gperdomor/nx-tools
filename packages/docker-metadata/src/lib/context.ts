@@ -50,6 +50,7 @@ export function getInputList(name: string, prefix: string, fallback?: string[], 
 
   for (const output of csvparse(items, {
     columns: false,
+    relax: true,
     relaxColumnCount: true,
     skipLinesWithEmptyValues: true,
   }) as Array<string[]>) {

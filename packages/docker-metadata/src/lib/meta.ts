@@ -143,7 +143,11 @@ export class Meta {
       includePrerelease: true,
     });
     if (semver.prerelease(vraw)) {
-      vraw = this.setValue(handlebars.compile('{{version}}')(sver), tag);
+      if (Meta.isRawStatement(tag.attrs['pattern'])) {
+        vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
+      } else {
+        vraw = this.setValue(handlebars.compile('{{version}}')(sver), tag);
+      }
     } else {
       vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
       latest = true;
@@ -171,7 +175,11 @@ export class Meta {
     let latest = false;
     const pver = pep440.explain(vraw);
     if (pver.is_prerelease || pver.is_postrelease || pver.is_devrelease) {
-      vraw = this.setValue(pep440.clean(vraw), tag);
+      if (Meta.isRawStatement(tag.attrs['pattern'])) {
+        vraw = this.setValue(vraw, tag);
+      } else {
+        vraw = this.setValue(pep440.clean(vraw), tag);
+      }
     } else {
       vraw = this.setValue(
         handlebars.compile(tag.attrs['pattern'])({
@@ -310,6 +318,20 @@ export class Meta {
     return version;
   }
 
+  public static isRawStatement(pattern: string): boolean {
+    try {
+      const hp = handlebars.parseWithoutProcessing(pattern);
+      if (hp.body.length == 1 && hp.body[0].type == 'MustacheStatement') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const stm: any = hp.body[0];
+        return stm['path']['parts'].length == 1 && stm['path']['parts'][0] == 'raw';
+      }
+    } catch (err) {
+      return false;
+    }
+    return false;
+  }
+
   private setValue(val: string, tag: tcl.Tag): string {
     if (tag.attrs.hasOwnProperty('prefix')) {
       val = `${this.setGlobalExp(tag.attrs['prefix'])}${val}`;
@@ -348,7 +370,7 @@ export class Meta {
           return ctx.payload?.['base_ref']?.replace(/^refs\/heads\//g, '').replace(/\//g, '-');
         }
         if (/^refs\/pull\//.test(ctx.ref)) {
-          return ctx.payload?.['pull_request']?.base?.ref;
+          return ctx.payload?.['pull_request']?.['base']?.ref;
         }
         return '';
       },
