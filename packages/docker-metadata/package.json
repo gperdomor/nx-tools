@@ -9,7 +9,7 @@
   "dependencies": {
     "@nx-tools/ci-context": "^2.1.0",
     "@nx-tools/core": "^2.1.0",
-    "@renovate/pep440": "1.0.0",
+    "@renovate/pep440": "^1.0.0",
     "csv-parse": "^4.16.3",
     "handlebars": "^4.7.7",
     "moment": "^2.29.1",
