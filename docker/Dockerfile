@@ -5,7 +5,7 @@ ARG NODE_VERSION
 #############
 
 # --> getting buildx binary
-FROM alpine:3.14 AS buildx-fetcher
+FROM alpine:3.15 AS buildx-fetcher
 ENV BUILDX_VERSION 0.7.1
 RUN apk add --no-cache curl
 RUN curl -L \
@@ -16,7 +16,7 @@ RUN chmod a+x /docker-buildx
 ## STAGE 2 ##
 #############
 
-FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION:-3.14}
+FROM node:${NODE_VERSION}-alpine3.14
 
 # --> add essential deps
 
@@ -39,6 +39,8 @@ RUN apk add --update --no-cache \
 
 RUN apk add --no-cache \
 		ca-certificates \
+# Workaround for golang not producing a static ctr binary on Go 1.15 and up https://github.com/containerd/containerd/issues/5824
+		libc6-compat \
 # DOCKER_HOST=ssh://... -- https://github.com/docker/cli/pull/1014
 		openssh-client
 
@@ -48,7 +50,7 @@ RUN apk add --no-cache \
 # - docker run --rm debian:stretch grep '^hosts:' /etc/nsswitch.conf
 RUN [ ! -e /etc/nsswitch.conf ] && echo 'hosts: files dns' > /etc/nsswitch.conf
 
-ENV DOCKER_VERSION 20.10.11
+ENV DOCKER_VERSION 20.10.12
 # TODO ENV DOCKER_SHA256
 # https://github.com/docker/docker-ce/blob/5b073ee2cf564edee5adca05eee574142f7627bb/components/packaging/static/hash_files !!
 # (no SHA file artifacts on download.docker.com yet as of 2017-06-07 though)
@@ -58,16 +60,16 @@ RUN set -eux; \
 	apkArch="$(apk --print-arch)"; \
 	case "$apkArch" in \
 		'x86_64') \
-			url='https://download.docker.com/linux/static/stable/x86_64/docker-20.10.11.tgz'; \
+			url='https://download.docker.com/linux/static/stable/x86_64/docker-20.10.12.tgz'; \
 			;; \
 		'armhf') \
-			url='https://download.docker.com/linux/static/stable/armel/docker-20.10.11.tgz'; \
+			url='https://download.docker.com/linux/static/stable/armel/docker-20.10.12.tgz'; \
 			;; \
 		'armv7') \
-			url='https://download.docker.com/linux/static/stable/armhf/docker-20.10.11.tgz'; \
+			url='https://download.docker.com/linux/static/stable/armhf/docker-20.10.12.tgz'; \
 			;; \
 		'aarch64') \
-			url='https://download.docker.com/linux/static/stable/aarch64/docker-20.10.11.tgz'; \
+			url='https://download.docker.com/linux/static/stable/aarch64/docker-20.10.12.tgz'; \
 			;; \
 		*) echo >&2 "error: unsupported architecture ($apkArch)"; exit 1 ;; \
 	esac; \
