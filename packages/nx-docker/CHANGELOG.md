@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.2...nx-docker@2.1.0) (2022-01-02)
+
+### Bug Fixes
+
+- **nx-docker:** fix core version ([6a8f96b](https://github.com/gperdomor/nx-tools/commit/6a8f96b1060c1affd1f7e5532009b27c84fa2f5d))
+
 # [2.0.2](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.1...nx-docker@2.0.2) (2021-11-25)
 
 - Set tslib@^2.1.0 as peerDependencies
