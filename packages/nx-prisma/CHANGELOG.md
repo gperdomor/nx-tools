@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.0.0-alpha.2](https://github.com/gperdomor/nx-tools/compare/nx-prisma@2.0.0-alpha.1...nx-prisma@2.0.0-alpha.2) (2022-01-02)
+
+### Bug Fixes
+
+- upgrade @nx-tools/core from 2.0.0-alpha.1 to 2.0.0 ([1481b89](https://github.com/gperdomor/nx-tools/commit/1481b898d42819e246b074dcfa0ebb9117e48214))
+
+### Features
+
+- **nx-prisma:** updare core version ([2f2065f](https://github.com/gperdomor/nx-tools/commit/2f2065f0ebdb509eaf7f101cb391d883bf94d6f4))
+
 ## 2.0.0-alpha.1 (2021-10-06)
 
 ### Features
