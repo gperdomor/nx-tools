@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.2.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.1.0...nx-docker@2.2.0) (2022-01-02)
+
+### Features
+
+- update versions ([950dc36](https://github.com/gperdomor/nx-tools/commit/950dc36612a94df3f5d87422ee7e38a25c806eec))
+
 ## [2.1.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.0.2...nx-docker@2.1.0) (2022-01-02)
 
 ### Bug Fixes
