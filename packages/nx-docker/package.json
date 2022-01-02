@@ -10,7 +10,7 @@
   "executors": "./executors.json",
   "dependencies": {
     "tmp": "^0.2.1",
-    "@nx-tools/core": "^2.0.1",
+    "@nx-tools/core": "^2.1.0",
     "csv-parse": "^4.16.3",
     "semver": "^7.3.5"
   },
