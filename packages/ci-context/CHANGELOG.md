@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.1](https://github.com/gperdomor/nx-tools/compare/ci-context@2.1.0...ci-context@2.1.1) (2022-01-02)
+
+### Bug Fixes
+
+- **ci-context:** fix core version ([72d436d](https://github.com/gperdomor/nx-tools/commit/72d436d387f33e85d80fc03b01e33dc7e44582e5))
+
 # [2.1.0](https://github.com/gperdomor/nx-tools/compare/ci-context@2.0.1...ci-context@2.1.0) (2021-12-27)
 
 ### Features
