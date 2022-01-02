@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.2.0](https://github.com/gperdomor/nx-tools/compare/core@2.1.0...core@2.2.0) (2022-01-02)
+
+### Features
+
+- **core:** switch from swc to tsc again ([4120750](https://github.com/gperdomor/nx-tools/commit/41207505aa09a8b0eb5a0ab73705d393fc082d2f))
+
 # [2.1.0](https://github.com/gperdomor/nx-tools/compare/core@2.0.1...core@2.1.0) (2021-12-27)
 
 ### Features
