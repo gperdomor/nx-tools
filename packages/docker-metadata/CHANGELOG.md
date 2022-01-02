@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.1.0](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.0.1...docker-metadata@2.1.0) (2022-01-02)
+
+### Bug Fixes
+
+- **docker-metadata:** fix package json ([7b2a64c](https://github.com/gperdomor/nx-tools/commit/7b2a64cbae283cfc79a810fd4c4ee5a6d899869f))
+
+### Features
+
+- **docker-metadata:** handle raw statement for pre-release ([27e25bf](https://github.com/gperdomor/nx-tools/commit/27e25bf07baa2d19d54d9b9b90fe3e1ebc81d2b6))
+- **docker-metadata:** migrate to swc compiler ([655bf20](https://github.com/gperdomor/nx-tools/commit/655bf202cc0661588b34f54357253fd290c4cabb))
+
 # [2.0.1](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.0.0...docker-metadata@2.0.1) (2021-11-25)
 
 - Set tslib@^2.1.0 as peerDependencies
