@@ -3,6 +3,7 @@ import { ExecutorContext, names } from '@nrwl/devkit';
 import { asyncForEach, getBooleanInput, getInput, warning } from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
+import * as handlebars from 'handlebars';
 import * as os from 'os';
 import * as path from 'path';
 import * as tmp from 'tmp';
@@ -12,11 +13,13 @@ import { DockerBuildSchema } from './schema';
 let _defaultContext, _tmpDir: string;
 
 export interface Inputs {
+  addHosts: string[];
   allow: string[];
   buildArgs: string[];
   builder: string;
   cacheFrom: string[];
   cacheTo: string[];
+  cgroupParent: string;
   context: string;
   file: string;
   githubToken: string;
@@ -30,9 +33,11 @@ export interface Inputs {
   push: boolean;
   secretFiles: string[];
   secrets: string[];
+  shmSize: string;
   ssh: string[];
   tags: string[];
   target: string;
+  ulimit: string[];
 }
 
 export function defaultContext(): string {
@@ -61,11 +66,13 @@ export async function getInputs(
   const prefix = names(ctx?.projectName || '').constantName;
 
   return {
+    addHosts: await getInputList('add-hosts', prefix, options['add-hosts']),
     allow: await getInputList('allow', prefix, options.allow),
     buildArgs: await getInputList('build-args', prefix, options['build-args'], true),
     builder: getInput('builder', { prefix, fallback: options.builder }),
     cacheFrom: await getInputList('cache-from', prefix, options['cache-from'], true),
     cacheTo: await getInputList('cache-to', prefix, options['cache-to'], true),
+    cgroupParent: getInput('cgroup-parent', { prefix, fallback: options['cgroup-parent'] }),
     context: getInput('context', { prefix, fallback: options.context || defaultContext }),
     file: getInput('file', { prefix, fallback: options.file }),
     githubToken: getInput('github-token'),
@@ -79,58 +86,60 @@ export async function getInputs(
     push: getBooleanInput('push', { fallback: `${options.push || false}` }),
     secretFiles: await getInputList('secret-files', prefix, options['secret-files'], true),
     secrets: await getInputList('secrets', prefix, options.secrets, true),
+    shmSize: getInput('shm-size', { prefix, fallback: options['shm-size'] }),
     ssh: await getInputList('ssh', prefix, options.ssh),
     tags: await getInputList('tags', prefix, options.tags),
     target: getInput('target', { prefix, fallback: options.target }),
+    ulimit: await getInputList('ulimit', prefix, options.ulimit, true),
   };
 }
 
 export async function getArgs(inputs: Inputs, defaultContext: string, buildxVersion: string): Promise<Array<string>> {
   const args: Array<string> = ['buildx'];
   args.push.apply(args, await getBuildArgs(inputs, defaultContext, buildxVersion));
-  args.push.apply(args, await getCommonArgs(inputs));
-  args.push(inputs.context);
+  args.push.apply(args, await getCommonArgs(inputs, buildxVersion));
+  args.push(handlebars.compile(inputs.context)({ defaultContext }));
   return args;
 }
 
 async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersion: string): Promise<Array<string>> {
   const args: Array<string> = ['build'];
-  await asyncForEach(inputs.buildArgs, async (buildArg) => {
-    args.push('--build-arg', buildArg);
+  await asyncForEach(inputs.addHosts, async (addHost) => {
+    args.push('--add-host', addHost);
   });
-  await asyncForEach(inputs.labels, async (label) => {
-    args.push('--label', label);
-  });
-  await asyncForEach(inputs.tags, async (tag) => {
-    args.push('--tag', tag);
-  });
-  if (inputs.target) {
-    args.push('--target', inputs.target);
-  }
   if (inputs.allow.length > 0) {
     args.push('--allow', inputs.allow.join(','));
   }
-  if (inputs.platforms.length > 0) {
-    args.push('--platform', inputs.platforms.join(','));
-  }
-  await asyncForEach(inputs.outputs, async (output) => {
-    args.push('--output', output);
+  await asyncForEach(inputs.buildArgs, async (buildArg) => {
+    args.push('--build-arg', buildArg);
   });
-  if (
-    !buildx.isLocalOrTarExporter(inputs.outputs) &&
-    (inputs.platforms.length == 0 || buildx.satisfies(buildxVersion, '>=0.4.2'))
-  ) {
-    args.push('--iidfile', await buildx.getImageIDFile());
-  }
-  if (buildx.satisfies(buildxVersion, '>=0.6.0')) {
-    args.push('--metadata-file', await buildx.getMetadataFile());
-  }
   await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
     args.push('--cache-from', cacheFrom);
   });
   await asyncForEach(inputs.cacheTo, async (cacheTo) => {
     args.push('--cache-to', cacheTo);
   });
+  if (inputs.cgroupParent) {
+    args.push('--cgroup-parent', inputs.cgroupParent);
+  }
+  if (inputs.file) {
+    args.push('--file', inputs.file);
+  }
+  if (
+    !buildx.isLocalOrTarExporter(inputs.outputs) &&
+    (inputs.platforms.length == 0 || buildx.satisfies(buildxVersion, '>=0.4.2'))
+  ) {
+    args.push('--iidfile', await buildx.getImageIDFile());
+  }
+  await asyncForEach(inputs.labels, async (label) => {
+    args.push('--label', label);
+  });
+  await asyncForEach(inputs.outputs, async (output) => {
+    args.push('--output', output);
+  });
+  if (inputs.platforms.length > 0) {
+    args.push('--platform', inputs.platforms.join(','));
+  }
   await asyncForEach(inputs.secrets, async (secret) => {
     try {
       args.push('--secret', await buildx.getSecretString(secret));
@@ -148,31 +157,43 @@ async function getBuildArgs(inputs: Inputs, defaultContext: string, buildxVersio
   if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && inputs.context == defaultContext) {
     args.push('--secret', await buildx.getSecretString(`GIT_AUTH_TOKEN=${inputs.githubToken}`));
   }
+  if (inputs.shmSize) {
+    args.push('--shm-size', inputs.shmSize);
+  }
   await asyncForEach(inputs.ssh, async (ssh) => {
     args.push('--ssh', ssh);
   });
-  if (inputs.file) {
-    args.push('--file', inputs.file);
+  await asyncForEach(inputs.tags, async (tag) => {
+    args.push('--tag', tag);
+  });
+  if (inputs.target) {
+    args.push('--target', inputs.target);
   }
+  await asyncForEach(inputs.ulimit, async (ulimit) => {
+    args.push('--ulimit', ulimit);
+  });
   return args;
 }
 
-async function getCommonArgs(inputs: Inputs): Promise<Array<string>> {
+async function getCommonArgs(inputs: Inputs, buildxVersion: string): Promise<Array<string>> {
   const args: Array<string> = [];
-  if (inputs.noCache) {
-    args.push('--no-cache');
-  }
   if (inputs.builder) {
     args.push('--builder', inputs.builder);
-  }
-  if (inputs.pull) {
-    args.push('--pull');
   }
   if (inputs.load) {
     args.push('--load');
   }
+  if (buildx.satisfies(buildxVersion, '>=0.6.0')) {
+    args.push('--metadata-file', await buildx.getMetadataFile());
+  }
   if (inputs.network) {
     args.push('--network', inputs.network);
+  }
+  if (inputs.noCache) {
+    args.push('--no-cache');
+  }
+  if (inputs.pull) {
+    args.push('--pull');
   }
   if (inputs.push) {
     args.push('--push');

@@ -7,6 +7,10 @@
 
 export interface DockerBuildSchema {
   /**
+   * List of customs host-to-IP mapping (e.g., docker:10.180.0.1)
+   */
+  'add-hosts'?: string[];
+  /**
    * List of extra privileged entitlement (eg. network.host,security.insecure)
    */
   allow?: string[];
@@ -26,6 +30,10 @@ export interface DockerBuildSchema {
    * List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
    */
   'cache-to'?: string[];
+  /**
+   * Optional parent cgroup for the container used in the build
+   */
+  'cgroup-parent'?: string;
   /**
    * Build's context is the set of files located in the specified PATH or URL (default .)
    */
@@ -75,6 +83,10 @@ export interface DockerBuildSchema {
    */
   'secret-files'?: string[];
   /**
+   * Size of /dev/shm (e.g., 2g)
+   */
+  'shm-size'?: string;
+  /**
    * List of SSH agent socket or keys to expose to the build
    */
   ssh?: string[];
@@ -86,6 +98,10 @@ export interface DockerBuildSchema {
    * Sets the target stage to build
    */
   target?: string;
+  /**
+   * Ulimit options (e.g., nofile=1024:1024)
+   */
+  ulimit?: string[];
   /**
    * Extract metadata from CI context
    */
