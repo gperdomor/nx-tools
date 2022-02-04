@@ -3227,7 +3227,7 @@ describe('json', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: Record<string,unknown>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests','fixtures', envFile)));
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
     const context = await ContextProxyFactory.create();
 
     const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
@@ -3532,7 +3532,7 @@ describe('bake', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: Record<string,unknown>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests','fixtures', envFile)));
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
     const context = await ContextProxyFactory.create();
 
     const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
