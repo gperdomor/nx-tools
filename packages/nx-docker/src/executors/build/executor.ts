@@ -13,7 +13,7 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
   const tmpDir = context.tmpDir();
 
   try {
-    startGroup('Docker info', GROUP_PREFIX);
+    startGroup(`Docker info`, GROUP_PREFIX);
     await exec('docker', ['version']);
     await exec('docker', ['info']);
 
@@ -56,7 +56,7 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
       }
     });
 
-    startGroup('Setting outputs', GROUP_PREFIX);
+    startGroup(`Setting outputs`, GROUP_PREFIX);
     const imageID = await buildx.getImageID();
     const metadata = await buildx.getMetadata();
     if (imageID) {

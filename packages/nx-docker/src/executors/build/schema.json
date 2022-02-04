@@ -5,6 +5,13 @@
   "description": "",
   "type": "object",
   "properties": {
+    "add-hosts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of customs host-to-IP mapping (e.g., docker:10.180.0.1)"
+    },
     "allow": {
       "type": "array",
       "items": {
@@ -36,6 +43,13 @@
         "type": "string"
       },
       "description": "List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)"
+    },
+    "cgroup-parent": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional parent cgroup for the container used in the build"
     },
     "context": {
       "type": "string",
@@ -104,6 +118,10 @@
       },
       "description": "List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)"
     },
+    "shm-size": {
+      "type": "string",
+      "description": "Size of /dev/shm (e.g., 2g)"
+    },
     "ssh": {
       "type": "array",
       "items": {
@@ -121,6 +139,13 @@
     "target": {
       "type": "string",
       "description": "Sets the target stage to build"
+    },
+    "ulimit": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ulimit options (e.g., nofile=1024:1024)"
     },
     "metadata": {
       "type": "object",
