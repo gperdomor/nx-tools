@@ -1,5 +1,5 @@
 import { ExecutorContext, names } from '@nrwl/devkit';
-import { getInput, interpolate } from '@nx-tools/core';
+import * as core from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -29,21 +29,24 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
   const prefix = names(ctx?.projectName || '').constantName;
 
   return {
-    'bake-target': getInput('bake-target', { prefix, fallback: options['bake-target'] || 'docker-metadata-action' }),
-    'github-token': getInput('github-token'),
-    'sep-labels': getInput('sep-labels', { prefix, fallback: options['sep-labels'] || '\n' }),
-    'sep-tags': getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n' }),
-    flavor: getInputList('flavor', prefix, options.flavor, true).map((flavor) => interpolate(flavor)),
-    images: getInputList('images', prefix, options.images).map((image) => interpolate(image)),
-    labels: getInputList('labels', prefix, options.labels, true).map((label) => interpolate(label)),
-    tags: getInputList('tags', prefix, options.tags, true).map((tag) => interpolate(tag)),
+    'bake-target': core.getInput('bake-target', {
+      prefix,
+      fallback: options['bake-target'] || 'docker-metadata-action',
+    }),
+    'github-token': core.getInput('github-token'),
+    'sep-labels': core.getInput('sep-labels', { prefix, fallback: options['sep-labels'] || '\n' }),
+    'sep-tags': core.getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n' }),
+    flavor: getInputList('flavor', prefix, options.flavor, true).map((flavor) => core.interpolate(flavor)),
+    images: getInputList('images', prefix, options.images).map((image) => core.interpolate(image)),
+    labels: getInputList('labels', prefix, options.labels, true).map((label) => core.interpolate(label)),
+    tags: getInputList('tags', prefix, options.tags, true).map((tag) => core.interpolate(tag)),
   };
 }
 
 export function getInputList(name: string, prefix: string, fallback?: string[], ignoreComma?: boolean): string[] {
   const res: Array<string> = [];
 
-  const items = getInput(name, { prefix });
+  const items = core.getInput(name, { prefix });
   if (items == '') {
     return fallback ?? res;
   }

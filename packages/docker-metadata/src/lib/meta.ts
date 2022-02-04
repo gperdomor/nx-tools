@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
-import { interpolate, warning } from '@nx-tools/core';
+import * as core from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
@@ -134,7 +134,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!semver.valid(vraw)) {
-      warning(`${vraw} is not a valid semver. More info: https://semver.org/`);
+      core.warning(`${vraw} is not a valid semver. More info: https://semver.org/`);
       return version;
     }
 
@@ -168,7 +168,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!pep440.valid(vraw)) {
-      warning(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
+      core.warning(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
       return version;
     }
 
@@ -227,13 +227,12 @@ export class Meta {
       tmatch = vraw.match(tag.attrs['pattern']);
     }
     if (!tmatch) {
-      warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
+      core.warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof tmatch[tag.attrs['group'] as any] === 'undefined') {
-      warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
+      core.warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 
@@ -367,7 +366,7 @@ export class Meta {
       },
       base_ref: function () {
         if (/^refs\/tags\//.test(ctx.ref)) {
-          return ctx.payload?.['base_ref']?.replace(/^refs\/heads\//g, '').replace(/\//g, '-');
+          return ctx.payload?.['base_ref'].replace(/^refs\/heads\//g, '').replace(/\//g, '-');
         }
         if (/^refs\/pull\//.test(ctx.ref)) {
           return ctx.payload?.['pull_request']?.['base']?.ref;
@@ -387,7 +386,7 @@ export class Meta {
 
     const tags: Array<string> = [];
     for (const image of this.inputs.images) {
-      const imageLc = interpolate(image).toLowerCase();
+      const imageLc = core.interpolate(image).toLowerCase();
       tags.push(`${imageLc}:${this.version.main}`);
       for (const partial of this.version.partial) {
         tags.push(`${imageLc}:${partial}`);

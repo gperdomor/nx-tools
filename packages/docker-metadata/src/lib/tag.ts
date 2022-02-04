@@ -1,5 +1,5 @@
 /* eslint-disable no-prototype-builtins */
-import { info, startGroup } from '@nx-tools/core';
+import * as core from '@nx-tools/core';
 import csvparse from 'csv-parse/lib/sync';
 import { GROUP_PREFIX } from './constants';
 
@@ -78,9 +78,9 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  startGroup(`Processing tags input`, GROUP_PREFIX);
+  core.startGroup(`Processing tags input`, GROUP_PREFIX);
   for (const tag of sorted) {
-    info(tag.toString());
+    core.info(tag.toString());
   }
 
   return sorted;
