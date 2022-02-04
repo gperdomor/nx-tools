@@ -1,256 +1,172 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
-import { getBooleanInput, getInput, getPosixName } from './get-input';
+import * as path from 'path';
+import { getBooleanInput, getInput, getMultilineInput, getPosixName } from './get-input';
 
-describe('getInput', () => {
-  let restore: RestoreFn;
+const testEnvVars = {
+  'my var': '',
+  'special char var \r\n];': '',
+  'my var2': '',
+  'my secret': '',
+  'special char secret \r\n];': '',
+  'my secret2': '',
+  PATH: `path1${path.delimiter}path2`,
 
-  beforeAll(() => {
-    restore = mockedEnv({
-      INPUT_REQUIRED_EXIST: 'Value 1',
-      INPUT_V1: 'Value 1',
-      INPUT_APP_V1: 'APP 1',
-      INPUT_V2: '101',
-      INPUT_TL: '     TRIM LEFT',
-      INPUT_TR: 'TRIM RIGHT      ',
-      INPUT_TB: '  TRIM BOTH  ',
-      INPUT_CACHE_FROM: 'cache-from-value',
-      INPUT_BUILD_ARGS: 'MY_ARG=val1,val2,val3\nARG=val',
-    });
-  });
+  // Set inputs
+  INPUT_PREFIXED_MY_INPUT: 'prefixed-val',
+  INPUT_MY_INPUT: 'val',
+  INPUT_MY_OTHER_INPUT: 'other-val',
+  INPUT_MISSING: '',
+  'INPUT_SPECIAL_CHARS_\'\t"\\': '\'\t"\\ response ',
+  INPUT_MULTIPLE_SPACES_VARIABLE: 'I have multiple spaces',
+  INPUT_BOOLEAN_INPUT: 'true',
+  INPUT_BOOLEAN_INPUT_TRUE1: 'true',
+  INPUT_BOOLEAN_INPUT_TRUE2: 'True',
+  INPUT_BOOLEAN_INPUT_TRUE3: 'TRUE',
+  INPUT_BOOLEAN_INPUT_FALSE1: 'false',
+  INPUT_BOOLEAN_INPUT_FALSE2: 'False',
+  INPUT_BOOLEAN_INPUT_FALSE3: 'FALSE',
+  INPUT_WRONG_BOOLEAN_INPUT: 'wrong',
+  INPUT_WITH_TRAILING_WHITESPACE: '  some val  ',
 
-  afterAll(() => {
-    restore();
-  });
+  INPUT_MY_INPUT_LIST: 'val1\nval2\nval3',
 
-  describe('getPosixName', () => {
-    test.each([
-      ['allow', 'INPUT_ALLOW'],
-      ['build-args', 'INPUT_BUILD_ARGS'],
-      ['builder', 'INPUT_BUILDER'],
-      ['cache_from', 'INPUT_CACHE_FROM'],
-      ['no-Cache', 'INPUT_NO_CACHE'],
-    ])('given %s, should return %s', (name: string, expected: string) => {
-      expect(getPosixName(name)).toEqual(expected);
-    });
-  });
+  // Save inputs
+  STATE_TEST_1: 'state_val',
 
-  describe('When env variable is defined', () => {
-    describe('and no fallback value is provided', () => {
-      test.each([
-        ['REQUIRED_EXIST', 'Value 1'],
-        ['V1', 'Value 1'],
-        ['V2', '101'],
-        ['TL', 'TRIM LEFT'],
-        ['TR', 'TRIM RIGHT'],
-        ['TB', 'TRIM BOTH'],
-        ['TB', 'TRIM BOTH'],
-        ['cache from', 'cache-from-value'],
-        ['cache-from', 'cache-from-value'],
-        ['cache_from', 'cache-from-value'],
-        ['Cache_From', 'cache-from-value'],
-        ['CACHE-FROM', 'cache-from-value'],
-        ['build args', 'MY_ARG=val1,val2,val3\nARG=val'],
-        ['build-args', 'MY_ARG=val1,val2,val3\nARG=val'],
-        ['build_args', 'MY_ARG=val1,val2,val3\nARG=val'],
-        ['Build_Args', 'MY_ARG=val1,val2,val3\nARG=val'],
-        ['BUILD-ARGS', 'MY_ARG=val1,val2,val3\nARG=val'],
-      ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: string) => {
-        expect(getInput(name)).toEqual(expected);
-        expect(getInput(name, { required: true })).toEqual(expected);
-      });
-    });
+  // File Commands
+  GITHUB_PATH: '',
+  GITHUB_ENV: '',
+};
 
-    describe('when prefix is provided', () => {
-      it('should return proper value', () => {
-        expect(getInput('v1', { prefix: 'app' })).toEqual('APP 1');
-        expect(getInput('v1')).toEqual('Value 1');
-      });
-    });
-
-    describe('and fallback value is provided', () => {
-      test.each([
-        ['REQUIRED_EXIST', 'fallbalck-1', 'Value 1'],
-        ['V1', 'fallbalck-2', 'Value 1'],
-        ['V2', 'fallbalck-3', '101'],
-        ['TL', 'fallbalck-4', 'TRIM LEFT'],
-        ['TR', 'fallbalck-5', 'TRIM RIGHT'],
-        ['TB', 'fallbalck-6', 'TRIM BOTH'],
-      ])(
-        'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
-        (name: string, fallback: string, expected: string) => {
-          expect(getInput(name, { fallback })).toEqual(expected);
-          expect(getInput(name, { fallback, required: true })).toEqual(expected);
-        }
-      );
-    });
-
-    describe('when returned value should not be trimed', () => {
-      test.each([
-        ['V1', 'Value 1'],
-        ['V2', '101'],
-        ['TL', '     TRIM LEFT'],
-        ['TR', 'TRIM RIGHT      '],
-        ['TB', '  TRIM BOTH  '],
-      ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: string) => {
-        expect(getInput(name, { trimWhitespace: false })).toEqual(expected);
-        expect(getInput(name, { trimWhitespace: false, required: true })).toEqual(expected);
-      });
-    });
-  });
-
-  describe('When env variable not exists', () => {
-    describe('and no fallback value is provided', () => {
-      test.each([['__A'], ['__B'], ['__C']])(
-        'given a not existing env variable named INPUT_%s, should return an empty string',
-        (name: string) => {
-          expect(getInput(name)).toEqual('');
-        }
-      );
-
-      test.each([['__A'], ['__B'], ['__C']])(
-        'given a not existing env variable named INPUT_%s, and required is true, should throw an error',
-        (name: string) => {
-          function getInputValue() {
-            getInput(name, { required: true });
-          }
-
-          expect(getInputValue).toThrowError(new Error(`Input required and not supplied: ${name}`));
-        }
-      );
-    });
-
-    describe('and fallback value is provided', () => {
-      test.each([
-        ['__O', 'fallbalck-1'],
-        ['__P', 'fallbalck-2'],
-        ['__Q', 'fallbalck-3'],
-      ])(
-        'given a not existing env variable named INPUT_%s, fallback: %s, should return the fallback value',
-        (name: string, fallback: string) => {
-          expect(getInput(name, { fallback })).toEqual(fallback);
-          expect(getInput(name, { required: true, fallback })).toEqual(fallback);
-        }
-      );
-    });
+describe('getPosixName', () => {
+  test.each([
+    ['my var', 'INPUT_MY_VAR'],
+    ['allow', 'INPUT_ALLOW'],
+    ['build-args', 'INPUT_BUILD_ARGS'],
+    ['builder', 'INPUT_BUILDER'],
+    ['cache_from', 'INPUT_CACHE_FROM'],
+    ['no-Cache', 'INPUT_NO_CACHE'],
+  ])('given %s, should return %s', (name: string, expected: string) => {
+    expect(getPosixName(name)).toEqual(expected);
   });
 });
 
-describe('getBooleanInput', () => {
+describe('getInputs', () => {
   let restore: RestoreFn;
-
-  beforeAll(() => {
+  beforeEach(() => {
     restore = mockedEnv({
-      INPUT_T1: 'true',
-      INPUT_T2: 'True',
-      INPUT_T3: 'TRUE',
-      INPUT_T4: '  TRUE  ',
-      INPUT_TX: 'invalid',
-      INPUT_F1: 'false',
-      INPUT_F2: 'False',
-      INPUT_F3: 'FALSE',
-      INPUT_F4: '  FALSE  ',
-      INPUT_FX: 'invalid',
-      INPUT_META_ENABLED: 'true',
+      ...testEnvVars,
     });
   });
 
-  afterAll(() => {
+  afterEach(() => {
     restore();
   });
 
-  describe('When env variable is defined', () => {
-    describe('and no fallback value is provided', () => {
-      test.each([
-        ['T1', true],
-        ['T2', true],
-        ['T3', true],
-        ['T4', true],
-        ['F1', false],
-        ['F2', false],
-        ['F3', false],
-        ['F4', false],
-        ['META_ENABLED', true],
-        ['meta-enabled', true],
-        ['meta enabled', true],
-        ['META ENABLED', true],
-      ])('given an existing env variable named INPUT_%s, should return: %s', (name: string, expected: boolean) => {
-        expect(getBooleanInput(name)).toEqual(expected);
-        expect(getBooleanInput(name, { required: true })).toEqual(expected);
+  describe('getInput', () => {
+    it('getInput gets non-required input', () => {
+      expect(getInput('my input')).toBe('val');
+    });
+
+    it('getInput gets required input', () => {
+      expect(getInput('my input', { required: true })).toBe('val');
+    });
+
+    it('getInput throws on missing required input', () => {
+      expect(() => getInput('missing', { required: true })).toThrow('Input required and not supplied: missing');
+    });
+
+    it('getInput does not throw on missing non-required input', () => {
+      expect(getInput('missing', { required: false })).toBe('');
+    });
+
+    it('getInput is case insensitive', () => {
+      expect(getInput('My InPuT')).toBe('val');
+    });
+
+    // it('getInput handles special characters', () => {
+    //   expect(getInput('special chars_\'\t"\\')).toBe('\'\t"\\ response');
+    // });
+
+    it('getInput handles multiple spaces', () => {
+      expect(getInput('multiple spaces variable')).toBe('I have multiple spaces');
+    });
+
+    it('getInput trims whitespace by default', () => {
+      expect(getInput('with trailing whitespace')).toBe('some val');
+    });
+
+    it('getInput trims whitespace when option is explicitly true', () => {
+      expect(getInput('with trailing whitespace', { trimWhitespace: true })).toBe('some val');
+    });
+
+    it('getInput does not trim whitespace when option is false', () => {
+      expect(getInput('with trailing whitespace', { trimWhitespace: false })).toBe('  some val  ');
+    });
+
+    it('getInput should use no prefixed input if prefixed input is missing', () => {
+      expect(getInput('my_other_input', { prefix: 'prefixed' })).toBe('other-val');
+    });
+
+    it('getInput should use fallback value on missing input', () => {
+      expect(getInput('no existent input', { fallback: 'fallback-value' })).toBe('fallback-value');
+    });
+
+    describe('fallback', () => {
+      it('getInput should use return real value if input exists', () => {
+        expect(getInput('my input', { fallback: 'fallback-1' })).toEqual('val');
+        expect(getInput('my other input', { fallback: 'fallback-2' })).toEqual('other-val');
+      });
+
+      it('getInput should use fallback value on missing input', () => {
+        expect(getInput('x 1', { fallback: 'fallback-1' })).toEqual('fallback-1');
+        expect(getInput('y 2', { fallback: 'fallback-2' })).toEqual('fallback-2');
+        expect(getInput('z 3', { fallback: 'fallback-3' })).toEqual('fallback-3');
       });
     });
 
-    describe('and fallback value is provided', () => {
-      test.each([
-        ['T1', 'fallback-1', true],
-        ['T2', 'fallback-2', true],
-        ['T3', 'fallback-3', true],
-        ['T4', 'fallback-3', true],
-        ['F1', 'fallback-4', false],
-        ['F2', 'fallback-5', false],
-        ['F3', 'fallback-6', false],
-        ['F4', 'fallback-6', false],
-      ])(
-        'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
-        (name: string, fallback: string, expected: boolean) => {
-          expect(getBooleanInput(name, { fallback })).toEqual(expected);
-          expect(getBooleanInput(name, { fallback, required: true })).toEqual(expected);
-        }
-      );
+    describe('prefix', () => {
+      it('getInput should use return prefixed value if prefixed input exists', () => {
+        expect(getInput('my input', { prefix: 'prefixed' })).toBe('prefixed-val');
+        expect(getInput('my input')).toBe('val');
+      });
+
+      it('getInput should use return unprefixed value if prefixed input is missing', () => {
+        expect(getInput('my other input', { prefix: 'prefixed' })).toBe('other-val');
+        expect(getInput('my other input')).toBe('other-val');
+      });
+    });
+  });
+
+  describe('getBooleanInput', () => {
+    it('getBooleanInput gets non-required boolean input', () => {
+      expect(getBooleanInput('boolean input')).toBe(true);
     });
 
-    describe('and value is not boolean', () => {
-      test.each([['TX'], ['FX']])(
-        'given an existing env variable named INPUT_%s, fallback: %s, the env value takes priority and should return: %s',
-        (name: string) => {
-          function getBooleanValue() {
-            getBooleanInput(name);
-          }
+    it('getBooleanInput gets required input', () => {
+      expect(getBooleanInput('boolean input', { required: true })).toBe(true);
+    });
 
-          expect(getBooleanValue).toThrowError(TypeError);
-        }
+    it('getBooleanInput handles boolean input', () => {
+      expect(getBooleanInput('boolean input true1')).toBe(true);
+      expect(getBooleanInput('boolean input true2')).toBe(true);
+      expect(getBooleanInput('boolean input true3')).toBe(true);
+      expect(getBooleanInput('boolean input false1')).toBe(false);
+      expect(getBooleanInput('boolean input false2')).toBe(false);
+      expect(getBooleanInput('boolean input false3')).toBe(false);
+    });
+
+    it('getBooleanInput handles wrong boolean input', () => {
+      expect(() => getBooleanInput('wrong boolean input')).toThrow(
+        'Input does not meet YAML 1.2 "Core Schema" specification: wrong boolean input\n' +
+          `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
       );
     });
   });
 
-  describe('When env variable not exists', () => {
-    describe('and no fallback value is provided', () => {
-      test.each([['__A'], ['__B'], ['__C']])(
-        'given a not existing env variable named INPUT_%s, should throw an error',
-        (name: string) => {
-          function getBooleanValue() {
-            getBooleanInput(name);
-          }
-
-          expect(getBooleanValue).toThrowError(TypeError);
-        }
-      );
-    });
-
-    describe('and fallback value is provided', () => {
-      test.each([
-        ['__O', 'true', true],
-        ['__P', 'FALSE', false],
-        ['__Q', '    True', true],
-      ])(
-        'given a not existing env variable named INPUT_%s, fallback: %s, should return: %s',
-        (name: string, fallback: string, expected) => {
-          expect(getBooleanInput(name, { fallback })).toEqual(expected);
-        }
-      );
-
-      test.each([
-        ['__O', 'asdff'],
-        ['__P', 'invalid'],
-      ])(
-        'given a not existing env variable named INPUT_%s, fallback: %s, should throw an error',
-        (name: string, fallback: string) => {
-          function getBooleanValue() {
-            getBooleanInput(name, { fallback });
-          }
-
-          expect(getBooleanValue).toThrowError(TypeError);
-        }
-      );
+  describe('getMultilineInput', () => {
+    it('getMultilineInput works', () => {
+      expect(getMultilineInput('my input list')).toEqual(['val1', 'val2', 'val3']);
     });
   });
 });
