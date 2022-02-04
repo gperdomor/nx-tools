@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.3.1](https://github.com/gperdomor/nx-tools/compare/core@2.3.0...core@2.3.1) (2022-02-04)
+
+### Bug Fixes
+
+- **core:** expose getMultilineInput properly ([97d9c36](https://github.com/gperdomor/nx-tools/commit/97d9c36d2283141bf59931f7f94d4ddd83702eec))
+
 # [2.3.0](https://github.com/gperdomor/nx-tools/compare/core@2.2.0...core@2.3.0) (2022-02-04)
 
 ### Features
