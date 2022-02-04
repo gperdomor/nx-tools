@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+# [2.3.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.2.0...nx-docker@2.3.0) (2022-02-04)
+
+### Features
+
+- **nx-docker:** add add-hosts, cgroup-parent, shm-size, ulimit inputs ([59a0dd2](https://github.com/gperdomor/nx-tools/commit/59a0dd295e3c0e6c709df53dc3f47995d4549a51))
+
 # [2.2.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.1.0...nx-docker@2.2.0) (2022-01-02)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-docker",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
