@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/docker-metadata",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "type": "commonjs",
   "author": "gperdomor",
   "repository": "https://github.com/gperdomor/nx-tools",

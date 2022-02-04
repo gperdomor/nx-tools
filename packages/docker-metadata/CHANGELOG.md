@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.2.1](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.2.0...docker-metadata@2.2.1) (2022-02-04)
+
+### Features
+
+- **docker-metadata:** minor changes and cleanup ([4bbf0c4](https://github.com/gperdomor/nx-tools/commit/4bbf0c46d8a8d286318e0570cb2d8aea8a141d06))
+
 # [2.2.0](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.1.0...docker-metadata@2.2.0) (2022-01-02)
 
 ### Features
