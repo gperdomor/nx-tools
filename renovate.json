@@ -1,5 +1,57 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":dependencyDashboard",
+    ":maintainLockFilesMonthly",
+    ":semanticCommits",
+    ":semanticCommitScope(deps)",
+    "docker:enableMajor",
+    "group:linters",
+    "group:monorepos",
+    "group:recommended"
+  ],
+  "assigneesFromCodeOwners": true,
+  "commitMessageAction": "bump",
+  "commitMessageExtra": "from {{currentVersion}} to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+  "commitMessageTopic": "{{depName}}",
+  "dependencyDashboard": true,
+  "ignorePaths": ["packages/**"],
+  "internalChecksFilter": "strict",
+  "labels": ["dependencies"],
+  "prCreation": "not-pending",
+  "rebaseWhen": "auto",
+  "timezone": "America/Santiago",
+  "packageRules": [
+    {
+      "description": "Require dashboard approval for major updates",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Five days stability period for npm packages",
+      "matchDatasources": ["npm"],
+      "stabilityDays": 5
+    },
+    {
+      "description": "Require approval for @nrwl packages",
+      "groupName": "Nrwl Nx",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["nx"],
+      "matchPackagePrefixes": ["@nrwl/"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Group prettier packages",
+      "groupName": "prettier packages",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["prettier"],
+      "matchPackagePatterns": ["^@prettier\\/", "^prettier-plugin-"]
+    },
+    {
+      "description": "v prefix workaround for action updates",
+      "matchDepTypes": ["action"],
+      "extractVersion": "^(?<version>v\\d+\\.\\d+\\.\\d+)$",
+      "versioning": "regex:^v(?<major>\\d+)(\\.(?<minor>\\d+)\\.(?<patch>\\d+))?$"
+    }
   ]
 }
