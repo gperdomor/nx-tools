@@ -1,4 +1,3 @@
-ARG ALPINE_VERSION
 ARG NODE_VERSION
 
 ## STAGE 1 ##
@@ -6,7 +5,7 @@ ARG NODE_VERSION
 
 # --> getting buildx binary
 FROM alpine:3.15 AS buildx-fetcher
-ENV BUILDX_VERSION 0.7.1
+ENV BUILDX_VERSION 0.8.0
 RUN apk add --no-cache curl
 RUN curl -L \
   --output /docker-buildx \
