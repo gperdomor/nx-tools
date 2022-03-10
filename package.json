@@ -42,7 +42,7 @@
     "@types/jest": "27.4.1",
     "@types/node": "16.11.26",
     "@types/semver": "7.3.9",
-    "@typescript-eslint/eslint-plugin": "5.10.2",
+    "@typescript-eslint/eslint-plugin": "5.14.0",
     "@typescript-eslint/parser": "5.10.2",
     "ci-info": "3.3.0",
     "commitizen": "4.2.4",
