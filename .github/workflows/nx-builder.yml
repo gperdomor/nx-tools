@@ -24,7 +24,7 @@ jobs:
           - '16.13.2'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - run: echo "NODE_VERSION=${{ matrix.NODE_VERSION }}"
 
