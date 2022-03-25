@@ -1,0 +1,32 @@
+{
+  "root": "packages/nx-set-shas",
+  "sourceRoot": "packages/nx-set-shas/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-set-shas",
+        "main": "packages/nx-set-shas/src/index.ts",
+        "tsConfig": "packages/nx-set-shas/tsconfig.lib.json",
+        "assets": ["packages/nx-set-shas/*.md", "packages/nx-set-shas/bin/*"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/nx-set-shas/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nx-set-shas"],
+      "options": {
+        "jestConfig": "packages/nx-set-shas/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:lib"]
+}

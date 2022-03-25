@@ -29,9 +29,12 @@
     "@nrwl/jest": "13.10.1",
     "@nrwl/js": "13.10.1",
     "@nrwl/linter": "13.10.1",
+    "@nrwl/node": "13.10.1",
     "@nrwl/nx-cloud": "13.2.2",
     "@nrwl/nx-plugin": "13.10.1",
     "@nrwl/workspace": "13.10.1",
+    "@oclif/core": "1.6.3",
+    "@oclif/plugin-help": "5.1.12",
     "@prisma/client": "3.12.0",
     "@renovate/pep440": "1.0.0",
     "@swc/cli": "0.1.57",
@@ -62,6 +65,7 @@
     "tmp": "0.2.1",
     "ts-jest": "27.1.4",
     "tslib": "2.3.1",
-    "typescript": "4.6.3"
+    "typescript": "4.6.3",
+    "undici": "5.0.0"
   }
 }
