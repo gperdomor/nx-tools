@@ -1,31 +1,14 @@
 {
   "root": "packages/nx-prisma",
   "sourceRoot": "packages/nx-prisma/src",
-  "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/nx-prisma/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-prisma"],
-      "options": {
-        "jestConfig": "packages/nx-prisma/jest.config.js",
-        "passWithNoTests": true
-      }
-    },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-prisma",
-        "tsConfig": "packages/nx-prisma/tsconfig.lib.json",
-        "packageJson": "packages/nx-prisma/package.json",
         "main": "packages/nx-prisma/src/index.ts",
+        "tsConfig": "packages/nx-prisma/tsconfig.lib.json",
         "assets": [
           "packages/nx-prisma/*.md",
           {
@@ -51,13 +34,30 @@
         ]
       }
     },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/nx-prisma/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nx-prisma"],
+      "options": {
+        "jestConfig": "packages/nx-prisma/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "main",
-        "versionTagPrefix": "${target}@"
+        "preset": "conventional",
+        "tagPrefix": "${projectName}@",
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },
-  "tags": ["plugin"]
+  "tags": ["type:plugin"]
 }
