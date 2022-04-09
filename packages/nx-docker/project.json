@@ -1,31 +1,14 @@
 {
   "root": "packages/nx-docker",
   "sourceRoot": "packages/nx-docker/src",
-  "projectType": "library",
   "targets": {
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-docker"],
-      "options": {
-        "jestConfig": "packages/nx-docker/jest.config.js",
-        "passWithNoTests": true
-      }
-    },
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-docker",
-        "tsConfig": "packages/nx-docker/tsconfig.lib.json",
-        "packageJson": "packages/nx-docker/package.json",
         "main": "packages/nx-docker/src/index.ts",
+        "tsConfig": "packages/nx-docker/tsconfig.lib.json",
         "assets": [
           "packages/nx-docker/*.md",
           {
@@ -51,13 +34,30 @@
         ]
       }
     },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/nx-docker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/nx-docker"],
+      "options": {
+        "jestConfig": "packages/nx-docker/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "main",
-        "versionTagPrefix": "${target}@"
+        "preset": "conventional",
+        "tagPrefix": "${projectName}@",
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },
-  "tags": ["plugin"]
+  "tags": ["type:plugin"]
 }

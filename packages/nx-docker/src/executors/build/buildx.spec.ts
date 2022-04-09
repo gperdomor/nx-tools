@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as semver from 'semver';
 import * as buildx from './buildx';
-import * as context from './context';
 
 const tmpNameSync = path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
 const digest = 'sha256:bfb45ab72e46908183546477a08f8867fc40cebadd00af54b071b097aed127a9';
@@ -13,16 +12,20 @@ const metadata = `{
   "containerimage.digest": "sha256:b09b9482c72371486bb2c1d2c2a2633ed1d0b8389e12c8d52b9e052725c0c83c"
 }`;
 
-jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
-  const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir, { recursive: true });
-  }
-  return tmpDir;
-});
-
-jest.spyOn(context, 'tmpNameSync').mockImplementation((): string => {
-  return tmpNameSync;
+jest.mock('./context', () => {
+  const originalModule = jest.requireActual('./context');
+  return {
+    __esModule: true,
+    ...originalModule,
+    tmpDir: jest.fn(() => {
+      const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      return tmpDir;
+    }),
+    tmpNameSync: jest.fn(() => tmpNameSync),
+  };
 });
 
 describe('getImageID', () => {
