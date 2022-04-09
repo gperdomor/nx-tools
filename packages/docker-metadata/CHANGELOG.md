@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/docker-metadata@2.2.1...docker-metadata@3.0.0-alpha.1) (2022-04-09)
+
+### ⚠ BREAKING CHANGES
+
+- **docker-metadata:** Dropped support for Node 12
+
+### Features
+
+- **docker-metadata:** move to swc ([27b73cc](https://github.com/nx-tools/nx-tools/commit/27b73ccb9615e27ffb00ae2794cad1f1407fb387))
+
 ## [2.2.1](https://github.com/gperdomor/nx-tools/compare/docker-metadata@2.2.0...docker-metadata@2.2.1) (2022-02-04)
 
 ### Features

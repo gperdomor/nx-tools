@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 const fn = rmSync || rmdirSync;
 
-export default () => {
+module.exports = async () => {
   fn(resolve(__dirname, './tests/migrations'), { recursive: true, force: true });
   fn(resolve(__dirname, './tests/artifacts'), { recursive: true, force: true });
 };

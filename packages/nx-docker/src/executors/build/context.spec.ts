@@ -111,20 +111,23 @@ PejgXO0uIRolYQ3sz2tMGhx1MfBqH64=
 =WbwB
 -----END PGP PRIVATE KEY BLOCK-----`;
 
-jest.spyOn(context, 'defaultContext').mockImplementation((): string => {
-  return 'https://github.com/docker/build-push-action.git#refs/heads/test-jest';
-});
-
-jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
-  const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir, { recursive: true });
-  }
-  return tmpDir;
-});
-
-jest.spyOn(context, 'tmpNameSync').mockImplementation((): string => {
-  return path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
+jest.mock('./context', () => {
+  const originalModule = jest.requireActual('./context');
+  return {
+    __esModule: true,
+    ...originalModule,
+    defaultContext: jest.fn(() => 'https://github.com/docker/build-push-action.git#refs/heads/test-jest'),
+    tmpDir: jest.fn(() => {
+      const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      return tmpDir;
+    }),
+    tmpNameSync: jest.fn(() =>
+      path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep)
+    ),
+  };
 });
 
 describe('getArgs', () => {

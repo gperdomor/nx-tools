@@ -1,15 +1,15 @@
 {
   "name": "@nx-tools/ci-context",
-  "version": "2.2.0",
+  "version": "3.0.0-alpha.1",
   "type": "commonjs",
-  "author": "gperdomor",
-  "repository": "https://github.com/gperdomor/nx-tools",
-  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "author": "gperdomor <gperdomor@gmail.com>",
+  "repository": "https://github.com/nx-tools/nx-tools",
+  "bugs": "https://github.com/nx-tools/nx-tools/issues",
   "license": "MIT",
   "dependencies": {
-    "@actions/github": "^5.0.0",
-    "@nx-tools/core": "^2.2.0",
-    "ci-info": "^3.2.0"
+    "@actions/github": "^5.0.1",
+    "@nx-tools/core": "^3.0.0-alpha.1",
+    "ci-info": "^3.3.0"
   },
   "peerDependencies": {
     "tslib": "^2.1.0"

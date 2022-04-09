@@ -127,13 +127,13 @@ To check all possible options please check this [schema.json](src/builders/nx-do
 
 ### Gitlab CI
 
-To use with Gitlab CI we provide a [custom node image](https://github.com/users/gperdomor/packages/container/package/nx-docker) with Docker and Buildx integrated. Just only need to use in your pipeline:
+To use with Gitlab CI we provide a [custom node image](https://github.com/nx-tools/nx-docker-builder/pkgs/container/nx-docker) with Docker and Buildx integrated. Just only need to use in your pipeline:
 
 ```yml
 build:
-  image: ghcr.io/gperdomor/nx-docker:16.10-alpine
+  image: ghcr.io/nx-tools/nx-docker:16.14-alpine # On Docker Hub: gperdomor/nx-docker:16.14-alpine
   services:
-    - docker:20.10.8-dind
+    - docker:20.10.14-dind
   variables:
     GIT_DEPTH: 0
     DOCKER_HOST: tcp://docker:2375/

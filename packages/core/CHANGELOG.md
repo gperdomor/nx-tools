@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/core@2.3.1...core@3.0.0-alpha.1) (2022-04-09)
+
+### ⚠ BREAKING CHANGES
+
+- **core:** Dropped support for Node 12
+
+### Features
+
+- **core:** move to swc ([78e4b4b](https://github.com/nx-tools/nx-tools/commit/78e4b4b1e83317a3f005fc6226f637699834d302))
+
 ## [2.3.1](https://github.com/gperdomor/nx-tools/compare/core@2.3.0...core@2.3.1) (2022-02-04)
 
 ### Bug Fixes

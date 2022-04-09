@@ -1,27 +1,29 @@
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as local from './local';
 
+jest.mock('./local-helpers', () => {
+  return {
+    __esModule: true,
+    getSha: jest.fn(() => 'local-sha'),
+    getRef: jest.fn(() => 'local-ref'),
+    getCommitUserEmail: jest.fn(() => 'local-actor'),
+  };
+});
+
 describe('LocalContext', () => {
-  const ENV: NodeJS.ProcessEnv = process.env;
+  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    jest.resetModules(); // Most important - it clears the cache
-    process.env = {
-      ...ENV,
-      PATH: 'true',
-    };
+    restore = mockedEnv({ PATH: process.env['PATH'] }, { clear: true });
   });
 
   afterEach(() => {
-    process.env = ENV; // Restore old environment
+    restore();
   });
 
   it('Should be take proper values', async () => {
-    jest.spyOn(local, 'getSha').mockResolvedValue('local-sha');
-    jest.spyOn(local, 'getRef').mockResolvedValue('local-ref');
-    jest.spyOn(local, 'getCommitUserEmail').mockResolvedValue('local-actor');
-
     context = await local.context();
 
     expect(context).toMatchObject({

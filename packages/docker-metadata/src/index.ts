@@ -1,2 +1,2 @@
 export { Inputs } from './lib/context';
-export { default as getMetadata } from './lib/main';
+export { getMetadata } from './lib/main';

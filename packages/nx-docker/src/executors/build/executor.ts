@@ -9,7 +9,7 @@ import { DockerBuildSchema } from './schema';
 
 const GROUP_PREFIX = 'Nx Docker';
 
-export default async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
+export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
   const tmpDir = context.tmpDir();
 
   try {
@@ -33,9 +33,7 @@ export default async function run(options: DockerBuildSchema, ctx?: ExecutorCont
     );
 
     if (options.metadata?.images) {
-      const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor', () =>
-        require('@nx-tools/docker-metadata')
-      );
+      const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor');
       startGroup('Generating metadata', GROUP_PREFIX);
       const meta = await getMetadata(options.metadata, ctx);
       inputs.labels = meta.getLabels();
@@ -78,3 +76,5 @@ async function cleanup(tmpDir: string): Promise<void> {
     rmdirSync(tmpDir, { recursive: true });
   }
 }
+
+export default run;

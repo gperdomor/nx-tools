@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/nx-prisma@2.0.0-alpha.4...nx-prisma@3.0.0-alpha.1) (2022-04-09)
+
+### ⚠ BREAKING CHANGES
+
+- **nx-prisma:** Dropped support for Node 12
+
+### Features
+
+- **nx-prisma:** move to swc ([2f05aa3](https://github.com/nx-tools/nx-tools/commit/2f05aa3e482b848646cf6dbfe533def549b826f4))
+
 # [2.0.0-alpha.4](https://github.com/gperdomor/nx-tools/compare/nx-prisma@2.0.0-alpha.3...nx-prisma@2.0.0-alpha.4) (2022-01-02)
 
 ### Features

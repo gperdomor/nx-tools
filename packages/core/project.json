@@ -1,10 +1,9 @@
 {
   "root": "packages/core",
   "sourceRoot": "packages/core/src",
-  "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/core",
@@ -32,9 +31,11 @@
       "executor": "@jscutlery/semver:version",
       "options": {
         "baseBranch": "main",
-        "versionTagPrefix": "${target}@"
+        "preset": "conventional",
+        "tagPrefix": "${projectName}@",
+        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },
-  "tags": ["shared"]
+  "tags": []
 }

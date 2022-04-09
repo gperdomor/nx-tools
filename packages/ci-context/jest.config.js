@@ -1,13 +1,14 @@
+const fs = require('fs');
+
+// Reading the SWC compilation config and remove the "exclude"
+// for the test files to be compiled by SWC
+const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
+
 module.exports = {
   displayName: 'ci-context',
   preset: '../../jest.preset.js',
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
   transform: {
-    '^.+\\.[tj]s$': 'ts-jest',
+    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/ci-context',

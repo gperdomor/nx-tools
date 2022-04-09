@@ -1,22 +1,23 @@
 {
   "name": "@nx-tools/docker-metadata",
-  "version": "2.2.1",
+  "version": "3.0.0-alpha.1",
   "type": "commonjs",
-  "author": "gperdomor",
-  "repository": "https://github.com/gperdomor/nx-tools",
-  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "author": "gperdomor <gperdomor@gmail.com>",
+  "repository": "https://github.com/nx-tools/nx-tools",
+  "bugs": "https://github.com/nx-tools/nx-tools/issues",
   "license": "MIT",
   "dependencies": {
-    "@nx-tools/ci-context": "^2.2.0",
-    "@nx-tools/core": "^2.3.1",
+    "@nx-tools/ci-context": "^3.0.0-alpha.1",
+    "@nx-tools/core": "^3.0.0-alpha.1",
     "@renovate/pep440": "^1.0.0",
     "csv-parse": "^4.16.3",
     "handlebars": "^4.7.7",
-    "moment": "^2.29.1",
-    "semver": "^7.3.5"
+    "moment": "^2.29.2",
+    "semver": "^7.3.6"
   },
   "peerDependencies": {
     "@nrwl/devkit": "^12.0.0 || ^13.0.0",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "@swc/helpers": "^0.3.8"
   }
 }
