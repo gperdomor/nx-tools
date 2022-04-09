@@ -6,7 +6,7 @@ import { GROUP_PREFIX } from './constants';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
 
-export default async function run(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
+export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
   const inputs: Inputs = await getInputs(options, ctx);
   if (inputs.images.length == 0) {
     throw new Error(`images input required`);
