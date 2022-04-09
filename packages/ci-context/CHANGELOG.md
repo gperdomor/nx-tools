@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/ci-context@2.2.0...ci-context@3.0.0-alpha.1) (2022-04-09)
+
+### ⚠ BREAKING CHANGES
+
+- **ci-context:** Dropped support for Node 12
+
+### Features
+
+- **ci-context:** move to swc ([a183cac](https://github.com/nx-tools/nx-tools/commit/a183cac4cda9888d3345989908dbf4ef0cc99971))
+
 # [2.2.0](https://github.com/gperdomor/nx-tools/compare/ci-context@2.1.1...ci-context@2.2.0) (2022-01-02)
 
 ### Features

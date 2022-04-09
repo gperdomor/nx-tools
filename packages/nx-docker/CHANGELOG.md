@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/nx-docker@2.3.0...nx-docker@3.0.0-alpha.1) (2022-04-09)
+
+### ⚠ BREAKING CHANGES
+
+- **nx-docker:** Dropped support for Node 12
+
+### Features
+
+- **nx-docker:** move to swc ([dc1fd5d](https://github.com/nx-tools/nx-tools/commit/dc1fd5daa57e0ad2f57f62d9aba2cb7822c2f95d))
+
 # [2.3.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@2.2.0...nx-docker@2.3.0) (2022-02-04)
 
 ### Features
