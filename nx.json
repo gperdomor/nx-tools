@@ -1,5 +1,5 @@
 {
-  "extends": "@nrwl/workspace/presets/npm.json",
+  "extends": "@nrwl/workspace/presets/core.json",
   "npmScope": "nx-tools",
   "affected": {
     "defaultBase": "main"

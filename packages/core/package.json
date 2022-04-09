@@ -1,16 +1,15 @@
 {
   "name": "@nx-tools/core",
-  "version": "2.3.1",
+  "version": "3.0.0-alpha.1",
   "type": "commonjs",
-  "author": "gperdomor",
-  "repository": "https://github.com/gperdomor/nx-tools",
-  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "author": "gperdomor <gperdomor@gmail.com>",
+  "repository": "https://github.com/nx-tools/nx-tools",
+  "bugs": "https://github.com/nx-tools/nx-tools/issues",
   "license": "MIT",
   "dependencies": {
-    "@actions/exec": "^1.1.0"
+    "@actions/exec": "^1.1.1"
   },
   "peerDependencies": {
-    "@nrwl/devkit": "^12.0.0 || ^13.0.0",
-    "tslib": "^2.1.0"
+    "@nrwl/devkit": "^12.0.0 || ^13.0.0"
   }
 }

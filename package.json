@@ -25,7 +25,7 @@
     "@commitlint/config-conventional": "16.2.1",
     "@commitlint/config-nx-scopes": "16.2.1",
     "@commitlint/cz-commitlint": "16.2.3",
-    "@jscutlery/semver": "2.21.3",
+    "@jscutlery/semver": "2.21.6",
     "@nrwl/cli": "13.10.1",
     "@nrwl/devkit": "13.10.1",
     "@nrwl/eslint-plugin-nx": "13.10.1",
@@ -38,6 +38,10 @@
     "@nrwl/workspace": "13.10.1",
     "@prisma/client": "3.11.0",
     "@renovate/pep440": "1.0.0",
+    "@swc/cli": "0.1.57",
+    "@swc/core": "1.2.164",
+    "@swc/helpers": "0.3.8",
+    "@swc/jest": "0.2.20",
     "@types/jest": "27.4.1",
     "@types/node": "17.0.21",
     "@types/semver": "7.3.9",
@@ -55,6 +59,7 @@
     "lint-staged": "12.3.7",
     "mocked-env": "1.3.5",
     "moment": "2.29.1",
+    "nx": "13.10.1",
     "prettier": "2.5.1",
     "prisma": "3.11.0",
     "semver": "7.3.5",
@@ -62,7 +67,6 @@
     "ts-jest": "27.1.3",
     "ts-node": "10.7.0",
     "tslib": "2.3.1",
-    "typescript": "4.5.5",
-    "nx": "13.10.1"
+    "typescript": "4.5.5"
   }
 }

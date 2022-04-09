@@ -1,4 +1,5 @@
 import { names } from '@nrwl/devkit';
+
 /**
  * Interface for getInput options
  */
