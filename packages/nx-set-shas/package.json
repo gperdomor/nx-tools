@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-set-shas",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "type": "commonjs",
   "bin": {
     "nx-set-shas": "./bin/run"
@@ -11,9 +11,9 @@
     "/oclif.manifest.json"
   ],
   "dependencies": {
-    "@oclif/core": "1.6.1",
+    "@oclif/core": "1.7.0",
     "@oclif/plugin-help": "5.1.12",
-    "undici": "4.16.0"
+    "undici": "5.0.0"
   },
   "oclif": {
     "bin": "nx-set-shas",
