@@ -23,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/docker-metadata"],
       "options": {
-        "jestConfig": "packages/docker-metadata/jest.config.js",
+        "jestConfig": "packages/docker-metadata/jest.config.ts",
         "passWithNoTests": true
       }
     },

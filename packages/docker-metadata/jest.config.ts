@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 
 // Reading the SWC compilation config and remove the "exclude"
@@ -5,11 +6,11 @@ const fs = require('fs');
 const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
 
 module.exports = {
-  displayName: 'ci-context',
-  preset: '../../jest.preset.js',
+  displayName: 'docker-metadata',
+  preset: '../../jest.preset.ts',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/packages/ci-context',
+  coverageDirectory: '../../coverage/packages/docker-metadata',
 };

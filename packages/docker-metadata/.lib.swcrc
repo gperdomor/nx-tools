@@ -21,6 +21,7 @@
   },
   "sourceMaps": true,
   "exclude": [
+    "jest.config.ts",
     "./src/**/.*.spec.ts$",
     "./**/.*.spec.ts$",
     "./src/**/jest-setup.ts$",
