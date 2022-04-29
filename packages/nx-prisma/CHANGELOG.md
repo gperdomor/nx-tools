@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0-alpha.2](https://github.com/gperdomor/nx-tools/compare/nx-prisma@3.0.0-alpha.1...nx-prisma@3.0.0-alpha.2) (2022-04-29)
+
+### Features
+
+- chore: bump nx to 14.0.5
+- other deps updates
+
 ## [3.0.0-alpha.1](https://github.com/nx-tools/nx-tools/compare/nx-prisma@2.0.0-alpha.4...nx-prisma@3.0.0-alpha.1) (2022-04-09)
 
 ### ⚠ BREAKING CHANGES
