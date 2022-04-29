@@ -45,7 +45,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/nx-docker"],
       "options": {
-        "jestConfig": "packages/nx-docker/jest.config.js",
+        "jestConfig": "packages/nx-docker/jest.config.ts",
         "passWithNoTests": true
       }
     },

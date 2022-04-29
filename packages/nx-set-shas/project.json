@@ -23,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/nx-set-shas"],
       "options": {
-        "jestConfig": "packages/nx-set-shas/jest.config.js",
+        "jestConfig": "packages/nx-set-shas/jest.config.ts",
         "passWithNoTests": true
       }
     }

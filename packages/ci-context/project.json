@@ -23,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/ci-context"],
       "options": {
-        "jestConfig": "packages/ci-context/jest.config.js",
+        "jestConfig": "packages/ci-context/jest.config.ts",
         "passWithNoTests": true
       }
     },
