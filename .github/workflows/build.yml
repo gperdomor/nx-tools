@@ -27,6 +27,8 @@ jobs:
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
         npx nx affected --target=e2e --parallel=2
+      final-commands: |
+        cat ${{ github.workspace }}/.github/workflows/run-commands-in-parallel.sh
 
   agents:
     name: Nx Cloud - Agents
