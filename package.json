@@ -37,7 +37,7 @@
     "@prisma/client": "3.13.0",
     "@renovate/pep440": "1.0.0",
     "@swc/cli": "0.1.57",
-    "@swc/core": "1.2.171",
+    "@swc/core": "1.2.173",
     "@swc/helpers": "0.3.8",
     "@swc/jest": "0.2.20",
     "@types/jest": "27.4.1",
