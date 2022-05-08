@@ -1,5 +1,4 @@
 {
-  "root": "packages/nx-set-shas",
   "sourceRoot": "packages/nx-set-shas/src",
   "targets": {
     "build": {

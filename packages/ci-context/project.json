@@ -1,5 +1,4 @@
 {
-  "root": "packages/ci-context",
   "sourceRoot": "packages/ci-context/src",
   "targets": {
     "build": {

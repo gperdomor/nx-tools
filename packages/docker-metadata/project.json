@@ -1,5 +1,4 @@
 {
-  "root": "packages/docker-metadata",
   "sourceRoot": "packages/docker-metadata/src",
   "targets": {
     "build": {

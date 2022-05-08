@@ -1,5 +1,4 @@
 {
-  "root": "packages/nx-docker",
   "sourceRoot": "packages/nx-docker/src",
   "targets": {
     "build": {

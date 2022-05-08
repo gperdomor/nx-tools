@@ -1,5 +1,4 @@
 {
-  "root": "packages/nx-prisma",
   "sourceRoot": "packages/nx-prisma/src",
   "targets": {
     "build": {
