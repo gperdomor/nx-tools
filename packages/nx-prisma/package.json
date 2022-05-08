@@ -12,6 +12,9 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "@nx-tools/core": "^3.0.0-alpha.2"
   },

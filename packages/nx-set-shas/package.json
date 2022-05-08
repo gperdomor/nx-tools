@@ -10,6 +10,9 @@
     "/src",
     "/oclif.manifest.json"
   ],
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "@oclif/core": "1.7.0",
     "@oclif/plugin-help": "5.1.12",

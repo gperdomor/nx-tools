@@ -12,6 +12,9 @@
     "prepare": "is-ci || husky install"
   },
   "private": true,
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "tslib": "2.3.1"
   },
