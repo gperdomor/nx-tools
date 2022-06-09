@@ -35,7 +35,7 @@
     "@nrwl/nx-cloud": "14.0.8",
     "@nrwl/nx-plugin": "14.2.2",
     "@nrwl/workspace": "14.2.2",
-    "@oclif/core": "1.8.0",
+    "@oclif/core": "1.9.0",
     "@oclif/plugin-help": "5.1.12",
     "@prisma/client": "3.14.0",
     "@renovate/pep440": "1.0.0",
