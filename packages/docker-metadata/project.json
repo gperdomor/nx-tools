@@ -1,26 +1,37 @@
 {
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/docker-metadata/src",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/packages/docker-metadata",
         "main": "packages/docker-metadata/src/index.ts",
         "tsConfig": "packages/docker-metadata/tsconfig.lib.json",
-        "assets": ["packages/docker-metadata/*.md"]
+        "assets": [
+          "packages/docker-metadata/*.md"
+        ]
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/docker-metadata/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/docker-metadata/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/docker-metadata"],
+      "outputs": [
+        "coverage/packages/docker-metadata"
+      ],
       "options": {
         "jestConfig": "packages/docker-metadata/jest.config.ts",
         "passWithNoTests": true

@@ -5,9 +5,9 @@ const fs = require('fs');
 // for the test files to be compiled by SWC
 const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
 
-module.exports = {
+export default {
   displayName: 'nx-set-shas',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
   transform: {
     '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
