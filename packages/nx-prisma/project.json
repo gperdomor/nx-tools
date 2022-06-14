@@ -1,12 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-prisma/src",
+  "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-prisma",
         "main": "packages/nx-prisma/src/index.ts",
@@ -38,20 +37,19 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/nx-prisma/**/*.ts"
+          "packages/nx-prisma/**/*.ts",
+          "packages/nx-prisma/generators.json",
+          "packages/nx-prisma/executors.json",
+          "packages/nx-prisma/package.json"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/nx-prisma"
-      ],
+      "outputs": ["coverage/packages/nx-prisma"],
       "options": {
         "jestConfig": "packages/nx-prisma/jest.config.ts",
         "passWithNoTests": true
@@ -67,7 +65,5 @@
       }
     }
   },
-  "tags": [
-    "type:plugin"
-  ]
+  "tags": ["type:plugin"]
 }

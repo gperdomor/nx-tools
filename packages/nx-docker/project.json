@@ -1,12 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-docker/src",
+  "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-docker",
         "main": "packages/nx-docker/src/index.ts",
@@ -38,20 +37,19 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/nx-docker/**/*.ts"
+          "packages/nx-docker/**/*.ts",
+          "packages/nx-docker/generators.json",
+          "packages/nx-docker/executors.json",
+          "packages/nx-docker/package.json"
         ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/nx-docker"
-      ],
+      "outputs": ["coverage/packages/nx-docker"],
       "options": {
         "jestConfig": "packages/nx-docker/jest.config.ts",
         "passWithNoTests": true
@@ -67,7 +65,5 @@
       }
     }
   },
-  "tags": [
-    "type:plugin"
-  ]
+  "tags": ["type:plugin"]
 }
