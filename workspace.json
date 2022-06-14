@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
     "ci-context": "packages/ci-context",
@@ -7,6 +8,5 @@
     "nx-docker": "packages/nx-docker",
     "nx-prisma": "packages/nx-prisma",
     "nx-set-shas": "packages/nx-set-shas"
-  },
-  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
+  }
 }

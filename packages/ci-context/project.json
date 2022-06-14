@@ -1,37 +1,40 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/ci-context/src",
+  "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:swc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/ci-context",
         "main": "packages/ci-context/src/index.ts",
         "tsConfig": "packages/ci-context/tsconfig.lib.json",
-        "assets": [
-          "packages/ci-context/*.md"
-        ]
+        "assets": ["packages/ci-context/*.md"]
       }
+    },
+    "publish": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs ci-context {args.ver} {args.tag}"
+      },
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build"
+        }
+      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "packages/ci-context/**/*.ts"
-        ]
+        "lintFilePatterns": ["packages/ci-context/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/packages/ci-context"
-      ],
+      "outputs": ["coverage/packages/ci-context"],
       "options": {
         "jestConfig": "packages/ci-context/jest.config.ts",
         "passWithNoTests": true

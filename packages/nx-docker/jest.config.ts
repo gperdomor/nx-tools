@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
+/* eslint-disable */
+import { readFileSync } from 'fs';
 
 // Reading the SWC compilation config and remove the "exclude"
 // for the test files to be compiled by SWC
-const { exclude: _, ...swcJestConfig } = JSON.parse(fs.readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
-
+const { exclude: _, ...swcJestConfig } = JSON.parse(readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
 export default {
   displayName: 'nx-docker',
   preset: '../../jest.preset.js',

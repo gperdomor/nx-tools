@@ -1,27 +1,25 @@
 {
-  "extends": "nx/presets/core.json",
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "nx-tools",
   "affected": {
     "defaultBase": "main"
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/workspace"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "NWQ5YjFmMDAtZGE0Yi00N2FjLWJhODktZTYzMDI2ZGIyNzEzfHJlYWQ=",
-        "canTrackAnalytics": false,
-        "showUsageWarnings": true
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "NWQ5YjFmMDAtZGE0Yi00N2FjLWJhODktZTYzMDI2ZGIyNzEzfHJlYWQ="
       }
     }
   },
-  "$schema": "./node_modules/nx/schemas/nx-schema.json"
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  }
 }
