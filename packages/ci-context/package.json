@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/nx-tools/nx-tools",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@actions/github": "^5.0.3",
-    "@nx-tools/core": "^3.0.0-alpha.3",
+    "@nx-tools/core": "^3.0.0",
     "@swc/helpers": "^0.3.17",
     "ci-info": "^3.3.1"
   },

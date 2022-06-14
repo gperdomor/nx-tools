@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "3.0.0-alpha.3",
+  "version": "3.0.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
@@ -16,7 +16,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@nx-tools/core": "^3.0.0-alpha.3",
+    "@nx-tools/core": "^3.0.0",
     "@swc/helpers": "^0.3.17"
   },
   "peerDependencies": {

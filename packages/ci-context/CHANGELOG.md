@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0](https://github.com/gperdomor/nx-tools/compare/ci-context@3.0.0-alpha.3...ci-context@3.0.0) (2022-06-14)
+
 ## [3.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/ci-context@3.0.0-alpha.2...ci-context@3.0.0-alpha.3) (2022-06-14)
 
 ### Features
