@@ -58,7 +58,7 @@ This build not handle registry login steps, so if you wanna push your docker ima
 
 - [Multi-platform image](docs/advanced/multi-platform.md)
 - [Isolated builders](docs/advanced/isolated-builders.md)
-- [Push to multi-registries](docs/advanced/push-multi-registries.md)
+- [Push to multi-registries](docs/advanced/push-multiple-registries.md)
 - [Cache](docs/advanced/cache.md)
 - [Local registry](docs/advanced/local-registry.md)
 - [Export image to Docker](docs/advanced/export-docker.md)
