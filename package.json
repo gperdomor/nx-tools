@@ -71,6 +71,6 @@
     "ts-node": "~10.8.0",
     "tslib": "2.4.0",
     "typescript": "4.7.3",
-    "undici": "5.4.0"
+    "undici": "5.5.1"
   }
 }
