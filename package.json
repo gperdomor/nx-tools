@@ -22,10 +22,10 @@
   "devDependencies": {
     "@actions/exec": "1.1.1",
     "@actions/github": "5.0.3",
-    "@commitlint/cli": "17.0.2",
-    "@commitlint/config-conventional": "17.0.2",
+    "@commitlint/cli": "17.0.3",
+    "@commitlint/config-conventional": "17.0.3",
     "@commitlint/config-nx-scopes": "17.0.0",
-    "@commitlint/cz-commitlint": "17.0.0",
+    "@commitlint/cz-commitlint": "17.0.3",
     "@jscutlery/semver": "2.25.2",
     "@nrwl/cli": "14.3.1",
     "@nrwl/devkit": "14.3.1",
