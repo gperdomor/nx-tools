@@ -16,7 +16,7 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@swc/helpers": "0.4.2",
+    "@swc/helpers": "0.4.3",
     "tslib": "2.4.0"
   },
   "devDependencies": {
