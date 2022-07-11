@@ -14,10 +14,10 @@
     "node": ">=14"
   },
   "dependencies": {
-    "@oclif/core": "1.7.0",
+    "@oclif/core": "1.9.5",
     "@oclif/plugin-help": "5.1.12",
-    "@swc/helpers": "^0.3.17",
-    "undici": "5.0.0"
+    "@swc/helpers": "^0.4.3",
+    "undici": "^5.6.1"
   },
   "oclif": {
     "bin": "nx-set-shas",
