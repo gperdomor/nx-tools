@@ -1,8 +1,9 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { exec, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
+import { isCI } from 'ci-info';
 import 'dotenv/config';
-import { rmdirSync } from 'fs';
-import { join } from 'path';
+import { mkdir, rmdir, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import * as buildx from './buildx';
 import * as context from './context';
 import { DockerBuildSchema } from './schema';
@@ -57,11 +58,23 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     startGroup(`Setting outputs`, GROUP_PREFIX);
     const imageID = await buildx.getImageID();
     const metadata = await buildx.getMetadata();
+
     if (imageID) {
       info(`digest=${imageID}`);
+
+      if (isCI) {
+        const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
+        await mkdir(outputDir, { recursive: true });
+        await writeFile(`${outputDir}/iidfile`, imageID);
+      }
     }
     if (metadata) {
       info(`metadata=${metadata}`);
+      if (isCI) {
+        const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
+        await mkdir(outputDir, { recursive: true });
+        await writeFile(`${outputDir}/metadata`, metadata);
+      }
     }
   } finally {
     cleanup(tmpDir);
@@ -73,7 +86,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 async function cleanup(tmpDir: string): Promise<void> {
   if (tmpDir.length > 0) {
     startGroup(`Removing temp folder ${tmpDir}`, GROUP_PREFIX);
-    rmdirSync(tmpDir, { recursive: true });
+    await rmdir(tmpDir, { recursive: true });
   }
 }
 
