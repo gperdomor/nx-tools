@@ -12,8 +12,8 @@
   "dependencies": {
     "@actions/github": "^5.0.3",
     "@nx-tools/core": "^3.0.0",
-    "@swc/helpers": "^0.3.17",
-    "ci-info": "^3.3.1"
+    "@swc/helpers": "^0.4.3",
+    "ci-info": "^3.3.2"
   },
   "peerDependencies": {
     "tslib": "^2.1.0"
