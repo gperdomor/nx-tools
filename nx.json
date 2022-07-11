@@ -14,12 +14,9 @@
       }
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   }
 }
