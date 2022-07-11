@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.1](https://github.com/gperdomor/nx-tools/compare/docker-metadata@3.0.0...docker-metadata@3.0.1) (2022-07-11)
+
 ## [3.0.0](https://github.com/gperdomor/nx-tools/compare/docker-metadata@3.0.0-alpha.3...docker-metadata@3.0.0) (2022-06-14)
 
 ## [3.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/docker-metadata@3.0.0-alpha.2...docker-metadata@3.0.0-alpha.3) (2022-06-14)

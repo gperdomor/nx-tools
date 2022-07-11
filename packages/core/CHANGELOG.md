@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.1](https://github.com/gperdomor/nx-tools/compare/core@3.0.0...core@3.0.1) (2022-07-11)
+
+### Bug Fixes
+
+- **core:** move from chalk to colorette ([5a5e7fa](https://github.com/gperdomor/nx-tools/commit/5a5e7facf1d47fb8b547fc2f5bf7ea0a9bc914ab))
+
 ## [3.0.0](https://github.com/gperdomor/nx-tools/compare/core@3.0.0-alpha.3...core@3.0.0) (2022-06-14)
 
 ## [3.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/core@3.0.0-alpha.2...core@3.0.0-alpha.3) (2022-06-14)

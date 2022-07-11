@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.1](https://github.com/gperdomor/nx-tools/compare/nx-docker@3.0.0...nx-docker@3.0.1) (2022-07-11)
+
+### Bug Fixes
+
+- **nx-docker:** write metadata to folder .nx-docker on CI environments ([12d56c3](https://github.com/gperdomor/nx-tools/commit/12d56c36d4f578b2a92d9e87126479959c371c13))
+
 ## [3.0.0](https://github.com/gperdomor/nx-tools/compare/nx-docker@3.0.0-alpha.3...nx-docker@3.0.0) (2022-06-14)
 
 ## [3.0.0-alpha.3](https://github.com/gperdomor/nx-tools/compare/nx-docker@3.0.0-alpha.2...nx-docker@3.0.0-alpha.3) (2022-06-14)
