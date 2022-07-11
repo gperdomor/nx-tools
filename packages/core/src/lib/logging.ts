@@ -1,6 +1,5 @@
 import { logger } from '@nrwl/devkit';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chalk = require('chalk');
+import { bold, cyan, gray, inverse, reset } from 'colorette';
 
 //-----------------------------------------------------------------------
 // Logging Commands
@@ -57,10 +56,10 @@ export const GROUP_PREFIX = (prefix: string) => {
   const trimmed = prefix.trim();
 
   if (trimmed.length === 0) {
-    return `${chalk.cyan('>')}`;
+    return `${cyan('>')}`;
   }
 
-  return `${chalk.cyan('>')} ${chalk.reset.inverse.bold.keyword('grey')(` ${trimmed} `)}`;
+  return `${cyan('>')} ${reset(inverse(bold(gray(` ${trimmed} `))))}`;
 };
 
 /**
@@ -68,5 +67,5 @@ export const GROUP_PREFIX = (prefix: string) => {
  * @param message info message
  */
 export function startGroup(message: string, prefix = ''): void {
-  console.info(`\n${GROUP_PREFIX(prefix)} ${chalk.bold(message)}\n`);
+  console.info(`\n${GROUP_PREFIX(prefix)} ${bold(message)}\n`);
 }

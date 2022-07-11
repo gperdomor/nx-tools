@@ -50,6 +50,7 @@
     "@typescript-eslint/eslint-plugin": "5.24.0",
     "@typescript-eslint/parser": "5.24.0",
     "ci-info": "3.3.2",
+    "colorette": "2.0.19",
     "commitizen": "4.2.4",
     "csv-parse": "4.16.3",
     "eslint": "8.18.0",

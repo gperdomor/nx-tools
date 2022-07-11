@@ -1,7 +1,6 @@
 import { logger } from '@nrwl/devkit';
+import { bold } from 'colorette';
 import * as logging from './logging';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const chalk = require('chalk');
 
 describe('Logging', () => {
   beforeEach(() => {
@@ -60,13 +59,13 @@ describe('Logging', () => {
     logging.startGroup('this is a group message');
     expect(console.info).toHaveBeenNthCalledWith(
       1,
-      `\n${logging.GROUP_PREFIX('')} ${chalk.bold('this is a group message')}\n`
+      `\n${logging.GROUP_PREFIX('')} ${bold('this is a group message')}\n`
     );
 
     logging.startGroup('this is a group message', 'PREFIX');
     expect(console.info).toHaveBeenNthCalledWith(
       2,
-      `\n${logging.GROUP_PREFIX('PREFIX')} ${chalk.bold('this is a group message')}\n`
+      `\n${logging.GROUP_PREFIX('PREFIX')} ${bold('this is a group message')}\n`
     );
   });
 });
