@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@nx-tools/core": "^3.0.0",
-    "@swc/helpers": "^0.3.17",
+    "@swc/helpers": "^0.4.3",
     "csv-parse": "^4.16.3",
     "semver": "^7.3.7",
     "tmp": "^0.2.1"

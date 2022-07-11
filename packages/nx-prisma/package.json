@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@nx-tools/core": "^3.0.0",
-    "@swc/helpers": "^0.3.17"
+    "@swc/helpers": "^0.4.3"
   },
   "peerDependencies": {
     "prisma": "^3.15.0",

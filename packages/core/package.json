@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@actions/exec": "^1.1.1",
-    "@swc/helpers": "^0.3.17"
+    "@swc/helpers": "^0.4.3",
+    "colorette": "^2.0.19"
   },
   "peerDependencies": {
     "@nrwl/devkit": "^12.0.0 || ^13.0.0 || ^14.0.0"
