@@ -42,7 +42,7 @@
     "@renovate/pep440": "1.0.0",
     "@swc-node/register": "^1.5.1",
     "@swc/cli": "0.1.57",
-    "@swc/core": "1.2.211",
+    "@swc/core": "1.2.218",
     "@swc/jest": "0.2.21",
     "@types/jest": "27.5.2",
     "@types/node": "17.0.31",
