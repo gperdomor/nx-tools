@@ -2,6 +2,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import { exec, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
 import { isCI } from 'ci-info';
 import 'dotenv/config';
+import { randomBytes } from 'node:crypto';
 import { mkdir, rmdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import * as buildx from './buildx';
@@ -12,6 +13,7 @@ const GROUP_PREFIX = 'Nx Docker';
 
 export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
   const tmpDir = context.tmpDir();
+  let tempBuilder = undefined;
 
   try {
     startGroup(`Docker info`, GROUP_PREFIX);
@@ -24,6 +26,12 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 
     const buildxVersion = await buildx.getVersion();
     const defContext = context.defaultContext();
+
+    if (!options.builder) {
+      tempBuilder = `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
+      options.builder = tempBuilder;
+    }
+
     const inputs: context.Inputs = await context.getInputs(
       defContext,
       {
@@ -42,6 +50,16 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
 
     startGroup(`Starting build...`, GROUP_PREFIX);
+    if (options.builder) {
+      info(`Creating builder`);
+      await getExecOutput(`docker`, ['buildx', 'create', `--name=${options.builder}`], {
+        ignoreReturnCode: true,
+      }).then((res) => {
+        if (res.stderr.length > 0 && res.exitCode != 0) {
+          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
+        }
+      });
+    }
     const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
     await getExecOutput(
       'docker',
@@ -77,13 +95,20 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
       }
     }
   } finally {
-    cleanup(tmpDir);
+    await cleanup(tmpDir, tempBuilder);
   }
 
   return { success: true };
 }
 
-async function cleanup(tmpDir: string): Promise<void> {
+async function cleanup(tmpDir: string, builder: string | undefined): Promise<void> {
+  if (builder) {
+    startGroup(`Removing builder ${builder}`, GROUP_PREFIX);
+    await getExecOutput(`docker`, ['buildx', 'rm', builder], {
+      ignoreReturnCode: true,
+    });
+  }
+
   if (tmpDir.length > 0) {
     startGroup(`Removing temp folder ${tmpDir}`, GROUP_PREFIX);
     await rmdir(tmpDir, { recursive: true });
