@@ -12,7 +12,8 @@ export default class GitLab extends Command {
   static override examples = ['$ nx-set-shas gitlab', '$ nx-set-shas gitlab -t=gitlab-token'];
 
   static override flags = {
-    token: Flags.string({ char: 't', description: 'Authentication Token', env: 'CI_JOB_TOKEN', required: true }),
+    // token: Flags.string({ char: 't', description: 'Authentication Token', env: 'CI_JOB_TOKEN', required: true }),
+    token: Flags.string({ char: 't', description: 'Authentication Token', required: false }),
     branch: Flags.string({
       char: 'b',
       description: 'The name of the main branch in your repo, used as the target of PRs. E.g. main, master etc',
@@ -123,7 +124,7 @@ export default class GitLab extends Command {
    * @param {string} token
    * @returns
    */
-  async findSuccessfulCommit(project: number, branch: string, token: string): Promise<string | undefined> {
+  async findSuccessfulCommit(project: number, branch: string, token: string | undefined): Promise<string | undefined> {
     const params: Record<string, string> = {
       scope: 'finished',
       status: 'success',
@@ -134,9 +135,11 @@ export default class GitLab extends Command {
     const response = await fetch(
       `https://gitlab.com/api/v4/projects/${project}/pipelines?${new URLSearchParams(params).toString()}`,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : undefined,
       }
     );
 
