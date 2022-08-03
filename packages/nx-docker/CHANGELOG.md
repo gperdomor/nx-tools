@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.3](https://github.com/gperdomor/nx-tools/compare/nx-docker@3.0.1...nx-docker@3.0.3) (2022-08-03)
+
+### Features
+
+- **nx-docker:** A new INPUT_CREATE_BUILDER env variable is handled, when is true, a new builder context is created for each app and removed after build execution. This is neccesary to run `npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=docker` inside GitLab Runner to avoid errors related to the build context
+
 ## [3.0.1](https://github.com/gperdomor/nx-tools/compare/nx-docker@3.0.0...nx-docker@3.0.1) (2022-07-11)
 
 ### Bug Fixes

@@ -85,7 +85,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     if (imageID) {
       info(`digest=${imageID}`);
 
-      if (isCI) {
+      if (isCI && ctx?.projectName) {
         const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
         await mkdir(outputDir, { recursive: true });
         await writeFile(`${outputDir}/iidfile`, imageID);
@@ -93,7 +93,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
     if (metadata) {
       info(`metadata=${metadata}`);
-      if (isCI) {
+      if (isCI && ctx?.projectName) {
         const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
         await mkdir(outputDir, { recursive: true });
         await writeFile(`${outputDir}/metadata`, metadata);
