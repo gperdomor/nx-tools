@@ -1,5 +1,5 @@
-import { ExecutorContext } from '@nrwl/devkit';
-import { exec, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
+import { ExecutorContext, names } from '@nrwl/devkit';
+import { exec, getBooleanInput, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
 import { isCI } from 'ci-info';
 import 'dotenv/config';
 import { randomBytes } from 'node:crypto';
@@ -13,7 +13,8 @@ const GROUP_PREFIX = 'Nx Docker';
 
 export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
   const tmpDir = context.tmpDir();
-  let tempBuilder = undefined;
+  let createBuilder: boolean;
+  let inputs: context.Inputs;
 
   try {
     startGroup(`Docker info`, GROUP_PREFIX);
@@ -27,12 +28,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     const buildxVersion = await buildx.getVersion();
     const defContext = context.defaultContext();
 
-    if (!options.builder) {
-      tempBuilder = `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
-      options.builder = tempBuilder;
-    }
-
-    const inputs: context.Inputs = await context.getInputs(
+    inputs = await context.getInputs(
       defContext,
       {
         ...options,
@@ -40,6 +36,15 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
       },
       ctx
     );
+
+    createBuilder = getBooleanInput('create-builder', {
+      prefix: names(ctx?.projectName || '').constantName,
+      fallback: 'false',
+    });
+
+    if (createBuilder) {
+      inputs.builder = inputs.builder || `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
+    }
 
     if (options.metadata?.images) {
       const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor');
@@ -50,9 +55,9 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
 
     startGroup(`Starting build...`, GROUP_PREFIX);
-    if (options.builder) {
+    if (createBuilder) {
       info(`Creating builder`);
-      await getExecOutput(`docker`, ['buildx', 'create', `--name=${options.builder}`], {
+      await getExecOutput(`docker`, ['buildx', 'create', `--name=${inputs.builder}`], {
         ignoreReturnCode: true,
       }).then((res) => {
         if (res.stderr.length > 0 && res.exitCode != 0) {
@@ -95,7 +100,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
       }
     }
   } finally {
-    await cleanup(tmpDir, tempBuilder);
+    await cleanup(tmpDir, createBuilder ? inputs?.builder : undefined);
   }
 
   return { success: true };
