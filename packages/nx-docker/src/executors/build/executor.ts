@@ -1,7 +1,8 @@
-import { ExecutorContext } from '@nrwl/devkit';
-import { exec, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
+import { ExecutorContext, names } from '@nrwl/devkit';
+import { exec, getBooleanInput, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
 import { isCI } from 'ci-info';
 import 'dotenv/config';
+import { randomBytes } from 'node:crypto';
 import { mkdir, rmdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import * as buildx from './buildx';
@@ -12,6 +13,8 @@ const GROUP_PREFIX = 'Nx Docker';
 
 export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
   const tmpDir = context.tmpDir();
+  let createBuilder: boolean;
+  let inputs: context.Inputs;
 
   try {
     startGroup(`Docker info`, GROUP_PREFIX);
@@ -24,7 +27,8 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 
     const buildxVersion = await buildx.getVersion();
     const defContext = context.defaultContext();
-    const inputs: context.Inputs = await context.getInputs(
+
+    inputs = await context.getInputs(
       defContext,
       {
         ...options,
@@ -32,6 +36,15 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
       },
       ctx
     );
+
+    createBuilder = getBooleanInput('create-builder', {
+      prefix: names(ctx?.projectName || '').constantName,
+      fallback: 'false',
+    });
+
+    if (createBuilder) {
+      inputs.builder = inputs.builder || `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
+    }
 
     if (options.metadata?.images) {
       const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor');
@@ -42,6 +55,16 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
 
     startGroup(`Starting build...`, GROUP_PREFIX);
+    if (createBuilder) {
+      info(`Creating builder`);
+      await getExecOutput(`docker`, ['buildx', 'create', `--name=${inputs.builder}`], {
+        ignoreReturnCode: true,
+      }).then((res) => {
+        if (res.stderr.length > 0 && res.exitCode != 0) {
+          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
+        }
+      });
+    }
     const args: string[] = await context.getArgs(inputs, defContext, buildxVersion);
     await getExecOutput(
       'docker',
@@ -62,7 +85,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     if (imageID) {
       info(`digest=${imageID}`);
 
-      if (isCI) {
+      if (isCI && ctx?.projectName) {
         const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
         await mkdir(outputDir, { recursive: true });
         await writeFile(`${outputDir}/iidfile`, imageID);
@@ -70,20 +93,27 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
     if (metadata) {
       info(`metadata=${metadata}`);
-      if (isCI) {
+      if (isCI && ctx?.projectName) {
         const outputDir = `${ctx?.root}/.nx-docker/${ctx.projectName}`;
         await mkdir(outputDir, { recursive: true });
         await writeFile(`${outputDir}/metadata`, metadata);
       }
     }
   } finally {
-    cleanup(tmpDir);
+    await cleanup(tmpDir, createBuilder ? inputs?.builder : undefined);
   }
 
   return { success: true };
 }
 
-async function cleanup(tmpDir: string): Promise<void> {
+async function cleanup(tmpDir: string, builder: string | undefined): Promise<void> {
+  if (builder) {
+    startGroup(`Removing builder ${builder}`, GROUP_PREFIX);
+    await getExecOutput(`docker`, ['buildx', 'rm', builder], {
+      ignoreReturnCode: true,
+    });
+  }
+
   if (tmpDir.length > 0) {
     startGroup(`Removing temp folder ${tmpDir}`, GROUP_PREFIX);
     await rmdir(tmpDir, { recursive: true });
