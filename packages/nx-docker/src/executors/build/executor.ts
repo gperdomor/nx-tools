@@ -47,7 +47,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     }
 
     if (options.metadata?.images) {
-      const { getMetadata } = loadPackage('@nx-tools/docker-metadata', 'Nx Docker BUild Executor');
+      const { getMetadata } = await loadPackage('@nx-tools/container-metadata', 'Nx Container Build Executor');
       startGroup('Generating metadata', GROUP_PREFIX);
       const meta = await getMetadata(options.metadata, ctx);
       inputs.labels = meta.getLabels();
