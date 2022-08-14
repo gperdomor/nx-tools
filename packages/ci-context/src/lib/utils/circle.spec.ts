@@ -16,6 +16,8 @@ describe('CircleCI Context', () => {
         CIRCLE_USERNAME: 'circleci-actor',
         CIRCLE_JOB: 'circleci-job',
         CIRCLE_BUILD_NUM: '30',
+        CIRCLE_REPOSITORY_URL: 'https://gitlab.com/gperdomor/nx-tools',
+        CIRCLE_PROJECT_REPONAME: 'nx-tools',
       },
       { clear: true }
     );
@@ -25,35 +27,8 @@ describe('CircleCI Context', () => {
     restore();
   });
 
-  it('Should be take proper values', async () => {
-    context = await circle.context();
-
-    expect(context).toMatchObject({
-      actor: 'circleci-actor',
-      eventName: 'pull_request',
-      job: 'circleci-job',
-      payload: {},
-      ref: 'refs/heads/circleci-ref-slug',
-      runId: 30,
-      runNumber: 30,
-      sha: 'circleci-sha',
-    });
-  });
-
-  describe('When git tag is present', () => {
-    let restore: RestoreFn;
-
-    beforeEach(() => {
-      restore = mockedEnv({
-        CIRCLE_TAG: 'circleci-tag',
-      });
-    });
-
-    afterEach(() => {
-      restore();
-    });
-
-    it('Should be take proper values', async () => {
+  describe('context', () => {
+    it('Should be take proper context values', async () => {
       context = await circle.context();
 
       expect(context).toMatchObject({
@@ -61,10 +36,69 @@ describe('CircleCI Context', () => {
         eventName: 'pull_request',
         job: 'circleci-job',
         payload: {},
-        ref: 'refs/tags/circleci-tag',
+        ref: 'refs/heads/circleci-ref-slug',
         runId: 30,
         runNumber: 30,
         sha: 'circleci-sha',
+      });
+    });
+
+    it('Should be take proper context values - no pr', async () => {
+      delete process.env['CI_PULL_REQUEST'];
+      context = await circle.context();
+
+      expect(context).toMatchObject({
+        actor: 'circleci-actor',
+        eventName: 'unknown',
+        job: 'circleci-job',
+        payload: {},
+        ref: 'refs/heads/circleci-ref-slug',
+        runId: 30,
+        runNumber: 30,
+        sha: 'circleci-sha',
+      });
+    });
+
+    describe('When git tag is present', () => {
+      let restore: RestoreFn;
+
+      beforeEach(() => {
+        restore = mockedEnv({
+          CIRCLE_TAG: 'circleci-tag',
+        });
+      });
+
+      afterEach(() => {
+        restore();
+      });
+
+      it('Should be take proper context values', async () => {
+        context = await circle.context();
+
+        expect(context).toMatchObject({
+          actor: 'circleci-actor',
+          eventName: 'pull_request',
+          job: 'circleci-job',
+          payload: {},
+          ref: 'refs/tags/circleci-tag',
+          runId: 30,
+          runNumber: 30,
+          sha: 'circleci-sha',
+        });
+      });
+    });
+  });
+
+  describe('repo', () => {
+    it('Should be take proper repo values', async () => {
+      const repo = await circle.repo();
+
+      expect(repo).toMatchObject({
+        default_branch: '',
+        description: '',
+        html_url: 'https://gitlab.com/gperdomor/nx-tools',
+        license: null,
+        name: 'nx-tools',
       });
     });
   });

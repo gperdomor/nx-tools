@@ -18,6 +18,9 @@ describe('GitLab Context', () => {
         CI_JOB_NAME: 'gitlab-job',
         CI_PIPELINE_ID: '10',
         CI_PIPELINE_IID: '100',
+        CI_DEFAULT_BRANCH: 'feature/ci-context-gitlab',
+        CI_PROJECT_URL: 'https://gitlab.com/gperdomor/nx-tools',
+        CI_PROJECT_NAME: 'nx-tools',
       },
       { clear: true }
     );
@@ -27,45 +30,61 @@ describe('GitLab Context', () => {
     restore();
   });
 
-  it('Should be take proper values', async () => {
-    context = await gitlab.context();
-
-    expect(context).toMatchObject({
-      actor: 'gitlab-actor',
-      eventName: 'gitlab-event-name',
-      job: 'gitlab-job',
-      payload: {},
-      ref: 'refs/heads/gitlab-ref-slug',
-      runId: 100,
-      runNumber: 10,
-      sha: 'gitlab-sha',
-    });
-  });
-
-  describe('When git tag is present', () => {
-    let restore: RestoreFn;
-
-    beforeEach(() => {
-      restore = mockedEnv({
-        CI_COMMIT_TAG: 'gitlab-tag',
-      });
-    });
-
-    afterEach(() => {
-      restore();
-    });
-
-    it('Should be take proper values', async () => {
+  describe('context', () => {
+    it('Should be take proper cotext values', async () => {
       context = await gitlab.context();
 
       expect(context).toMatchObject({
         actor: 'gitlab-actor',
         eventName: 'gitlab-event-name',
         job: 'gitlab-job',
-        ref: 'refs/tags/gitlab-tag',
+        payload: {},
+        ref: 'refs/heads/gitlab-ref-slug',
         runId: 100,
         runNumber: 10,
         sha: 'gitlab-sha',
+      });
+    });
+
+    describe('When git tag is present', () => {
+      let restore: RestoreFn;
+
+      beforeEach(() => {
+        restore = mockedEnv({
+          CI_COMMIT_TAG: 'gitlab-tag',
+        });
+      });
+
+      afterEach(() => {
+        restore();
+      });
+
+      it('Should be take proper context values', async () => {
+        context = await gitlab.context();
+
+        expect(context).toMatchObject({
+          actor: 'gitlab-actor',
+          eventName: 'gitlab-event-name',
+          job: 'gitlab-job',
+          ref: 'refs/tags/gitlab-tag',
+          runId: 100,
+          runNumber: 10,
+          sha: 'gitlab-sha',
+        });
+      });
+    });
+  });
+
+  describe('repo', () => {
+    it('Should be take proper repo values', async () => {
+      const repo = await gitlab.repo();
+
+      expect(repo).toMatchObject({
+        default_branch: 'feature/ci-context-gitlab',
+        description: '',
+        html_url: 'https://gitlab.com/gperdomor/nx-tools',
+        license: null,
+        name: 'nx-tools',
       });
     });
   });
