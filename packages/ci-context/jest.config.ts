@@ -8,9 +8,9 @@ export default {
   displayName: 'ci-context',
   preset: '../../jest.preset.js',
   transform: {
-    // '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
-    '^.+\\.[tj]s$': ['ts-jest'],
+    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/ci-context',
+  testEnvironment: 'node',
 };

@@ -13,6 +13,7 @@ describe('Azure DevOps Context', () => {
         BUILD_SOURCEVERSIONAUTHOR: 'devops-actor',
         AGENT_JOBNAME: 'devops-job',
         BUILD_BUILDID: '40',
+        BUILD_REPOSITORY_URI: 'https://gitlab.com/gperdomor/nx-tools',
       },
       { clear: true }
     );
@@ -22,45 +23,61 @@ describe('Azure DevOps Context', () => {
     restore();
   });
 
-  describe('When building pull requests', () => {
-    beforeEach(() => {
-      process.env['SYSTEM_PULLREQUEST_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
-      process.env['SYSTEM_PULLREQUEST_PULLREQUESTID'] = '123';
+  describe('context', () => {
+    describe('When building pull requests', () => {
+      beforeEach(() => {
+        process.env['SYSTEM_PULLREQUEST_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
+        process.env['SYSTEM_PULLREQUEST_PULLREQUESTID'] = '123';
+      });
+
+      it('Should be take proper context values', async () => {
+        context = await devops.context();
+
+        expect(context).toMatchObject({
+          actor: 'devops-actor',
+          eventName: 'pull_request',
+          job: 'devops-job',
+          payload: {},
+          ref: 'refs/heads/devops-ref-slug',
+          runId: 40,
+          runNumber: 40,
+          sha: 'devops-sha',
+        });
+      });
     });
 
-    it('Should be take proper values', async () => {
-      context = await devops.context();
+    describe('When building branches', () => {
+      beforeEach(() => {
+        process.env['BUILD_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
+      });
 
-      expect(context).toMatchObject({
-        actor: 'devops-actor',
-        eventName: 'pull_request',
-        job: 'devops-job',
-        payload: {},
-        ref: 'refs/heads/devops-ref-slug',
-        runId: 40,
-        runNumber: 40,
-        sha: 'devops-sha',
+      it('Should be take proper context values', async () => {
+        context = await devops.context();
+
+        expect(context).toMatchObject({
+          actor: 'devops-actor',
+          eventName: 'unknown',
+          job: 'devops-job',
+          payload: {},
+          ref: 'refs/heads/devops-ref-slug',
+          runId: 40,
+          runNumber: 40,
+          sha: 'devops-sha',
+        });
       });
     });
   });
 
-  describe('When building branches', () => {
-    beforeEach(() => {
-      process.env['BUILD_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
-    });
+  describe('repo', () => {
+    it('Should be take proper repo values', async () => {
+      const repo = await devops.repo();
 
-    it('Should be take proper values', async () => {
-      context = await devops.context();
-
-      expect(context).toMatchObject({
-        actor: 'devops-actor',
-        eventName: 'unknown',
-        job: 'devops-job',
-        payload: {},
-        ref: 'refs/heads/devops-ref-slug',
-        runId: 40,
-        runNumber: 40,
-        sha: 'devops-sha',
+      expect(repo).toMatchObject({
+        default_branch: '',
+        description: '',
+        html_url: 'https://gitlab.com/gperdomor/nx-tools',
+        license: null,
+        name: 'devops-job',
       });
     });
   });
