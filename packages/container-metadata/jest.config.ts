@@ -5,12 +5,12 @@ import { readFileSync } from 'fs';
 // for the test files to be compiled by SWC
 const { exclude: _, ...swcJestConfig } = JSON.parse(readFileSync(`${__dirname}/.lib.swcrc`, 'utf-8'));
 export default {
-  displayName: 'docker-metadata',
+  displayName: 'container-metadata',
   preset: '../../jest.preset.js',
   transform: {
     // '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/packages/docker-metadata',
+  coverageDirectory: '../../coverage/packages/container-metadata',
 };

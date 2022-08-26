@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@nx-tools/ci-context": ["packages/ci-context/src/index.ts"],
+      "@nx-tools/container-metadata": ["packages/container-metadata/src/index.ts"],
       "@nx-tools/core": ["packages/core/src/index.ts"],
-      "@nx-tools/docker-metadata": ["packages/docker-metadata/src/index.ts"],
       "@nx-tools/nx-docker": ["packages/nx-docker/src/index.ts"],
       "@nx-tools/nx-prisma": ["packages/nx-prisma/src/index.ts"],
       "@nx-tools/nx-set-shas": ["packages/nx-set-shas/src/index.ts"]

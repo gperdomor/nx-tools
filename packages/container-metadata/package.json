@@ -1,5 +1,5 @@
 {
-  "name": "@nx-tools/docker-metadata",
+  "name": "@nx-tools/container-metadata",
   "version": "3.0.1",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
