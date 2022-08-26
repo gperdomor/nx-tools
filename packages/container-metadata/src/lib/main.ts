@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { GROUP_PREFIX } from './constants';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
@@ -21,6 +21,11 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
   core.info(`actor: ${context.actor}`);
   core.info(`runNumber: ${context.runNumber}`);
   core.info(`runId: ${context.runId}`);
+
+  if (core.isDebug()) {
+    core.startGroup(`Webhook payload`);
+    core.info(JSON.stringify(context.payload, null, 2));
+  }
 
   const meta: Meta = new Meta(inputs, context, repo);
 

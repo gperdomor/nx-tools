@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import * as core from '@nx-tools/core';
-import csvparse from 'csv-parse/lib/sync';
+import parse from 'csv-parse/lib/sync';
 import { GROUP_PREFIX } from './constants';
 
 export enum Type {
@@ -87,9 +87,9 @@ export function Transform(inputs: string[]): Tag[] {
 }
 
 export function Parse(s: string): Tag {
-  const fields = csvparse(s, {
+  const fields = parse(s, {
     relaxColumnCount: true,
-    skipLinesWithEmptyValues: true,
+    skipEmptyLines: true,
   })[0];
 
   const tag = new Tag();
@@ -125,44 +125,44 @@ export function Parse(s: string): Tag {
 
   switch (tag.type) {
     case Type.Schedule: {
-      if (!tag.attrs.hasOwnProperty('pattern')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'pattern')) {
         tag.attrs['pattern'] = 'nightly';
       }
       break;
     }
     case Type.Semver:
     case Type.Pep440: {
-      if (!tag.attrs.hasOwnProperty('pattern')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'pattern')) {
         throw new Error(`Missing pattern attribute for ${s}`);
       }
-      if (!tag.attrs.hasOwnProperty('value')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'value')) {
         tag.attrs['value'] = '';
       }
       break;
     }
     case Type.Match: {
-      if (!tag.attrs.hasOwnProperty('pattern')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'pattern')) {
         throw new Error(`Missing pattern attribute for ${s}`);
       }
-      if (!tag.attrs.hasOwnProperty('group')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'group')) {
         tag.attrs['group'] = '0';
       }
       if (isNaN(+tag.attrs['group'])) {
         throw new Error(`Invalid match group for ${s}`);
       }
-      if (!tag.attrs.hasOwnProperty('value')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'value')) {
         tag.attrs['value'] = '';
       }
       break;
     }
     case Type.Edge: {
-      if (!tag.attrs.hasOwnProperty('branch')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'branch')) {
         tag.attrs['branch'] = '';
       }
       break;
     }
     case Type.Ref: {
-      if (!tag.attrs.hasOwnProperty('event')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'event')) {
         throw new Error(`Missing event attribute for ${s}`);
       }
       if (
@@ -172,22 +172,22 @@ export function Parse(s: string): Tag {
       ) {
         throw new Error(`Invalid event for ${s}`);
       }
-      if (tag.attrs['event'] == RefEvent.PR && !tag.attrs.hasOwnProperty('prefix')) {
+      if (tag.attrs['event'] == RefEvent.PR && !Object.prototype.hasOwnProperty.call(tag.attrs, 'prefix')) {
         tag.attrs['prefix'] = 'pr-';
       }
       break;
     }
     case Type.Raw: {
-      if (!tag.attrs.hasOwnProperty('value')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'value')) {
         throw new Error(`Missing value attribute for ${s}`);
       }
       break;
     }
     case Type.Sha: {
-      if (!tag.attrs.hasOwnProperty('prefix')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'prefix')) {
         tag.attrs['prefix'] = 'sha-';
       }
-      if (!tag.attrs.hasOwnProperty('format')) {
+      if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'format')) {
         tag.attrs['format'] = ShaFormat.Short;
       }
       if (
@@ -201,14 +201,11 @@ export function Parse(s: string): Tag {
     }
   }
 
-  if (!tag.attrs.hasOwnProperty('enable')) {
+  if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'enable')) {
     tag.attrs['enable'] = 'true';
   }
-  if (!tag.attrs.hasOwnProperty('priority')) {
+  if (!Object.prototype.hasOwnProperty.call(tag.attrs, 'priority')) {
     tag.attrs['priority'] = DefaultPriorities[tag.type];
-  }
-  if (!['true', 'false'].includes(tag.attrs['enable'])) {
-    throw new Error(`Invalid value for enable attribute: ${tag.attrs['enable']}`);
   }
 
   return tag;

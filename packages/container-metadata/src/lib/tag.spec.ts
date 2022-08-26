@@ -416,16 +416,11 @@ describe('parse', () => {
       true
     ],
     [
-      `type=sha,enable=foo`,
-      {} as Tag,
-      true
-    ],
-    [
       `type=sha,format=foo`,
       {} as Tag,
       true
     ]
-  ])('given %p event ', async (s: string, expected: Tag, invalid: boolean) => {
+  ])('given %p event', async (s: string, expected: Tag, invalid: boolean) => {
     try {
       const tag = Parse(s);
       expect(tag).toEqual(expected);

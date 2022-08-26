@@ -165,7 +165,7 @@ describe('transform', () => {
       } as Flavor,
       false
     ]
-  ])('given %p attributes ', async (inputs: string[], expected: Flavor, invalid: boolean) => {
+  ])('given %p attributes', async (inputs: string[], expected: Flavor, invalid: boolean) => {
     try {
       const flavor = Transform(inputs);
       expect(flavor).toEqual(expected);

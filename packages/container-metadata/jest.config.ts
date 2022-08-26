@@ -8,9 +8,9 @@ export default {
   displayName: 'container-metadata',
   preset: '../../jest.preset.js',
   transform: {
-    // '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
-    '^.+\\.[tj]s$': 'ts-jest',
+    '^.+\\.[tj]s$': ['@swc/jest', swcJestConfig],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/container-metadata',
+  testEnvironment: 'node',
 };

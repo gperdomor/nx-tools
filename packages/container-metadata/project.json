@@ -16,7 +16,7 @@
     "publish": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs docker-metadata {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs container-metadata {args.ver} {args.tag}"
       },
       "dependsOn": [
         {
@@ -38,15 +38,6 @@
       "options": {
         "jestConfig": "packages/container-metadata/jest.config.ts",
         "passWithNoTests": true
-      }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "baseBranch": "main",
-        "preset": "conventional",
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },

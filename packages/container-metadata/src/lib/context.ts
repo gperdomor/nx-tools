@@ -1,9 +1,9 @@
 import { ExecutorContext, names } from '@nrwl/devkit';
 import * as core from '@nx-tools/core';
-import csvparse from 'csv-parse/lib/sync';
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
+import parse from 'csv-parse/lib/sync';
+import * as fs from 'node:fs';
+import * as os from 'node:os';
+import * as path from 'node:path';
 
 let _tmpDir: string;
 
@@ -20,7 +20,7 @@ export interface Inputs {
 
 export function tmpDir(): string {
   if (!_tmpDir) {
-    _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'docker-metadata-action-')).split(path.sep).join(path.posix.sep);
+    _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'container-metadata-action-')).split(path.sep).join(path.posix.sep);
   }
   return _tmpDir;
 }
@@ -31,7 +31,7 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
   return {
     'bake-target': core.getInput('bake-target', {
       prefix,
-      fallback: options['bake-target'] || 'docker-metadata-action',
+      fallback: options['bake-target'] || 'container-metadata-action',
     }),
     'github-token': core.getInput('github-token'),
     'sep-labels': core.getInput('sep-labels', { prefix, fallback: options['sep-labels'] || '\n' }),
@@ -43,7 +43,7 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
   };
 }
 
-export function getInputList(name: string, prefix: string, fallback?: string[], ignoreComma?: boolean): string[] {
+export function getInputList(name: string, prefix = '', fallback?: string[], ignoreComma?: boolean): string[] {
   const res: Array<string> = [];
 
   const items = core.getInput(name, { prefix });
@@ -51,20 +51,23 @@ export function getInputList(name: string, prefix: string, fallback?: string[], 
     return fallback ?? res;
   }
 
-  for (const output of csvparse(items, {
+  const records = parse(items, {
     columns: false,
     relax: true,
+    comment: '#',
     relaxColumnCount: true,
-    skipLinesWithEmptyValues: true,
-  }) as Array<string[]>) {
-    if (output.length == 1) {
-      res.push(output[0]);
+    skipEmptyLines: true,
+  });
+
+  for (const record of records as Array<string[]>) {
+    if (record.length == 1) {
+      res.push(record[0]);
       continue;
     } else if (!ignoreComma) {
-      res.push(...output);
+      res.push(...record);
       continue;
     }
-    res.push(output.join(','));
+    res.push(record.join(','));
   }
 
   return res.filter((item) => item).map((pat) => pat.trim());

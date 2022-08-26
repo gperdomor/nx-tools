@@ -1,5 +1,5 @@
 import * as core from '@nx-tools/core';
-import csvparse from 'csv-parse/lib/sync';
+import parse from 'csv-parse/lib/sync';
 import { GROUP_PREFIX } from './constants';
 
 export interface Flavor {
@@ -20,9 +20,9 @@ export function Transform(inputs: string[]): Flavor {
   };
 
   for (const input of inputs) {
-    const fields = csvparse(input, {
+    const fields = parse(input, {
       relaxColumnCount: true,
-      skipLinesWithEmptyValues: true,
+      skipEmptyLines: true,
     })[0];
     let onlatestfor = '';
     for (const field of fields) {

@@ -1,1 +1,1 @@
-export const GROUP_PREFIX = 'Docker Metadata';
+export const GROUP_PREFIX = 'Container Metadata';

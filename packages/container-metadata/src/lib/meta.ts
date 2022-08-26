@@ -2,14 +2,16 @@
 import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
-import * as fs from 'fs';
 import * as handlebars from 'handlebars';
 import moment from 'moment';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import * as semver from 'semver';
 import { Inputs, tmpDir } from './context';
 import * as fcl from './flavor';
 import * as tcl from './tag';
+
+import * as icl from './image';
 
 export interface Version {
   main: string | undefined;
@@ -23,6 +25,7 @@ export class Meta {
   private readonly inputs: Inputs;
   private readonly context: Context;
   private readonly repo: RepoMetadata;
+  private readonly images: icl.Image[];
   private readonly tags: tcl.Tag[];
   private readonly flavor: fcl.Flavor;
   private readonly date: Date;
@@ -30,6 +33,7 @@ export class Meta {
   constructor(inputs: Inputs, context: Context, repo: RepoMetadata) {
     // Needs to override Git reference with pr ref instead of upstream branch ref
     // for pull_request_target event
+    // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
     if (/pull_request_target/.test(context.eventName)) {
       context.ref = `refs/pull/${context.payload['number']}/merge`;
     }
@@ -37,6 +41,7 @@ export class Meta {
     this.inputs = inputs;
     this.context = context;
     this.repo = repo;
+    this.images = icl.Transform(inputs.images);
     this.tags = tcl.Transform(inputs.tags);
     this.flavor = fcl.Transform(inputs.flavor);
     this.date = new Date();
@@ -51,7 +56,11 @@ export class Meta {
     };
 
     for (const tag of this.tags) {
-      if (!/true/i.test(tag.attrs['enable'])) {
+      const enabled = this.setGlobalExp(tag.attrs['enable']);
+      if (!['true', 'false'].includes(enabled)) {
+        throw new Error(`Invalid value for enable attribute: ${enabled}`);
+      }
+      if (!/true/i.test(enabled)) {
         continue;
       }
       switch (tag.type) {
@@ -141,7 +150,7 @@ export class Meta {
     let latest = false;
     const sver = semver.parse(vraw, {
       includePrerelease: true,
-    });
+    } as any);
     if (semver.prerelease(vraw)) {
       if (Meta.isRawStatement(tag.attrs['pattern'])) {
         vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
@@ -216,7 +225,7 @@ export class Meta {
     if (tag.attrs['value'].length > 0) {
       vraw = this.setGlobalExp(tag.attrs['value']);
     } else {
-      vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
+      vraw = this.context.ref.replace(/^refs\/tags\//g, '');
     }
 
     let tmatch;
@@ -245,7 +254,7 @@ export class Meta {
     if (!/^refs\/heads\//.test(this.context.ref)) {
       return version;
     }
-    const vraw = this.setValue(this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-'), tag);
+    const vraw = this.setValue(this.context.ref.replace(/^refs\/heads\//g, ''), tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
   }
 
@@ -253,7 +262,7 @@ export class Meta {
     if (!/^refs\/tags\//.test(this.context.ref)) {
       return version;
     }
-    const vraw = this.setValue(this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-'), tag);
+    const vraw = this.setValue(this.context.ref.replace(/^refs\/tags\//g, ''), tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
 
@@ -271,7 +280,7 @@ export class Meta {
       return version;
     }
 
-    const val = this.context.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
+    const val = this.context.ref.replace(/^refs\/heads\//g, '');
     if (tag.attrs['branch'].length == 0) {
       tag.attrs['branch'] = this.repo.default_branch;
     }
@@ -306,6 +315,7 @@ export class Meta {
     if (val.length == 0) {
       return version;
     }
+    val = Meta.sanitizeTag(val);
     if (version.main == undefined) {
       version.main = val;
     } else if (val !== version.main) {
@@ -332,12 +342,12 @@ export class Meta {
   }
 
   private setValue(val: string, tag: tcl.Tag): string {
-    if (tag.attrs.hasOwnProperty('prefix')) {
+    if (Object.prototype.hasOwnProperty.call(tag.attrs, 'prefix')) {
       val = `${this.setGlobalExp(tag.attrs['prefix'])}${val}`;
     } else if (this.flavor.prefix.length > 0) {
       val = `${this.setGlobalExp(this.flavor.prefix)}${val}`;
     }
-    if (tag.attrs.hasOwnProperty('suffix')) {
+    if (Object.prototype.hasOwnProperty.call(tag.attrs, 'suffix')) {
       val = `${val}${this.setGlobalExp(tag.attrs['suffix'])}`;
     } else if (this.flavor.suffix.length > 0) {
       val = `${val}${this.setGlobalExp(this.flavor.suffix)}`;
@@ -353,30 +363,70 @@ export class Meta {
         if (!/^refs\/heads\//.test(ctx.ref)) {
           return '';
         }
-        return ctx.ref.replace(/^refs\/heads\//g, '').replace(/[^a-zA-Z0-9._-]+/g, '-');
+        return ctx.ref.replace(/^refs\/heads\//g, '');
       },
       tag: function () {
         if (!/^refs\/tags\//.test(ctx.ref)) {
           return '';
         }
-        return ctx.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
+        return ctx.ref.replace(/^refs\/tags\//g, '');
       },
       sha: function () {
         return ctx.sha.substr(0, 7);
       },
       base_ref: function () {
-        if (/^refs\/tags\//.test(ctx.ref)) {
-          return ctx.payload?.['base_ref'].replace(/^refs\/heads\//g, '').replace(/\//g, '-');
+        if (/^refs\/tags\//.test(ctx.ref) && ctx.payload?.['base_ref'] != undefined) {
+          return ctx.payload['base_ref'].replace(/^refs\/heads\//g, '');
         }
-        if (/^refs\/pull\//.test(ctx.ref)) {
-          return ctx.payload?.['pull_request']?.['base']?.ref;
+        // FIXME: keep this for backward compatibility even if doesn't always seem
+        //  to return the expected branch. See the comment below.
+        if (/^refs\/pull\//.test(ctx.ref) && ctx.payload?.['pull_request']?.base?.ref != undefined) {
+          return ctx.payload['pull_request'].base.ref;
         }
         return '';
+      },
+      is_default_branch: function () {
+        const branch = ctx.ref.replace(/^refs\/heads\//g, '');
+        // TODO: "base_ref" is available in the push payload but doesn't always seem to
+        //  return the expected branch when the push tag event occurs. It's also not
+        //  documented in GitHub docs: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+        //  more context: https://github.com/docker/metadata-action/pull/192#discussion_r854673012
+        // if (/^refs\/tags\//.test(ctx.ref) && ctx.payload?.base_ref != undefined) {
+        //   branch = ctx.payload.base_ref.replace(/^refs\/heads\//g, '');
+        // }
+        if (branch == undefined || branch.length == 0) {
+          return 'false';
+        }
+        if (ctx.payload?.['repository']?.default_branch == branch) {
+          return 'true';
+        }
+        // following events always trigger for last commit on default branch
+        // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+        if (
+          /create/.test(ctx.eventName) ||
+          /discussion/.test(ctx.eventName) ||
+          /issues/.test(ctx.eventName) ||
+          /schedule/.test(ctx.eventName)
+        ) {
+          return 'true';
+        }
+        return 'false';
       },
       date: function (format: string) {
         return moment(currentDate).utc().format(format);
       },
     });
+  }
+
+  private getImageNames(): Array<string> {
+    const images: Array<string> = [];
+    for (const image of this.images) {
+      if (!image.enable) {
+        continue;
+      }
+      images.push(Meta.sanitizeImageName(image.name));
+    }
+    return images;
   }
 
   public getTags(): Array<string> {
@@ -385,18 +435,16 @@ export class Meta {
     }
 
     const tags: Array<string> = [];
-    for (const image of this.inputs.images) {
-      const imageLc = core.interpolate(image).toLowerCase();
-      tags.push(`${imageLc}:${this.version.main}`);
+    for (const imageName of this.getImageNames()) {
+      tags.push(`${imageName}:${this.version.main}`);
       for (const partial of this.version.partial) {
-        tags.push(`${imageLc}:${partial}`);
+        tags.push(`${imageName}:${partial}`);
       }
       if (this.version.latest) {
-        tags.push(
-          `${imageLc}:${this.flavor.prefixLatest ? this.flavor.prefix : ''}latest${
-            this.flavor.suffixLatest ? this.flavor.suffix : ''
-          }`
-        );
+        const latestTag = `${this.flavor.prefixLatest ? this.flavor.prefix : ''}latest${
+          this.flavor.suffixLatest ? this.flavor.suffix : ''
+        }`;
+        tags.push(`${imageName}:${Meta.sanitizeTag(latestTag)}`);
       }
     }
     return tags;
@@ -432,7 +480,7 @@ export class Meta {
   }
 
   public getBakeFile(): string {
-    const bakeFile = path.join(tmpDir(), 'docker-metadata-action-bake.json').split(path.sep).join(path.posix.sep);
+    const bakeFile = path.join(tmpDir(), 'container-metadata-action-bake.json').split(path.sep).join(path.posix.sep);
     fs.writeFileSync(
       bakeFile,
       JSON.stringify(
@@ -449,7 +497,7 @@ export class Meta {
                 return res;
               }, {}),
               args: {
-                DOCKER_META_IMAGES: this.inputs.images.join(','),
+                DOCKER_META_IMAGES: this.getImageNames().join(','),
                 DOCKER_META_VERSION: this.version.main,
               },
             },
@@ -461,5 +509,13 @@ export class Meta {
     );
 
     return bakeFile;
+  }
+
+  private static sanitizeImageName(name: string): string {
+    return core.interpolate(name).toLowerCase();
+  }
+
+  private static sanitizeTag(tag: string): string {
+    return tag.replace(/[^a-zA-Z0-9._-]+/g, '-');
   }
 }
