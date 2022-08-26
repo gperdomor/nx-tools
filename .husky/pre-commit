@@ -1,5 +1,6 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
+npx validate-branch-name -r "^(master|main|develop){1}$|^(feature|fix|hotfix|release|renovate)/.+$"
 npm run check-lock-files
 npx --no-install lint-staged --concurrent false

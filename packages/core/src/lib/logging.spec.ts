@@ -1,5 +1,6 @@
 import { logger } from '@nrwl/devkit';
 import { bold } from 'colorette';
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as logging from './logging';
 
 describe('Logging', () => {
@@ -67,5 +68,26 @@ describe('Logging', () => {
       2,
       `\n${logging.GROUP_PREFIX('PREFIX')} ${bold('this is a group message')}\n`
     );
+  });
+
+  describe('isDebug', () => {
+    let restore: RestoreFn;
+
+    afterEach(() => {
+      restore && restore();
+    });
+
+    test.each([
+      [true, 'true'],
+      [true, '1'],
+      [false, 'false'],
+      [false, '0'],
+    ])('should return  %s for RUNNER_DEBUG= %s', (expected: boolean, value: string) => {
+      restore = mockedEnv({
+        RUNNER_DEBUG: value,
+      });
+
+      expect(logging.isDebug()).toEqual(expected);
+    });
   });
 });

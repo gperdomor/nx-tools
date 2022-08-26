@@ -9,7 +9,8 @@ import { bold, cyan, gray, inverse, reset } from 'colorette';
  * Gets whether Actions Step Debug is on or not
  */
 export function isDebug(): boolean {
-  return process.env['RUNNER_DEBUG'] === '1';
+  const debug = process.env['RUNNER_DEBUG'];
+  return debug === 'true' || debug === '1';
 }
 
 /**
