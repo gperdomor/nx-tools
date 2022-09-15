@@ -1,10 +1,10 @@
 import { ExecutorContext, names } from '@nrwl/devkit';
 import { exec, getBooleanInput, getExecOutput, info, interpolate, loadPackage, startGroup } from '@nx-tools/core';
 import { isCI } from 'ci-info';
+import { randomBytes } from 'crypto';
 import 'dotenv/config';
-import { randomBytes } from 'node:crypto';
-import { mkdir, rmdir, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { mkdir, rmdir, writeFile } from 'fs/promises';
+import { join } from 'path';
 import * as buildx from './buildx';
 import * as context from './context';
 import { DockerBuildSchema } from './schema';
