@@ -12,5 +12,4 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/container-metadata',
-  testEnvironment: 'node',
 };
