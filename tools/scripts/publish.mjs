@@ -9,12 +9,12 @@
 
 import { readCachedProjectGraph } from '@nrwl/devkit';
 import { execSync } from 'child_process';
-import { bold, red } from 'colorette';
 import { readFileSync, writeFileSync } from 'fs';
+import chalk from 'chalk';
 
 function invariant(condition, message) {
   if (!condition) {
-    console.error(bold(red(message)));
+    console.error(chalk.bold.red(message));
     process.exit(1);
   }
 }

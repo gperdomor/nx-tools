@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { PrismaClient } from './artifacts/client';
 
 const prisma = new PrismaClient();

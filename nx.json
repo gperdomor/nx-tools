@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "nx-tools",
-  "affected": {
-    "defaultBase": "main"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
@@ -18,26 +15,26 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
-    },
     "lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+    },
+    "test": {
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
     }
+  },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.[jt]s"
+    ],
+    "sharedGlobals": []
   },
   "workspaceLayout": {
     "appsDir": "packages",
     "libsDir": "packages"
-  },
-  "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "sharedGlobals": [],
-    "production": [
-      "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json"
-    ]
   }
 }
