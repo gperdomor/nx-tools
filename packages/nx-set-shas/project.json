@@ -14,7 +14,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs nx-set-shas {args.ver} {args.tag}"
       },
@@ -34,7 +34,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-set-shas"],
+      "outputs": ["{workspaceRoot}/coverage/packages/nx-set-shas"],
       "options": {
         "jestConfig": "packages/nx-set-shas/jest.config.ts",
         "passWithNoTests": true

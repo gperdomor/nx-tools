@@ -1,5 +1,5 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
-import * as path from 'path';
+import * as path from 'node:path';
 import { getBooleanInput, getInput, getMultilineInput, getPosixName } from './get-input';
 
 const testEnvVars = {
