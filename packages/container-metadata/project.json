@@ -14,7 +14,7 @@
       }
     },
     "publish": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "command": "node tools/scripts/publish.mjs container-metadata {args.ver} {args.tag}"
       },
@@ -34,7 +34,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/container-metadata"],
+      "outputs": ["{workspaceRoot}/coverage/packages/container-metadata"],
       "options": {
         "jestConfig": "packages/container-metadata/jest.config.ts",
         "passWithNoTests": true

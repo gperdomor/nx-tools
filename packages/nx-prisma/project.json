@@ -49,7 +49,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/nx-prisma"],
+      "outputs": ["{workspaceRoot}/coverage/packages/nx-prisma"],
       "options": {
         "jestConfig": "packages/nx-prisma/jest.config.ts",
         "passWithNoTests": true
