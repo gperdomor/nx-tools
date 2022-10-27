@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Status executor",
   "description": "Looks up the migrations in /prisma/migrations/* folder and the entries in the _prisma_migrations table and compiles information about the state of the migrations in your database.",

@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Seed executor",
   "description": "Runs the seed script",
@@ -16,5 +15,5 @@
       "description": "TypeScript config to use for seeding"
     }
   },
-  "required": ["script", "tsConfig"]
+  "required": ["script"]
 }

@@ -1,7 +1,7 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { expectCommandToHaveBeenCalled } from '../generate/executor.spec';
 import executor from './executor';
-import { PullExecutorSchema } from './schema';
+import { StudioExecutorSchema } from './schema';
 
 jest.mock('@nx-tools/core', () => {
   const originalModule = jest.requireActual('@nx-tools/core');
@@ -17,46 +17,42 @@ const mockContext: Partial<ExecutorContext> = {
   projectName: 'foo',
 };
 
-describe('Pull Executor', () => {
+describe('Studio Executor', () => {
   it('empty options', async () => {
-    const options: PullExecutorSchema = {};
+    const options: StudioExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma studio', [], 'apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
-  test.each([['schema', 'my-prisma-file.schema']])(
-    'given %p option with %p value, should be handled has arg',
-    async (option: keyof PullExecutorSchema, value: string) => {
-      const options: PullExecutorSchema = {
+  test.each([
+    ['schema', 'my-prisma-file.schema'],
+    ['browser', 'safari'],
+    ['browser', 'chrome'],
+    ['port', 5555],
+  ])(
+    'given %p option with %p value, should be included in the args array',
+    async (option: keyof Omit<StudioExecutorSchema, 'options'>, value: string) => {
+      const options: StudioExecutorSchema = {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`], 'apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma studio', [`--${option}=${value}`], 'apps/foo'));
       expect(output.success).toBeTruthy();
     }
   );
 
-  test.each([['force'], ['print']])('given %p, should be handled has flag', async (flag: keyof PullExecutorSchema) => {
-    const options: PullExecutorSchema = {
-      [flag]: true,
-    };
-    const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${flag}`], 'apps/foo'));
-    expect(output.success).toBeTruthy();
-  });
-
   it('with all options', async () => {
-    const options: PullExecutorSchema = {
+    const options: StudioExecutorSchema = {
       schema: 'my-schema.schema',
-      force: true,
-      print: true,
+      browser: 'firefox',
+      port: 6666,
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled(
-        'npx prisma db pull',
-        ['--schema=my-schema.schema', '--force', '--print'],
+        'npx prisma studio',
+        ['--schema=my-schema.schema', '--browser=firefox', '--port=6666'],
         'apps/foo'
       )
     );

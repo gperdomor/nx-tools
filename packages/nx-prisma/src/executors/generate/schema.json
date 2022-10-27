@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Generate executor",
   "description": "",
@@ -10,6 +9,14 @@
     "schema": {
       "type": "string",
       "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+    },
+    "data-proxy": {
+      "type": "boolean",
+      "description": "The generate command will generate Prisma Client for use with the Data Proxy."
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "The generate command will continue to watch the schema.prisma file and re-generate Prisma Client on file changes."
     }
   },
   "required": []

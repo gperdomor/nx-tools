@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Deploy executor",
   "description": "Applies all pending migrations, and creates the database if it does not exist",

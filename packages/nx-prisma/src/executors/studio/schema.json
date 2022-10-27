@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "cli": "nx",
+  "title": "Prisma Studio executor",
+  "description": "The studio command allows you to interact with and manage your data interactively",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+    },
+    "browser": {
+      "type": "string",
+      "description": "The browser to auto-open Studio in"
+    },
+    "port": {
+      "type": "number",
+      "description": "The port number to start Studio on"
+    }
+  },
+  "required": []
+}

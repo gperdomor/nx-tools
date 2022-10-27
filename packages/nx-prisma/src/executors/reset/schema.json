@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Reset executor",
   "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts",
@@ -11,23 +10,17 @@
       "type": "string",
       "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
     },
-    "options": {
-      "type": "object",
-      "description": "Optional flags",
-      "properties": {
-        "force": {
-          "type": "boolean",
-          "description": "Skip the confirmation prompt."
-        },
-        "skip-seed": {
-          "type": "boolean",
-          "description": "Skip triggering seed."
-        },
-        "skip-generate": {
-          "type": "boolean",
-          "description": "Skip triggering generators (for example, Prisma Client)."
-        }
-      }
+    "force": {
+      "type": "boolean",
+      "description": "Skip the confirmation prompt."
+    },
+    "skip-generate": {
+      "type": "boolean",
+      "description": "Skip triggering generators (for example, Prisma Client)."
+    },
+    "skip-seed": {
+      "type": "boolean",
+      "description": "Skip triggering seed."
     }
   },
   "required": []

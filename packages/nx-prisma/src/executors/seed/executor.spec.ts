@@ -1,15 +1,49 @@
+import { ExecutorContext } from '@nrwl/devkit';
+import { expectCommandToHaveBeenCalled } from '../generate/executor.spec';
 import executor from './executor';
-import type { PrismaSeedSchema } from './schema';
+import { SeedExecutorSchema } from './schema';
 
-const options: PrismaSeedSchema = {
-  script: 'packages/nx-prisma/tests/seed.ts',
-  tsConfig: 'packages/nx-prisma/tsconfig.spec.json',
+jest.mock('@nx-tools/core', () => {
+  const originalModule = jest.requireActual('@nx-tools/core');
+  return {
+    __esModule: true,
+    ...originalModule,
+    getExecOutput: jest.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
+  };
+});
+
+const mockContext: Partial<ExecutorContext> = {
+  workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
+  projectName: 'foo',
 };
 
-export const seedSuite = () =>
-  describe('Seed Executor', () => {
-    it('can run', async () => {
-      const output = await executor(options);
-      expect(output.success).toBeTruthy();
-    }, 40000);
+describe('Seed Executor', () => {
+  it('empty options', async () => {
+    const options: SeedExecutorSchema = {
+      script: undefined,
+    };
+    expect.assertions(1);
+    await expect(executor(options, mockContext as ExecutorContext)).rejects.toThrowError(
+      'You must specify a seed script file.'
+    );
   });
+
+  it('script option', async () => {
+    const options: SeedExecutorSchema = {
+      script: 'custom-seed-file.ts',
+    };
+    const output = await executor(options, mockContext as ExecutorContext);
+    expect(expectCommandToHaveBeenCalled('npx ts-node', ['custom-seed-file.ts'], 'apps/foo'));
+    expect(output.success).toBeTruthy();
+  });
+
+  it('with all options', async () => {
+    const options: SeedExecutorSchema = {
+      script: 'seed.ts',
+      tsConfig: 'tsconfig.base.ts',
+    };
+    const output = await executor(options, mockContext as ExecutorContext);
+    expect(expectCommandToHaveBeenCalled('npx ts-node', ['--project=tsconfig.base.ts', 'seed.ts'], 'apps/foo'));
+    expect(output.success).toBeTruthy();
+  });
+});

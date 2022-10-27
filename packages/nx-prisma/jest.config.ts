@@ -12,6 +12,4 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/nx-prisma',
-  globalSetup: './setup-test.ts',
-  testMatch: ['**/test-suite.spec.ts'],
 };
