@@ -2,5 +2,11 @@
   "$schema": "http://json-schema.org/schema",
   "name": "nx-prisma",
   "version": "0.0.1",
-  "generators": {}
+  "generators": {
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Initial setup for a prisma project"
+    }
+  }
 }

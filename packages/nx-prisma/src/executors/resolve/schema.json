@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "cli": "nx",
+  "title": "Prisma Resolve executor",
+  "description": "Allows you to solve migration history issues in production by marking a failed migration as already applied (supports baselining) or rolled back",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+    },
+    "applied": {
+      "type": "string",
+      "description": "Record a specific migration as applied - for example --applied '20201231000000_add_users_table'"
+    },
+    "rolled-back": {
+      "type": "string",
+      "description": "Record a specific migration as rolled back - for example --rolled-back '20201231000000_add_users_table'."
+    }
+  },
+  "required": []
+}

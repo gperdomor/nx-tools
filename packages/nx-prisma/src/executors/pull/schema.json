@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "outputCapture": "direct-nodejs",
   "$schema": "http://json-schema.org/schema",
+  "version": 2,
   "cli": "nx",
   "title": "Prisma Pull executor",
   "description": "Connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema.",
@@ -11,19 +10,13 @@
       "type": "string",
       "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
     },
-    "options": {
-      "type": "object",
-      "description": "Optional flags",
-      "properties": {
-        "force": {
-          "type": "boolean",
-          "description": "Force overwrite of manual changes made to schema."
-        },
-        "print": {
-          "type": "boolean",
-          "description": "Prints the created schema.prisma to the screen instead of writing it to the filesystem."
-        }
-      }
+    "force": {
+      "type": "boolean",
+      "description": "Force overwrite of manual changes made to schema."
+    },
+    "print": {
+      "type": "boolean",
+      "description": "Prints the created schema.prisma to the screen instead of writing it to the filesystem."
     }
   },
   "required": []

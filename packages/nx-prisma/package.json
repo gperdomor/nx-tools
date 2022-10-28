@@ -1,26 +1,23 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "3.0.1",
-  "type": "commonjs",
+  "version": "4.0.0-alpha.8",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
     "wSedlacek"
   ],
-  "repository": "https://github.com/nx-tools/nx-tools",
-  "bugs": "https://github.com/nx-tools/nx-tools/issues",
+  "repository": "https://github.com/gperdomor/nx-tools",
+  "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
-  "engines": {
-    "node": ">=14"
-  },
   "dependencies": {
-    "@nx-tools/core": "^3.0.1",
-    "@swc/helpers": "^0.4.3"
+    "@nx-tools/core": "4.0.0-alpha.8",
+    "@swc/helpers": "^0.4.12"
   },
   "peerDependencies": {
-    "prisma": "^3.15.0",
+    "@nrwl/devkit": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
+    "prisma": "^4.5.0",
     "ts-node": "*"
   }
 }

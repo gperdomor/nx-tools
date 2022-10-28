@@ -1,4 +1,5 @@
 {
+  "name": "nx-prisma",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-prisma/src",
   "projectType": "library",
@@ -32,7 +33,8 @@
             "glob": "executors.json",
             "output": "."
           }
-        ]
+        ],
+        "updateBuildableProjectDepsInPackageJson": false
       }
     },
     "lint": {
@@ -49,7 +51,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/nx-prisma"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/nx-prisma/jest.config.ts",
         "passWithNoTests": true

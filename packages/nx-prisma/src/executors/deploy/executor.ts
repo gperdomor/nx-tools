@@ -1,9 +1,21 @@
-import { createPrismaBuilder } from '../core/prisma-builder';
-import { PrismaDeploySchema } from './schema';
+import { ExecutorContext } from '@nrwl/devkit';
+import { runCommand } from '../../run-commands';
+import { DeployExecutorSchema } from './schema';
 
-const runExecutor = createPrismaBuilder<PrismaDeploySchema>({
-  description: 'Deploying Database...',
-  command: 'npx prisma migrate deploy',
-});
+export default async function run(options: DeployExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+  return runCommand(options, ctx, {
+    description: 'Deploying Database',
+    command: 'prisma migrate deploy',
+    getArgs,
+  });
+}
 
-export default runExecutor;
+const getArgs = (options: DeployExecutorSchema): string[] => {
+  const args = [];
+
+  if (options?.schema) {
+    args.push(`--schema=${options.schema}`);
+  }
+
+  return args;
+};

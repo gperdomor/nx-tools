@@ -1,0 +1,13 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./db.sql"
+}
+
+model Todo {
+  id String @id @default(cuid())
+  @@map("todos")
+}

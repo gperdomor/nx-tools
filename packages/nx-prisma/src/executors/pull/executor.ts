@@ -1,9 +1,29 @@
-import { createPrismaBuilder } from '../core/prisma-builder';
-import { PrismaPullSchema } from './schema';
+import { ExecutorContext } from '@nrwl/devkit';
+import { runCommand } from '../../run-commands';
+import { PullExecutorSchema } from './schema';
 
-const runExecutor = createPrismaBuilder<PrismaPullSchema>({
-  description: 'Pulling Database...',
-  command: 'npx prisma db pull',
-});
+export default async function run(options: PullExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+  return runCommand(options, ctx, {
+    description: 'Pulling Database',
+    command: 'prisma db pull',
+    getArgs,
+  });
+}
 
-export default runExecutor;
+const getArgs = (options: PullExecutorSchema): string[] => {
+  const args = [];
+
+  if (options?.schema) {
+    args.push(`--schema=${options.schema}`);
+  }
+
+  if (options?.force) {
+    args.push('--force');
+  }
+
+  if (options?.print) {
+    args.push('--print');
+  }
+
+  return args;
+};

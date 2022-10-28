@@ -6,56 +6,57 @@ This builder provides a wrapper around the [Prisma CLI](https://www.npmjs.com/pa
 
 ### Configuration
 
-The first step is configure the builder in your `angular.json` or `workspace.json`.
+The first step to use this plugin is configure your projects and create new targets.
+
 You will need at least one project per each prisma schema you make. The prisma schemas can be in already existing backend/frontend projects OR in their own libraries.
 Each CLI command uses it's own architect so add the ones you need from the examples bellow.
 
 ```json
-"deploy": {
+"prisma-deploy": {
   "builder": "@nx-tools/nx-prisma:generate",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"generate": {
+"prisma-generate": {
   "builder": "@nx-tools/nx-prisma:generate",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"migrate": {
+"prisma-migrate": {
   "builder": "@nx-tools/nx-prisma:migrate",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"pull": {
-  "builder": "@nx-tools/nx-prisma:rollback",
+"prisma-pull": {
+  "builder": "@nx-tools/nx-prisma:pull",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"push": {
-  "builder": "@nx-tools/nx-prisma:seed",
+"prisma-push": {
+  "builder": "@nx-tools/nx-prisma:push",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"reset": {
-  "builder": "@nx-tools/nx-prisma:seed",
+"prisma-reset": {
+  "builder": "@nx-tools/nx-prisma:reset",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
 },
-"seed": {
+"prisma-seed": {
   "builder": "@nx-tools/nx-prisma:seed",
   "options": {
     "script": "apps/examples/prisma/data/seed.ts",
     "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
   }
 },
-"status": {
-  "builder": "@nx-tools/nx-prisma:seed",
+"prisma-status": {
+  "builder": "@nx-tools/nx-prisma:status",
   "options": {
     "schema": "apps/api/schema.prisma"
   }
@@ -66,12 +67,8 @@ Note that the options use absolute paths to where your configuration files live 
 
 ### Usage
 
-Once your `angular.json` or `workspace.json` is configured you can run the commands using the the Angular/NX CLI.
+Once your project is configured and taking the previous configuration as example, you can run the commands using the the nx command:
 
 ```sh
-nx <architect> <project>
-# OR
-ng <architect> <project>
-# ie
-nx migrations prisma
+nx run project-name:prisma-generate
 ```

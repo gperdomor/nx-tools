@@ -1,10 +1,15 @@
 {
   "$schema": "http://json-schema.org/schema",
   "executors": {
+    "deploy": {
+      "implementation": "./src/executors/deploy/executor",
+      "schema": "./src/executors/deploy/schema.json",
+      "description": "Applies all pending migrations, and creates the database if it does not exist"
+    },
     "generate": {
       "implementation": "./src/executors/generate/executor",
       "schema": "./src/executors/generate/schema.json",
-      "description": "Generates Prisma artifacts (e.g. Prisma Client)"
+      "description": "Generates assets like Prisma Client based on the generator and data model blocks defined in your schema.prisma file"
     },
     "migrate": {
       "implementation": "./src/executors/migrate/executor",
@@ -14,7 +19,7 @@
     "pull": {
       "implementation": "./src/executors/pull/executor",
       "schema": "./src/executors/pull/schema.json",
-      "description": "Adds Prisma models to your Prisma schema that reflect the current database schema"
+      "description": "Connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema"
     },
     "push": {
       "implementation": "./src/executors/push/executor",
@@ -26,6 +31,11 @@
       "schema": "./src/executors/reset/schema.json",
       "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts"
     },
+    "resolve": {
+      "implementation": "./src/executors/resolve/executor",
+      "schema": "./src/executors/resolve/schema.json",
+      "description": "Allows you to solve migration history issues in production by marking a failed migration as already applied (supports baselining) or rolled back"
+    },
     "seed": {
       "implementation": "./src/executors/seed/executor",
       "schema": "./src/executors/seed/schema.json",
@@ -36,10 +46,10 @@
       "schema": "./src/executors/status/schema.json",
       "description": "Looks up the migrations and shows the DB status"
     },
-    "deploy": {
-      "implementation": "./src/executors/deploy/executor",
-      "schema": "./src/executors/deploy/schema.json",
-      "description": "Applies all pending migrations, and creates the database if it does not exist"
+    "studio": {
+      "implementation": "./src/executors/studio/executor",
+      "schema": "./src/executors/studio/schema.json",
+      "description": "The studio command allows you to interact with and manage your data interactively"
     }
   }
 }

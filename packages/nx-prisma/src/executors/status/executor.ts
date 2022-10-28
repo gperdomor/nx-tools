@@ -1,9 +1,21 @@
-import { createPrismaBuilder } from '../core/prisma-builder';
-import { PrismaStatusSchema } from './schema';
+import { ExecutorContext } from '@nrwl/devkit';
+import { runCommand } from '../../run-commands';
+import { StatusExecutorSchema } from './schema';
 
-const runExecutor = createPrismaBuilder<PrismaStatusSchema>({
-  description: 'Getting Migration Status...',
-  command: 'npx prisma migrate status',
-});
+export default async function run(options: StatusExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+  return runCommand(options, ctx, {
+    description: 'Getting Migration Status',
+    command: 'prisma migrate status',
+    getArgs,
+  });
+}
 
-export default runExecutor;
+const getArgs = (options: StatusExecutorSchema): string[] => {
+  const args = [];
+
+  if (options?.schema) {
+    args.push(`--schema=${options.schema}`);
+  }
+
+  return args;
+};
