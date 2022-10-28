@@ -11,6 +11,8 @@ const metadata = `{
   "containerimage.digest": "sha256:b09b9482c72371486bb2c1d2c2a2633ed1d0b8389e12c8d52b9e052725c0c83c"
 }`;
 
+jest.setTimeout(10000);
+
 jest.mock('../../context', () => {
   const originalModule = jest.requireActual('../../context');
   return {
@@ -93,7 +95,7 @@ describe('getVersion', () => {
   it('valid', async () => {
     const version = await podman.getVersion();
     expect(semver.valid(version)).not.toBeNull();
-  });
+  }, 30000);
 });
 
 describe('parseVersion', () => {

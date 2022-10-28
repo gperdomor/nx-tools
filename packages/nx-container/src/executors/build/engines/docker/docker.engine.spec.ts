@@ -4,6 +4,8 @@ import * as context from '../../context';
 import { setInput } from '../../context.spec';
 import { Docker } from './docker.engine';
 
+jest.setTimeout(10000);
+
 jest.mock('../../context', () => {
   const originalModule = jest.requireActual('../../context');
   return {
