@@ -16,13 +16,13 @@ build, secrets, remote cache, etc. and different builder deployment/namespacing 
 
 - [Usage](#usage)
 - [Advanced usage](#advanced-usage)
-  - [Multi-platform image](docs/advanced/multi-platform.md)
-  - [Isolated builders](docs/advanced/isolated-builders.md)
-  - [Push to multi-registries](docs/advanced/push-multi-registries.md)
-  - [Cache](docs/advanced/cache.md)
-  - [Local registry](docs/advanced/local-registry.md)
-  - [Export image to Docker](docs/advanced/export-docker.md)
-  - [Handle tags and labels](docs/advanced/tags-labels.md)
+  - [Multi-platform image](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/multi-platform.md)
+  - [Isolated builders](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/isolated-builders.md)
+  - [Push to multi-registries](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/push-multi-registries.md)
+  - [Cache](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/cache.md)
+  - [Local registry](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/local-registry.md)
+  - [Export image to Docker](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/export-docker.md)
+  - [Handle tags and labels](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/tags-labels.md)
 - [Customizing](#customizing)
   - [inputs](#inputs)
 - [Usage with CI](#usage-with-ci)
@@ -56,13 +56,13 @@ This build not handle registry login steps, so if you wanna push your docker ima
 
 ## Advanced usage
 
-- [Multi-platform image](docs/advanced/multi-platform.md)
-- [Isolated builders](docs/advanced/isolated-builders.md)
-- [Push to multi-registries](docs/advanced/push-multiple-registries.md)
-- [Cache](docs/advanced/cache.md)
-- [Local registry](docs/advanced/local-registry.md)
-- [Export image to Docker](docs/advanced/export-docker.md)
-- [Handle tags and labels](docs/advanced/tags-labels.md)
+- [Multi-platform image](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/multi-platform.md)
+- [Isolated builders](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/isolated-builders.md)
+- [Push to multi-registries](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/push-multiple-registries.md)
+- [Cache](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/cache.md)
+- [Local registry](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/local-registry.md)
+- [Export image to Docker](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/export-docker.md)
+- [Handle tags and labels](https://github.com/gperdomor/nx-tools/blob/v3/packages/nx-docker/docs/advanced/tags-labels.md)
 
 ## Customizing
 
