@@ -1,6 +1,5 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
 import { getExecOutput, getProjectRoot, startGroup } from '@nx-tools/core';
-import { GROUP_PREFIX } from '../../constants';
 import { SeedExecutorSchema } from './schema';
 
 export default async function run(options: SeedExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -12,7 +11,7 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
   const command = `${getPackageManagerCommand().exec} ts-node`;
   const args = getArgs(options);
 
-  startGroup('Seeding Database', GROUP_PREFIX);
+  startGroup('Seeding Database', 'Nx Prisma');
 
   await getExecOutput(command, args, { cwd, ignoreReturnCode: true }).then((res) => {
     if (res.stderr.length > 0 && res.exitCode != 0) {

@@ -1,7 +1,6 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
 import { getProjectRoot, startGroup } from '@nx-tools/core';
 import { execSync } from 'child_process';
-import { GROUP_PREFIX } from '../../constants';
 import { MigrateExecutorSchema } from './schema';
 
 export default async function run(options: MigrateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -9,7 +8,7 @@ export default async function run(options: MigrateExecutorSchema, ctx: ExecutorC
   const command = `${getPackageManagerCommand().exec} prisma migrate dev`;
   const args = getArgs(options);
 
-  startGroup('Migrating Database', GROUP_PREFIX);
+  startGroup('Migrating Database', 'Nx Prisma');
 
   execSync([command, ...args].join(' '), {
     cwd: cwd,

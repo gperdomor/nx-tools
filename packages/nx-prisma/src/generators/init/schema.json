@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Init",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add the Tailwind CSS setup for.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What project would you like to add the Tailwind CSS setup?"
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skips formatting the workspace after the generator completes."
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add dependencies to `package.json`"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["project"]
+}

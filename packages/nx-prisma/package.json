@@ -12,7 +12,8 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "4.0.0-alpha.8"
+    "@nx-tools/core": "4.0.0-alpha.8",
+    "@swc/helpers": "^0.4.12"
   },
   "peerDependencies": {
     "@nrwl/devkit": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
