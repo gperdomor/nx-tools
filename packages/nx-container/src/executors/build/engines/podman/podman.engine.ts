@@ -28,20 +28,24 @@ export class Podman extends EngineAdapter {
       );
     }
 
-    core.startGroup(`Podman info`, GROUP_PREFIX);
-    await core.exec('podman', ['version'], {
-      failOnStdErr: false,
-    });
-    await core.exec('podman', ['info'], {
-      failOnStdErr: false,
-    });
+    if (!inputs.quiet) {
+      core.startGroup('Podman info', GROUP_PREFIX);
+      await core.exec('podman', ['version'], {
+        failOnStdErr: false,
+      });
+      await core.exec('podman', ['info'], {
+        failOnStdErr: false,
+      });
+    }
 
     this.podmanVersion = await podman.getVersion();
 
-    core.startGroup(`Podman version`);
-    await core.exec('podman', ['version'], {
-      failOnStdErr: false,
-    });
+    if (!inputs.quiet) {
+      core.startGroup('Podman version');
+      await core.exec('podman', ['version'], {
+        failOnStdErr: false,
+      });
+    }
   }
 
   async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {

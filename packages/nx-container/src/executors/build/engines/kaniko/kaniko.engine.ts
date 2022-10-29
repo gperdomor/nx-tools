@@ -26,11 +26,13 @@ export class Kaniko extends EngineAdapter {
       );
     }
 
-    core.startGroup(`Kaniko info`, GROUP_PREFIX);
-    const cmd = kaniko.getCommand(['version']);
-    await core.exec(cmd.command, cmd.args, {
-      failOnStdErr: false,
-    });
+    if (!inputs.quiet) {
+      core.startGroup('Kaniko info', GROUP_PREFIX);
+      const cmd = kaniko.getCommand(['version']);
+      await core.exec(cmd.command, cmd.args, {
+        failOnStdErr: false,
+      });
+    }
 
     this.originalDirs = await readdir('/kaniko');
   }
