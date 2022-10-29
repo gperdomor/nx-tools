@@ -3,8 +3,15 @@ import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as github from './github';
 
-jest.spyOn(github, 'context').mockImplementation((): Promise<Context> => {
-  return Promise.resolve(new Context());
+jest.mock('./github', () => {
+  const actualModule = jest.requireActual('./github');
+  return {
+    __esModule: true,
+    ...actualModule,
+    context: jest.fn(() => {
+      return Promise.resolve(new Context());
+    }),
+  };
 });
 
 describe('GitHub Context', () => {

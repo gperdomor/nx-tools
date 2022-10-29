@@ -46,6 +46,8 @@ describe('getPosixName', () => {
     ['builder', 'INPUT_BUILDER'],
     ['cache_from', 'INPUT_CACHE_FROM'],
     ['no-Cache', 'INPUT_NO_CACHE'],
+    ['engine', 'INPUT_ENGINE'],
+    ['ENGINE', 'INPUT_ENGINE'],
   ])('given %s, should return %s', (name: string, expected: string) => {
     expect(getPosixName(name)).toEqual(expected);
   });

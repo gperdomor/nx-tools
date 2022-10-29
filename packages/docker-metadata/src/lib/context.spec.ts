@@ -1,15 +1,22 @@
 /* eslint-disable no-useless-escape */
-import { names } from '@nrwl/devkit';
-import * as fs from 'fs';
-import * as path from 'path';
+import { getPosixName } from '@nx-tools/core';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import * as context from './context';
 
-jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
-  const tmpDir = path.join('/tmp/.docker-metadata-action-jest').split(path.sep).join(path.posix.sep);
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir, { recursive: true });
-  }
-  return tmpDir;
+jest.mock('./context', () => {
+  const actualModule = jest.requireActual('./context');
+  return {
+    __esModule: true,
+    ...actualModule,
+    tmpDir: jest.fn(() => {
+      const tmpDir = path.join('/tmp/.docker-metadata-action-jest').split(path.sep).join(path.posix.sep);
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      return tmpDir;
+    }),
+  };
 });
 
 describe('getInputList', () => {
@@ -152,10 +159,6 @@ ccccccccc`,
   });
 });
 
-function getInputName(name: string): string {
-  return names(`INPUT_${name}`).constantName;
-}
-
 function setInput(name: string, value: string): void {
-  process.env[getInputName(name)] = value;
+  process.env[getPosixName(name)] = value;
 }
