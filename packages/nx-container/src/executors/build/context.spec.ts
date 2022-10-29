@@ -1,4 +1,4 @@
-import { names } from '@nrwl/devkit';
+import { getPosixName } from '@nx-tools/core';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as context from './context';
@@ -279,11 +279,6 @@ ccccccccc`,
   });
 });
 
-// See: https://github.com/actions/toolkit/blob/a1b068ec31a042ff1e10a522d8fdf0b8869d53ca/packages/core/src/core.ts#L89
-function getInputName(name: string): string {
-  return names(`INPUT_${name}`).constantName;
-}
-
 export function setInput(name: string, value: string): void {
-  process.env[getInputName(name)] = value;
+  process.env[getPosixName(name)] = value;
 }

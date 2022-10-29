@@ -1,5 +1,6 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext, names } from '@nrwl/devkit';
 import * as core from '@nx-tools/core';
+import { getProjectRoot } from '@nx-tools/core';
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
 import { rmdir } from 'node:fs/promises';
@@ -20,13 +21,15 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
       defContext,
       {
         ...options,
-        file: options.file || join(ctx?.workspace.projects[ctx.projectName].root, 'Dockerfile'),
+        file: options.file || join(getProjectRoot(ctx), 'Dockerfile'),
       },
       ctx
     );
 
-    const engine: EngineAdapter = EngineFactory.create(options.engine || 'docker');
+    const prefix = names(ctx?.projectName || '').constantName;
+    const provider = core.getInput('engine', { prefix, fallback: options.engine || 'docker' });
 
+    const engine: EngineAdapter = EngineFactory.create(provider);
     await engine.initialize(inputs, ctx);
 
     if (options.metadata?.images) {

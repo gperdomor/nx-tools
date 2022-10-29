@@ -14,7 +14,7 @@ export interface InputOptions {
   prefix?: string;
 }
 
-export const getPosixName = (name: string) => names(`INPUT_${name}`).constantName;
+export const getPosixName = (name: string) => names(`input-${name.toLowerCase()}`).constantName;
 
 /**
  * Gets the value of an input.
