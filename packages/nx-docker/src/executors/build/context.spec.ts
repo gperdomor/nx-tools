@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { getPosixName } from '@nx-tools/core';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import * as fs from 'fs';
+import * as path from 'path';
 import * as context from './context';
 
 const pgp = `-----BEGIN PGP PRIVATE KEY BLOCK-----
