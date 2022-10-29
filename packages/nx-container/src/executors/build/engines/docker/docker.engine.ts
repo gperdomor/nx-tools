@@ -26,16 +26,18 @@ export class Docker extends EngineAdapter {
     // standalone if docker cli not available
     this.standalone = !(await docker.isAvailable());
 
-    core.startGroup(`Docker info`, GROUP_PREFIX);
-    if (this.standalone) {
-      core.info(`Docker info skipped in standalone mode`);
-    } else {
-      await core.exec('docker', ['version'], {
-        failOnStdErr: false,
-      });
-      await core.exec('docker', ['info'], {
-        failOnStdErr: false,
-      });
+    if (!inputs.quiet) {
+      core.startGroup('Docker info', GROUP_PREFIX);
+      if (this.standalone) {
+        core.info('Docker info skipped in standalone mode');
+      } else {
+        await core.exec('docker', ['version'], {
+          failOnStdErr: false,
+        });
+        await core.exec('docker', ['info'], {
+          failOnStdErr: false,
+        });
+      }
     }
 
     if (!(await buildx.isAvailable(this.standalone))) {
@@ -46,11 +48,13 @@ export class Docker extends EngineAdapter {
 
     this.buildxVersion = await buildx.getVersion();
 
-    core.startGroup(`Buildx version`);
-    const versionCmd = buildx.getCommand(['version'], this.standalone);
-    await core.exec(versionCmd.command, versionCmd.args, {
-      failOnStdErr: false,
-    });
+    if (!inputs.quiet) {
+      core.startGroup('Buildx version');
+      const versionCmd = buildx.getCommand(['version'], this.standalone);
+      await core.exec(versionCmd.command, versionCmd.args, {
+        failOnStdErr: false,
+      });
+    }
 
     this.createdBuilder = core.getBooleanInput('create-builder', {
       prefix: names(ctx?.projectName || '').constantName,
