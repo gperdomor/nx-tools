@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -25,7 +26,7 @@ describe('Generate Executor', () => {
   it('empty options', async () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma generate', [], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma generate', [], 'workspace-root/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -36,7 +37,7 @@ describe('Generate Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`], 'apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`], 'workspace-root/apps/foo'));
       expect(output.success).toBeTruthy();
     }
   );
@@ -48,7 +49,7 @@ describe('Generate Executor', () => {
         [flag]: true,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${flag}`], 'apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${flag}`], 'workspace-root/apps/foo'));
       expect(output.success).toBeTruthy();
     }
   );
@@ -64,7 +65,7 @@ describe('Generate Executor', () => {
       expectCommandToHaveBeenCalled(
         'npx prisma generate',
         ['--schema=my-schema.schema', '--data-proxy', '--watch'],
-        'apps/foo'
+        'workspace-root/apps/foo'
       )
     );
     expect(output.success).toBeTruthy();

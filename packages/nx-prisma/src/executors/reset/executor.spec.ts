@@ -13,6 +13,7 @@ jest.mock('child_process', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -21,7 +22,10 @@ describe('Reset Executor', () => {
   it('empty options', async () => {
     const options: ResetExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset`, { cwd: 'apps/foo', stdio: 'inherit' });
+    expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset`, {
+      cwd: 'workspace-root/apps/foo',
+      stdio: 'inherit',
+    });
     expect(output.success).toBeTruthy();
   });
 
@@ -33,7 +37,7 @@ describe('Reset Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset --${option}=${value}`, {
-        cwd: 'apps/foo',
+        cwd: 'workspace-root/apps/foo',
         stdio: 'inherit',
       });
       expect(output.success).toBeTruthy();
@@ -48,7 +52,7 @@ describe('Reset Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset --${flag}`, {
-        cwd: 'apps/foo',
+        cwd: 'workspace-root/apps/foo',
         stdio: 'inherit',
       });
       expect(output.success).toBeTruthy();
@@ -65,7 +69,7 @@ describe('Reset Executor', () => {
     const output = await executor(options, mockContext as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate reset --schema=my-schema.schema --force --skip-generate --skip-seed',
-      { cwd: 'apps/foo', stdio: 'inherit' }
+      { cwd: 'workspace-root/apps/foo', stdio: 'inherit' }
     );
     expect(output.success).toBeTruthy();
   });

@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -21,7 +22,7 @@ describe('Deploy Executor', () => {
   it('empty options', async () => {
     const options: DeployExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma migrate deploy', [], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma migrate deploy', [], 'workspace-root/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -32,7 +33,9 @@ describe('Deploy Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma migrate deploy', [`--${option}=${value}`], 'apps/foo'));
+      expect(
+        expectCommandToHaveBeenCalled('npx prisma migrate deploy', [`--${option}=${value}`], 'workspace-root/apps/foo')
+      );
       expect(output.success).toBeTruthy();
     }
   );

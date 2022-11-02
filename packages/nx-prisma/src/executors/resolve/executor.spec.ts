@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -47,7 +48,9 @@ describe('Resolve Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma migrate resolve', [`--${option}=${value}`], 'apps/foo'));
+      expect(
+        expectCommandToHaveBeenCalled('npx prisma migrate resolve', [`--${option}=${value}`], 'workspace-root/apps/foo')
+      );
       expect(output.success).toBeTruthy();
     }
   );
@@ -62,7 +65,7 @@ describe('Resolve Executor', () => {
       expectCommandToHaveBeenCalled(
         'npx prisma migrate resolve',
         ['--schema=custom.schema', '--applied=add_users_table'],
-        'apps/foo'
+        'workspace-root/apps/foo'
       )
     );
     expect(output.success).toBeTruthy();
@@ -78,7 +81,7 @@ describe('Resolve Executor', () => {
       expectCommandToHaveBeenCalled(
         'npx prisma migrate resolve',
         ['--schema=custom.schema', '--rolled-back=add_users_table'],
-        'apps/foo'
+        'workspace-root/apps/foo'
       )
     );
     expect(output.success).toBeTruthy();
