@@ -13,6 +13,7 @@ jest.mock('child_process', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -22,7 +23,7 @@ describe('Migrate Executor', () => {
     const options: MigrateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(`npx prisma migrate dev`, {
-      cwd: 'apps/foo',
+      cwd: 'workspace-root/apps/foo',
       stdio: 'inherit',
     });
     expect(output.success).toBeTruthy();
@@ -39,7 +40,7 @@ describe('Migrate Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(`npx prisma migrate dev --${option}=${value}`, {
-        cwd: 'apps/foo',
+        cwd: 'workspace-root/apps/foo',
         stdio: 'inherit',
       });
       expect(output.success).toBeTruthy();
@@ -53,7 +54,10 @@ describe('Migrate Executor', () => {
         [flag]: true,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(execSync).toHaveBeenCalledWith(`npx prisma migrate dev --${flag}`, { cwd: 'apps/foo', stdio: 'inherit' });
+      expect(execSync).toHaveBeenCalledWith(`npx prisma migrate dev --${flag}`, {
+        cwd: 'workspace-root/apps/foo',
+        stdio: 'inherit',
+      });
       expect(output.success).toBeTruthy();
     }
   );
@@ -69,7 +73,7 @@ describe('Migrate Executor', () => {
     const output = await executor(options, mockContext as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate dev --schema=my-schema.schema --name=migration-name --create-only --skip-generate --skip-seed',
-      { cwd: 'apps/foo', stdio: 'inherit' }
+      { cwd: 'workspace-root/apps/foo', stdio: 'inherit' }
     );
     expect(output.success).toBeTruthy();
   });

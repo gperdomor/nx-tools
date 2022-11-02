@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -21,7 +22,7 @@ describe('Studio Executor', () => {
   it('empty options', async () => {
     const options: StudioExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma studio', [], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma studio', [], 'workspace-root/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -37,7 +38,7 @@ describe('Studio Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma studio', [`--${option}=${value}`], 'apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma studio', [`--${option}=${value}`], 'workspace-root/apps/foo'));
       expect(output.success).toBeTruthy();
     }
   );
@@ -53,7 +54,7 @@ describe('Studio Executor', () => {
       expectCommandToHaveBeenCalled(
         'npx prisma studio',
         ['--schema=my-schema.schema', '--browser=firefox', '--port=6666'],
-        'apps/foo'
+        'workspace-root/apps/foo'
       )
     );
     expect(output.success).toBeTruthy();

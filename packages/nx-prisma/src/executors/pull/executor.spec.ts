@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -21,7 +22,7 @@ describe('Pull Executor', () => {
   it('empty options', async () => {
     const options: PullExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [], 'workspace-root/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -32,7 +33,7 @@ describe('Pull Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`], 'apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`], 'workspace-root/apps/foo'));
       expect(output.success).toBeTruthy();
     }
   );
@@ -42,7 +43,7 @@ describe('Pull Executor', () => {
       [flag]: true,
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${flag}`], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${flag}`], 'workspace-root/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -57,7 +58,7 @@ describe('Pull Executor', () => {
       expectCommandToHaveBeenCalled(
         'npx prisma db pull',
         ['--schema=my-schema.schema', '--force', '--print'],
-        'apps/foo'
+        'workspace-root/apps/foo'
       )
     );
     expect(output.success).toBeTruthy();
