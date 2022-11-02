@@ -304,7 +304,10 @@ export class Meta {
 
     let val = this.context.sha;
     if (tag.attrs['format'] === tcl.ShaFormat.Short) {
-      val = this.context.sha.substr(0, parseInt(process.env['NX_DOCKER_SHORT_SHA_LENGTH'] || '7', 10));
+      val = this.context.sha.substr(
+        0,
+        parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || process.env['NX_DOCKER_SHORT_SHA_LENGTH'] || '7', 10)
+      );
     }
 
     const vraw = this.setValue(val, tag);

@@ -13,6 +13,7 @@ jest.mock('@nx-tools/core', () => {
 });
 
 const mockContext: Partial<ExecutorContext> = {
+  root: 'workspace-folder',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
 };
@@ -33,7 +34,7 @@ describe('Seed Executor', () => {
       script: 'custom-seed-file.ts',
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx ts-node', ['custom-seed-file.ts'], 'apps/foo'));
+    expect(expectCommandToHaveBeenCalled('npx ts-node', ['custom-seed-file.ts'], 'workspace-folder/apps/foo'));
     expect(output.success).toBeTruthy();
   });
 
@@ -43,7 +44,13 @@ describe('Seed Executor', () => {
       tsConfig: 'tsconfig.base.ts',
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx ts-node', ['--project=tsconfig.base.ts', 'seed.ts'], 'apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled(
+        'npx ts-node',
+        ['--project=tsconfig.base.ts', 'seed.ts'],
+        'workspace-folder/apps/foo'
+      )
+    );
     expect(output.success).toBeTruthy();
   });
 });
