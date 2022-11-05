@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Deploy executor",
-  "description": "Applies all pending migrations, and creates the database if it does not exist",
+  "description": "Apply pending migrations to update the database schema in production/staging.",
   "type": "object",
   "properties": {
     "schema": {

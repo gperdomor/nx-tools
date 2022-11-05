@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Reset executor",
-  "description": "Deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts",
+  "description": "Reset your database and apply all migrations, all data will be lost.",
   "type": "object",
   "properties": {
     "schema": {

@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Migrate executor",
-  "description": "Updates your database using migrations during development and creates the database if it does not exist",
+  "description": "Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client).",
   "type": "object",
   "properties": {
     "schema": {

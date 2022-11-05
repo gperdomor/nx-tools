@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Resolve executor",
-  "description": "Allows you to solve migration history issues in production by marking a failed migration as already applied (supports baselining) or rolled back",
+  "description": "Resolve issues with database migrations in deployment databases.",
   "type": "object",
   "properties": {
     "schema": {

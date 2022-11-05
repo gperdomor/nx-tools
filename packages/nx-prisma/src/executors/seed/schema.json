@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Seed executor",
-  "description": "Runs the seed script",
+  "description": "Seed your database",
   "type": "object",
   "properties": {
     "script": {

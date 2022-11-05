@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Studio executor",
-  "description": "The studio command allows you to interact with and manage your data interactively",
+  "description": "Browse your data with Prisma Studio.",
   "type": "object",
   "properties": {
     "schema": {
