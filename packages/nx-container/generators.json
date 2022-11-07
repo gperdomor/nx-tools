@@ -2,5 +2,11 @@
   "$schema": "http://json-schema.org/schema",
   "name": "nx-container",
   "version": "0.0.1",
-  "generators": {}
+  "generators": {
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Configure Container builds for your application"
+    }
+  }
 }
