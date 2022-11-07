@@ -3,7 +3,7 @@ import * as core from '@nx-tools/core';
 import { getProjectRoot } from '@nx-tools/core';
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
-import { rmdir } from 'node:fs/promises';
+import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import * as context from './context';
 import { EngineAdapter } from './engines/engine-adapter';
@@ -84,7 +84,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 async function cleanup(tmpDir: string): Promise<void> {
   if (tmpDir.length > 0 && existsSync(tmpDir)) {
     core.startGroup(`Removing temp folder ${tmpDir}`, GROUP_PREFIX);
-    await rmdir(tmpDir, { recursive: true });
+    await rm(tmpDir, { recursive: true });
   }
 }
 

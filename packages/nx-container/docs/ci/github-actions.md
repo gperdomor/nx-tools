@@ -15,17 +15,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        with:
+          fetch-depth: 0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
       - name: 'Install Dependencies'
-        run: npm i
+        run: npm install
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
       - name: 'Build images'
         run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
 ```
@@ -39,36 +45,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Login to DockerHub
         run: echo "$DOCKERHUB_TOKEN" | podman login -u $DOCKERHUB_USERNAME --password-stdin
         env:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+          node-version-file: '.nvmrc'
       - name: 'Install Dependencies'
-        run: npm i
+        run: npm install
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v3
       - name: 'Build images'
         run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
 ```
-
-## Example with Kaniko:
-
-Github shared runners not included the kaniko command, so in this case we will use a container based job using the provided [gperdomor/nx-kaniko](https://hub.docker.com/r/gperdomor/nx-kaniko) image:
-
-```yml
-jobs:
-  build-with-kaniko-engine:
-    runs-on: ubuntu-latest
-    container:
-      image: gperdomor/nx-kaniko:18.12.0-alpine
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Login to DockerHub
-        run: echo "{\"auths\":{\"docker.io\":{\"auth\":\"$(echo -n $DOCKERHUB_USERNAME:$DOCKERHUB_TOKEN | base64)\"}}}" > /kaniko/.docker/config.json
-      - name: 'Install Dependencies'
-        run: npm i
-      - name: 'Build images'
-        run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=1
-```
-
-> Tip: kaniko don't support parallel builds, so we need to build one application at time with `--parallel=1`

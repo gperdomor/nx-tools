@@ -2,9 +2,9 @@
 
 To build your container images with Gitlab CI we provide a set of custom builder images to build your app:
 
-- [gperdomor/nx-docker](https://hub.docker.com/r/gperdomor/nx-docker) with Node, Docker and Buildx integrated. Required to use `docker` engine.
-- [gperdomor/nx-podman](https://hub.docker.com/r/gperdomor/nx-podman) with Node and Podman integrated. Required to use `podman` engine.
-- [gperdomor/nx-kaniko](https://hub.docker.com/r/gperdomor/nx-kaniko) with Node and Kaniko integrated. Required to use `kaniko` engine.
+- [gperdomor/nx-docker](https://hub.docker.com/r/gperdomor/nx-docker) with Node, Docker and Buildx preintalled. Required to use `docker` engine.
+- [gperdomor/nx-podman](https://hub.docker.com/r/gperdomor/nx-podman) with Node and Podman preintalled. Required to use `podman` engine.
+- [gperdomor/nx-kaniko](https://hub.docker.com/r/gperdomor/nx-kaniko) with Node and Kaniko preintalled. Required to use `kaniko` engine.
 
 ## Example with Docker:
 
@@ -38,6 +38,7 @@ build-with-podman-engine:
   variables:
     # Nx Container
     INPUT_PUSH: 'true' # To push your image to the registry
+    INPUT_ENGINE: 'podman' # Overriding engine of project.json files
   before_script:
     - npm i
     - NX_HEAD=$CI_COMMIT_SHA
@@ -52,12 +53,11 @@ build-with-podman-engine:
 
 ```yml
 build-with-kaniko:
-  image:
-    name: gperdomor/nx-kaniko:18.12.0-alpine
-    entrypoint: ['']
+  image: gperdomor/nx-kaniko:18.12.0-alpine
   variables:
     # Nx Container
     INPUT_PUSH: 'true' # To push your image to the registry
+    INPUT_ENGINE: 'kaniko' # Overriding engine of project.json files
   before_script:
     - npm i
     - NX_HEAD=$CI_COMMIT_SHA
