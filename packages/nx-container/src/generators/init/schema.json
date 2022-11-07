@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Init",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add the Container setup to.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What project would you like to add the Container setup to?"
+    },
+    "engine": {
+      "type": "string",
+      "description": "Provide the container engine to be used.",
+      "$default": {
+        "index": 1
+      },
+      "x-prompt": {
+        "message": "Which type of engine would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "docker",
+            "label": "docker"
+          },
+          {
+            "value": "podman",
+            "label": "podman"
+          },
+          {
+            "value": "kaniko",
+            "label": "kaniko"
+          }
+        ]
+      },
+      "default": "docker",
+      "alias": "e"
+    },
+    "template": {
+      "type": "string",
+      "description": "Which type of app you are building?.",
+      "$default": {
+        "index": 2
+      },
+      "x-prompt": {
+        "message": "Which type of app you are building?",
+        "type": "list",
+        "items": [
+          {
+            "value": "nest",
+            "label": "nest"
+          },
+          {
+            "value": "next",
+            "label": "next"
+          },
+          {
+            "value": "react-angular-spa",
+            "label": "react-angular-spa"
+          }
+        ]
+      },
+      "default": "",
+      "alias": "t"
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skips formatting the workspace after the generator completes.",
+      "$default": {
+        "index": 3
+      }
+    }
+  },
+  "required": ["project"]
+}
