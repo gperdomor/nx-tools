@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Prisma Pull executor",
-  "description": "Connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema.",
+  "description": "Pull the schema from an existing database, updating the Prisma schema.",
   "type": "object",
   "properties": {
     "schema": {

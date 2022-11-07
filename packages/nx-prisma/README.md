@@ -1,74 +1,67 @@
 # `@nx-tools/nx-prisma`
 
-This builder provides a wrapper around the [Prisma CLI](https://www.npmjs.com/package/@prisma/cli)
+The Nx Plugin for Prisma contains executors, generators, and utilities for managing Prisma applications within an Nx workspace. It provides:
 
-## Getting started
+- Integration with [Prisma CLI](https://www.npmjs.com/package/prisma)
+- Generators to help to setup your apps quickly
 
-### Configuration
+## Setting up the Prisma plugin
 
-The first step to use this plugin is configure your projects and create new targets.
+Adding the Prisma plugin to an existing Nx workspace can be done with the following:
 
-You will need at least one project per each prisma schema you make. The prisma schemas can be in already existing backend/frontend projects OR in their own libraries.
-Each CLI command uses it's own architect so add the ones you need from the examples bellow.
-
-```json
-"prisma-deploy": {
-  "builder": "@nx-tools/nx-prisma:generate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-generate": {
-  "builder": "@nx-tools/nx-prisma:generate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-migrate": {
-  "builder": "@nx-tools/nx-prisma:migrate",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-pull": {
-  "builder": "@nx-tools/nx-prisma:pull",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-push": {
-  "builder": "@nx-tools/nx-prisma:push",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-reset": {
-  "builder": "@nx-tools/nx-prisma:reset",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-},
-"prisma-seed": {
-  "builder": "@nx-tools/nx-prisma:seed",
-  "options": {
-    "script": "apps/examples/prisma/data/seed.ts",
-    "tsConfig": "apps/examples/prisma/tsconfig.tools.json"
-  }
-},
-"prisma-status": {
-  "builder": "@nx-tools/nx-prisma:status",
-  "options": {
-    "schema": "apps/api/schema.prisma"
-  }
-}
+```bash
+npm install -D @nx-tools/nx-prisma
 ```
 
-Note that the options use absolute paths to where your configuration files live in your repository.
-
-### Usage
-
-Once your project is configured and taking the previous configuration as example, you can run the commands using the the nx command:
-
-```sh
-nx run project-name:prisma-generate
+```bash
+yarn add -D @nx-tools/nx-prisma
 ```
+
+## Using the Prisma Plugin
+
+### Configuring an application
+
+It's straightforward to setup your application:
+
+```bash
+nx g @nx-tools/nx-prisma:init appName
+```
+
+By default, the application will be configured with:
+
+- A Prisma schema in the application root.
+- A set of targets and executors to invoke common prisma commands to manage your application. You can add more executors later.
+
+We can then call generate, deploy, migrate, db pull, db push prisma commands, and even start prisma studio with the following commands:
+
+```bash
+nx prisma-generate appName
+nx prisma-deploy appName
+nx prisma-migrate appName
+nx prisma-pull appName
+nx prisma-push appName
+nx prisma-studio appName
+```
+
+> Tip: You can change the location or rename your prisma file, but should live inside the project folder and the `options.schema` property of your project target needs to be updated with the relative path to the new schema location.
+
+## Package reference
+
+Here is a list of all the executors and generators available from this package:
+
+### Executors
+
+- deploy: Apply pending migrations to update the database schema in production/staging.
+- generate: Generate artifacts (e.g. Prisma Client).
+- migrate: Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client).
+- pull: Pull the schema from an existing database, updating the Prisma schema.
+- push: Push the Prisma schema state to the database.
+- reset: Reset your database and apply all migrations, all data will be lost.
+- resolve: Resolve issues with database migrations in deployment databases.
+- seed: Seed your database.
+- status: Check the status of your database migrations.
+- studio: Browse your data with Prisma Studio.
+
+### Generators
+
+- init: Setup Prisma for your app

@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Docker Build executor",
-  "description": "",
+  "description": "Builds an image using instructions from the Dockerfile and a specified build context directory.",
   "type": "object",
   "properties": {
     "engine": {

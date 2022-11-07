@@ -3,7 +3,7 @@
   "version": 2,
   "cli": "nx",
   "title": "Push executor",
-  "description": "Pushes the state of your Prisma schema file to the database without using migrations. It creates the database if the database does not exist.",
+  "description": "Push the Prisma schema state to the database.",
   "type": "object",
   "properties": {
     "schema": {

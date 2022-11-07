@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.10",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
     "wSedlacek"
@@ -12,7 +12,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "4.0.0-alpha.9",
+    "@nx-tools/core": "4.0.0-alpha.10",
     "@swc/helpers": "^0.4.12"
   },
   "peerDependencies": {
