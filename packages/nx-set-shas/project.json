@@ -1,16 +1,20 @@
 {
+  "name": "nx-set-shas",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-set-shas/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-set-shas",
         "main": "packages/nx-set-shas/src/index.ts",
         "tsConfig": "packages/nx-set-shas/tsconfig.lib.json",
-        "assets": ["packages/nx-set-shas/*.md", "packages/nx-set-shas/bin/*"]
+        "assets": ["packages/nx-set-shas/*.md"],
+        "metafile": true,
+        "format": ["cjs"],
+        "external": ["commander", "colorette", "undici"]
       }
     },
     "publish": {
@@ -18,12 +22,7 @@
       "options": {
         "command": "node tools/scripts/publish.mjs nx-set-shas {args.ver} {args.tag}"
       },
-      "dependsOn": [
-        {
-          "projects": "self",
-          "target": "build"
-        }
-      ]
+      "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -34,19 +33,10 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/nx-set-shas"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/nx-set-shas/jest.config.ts",
         "passWithNoTests": true
-      }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "baseBranch": "main",
-        "preset": "conventional",
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },
