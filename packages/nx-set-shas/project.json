@@ -14,7 +14,8 @@
         "assets": ["packages/nx-set-shas/*.md"],
         "metafile": true,
         "format": ["cjs"],
-        "external": ["commander", "colorette", "undici"]
+        "external": ["commander", "colorette", "undici"],
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
