@@ -1,4 +1,4 @@
-import { green, red, yellow } from 'colorette';
+import { blue, red, yellow } from 'colorette';
 import { execSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fetch } from 'undici';
@@ -20,7 +20,7 @@ export const gitlab = async (options: any) => {
 
   let BASE_SHA;
   const eventName = process.env['CI_MERGE_REQUEST_ID'] ? 'pull_request' : '';
-  let HEAD_SHA = execSync(`git rev-parse HEAD`, { encoding: 'utf-8' }).trim();
+  let HEAD_SHA = process.env['CI_COMMIT_SHA'] || execSync(`git rev-parse HEAD`, { encoding: 'utf-8' }).trim();
 
   if (eventName === 'pull_request') {
     BASE_SHA = execSync(`git merge-base origin/${branch} HEAD`, { encoding: 'utf-8' });
@@ -29,7 +29,7 @@ export const gitlab = async (options: any) => {
       BASE_SHA = await findSuccessfulCommit(project, branch, token);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      process.stdout.write(red(e.message));
+      process.stdout.write(`${red(e.message)}\n`);
       process.exit(1);
     }
 
@@ -60,8 +60,8 @@ export const gitlab = async (options: any) => {
   const stripNewLineEndings = (sha: string) => sha.replace('\n', '');
   BASE_SHA = stripNewLineEndings(BASE_SHA);
   HEAD_SHA = stripNewLineEndings(HEAD_SHA);
-  process.stdout.write(green(`NX_BASE: ${BASE_SHA}\n`));
-  process.stdout.write(green(`NX_HEAD: ${HEAD_SHA}\n`));
+  process.stdout.write(blue(`NX_BASE: ${BASE_SHA}\n`));
+  process.stdout.write(blue(`NX_HEAD: ${HEAD_SHA}\n`));
 
   let lines: string[] = [];
 
@@ -74,7 +74,7 @@ export const gitlab = async (options: any) => {
     }
     lines.push(`NX_BASE=${BASE_SHA}`, `NX_HEAD=${HEAD_SHA}`);
     writeFileSync(output, lines.join('\n'), { encoding: 'utf-8' });
-    process.stdout.write(green(`NX_BASE and NX_HEAD environment variables have been written to '${output}'`));
+    process.stdout.write(blue(`NX_BASE and NX_HEAD environment variables have been written to '${output}'\n`));
   }
 };
 
@@ -85,7 +85,7 @@ const reportFailure = (branchName: string) => {
       NOTE: You have set 'error-on-no-successful-pipeline' on the script so this is a hard error.
       Is it possible that you have no runs currently on 'origin/${branchName}'?
       - If yes, then you should run the pipeline without this flag first.
-      - If no, then you might have changed your git history and those commits no longer exist.`)
+      - If no, then you might have changed your git history and those commits no longer exist.\n`)
   );
 };
 
