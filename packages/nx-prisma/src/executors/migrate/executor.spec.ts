@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 import executor from './executor';
 import { MigrateExecutorSchema } from './schema';
 

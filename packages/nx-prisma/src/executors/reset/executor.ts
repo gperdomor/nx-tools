@@ -1,6 +1,6 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
 import { getProjectRoot, startGroup } from '@nx-tools/core';
-import { execSync } from 'child_process';
+import { execSync } from 'node:child_process';
 import { ResetExecutorSchema } from './schema';
 
 export default async function run(options: ResetExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
