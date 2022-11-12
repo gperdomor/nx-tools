@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 import { Command } from 'commander';
+import { version } from '../package.json';
 import { defaultWorkingDirectory, gitlab } from './lib/commands/gitlab';
 
 const program = new Command();
@@ -8,7 +9,7 @@ const program = new Command();
 program
   .command('gitlab')
   .description('Find latest successful pipeline of gitlab project')
-  .option('-t, --token <token>', 'authentication token')
+  .option('-t, --token <token>', 'Authentication token')
   .option('-o, --output <output>')
   .option('-d, --working-dir <directory>', 'The directory where your repository is located', defaultWorkingDirectory)
   .option(
@@ -23,5 +24,7 @@ program
   )
   .requiredOption('-p, --project <project>', 'The ID of the project.', process.env['CI_PROJECT_ID'])
   .action(gitlab);
+
+program.version(version, '-v, --version', 'Output the current version');
 
 program.parse(process.argv);
