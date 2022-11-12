@@ -1,39 +1,8 @@
 {
   "name": "@nx-tools/nx-set-shas",
-  "version": "1.0.0-alpha.7",
+  "version": "4.0.0-alpha.11",
   "type": "commonjs",
   "bin": {
-    "nx-set-shas": "./bin/run"
-  },
-  "files": [
-    "/bin",
-    "/src",
-    "/oclif.manifest.json"
-  ],
-  "engines": {
-    "node": ">=14"
-  },
-  "dependencies": {
-    "@oclif/core": "1.9.5",
-    "@oclif/plugin-help": "5.1.12",
-    "@swc/helpers": "^0.4.3",
-    "undici": "^5.6.1"
-  },
-  "oclif": {
-    "bin": "nx-set-shas",
-    "dirname": "nx-set-shas",
-    "commands": "./src/commands",
-    "plugins": [
-      "@oclif/plugin-help"
-    ],
-    "topicSeparator": " ",
-    "topics": {
-      "hello": {
-        "description": "Calculate the base and head SHAs required for `nx affected` commands in CI"
-      }
-    }
-  },
-  "scripts": {
-    "prepack": "npx oclif manifest && npx oclif readme"
+    "nx-set-shas": "./index.cjs"
   }
 }
