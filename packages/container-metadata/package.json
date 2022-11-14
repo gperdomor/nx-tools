@@ -1,14 +1,14 @@
 {
   "name": "@nx-tools/container-metadata",
-  "version": "4.0.0-rc.1",
+  "version": "4.0.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "dependencies": {
-    "@nx-tools/ci-context": "4.0.0-rc.1",
-    "@nx-tools/core": "4.0.0-rc.1",
+    "@nx-tools/ci-context": "4.0.0",
+    "@nx-tools/core": "4.0.0",
     "@renovate/pep440": "^1.0.0",
     "csv-parse": "^4.16.3",
     "handlebars": "^4.7.7",
