@@ -133,7 +133,7 @@ export interface DockerBuildSchema {
      */
     'sep-labels'?: string;
     /**
-     * Bake target name (default docker-metadata-action)
+     * Bake target name (default container-metadata-action)
      */
     'bake-target'?: string;
   };

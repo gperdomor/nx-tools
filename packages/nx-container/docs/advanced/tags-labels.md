@@ -1,10 +1,10 @@
 # Handle tags and labels
 
 If you want an "automatic" tag management and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) for labels, you can do it with a dedicated configuration option.
-The following config will use the [Docker metadata package](https://github.com/gperdomor/nx-tools/tree/main/packages/docker-metadata)
+The following config will use the [Docker metadata package](https://github.com/gperdomor/nx-tools/tree/main/packages/container-metadata)
 to handle tags and labels based on CI events and Git metadata.
 
-> 💡 First you need to install the [@nx-tools/docker-metadata](https://www.npmjs.com/package/@nx-tools/docker-metadata) package.
+> 💡 First you need to install the [@nx-tools/container-metadata](https://www.npmjs.com/package/@nx-tools/container-metadata) package.
 
 ```json
 "docker": {
