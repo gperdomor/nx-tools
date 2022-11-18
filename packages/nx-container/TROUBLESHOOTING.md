@@ -2,7 +2,7 @@
 
 - [Unsupported CI Provider](#Unsupported-CI-Provider)
 - [INPUT_BUILD_ARGS is not working](#INPUT_BUILD_ARGS-is-not-working)
-- [INPUT_TAGS is not working with docker-metadata](#INPUT_TAGS-is-not-working-with-docker-metadata)
+- [INPUT_TAGS is not working with container-metadata](#INPUT_TAGS-is-not-working-with-container-metadata)
 
 ## Unsupported CI Provider
 
@@ -36,6 +36,6 @@ Sadly, the string of the first option not work if you try to run `INPUT_BUILD_AR
 
 <img width="682" alt="Screen Shot 2021-10-02 at 1 01 11 PM" src="https://user-images.githubusercontent.com/371939/135723980-2b474eb8-0e4b-4900-b86d-e3f3c52c96c0.png">
 
-## INPUT_TAGS is not working with docker-metadata
+## INPUT_TAGS is not working with container-metadata
 
-This specific case is for the docker-metadata tags, and is the same issue of [INPUT_BUILD_ARGS](#INPUT_BUILD_ARGS-is-not-working), please apply the same solutions described above
+This specific case is for the container-metadata tags, and is the same issue of [INPUT_BUILD_ARGS](#INPUT_BUILD_ARGS-is-not-working), please apply the same solutions described above
