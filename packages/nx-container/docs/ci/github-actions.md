@@ -33,7 +33,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v3
       - name: 'Build images'
-        run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
+        run: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
 ```
 
 ## Example with Podman:
