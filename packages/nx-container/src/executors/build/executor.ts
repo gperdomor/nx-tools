@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import { ExecutorContext, names } from '@nrwl/devkit';
 import * as core from '@nx-tools/core';
 import { getProjectRoot } from '@nx-tools/core';
-import 'dotenv/config';
 import { existsSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -44,9 +44,13 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     const args: string[] = await engine.getArgs(inputs, defContext);
     const buildCmd = engine.getCommand(args);
     await core
-      .getExecOutput(buildCmd.command, buildCmd.args, {
-        ignoreReturnCode: true,
-      })
+      .getExecOutput(
+        buildCmd.command,
+        buildCmd.args.map((arg) => core.interpolate(arg)),
+        {
+          ignoreReturnCode: true,
+        }
+      )
       .then((res) => {
         if (res.stderr.length > 0 && res.exitCode != 0) {
           throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
