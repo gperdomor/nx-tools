@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-container",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -9,7 +9,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "4.0.0",
+    "@nx-tools/core": "4.0.1",
     "@swc/helpers": "^0.4.12",
     "csv-parse": "^4.16.3",
     "handlebars": "^4.7.7",
