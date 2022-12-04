@@ -1,3 +1,8 @@
+<p style="text-align: center;">
+  <picture>
+  </picture>
+</p>
+
 <div style="text-align: center;">
 
 [![CI](https://github.com/gperdomor/nx-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/gperdomor/nx-tools/actions/workflows/ci.yml)
@@ -29,7 +34,18 @@ A collection of Nx plugins and commons tools to build them.
 
 ## Sponsors
 
-| Ethan Brooks                                                                                             |
-| -------------------------------------------------------------------------------------------------------- |
-| <div style="width: 160px">![Ethan Brooks](https://avatars1.githubusercontent.com/u/16616717?s=160)</div> |
-| [ethanbrooks](https://github.com/ethanbrooks)                                                            |
+<table>
+  <thead>
+    <tr>
+    <th>Ethan Brooks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://avatars.githubusercontent.com/u/16616717?s=160"><img src="https://avatars.githubusercontent.com/u/16616717?s=160" alt="Ethan Brooks" style="max-width: 160px;"></a></td>
+    </tr>
+    <tr>
+    <td><a href="https://github.com/ethanbrooks">ethanbrooks</a></td>
+    </tr>
+  </tbody>
+</table>
