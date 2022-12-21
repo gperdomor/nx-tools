@@ -28,6 +28,7 @@ export default async function (tree: Tree, options: InitGeneratorSchema) {
       ...project.targets,
       container: {
         executor: '@nx-tools/nx-container:build',
+        dependsOn: ['build'],
         options: {
           engine: options.engine,
           metadata: {
