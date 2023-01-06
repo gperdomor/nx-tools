@@ -7,6 +7,7 @@ import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
 import * as jenkins from './utils/jenkins';
 import * as local from './utils/local';
+import * as travis from './utils/travis';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
@@ -43,6 +44,11 @@ export class ContextProxyFactory {
     if (ci.AZURE_PIPELINES) {
       info(`CI Provider: ${ci.name}`);
       return azure.context();
+    }
+
+    if (ci.TRAVIS) {
+      info(`CI Provider: ${ci.name}`);
+      return travis.context();
     }
 
     if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {
