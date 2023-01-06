@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches:
@@ -11,6 +12,8 @@ jobs:
     uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
     with:
       number-of-agents: 3
+      init-commands: |
+        npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
       parallel-commands: |
         npx nx-cloud record -- npx nx workspace-lint
         npx nx-cloud record -- npx nx format:check
