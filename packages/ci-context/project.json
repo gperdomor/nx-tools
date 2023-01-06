@@ -5,17 +5,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/ci-context",
         "main": "packages/ci-context/src/index.ts",
         "tsConfig": "packages/ci-context/tsconfig.lib.json",
         "assets": ["packages/ci-context/*.md"],
-        "metafile": true,
-        "format": ["esm", "cjs"],
-        "external": ["@actions/github", "@nx-tools/core", "ci-info"],
-        "updateBuildableProjectDepsInPackageJson": false
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {

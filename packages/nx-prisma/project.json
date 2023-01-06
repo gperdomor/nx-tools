@@ -5,7 +5,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:swc",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-prisma",
@@ -34,7 +34,7 @@
             "output": "."
           }
         ],
-        "updateBuildableProjectDepsInPackageJson": false
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "lint": {
@@ -55,15 +55,6 @@
       "options": {
         "jestConfig": "packages/nx-prisma/jest.config.ts",
         "passWithNoTests": true
-      }
-    },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "baseBranch": "main",
-        "preset": "conventional",
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): release version ${version}"
       }
     }
   },
