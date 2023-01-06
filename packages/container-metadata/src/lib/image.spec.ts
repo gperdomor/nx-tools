@@ -63,7 +63,7 @@ describe('transform', () => {
     [[`name/foo,bar=baz`], undefined, true],
     [[`name=,enable=true`], undefined, true],
     [[`name/foo,name=name/bar,enable=true`], undefined, true],
-  ])('given %p', async (l: string[], expected: Image[], invalid: boolean): Promise<any> => {
+  ])('given %p', async (l: string[], expected: Image[] | undefined, invalid: boolean) => {
     try {
       const images = Transform(l);
       expect(images).toEqual(expected);

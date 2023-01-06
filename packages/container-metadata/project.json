@@ -5,17 +5,14 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/container-metadata",
         "main": "packages/container-metadata/src/index.ts",
         "tsConfig": "packages/container-metadata/tsconfig.lib.json",
         "assets": ["packages/container-metadata/*.md"],
-        "metafile": true,
-        "format": ["esm", "cjs"],
-        "external": ["@nrwl/*", "@nx-tools/*", "handlebars", "moment", "csv-parse", "@renovate/pep440", "semver"],
-        "updateBuildableProjectDepsInPackageJson": false
+        "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
     "publish": {
