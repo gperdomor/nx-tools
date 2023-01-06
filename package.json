@@ -60,7 +60,7 @@
     "@typescript-eslint/parser": "5.42.0",
     "commitizen": "4.2.6",
     "esbuild": "0.15.13",
-    "eslint": "8.27.0",
+    "eslint": "8.31.0",
     "eslint-config-prettier": "8.5.0",
     "husky": "8.0.2",
     "is-ci": "3.0.1",
