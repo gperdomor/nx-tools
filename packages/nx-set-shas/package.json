@@ -3,6 +3,6 @@
   "version": "4.0.2",
   "type": "commonjs",
   "bin": {
-    "nx-set-shas": "./index.cjs"
+    "nx-set-shas": "./src/index.js"
   }
 }

@@ -5,16 +5,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/nx-set-shas",
         "main": "packages/nx-set-shas/src/index.ts",
         "tsConfig": "packages/nx-set-shas/tsconfig.lib.json",
         "assets": ["packages/nx-set-shas/*.md"],
-        "metafile": true,
-        "format": ["cjs"],
-        "external": ["commander", "colorette", "undici"],
         "buildableProjectDepsInPackageJsonType": "dependencies"
       }
     },
