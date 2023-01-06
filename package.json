@@ -20,7 +20,7 @@
     "@actions/exec": "1.1.1",
     "@actions/github": "5.1.1",
     "@renovate/pep440": "1.0.0",
-    "@swc/helpers": "0.4.12",
+    "@swc/helpers": "0.4.14",
     "ci-info": "3.5.0",
     "colorette": "2.0.19",
     "commander": "9.4.1",
