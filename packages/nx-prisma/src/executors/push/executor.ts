@@ -1,5 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { runCommand } from '../../run-commands';
+import { getDefaultScheme } from '../../utils';
 import { PushExecutorSchema } from './schema';
 
 export default async function run(options: PushExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -10,12 +11,11 @@ export default async function run(options: PushExecutorSchema, ctx: ExecutorCont
   });
 }
 
-const getArgs = (options: PushExecutorSchema): string[] => {
+const getArgs = (options: PushExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.['accept-data-loss']) {
     args.push('--accept-data-loss');

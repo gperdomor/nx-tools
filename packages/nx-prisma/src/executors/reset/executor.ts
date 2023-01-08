@@ -1,29 +1,27 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
-import { getProjectRoot, startGroup } from '@nx-tools/core';
-import { execSync } from 'child_process';
+import { startGroup } from '@nx-tools/core';
+import { execSync } from 'node:child_process';
+import { getDefaultScheme } from '../../utils';
 import { ResetExecutorSchema } from './schema';
 
 export default async function run(options: ResetExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
-  const cwd = getProjectRoot(ctx);
   const command = `${getPackageManagerCommand().exec} prisma migrate reset`;
-  const args = getArgs(options);
+  const args = getArgs(options, ctx);
 
   startGroup('Resetting Database', 'Nx Prisma');
 
   execSync([command, ...args].join(' '), {
-    cwd: cwd,
     stdio: 'inherit',
   });
 
   return { success: true };
 }
 
-const getArgs = (options: ResetExecutorSchema): string[] => {
+const getArgs = (options: ResetExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.force) {
     args.push('--force');

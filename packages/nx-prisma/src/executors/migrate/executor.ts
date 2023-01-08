@@ -1,29 +1,27 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
-import { getProjectRoot, startGroup } from '@nx-tools/core';
-import { execSync } from 'child_process';
+import { startGroup } from '@nx-tools/core';
+import { execSync } from 'node:child_process';
+import { getDefaultScheme } from '../../utils';
 import { MigrateExecutorSchema } from './schema';
 
 export default async function run(options: MigrateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
-  const cwd = getProjectRoot(ctx);
   const command = `${getPackageManagerCommand().exec} prisma migrate dev`;
-  const args = getArgs(options);
+  const args = getArgs(options, ctx);
 
   startGroup('Migrating Database', 'Nx Prisma');
 
   execSync([command, ...args].join(' '), {
-    cwd: cwd,
     stdio: 'inherit',
   });
 
   return { success: true };
 }
 
-const getArgs = (options: MigrateExecutorSchema): string[] => {
+const getArgs = (options: MigrateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.name) {
     args.push(`--name=${options.name}`);

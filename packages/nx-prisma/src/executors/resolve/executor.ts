@@ -1,5 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { runCommand } from '../../run-commands';
+import { getDefaultScheme } from '../../utils';
 import { ResolveExecutorSchema } from './schema';
 
 export default async function run(options: ResolveExecutorSchema, ctx: ExecutorContext): Promise<{ success: boolean }> {
@@ -14,12 +15,11 @@ export default async function run(options: ResolveExecutorSchema, ctx: ExecutorC
   });
 }
 
-const getArgs = (options: ResolveExecutorSchema): string[] => {
+const getArgs = (options: ResolveExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.['rolled-back']) {
     args.push(`--rolled-back=${options['rolled-back']}`);

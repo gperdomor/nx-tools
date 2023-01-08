@@ -22,7 +22,9 @@ describe('Push Executor', () => {
   it('empty options', async () => {
     const options: PushExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db push', [], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma db push', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+    );
     expect(output.success).toBeTruthy();
   });
 
@@ -33,7 +35,7 @@ describe('Push Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db push', [`--${option}=${value}`], 'workspace-root/apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma db push', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );
@@ -45,7 +47,12 @@ describe('Push Executor', () => {
         [flag]: true,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db push', [`--${flag}`], 'workspace-root/apps/foo'));
+      expect(
+        expectCommandToHaveBeenCalled('npx prisma db push', [
+          '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+          `--${flag}`,
+        ])
+      );
       expect(output.success).toBeTruthy();
     }
   );
@@ -59,11 +66,12 @@ describe('Push Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma db push',
-        ['--schema=my-schema.schema', '--accept-data-loss', '--force-reset', '--skip-generate'],
-        'workspace-root/apps/foo'
-      )
+      expectCommandToHaveBeenCalled('npx prisma db push', [
+        '--schema=my-schema.schema',
+        '--accept-data-loss',
+        '--force-reset',
+        '--skip-generate',
+      ])
     );
     expect(output.success).toBeTruthy();
   });

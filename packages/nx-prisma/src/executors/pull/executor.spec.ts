@@ -22,7 +22,9 @@ describe('Pull Executor', () => {
   it('empty options', async () => {
     const options: PullExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+    );
     expect(output.success).toBeTruthy();
   });
 
@@ -33,7 +35,7 @@ describe('Pull Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`], 'workspace-root/apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );
@@ -43,7 +45,12 @@ describe('Pull Executor', () => {
       [flag]: true,
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${flag}`], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma db pull', [
+        '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+        `--${flag}`,
+      ])
+    );
     expect(output.success).toBeTruthy();
   });
 
@@ -54,13 +61,7 @@ describe('Pull Executor', () => {
       print: true,
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma db pull',
-        ['--schema=my-schema.schema', '--force', '--print'],
-        'workspace-root/apps/foo'
-      )
-    );
+    expect(expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=my-schema.schema', '--force', '--print']));
     expect(output.success).toBeTruthy();
   });
 });

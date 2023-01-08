@@ -1,5 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { runCommand } from '../../run-commands';
+import { getDefaultScheme } from '../../utils';
 import { GenerateExecutorSchema } from './schema';
 
 export default async function run(options: GenerateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -10,12 +11,11 @@ export default async function run(options: GenerateExecutorSchema, ctx: Executor
   });
 }
 
-const getArgs = (options: GenerateExecutorSchema): string[] => {
+const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.['data-proxy']) {
     args.push('--data-proxy');

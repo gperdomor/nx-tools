@@ -22,7 +22,11 @@ describe('Deploy Executor', () => {
   it('empty options', async () => {
     const options: DeployExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma migrate deploy', [], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma migrate deploy', [
+        '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+      ])
+    );
     expect(output.success).toBeTruthy();
   });
 
@@ -33,9 +37,7 @@ describe('Deploy Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(
-        expectCommandToHaveBeenCalled('npx prisma migrate deploy', [`--${option}=${value}`], 'workspace-root/apps/foo')
-      );
+      expect(expectCommandToHaveBeenCalled('npx prisma migrate deploy', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );

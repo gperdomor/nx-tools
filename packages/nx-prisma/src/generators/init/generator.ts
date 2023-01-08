@@ -32,31 +32,31 @@ export default async function (tree: Tree, options: InitGeneratorSchema): Promis
       ...project.targets,
       'prisma-generate': {
         executor: '@nx-tools/nx-prisma:generate',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-migrate': {
         executor: '@nx-tools/nx-prisma:migrate',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-pull': {
         executor: '@nx-tools/nx-prisma:pull',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-push': {
         executor: '@nx-tools/nx-prisma:push',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-status': {
         executor: '@nx-tools/nx-prisma:status',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
       'prisma-studio': {
         executor: '@nx-tools/nx-prisma:studio',
-        options: { schema: 'prisma/schema.prisma' },
+        options: { schema: `${project.root}/prisma/schema.prisma` },
       },
     },
   });
