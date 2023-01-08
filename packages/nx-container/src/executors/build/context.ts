@@ -134,7 +134,7 @@ export async function getInputList(
 
 export function setOutput(name: string, value: string, ctx: ExecutorContext): void {
   if (ctx?.projectName) {
-    const outputDir = `${ctx?.root}/.nx-container/${ctx.projectName}`;
+    const outputDir = `${ctx?.root}/node_modules/.cache/nx-container/${ctx.projectName}`;
     fs.mkdirSync(outputDir, { recursive: true });
     fs.writeFileSync(`${outputDir}/${name}`, value);
   }
