@@ -3,10 +3,12 @@ import { RunnerContext } from './interfaces';
 import * as azure from './utils/azure-devops';
 import * as bitbucket from './utils/bitbucket';
 import * as circle from './utils/circle';
+import * as drone from './utils/drone';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
 import * as jenkins from './utils/jenkins';
 import * as local from './utils/local';
+import * as semaphore from './utils/semaphore';
 import * as travis from './utils/travis';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,6 +18,11 @@ export class ContextProxyFactory {
   public static async create(): Promise<RunnerContext> {
     startGroup('Getting CI Provider', 'CI Context');
 
+    if (ci.AZURE_PIPELINES) {
+      info(`CI Provider: ${ci.name}`);
+      return azure.context();
+    }
+
     if (ci.BITBUCKET) {
       info(`CI Provider: ${ci.name}`);
       return bitbucket.context();
@@ -24,6 +31,11 @@ export class ContextProxyFactory {
     if (ci.CIRCLE) {
       info(`CI Provider: ${ci.name}`);
       return circle.context();
+    }
+
+    if (ci.DRONE) {
+      info(`CI Provider: ${ci.name}`);
+      return drone.context();
     }
 
     if (ci.GITHUB_ACTIONS) {
@@ -41,9 +53,9 @@ export class ContextProxyFactory {
       return jenkins.context();
     }
 
-    if (ci.AZURE_PIPELINES) {
+    if (ci.SEMAPHORE) {
       info(`CI Provider: ${ci.name}`);
-      return azure.context();
+      return semaphore.context();
     }
 
     if (ci.TRAVIS) {
