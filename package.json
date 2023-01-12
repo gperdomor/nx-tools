@@ -22,7 +22,7 @@
     "@renovate/pep440": "1.0.0",
     "ci-info": "3.7.1",
     "colorette": "2.0.19",
-    "commander": "9.4.1",
+    "commander": "9.5.0",
     "csv-parse": "4.16.3",
     "handlebars": "4.7.7",
     "moment": "2.29.4",
