@@ -5,6 +5,7 @@ import * as circle from './utils/circle';
 import * as github from './utils/github';
 import * as gitlab from './utils/gitlab';
 import * as jenkins from './utils/jenkins';
+import * as teamcity from './utils/teamcity';
 import * as local from './utils/local';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -34,6 +35,10 @@ export class RepoProxyFactory {
 
     if (ci.JENKINS) {
       return jenkins.repo();
+    }
+
+    if (ci.TEAMCITY) {
+      return teamcity.repo();
     }
 
     if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {

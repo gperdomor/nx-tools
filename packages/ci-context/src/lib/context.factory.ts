@@ -10,6 +10,7 @@ import * as jenkins from './utils/jenkins';
 import * as local from './utils/local';
 import * as semaphore from './utils/semaphore';
 import * as travis from './utils/travis';
+import * as teamcity from './utils/teamcity';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
@@ -61,6 +62,11 @@ export class ContextProxyFactory {
     if (ci.TRAVIS) {
       info(`CI Provider: ${ci.name}`);
       return travis.context();
+    }
+
+    if (ci.TEAMCITY) {
+      info(`CI Provider: ${ci.name}`);
+      return teamcity.context();
     }
 
     if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {
