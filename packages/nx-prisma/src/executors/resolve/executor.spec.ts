@@ -49,7 +49,10 @@ describe('Resolve Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(
-        expectCommandToHaveBeenCalled('npx prisma migrate resolve', [`--${option}=${value}`], 'workspace-root/apps/foo')
+        expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+          '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+          `--${option}=${value}`,
+        ])
       );
       expect(output.success).toBeTruthy();
     }
@@ -62,11 +65,10 @@ describe('Resolve Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma migrate resolve',
-        ['--schema=custom.schema', '--applied=add_users_table'],
-        'workspace-root/apps/foo'
-      )
+      expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+        '--schema=custom.schema',
+        '--applied=add_users_table',
+      ])
     );
     expect(output.success).toBeTruthy();
   });
@@ -78,11 +80,10 @@ describe('Resolve Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma migrate resolve',
-        ['--schema=custom.schema', '--rolled-back=add_users_table'],
-        'workspace-root/apps/foo'
-      )
+      expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+        '--schema=custom.schema',
+        '--rolled-back=add_users_table',
+      ])
     );
     expect(output.success).toBeTruthy();
   });

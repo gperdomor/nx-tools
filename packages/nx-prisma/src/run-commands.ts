@@ -1,5 +1,5 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
-import { getExecOutput, getProjectRoot, startGroup } from '@nx-tools/core';
+import { getExecOutput, startGroup } from '@nx-tools/core';
 
 export interface PrismaBuilderOptions {
   schema?: string;
@@ -9,7 +9,7 @@ export interface PrismaBuilderOptions {
 export interface PrismaCommands<T extends PrismaBuilderOptions> {
   description: string;
   command: string;
-  getArgs: (options: T) => string[];
+  getArgs: (options: T, ctx: ExecutorContext) => string[];
 }
 
 export const runCommand = async <T extends PrismaBuilderOptions>(
@@ -17,13 +17,12 @@ export const runCommand = async <T extends PrismaBuilderOptions>(
   ctx: ExecutorContext,
   { description, command, getArgs }: PrismaCommands<T>
 ): Promise<{ success: true }> => {
-  const cwd = getProjectRoot(ctx);
   const cmd = `${getPackageManagerCommand().exec} ${command}`;
-  const args = getArgs(options);
+  const args = getArgs(options, ctx);
 
   startGroup(description, 'Nx Prisma');
 
-  await getExecOutput(cmd, args, { cwd, ignoreReturnCode: true }).then((res) => {
+  await getExecOutput(cmd, args, { ignoreReturnCode: true }).then((res) => {
     if (res.stderr.length > 0 && res.exitCode != 0) {
       throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
     }

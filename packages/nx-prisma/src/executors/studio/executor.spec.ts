@@ -22,12 +22,13 @@ describe('Studio Executor', () => {
   it('empty options', async () => {
     const options: StudioExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma studio', [], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma studio', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+    );
     expect(output.success).toBeTruthy();
   });
 
   test.each([
-    ['schema', 'my-prisma-file.schema'],
     ['browser', 'safari'],
     ['browser', 'chrome'],
     ['port', 5555],
@@ -38,7 +39,12 @@ describe('Studio Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma studio', [`--${option}=${value}`], 'workspace-root/apps/foo'));
+      expect(
+        expectCommandToHaveBeenCalled('npx prisma studio', [
+          '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+          `--${option}=${value}`,
+        ])
+      );
       expect(output.success).toBeTruthy();
     }
   );
@@ -51,11 +57,11 @@ describe('Studio Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma studio',
-        ['--schema=my-schema.schema', '--browser=firefox', '--port=6666'],
-        'workspace-root/apps/foo'
-      )
+      expectCommandToHaveBeenCalled('npx prisma studio', [
+        '--schema=my-schema.schema',
+        '--browser=firefox',
+        '--port=6666',
+      ])
     );
     expect(output.success).toBeTruthy();
   });

@@ -18,15 +18,17 @@ const mockContext: Partial<ExecutorContext> = {
   projectName: 'foo',
 };
 
-export const expectCommandToHaveBeenCalled = (cmd: string, args: string[], cwd: string) => {
-  expect(getExecOutput).toHaveBeenCalledWith(cmd, args, { ignoreReturnCode: true, cwd });
+export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
+  expect(getExecOutput).toHaveBeenCalledWith(cmd, args, { ignoreReturnCode: true });
 };
 
 describe('Generate Executor', () => {
   it('empty options', async () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx prisma generate', [], 'workspace-root/apps/foo'));
+    expect(
+      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+    );
     expect(output.success).toBeTruthy();
   });
 
@@ -37,7 +39,7 @@ describe('Generate Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`], 'workspace-root/apps/foo'));
+      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );
@@ -49,7 +51,12 @@ describe('Generate Executor', () => {
         [flag]: true,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${flag}`], 'workspace-root/apps/foo'));
+      expect(
+        expectCommandToHaveBeenCalled('npx prisma generate', [
+          '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+          `--${flag}`,
+        ])
+      );
       expect(output.success).toBeTruthy();
     }
   );
@@ -62,11 +69,7 @@ describe('Generate Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled(
-        'npx prisma generate',
-        ['--schema=my-schema.schema', '--data-proxy', '--watch'],
-        'workspace-root/apps/foo'
-      )
+      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=my-schema.schema', '--data-proxy', '--watch'])
     );
     expect(output.success).toBeTruthy();
   });

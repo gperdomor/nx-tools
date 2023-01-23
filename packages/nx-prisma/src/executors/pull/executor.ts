@@ -1,5 +1,6 @@
 import { ExecutorContext } from '@nrwl/devkit';
 import { runCommand } from '../../run-commands';
+import { getDefaultScheme } from '../../utils';
 import { PullExecutorSchema } from './schema';
 
 export default async function run(options: PullExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -10,12 +11,11 @@ export default async function run(options: PullExecutorSchema, ctx: ExecutorCont
   });
 }
 
-const getArgs = (options: PullExecutorSchema): string[] => {
+const getArgs = (options: PullExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const schema = options?.schema ?? getDefaultScheme(ctx);
 
-  if (options?.schema) {
-    args.push(`--schema=${options.schema}`);
-  }
+  args.push(`--schema=${schema}`);
 
   if (options?.force) {
     args.push('--force');
