@@ -2,7 +2,7 @@ import {
   formatFiles,
   generateFiles,
   ProjectConfiguration,
-  readNxJson,
+  readJson,
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
@@ -20,7 +20,7 @@ function addFiles(tree: Tree, project: ProjectConfiguration, template) {
 
 export default async function (tree: Tree, options: InitGeneratorSchema) {
   const project = readProjectConfiguration(tree, options.project);
-  const nx = readNxJson();
+  const nx = readJson(tree, 'nx.json');
 
   updateProjectConfiguration(tree, options.project, {
     ...project,
