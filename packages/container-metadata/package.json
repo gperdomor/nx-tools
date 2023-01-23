@@ -1,13 +1,13 @@
 {
   "name": "@nx-tools/container-metadata",
-  "version": "4.0.2",
+  "version": "5.0.0-alpha.1",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "peerDependencies": {
-    "@nrwl/devkit": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
+    "@nrwl/devkit": "^14.0.0 || ^15.0.0",
     "dotenv": ">=10.0.0"
   }
 }
