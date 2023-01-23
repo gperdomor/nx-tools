@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "4.0.2",
+  "version": "5.0.0-alpha.1",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
     "wSedlacek"
@@ -12,7 +12,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
+    "@nrwl/devkit": "^14.0.0 || ^15.0.0",
     "prisma": "^4.5.0",
     "ts-node": "*"
   }
