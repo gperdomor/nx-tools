@@ -33,14 +33,21 @@ A collection of Nx plugins and commons tools to build them.
   <thead>
     <tr>
     <th>Ethan Brooks</th>
+    <th>AlphaEagle1</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-    <td><a target="_blank" rel="noopener noreferrer nofollow" href="https://avatars.githubusercontent.com/u/16616717?s=160"><img src="https://avatars.githubusercontent.com/u/16616717?s=160" alt="Ethan Brooks" style="width: 160px;"></a></td>
+      <td>
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://avatars.githubusercontent.com/u/16616717?s=160"><img src="https://avatars.githubusercontent.com/u/16616717?s=160" alt="Ethan Brooks" style="width: 160px;"></a>
+      </td>
+      <td>
+        <a target="_blank" rel="noopener noreferrer nofollow" href="https://avatars.githubusercontent.com/u/114931046?s=160"><img src="https://avatars.githubusercontent.com/u/114931046?s=160" alt="AlphaEagle1" style="width: 160px;"></a>
+      </td>
     </tr>
     <tr>
     <td><a href="https://github.com/ethanbrooks">ethanbrooks</a></td>
+    <td><a href="https://github.com/AlphaEagle1">AlphaEagle1</a></td>
     </tr>
   </tbody>
 </table>
