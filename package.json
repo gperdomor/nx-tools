@@ -52,7 +52,7 @@
     "@types/node": "18.14.6",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
-    "commitizen": "4.2.6",
+    "commitizen": "4.3.0",
     "eslint": "8.32.0",
     "eslint-config-prettier": "8.6.0",
     "husky": "8.0.3",
