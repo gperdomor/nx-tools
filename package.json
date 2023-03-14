@@ -49,7 +49,7 @@
     "@nrwl/workspace": "15.5.3",
     "@prisma/client": "4.9.0",
     "@types/jest": "28.1.8",
-    "@types/node": "18.11.18",
+    "@types/node": "18.14.6",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "commitizen": "4.2.6",
