@@ -1,13 +1,9 @@
 {
   "name": "nx-tools",
   "description": "NX Tools plugins",
-  "version": "5.0.0-alpha.1",
+  "version": "5.0.0-alpha.2",
   "license": "MIT",
   "scripts": {
-    "format": "nx format:write",
-    "update": "nx migrate latest",
-    "graph": "nx graph",
-    "help": "nx help",
     "commit": "cz",
     "check-lock-files": "node ./tools/scripts/check-lock-files.js",
     "prepare": "is-ci || husky install"
