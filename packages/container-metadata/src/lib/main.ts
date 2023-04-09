@@ -1,9 +1,9 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext as Context } from '@nx-tools/ci-context';
+import { RunnerContext as Context, ContextProxyFactory, RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as fs from 'node:fs';
 import { GROUP_PREFIX } from './constants';
-import { getInputs, Inputs } from './context';
+import { Inputs, getInputs } from './context';
 import { Meta, Version } from './meta';
 
 export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
@@ -60,7 +60,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
   core.startGroup(`JSON output`, GROUP_PREFIX);
   core.info(JSON.stringify(jsonOutput, null, 2));
 
-  // Bake definition file
+  // Bake file definition
   const bakeFile: string = meta.getBakeFile();
   core.startGroup(`Bake definition file`, GROUP_PREFIX);
   core.info(fs.readFileSync(bakeFile, 'utf8'));

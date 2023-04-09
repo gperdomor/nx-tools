@@ -1,17 +1,15 @@
-/* eslint-disable no-prototype-builtins */
-import { RepoMetadata, RunnerContext as Context } from '@nx-tools/ci-context';
+import { RunnerContext as Context, RepoMetadata } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
 import * as handlebars from 'handlebars';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
 import { Inputs, tmpDir } from './context';
 import * as fcl from './flavor';
-import * as tcl from './tag';
-
 import * as icl from './image';
+import * as tcl from './tag';
 
 export interface Version {
   main: string | undefined;
@@ -121,8 +119,19 @@ export class Meta {
     const currentDate = this.date;
     const vraw = this.setValue(
       handlebars.compile(tag.attrs['pattern'])({
-        date: function (format: string) {
-          return moment(currentDate).utc().format(format);
+        date: function (format: string, options: any) {
+          const m = moment(currentDate);
+          let tz = 'UTC';
+          Object.keys(options.hash).forEach((key) => {
+            switch (key) {
+              case 'tz':
+                tz = options.hash[key];
+                break;
+              default:
+                throw new Error(`Unknown ${key} attribute`);
+            }
+          });
+          return m.tz(tz).format(format);
         },
       }),
       tag
@@ -150,7 +159,7 @@ export class Meta {
     let latest = false;
     const sver = semver.parse(vraw, {
       includePrerelease: true,
-    } as any);
+    } as semver.Options);
     if (semver.prerelease(vraw)) {
       if (Meta.isRawStatement(tag.attrs['pattern'])) {
         vraw = this.setValue(handlebars.compile(tag.attrs['pattern'])(sver), tag);
@@ -239,13 +248,11 @@ export class Meta {
       core.warning(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (typeof tmatch[tag.attrs['group'] as any] === 'undefined') {
       core.warning(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     vraw = this.setValue(tmatch[tag.attrs['group'] as any], tag);
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? true : this.flavor.latest == 'true');
   }
@@ -304,10 +311,7 @@ export class Meta {
 
     let val = this.context.sha;
     if (tag.attrs['format'] === tcl.ShaFormat.Short) {
-      val = this.context.sha.substr(
-        0,
-        parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || process.env['NX_DOCKER_SHORT_SHA_LENGTH'] || '7', 10)
-      );
+      val = this.context.sha.substring(0, parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || '7', 10));
     }
 
     const vraw = this.setValue(val, tag);
@@ -334,7 +338,6 @@ export class Meta {
     try {
       const hp = handlebars.parseWithoutProcessing(pattern);
       if (hp.body.length == 1 && hp.body[0].type == 'MustacheStatement') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const stm: any = hp.body[0];
         return stm['path']['parts'].length == 1 && stm['path']['parts'][0] == 'raw';
       }
@@ -375,16 +378,16 @@ export class Meta {
         return ctx.ref.replace(/^refs\/tags\//g, '');
       },
       sha: function () {
-        return ctx.sha.substr(0, 7);
+        return ctx.sha.substring(0, parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || '7', 10));
       },
       base_ref: function () {
-        if (/^refs\/tags\//.test(ctx.ref) && ctx.payload?.['base_ref'] != undefined) {
-          return ctx.payload['base_ref'].replace(/^refs\/heads\//g, '');
+        if (/^refs\/tags\//.test(ctx.ref) && ctx.payload?.base_ref != undefined) {
+          return ctx.payload.base_ref.replace(/^refs\/heads\//g, '');
         }
         // FIXME: keep this for backward compatibility even if doesn't always seem
         //  to return the expected branch. See the comment below.
-        if (/^refs\/pull\//.test(ctx.ref) && ctx.payload?.['pull_request']?.base?.ref != undefined) {
-          return ctx.payload['pull_request'].base.ref;
+        if (/^refs\/pull\//.test(ctx.ref) && ctx.payload?.pull_request?.base?.ref != undefined) {
+          return ctx.payload.pull_request.base.ref;
         }
         return '';
       },
@@ -400,7 +403,7 @@ export class Meta {
         if (branch == undefined || branch.length == 0) {
           return 'false';
         }
-        if (ctx.payload?.['repository']?.default_branch == branch) {
+        if (ctx.payload?.repository?.default_branch == branch) {
           return 'true';
         }
         // following events always trigger for last commit on default branch
@@ -415,8 +418,19 @@ export class Meta {
         }
         return 'false';
       },
-      date: function (format: string) {
-        return moment(currentDate).utc().format(format);
+      date: function (format: string, options: any) {
+        const m = moment(currentDate);
+        let tz = 'UTC';
+        Object.keys(options.hash).forEach((key) => {
+          switch (key) {
+            case 'tz':
+              tz = options.hash[key];
+              break;
+            default:
+              throw new Error(`Unknown ${key} attribute`);
+          }
+        });
+        return m.tz(tz).format(format);
       },
     });
   }
@@ -436,7 +450,6 @@ export class Meta {
     if (!this.version.main) {
       return [];
     }
-
     const tags: Array<string> = [];
     for (const imageName of this.getImageNames()) {
       tags.push(`${imageName}:${this.version.main}`);

@@ -35,8 +35,14 @@
       "options": {
         "jestConfig": "packages/container-metadata/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
-  "tags": []
+  "tags": ["nx-container"]
 }
