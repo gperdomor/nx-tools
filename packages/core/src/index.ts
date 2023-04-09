@@ -1,4 +1,4 @@
-export { exec, ExecListeners, ExecOptions, ExecOutput, getExecOutput } from '@actions/exec';
+export { ExecListeners, ExecOptions, ExecOutput, exec, getExecOutput } from '@actions/exec';
 export { asyncForEach } from './lib/async-for-each';
 export { getBooleanInput, getInput, getMultilineInput, getPosixName } from './lib/get-input';
 export type { InputOptions } from './lib/get-input';
