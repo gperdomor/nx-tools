@@ -1,4 +1,4 @@
-const { readFileSync, existsSync } = require('fs');
+const { readFileSync, existsSync } = require('node:fs');
 
 function checkLockFiles() {
   const errors = [];

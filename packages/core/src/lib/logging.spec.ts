@@ -10,11 +10,11 @@ describe('Logging', () => {
     jest.spyOn(logger, 'warn');
     jest.spyOn(logger, 'log');
     jest.spyOn(logger, 'info');
-    process.stdout.write = jest.fn();
+    jest.spyOn(process.stdout, 'write').mockImplementation(() => true);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('debug should call devkit logger debug method', () => {
