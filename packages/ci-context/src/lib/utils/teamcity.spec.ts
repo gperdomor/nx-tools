@@ -87,11 +87,11 @@ describe('TeamCity', () => {
       context = await teamcity.context();
 
       expect(context).toMatchInlineSnapshot(`
-        Object {
+        {
           "actor": "ian",
           "eventName": "Git",
           "job": "code quality",
-          "payload": Object {},
+          "payload": {},
           "ref": "refs/heads/branch",
           "runId": 61838662,
           "runNumber": 1575,
@@ -109,11 +109,11 @@ describe('TeamCity', () => {
       context = await teamcity.context();
 
       expect(context).toMatchInlineSnapshot(`
-        Object {
+        {
           "actor": "ian",
           "eventName": "Git",
           "job": "code quality",
-          "payload": Object {},
+          "payload": {},
           "ref": "refs/reviews/337733/9",
           "runId": 61838662,
           "runNumber": 1575,
@@ -128,7 +128,7 @@ describe('TeamCity', () => {
       const repo = await teamcity.repo();
 
       expect(repo).toMatchInlineSnapshot(`
-        Object {
+        {
           "default_branch": "master",
           "description": "",
           "html_url": "https://git.repo.com/cool/project",
@@ -148,7 +148,7 @@ describe('TeamCity', () => {
       const repo = await teamcity.repo();
 
       expect(repo).toMatchInlineSnapshot(`
-        Object {
+        {
           "default_branch": "master",
           "description": "",
           "html_url": "https://gerrit.repo.com/q/project:cool%2Fproject",
