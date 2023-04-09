@@ -1,6 +1,6 @@
 import { ExecutorContext, names } from '@nrwl/devkit';
 import * as core from '@nx-tools/core';
-import parse from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -112,7 +112,7 @@ export async function getInputList(
 
   const records = await parse(items, {
     columns: false,
-    relax: true,
+    relaxQuotes: true,
     relaxColumnCount: true,
     // skipLinesWithEmptyValues: true,
     skipEmptyLines: true,

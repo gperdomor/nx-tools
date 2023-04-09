@@ -3,19 +3,12 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as context from './context';
 
-jest.mock('./context', () => {
-  const actualModule = jest.requireActual('./context');
-  return {
-    __esModule: true,
-    ...actualModule,
-    tmpDir: jest.fn(() => {
-      const tmpDir = path.join('/tmp/.container-metadata-action-jest').split(path.sep).join(path.posix.sep);
-      if (!fs.existsSync(tmpDir)) {
-        fs.mkdirSync(tmpDir, { recursive: true });
-      }
-      return tmpDir;
-    }),
-  };
+jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
+  const tmpDir = path.join('/tmp/.container-metadata-action-jest').split(path.sep).join(path.posix.sep);
+  if (!fs.existsSync(tmpDir)) {
+    fs.mkdirSync(tmpDir, { recursive: true });
+  }
+  return tmpDir;
 });
 
 describe('getInputList', () => {

@@ -1,5 +1,5 @@
 import * as core from '@nx-tools/core';
-import parse from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
 
 export interface Image {
   name: string;
@@ -81,5 +81,6 @@ function output(images: Image[]): Image[] {
   for (const image of images) {
     core.info(`name=${image.name},enable=${image.enable}`);
   }
+
   return images;
 }

@@ -1,5 +1,5 @@
 import * as core from '@nx-tools/core';
-import parse from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
 import fs from 'node:fs';
 import path from 'node:path';
 import * as semver from 'semver';

@@ -1,6 +1,5 @@
-/* eslint-disable no-prototype-builtins */
 import * as core from '@nx-tools/core';
-import parse from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
 import { GROUP_PREFIX } from './constants';
 
 export enum Type {
@@ -96,7 +95,7 @@ export function Parse(s: string): Tag {
   for (const field of fields) {
     const parts = field
       .toString()
-      .split('=')
+      .split(/(?<=^[^=]+?)=/)
       .map((item: string) => item.trim());
     if (parts.length == 1) {
       tag.attrs['value'] = parts[0];

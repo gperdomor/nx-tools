@@ -3,12 +3,12 @@ import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext } fr
 import * as dotenv from 'dotenv';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { getInputs, Inputs } from './context';
+import * as repoFixture from '../../tests/fixtures/repo.json';
+import { Inputs, getInputs } from './context';
 import { Meta, Version } from './meta';
 
 jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return <Promise<RepoMetadata>>require(path.join(__dirname, '..', '..', 'tests', 'fixtures', 'repo.json'));
+  return <Promise<RepoMetadata>>(repoFixture as unknown);
 });
 
 jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
@@ -19,8 +19,8 @@ jest.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {
   return '2020-01-10T00:30:00.000Z';
 });
 
-jest.mock('moment', () => {
-  return () => (jest.requireActual('moment') as typeof import('moment'))('2020-01-10T00:30:00.000Z');
+jest.mock('moment-timezone', () => {
+  return () => (jest.requireActual('moment-timezone') as typeof import('moment-timezone'))('2020-01-10T00:30:00.000Z');
 });
 
 beforeEach(() => {
@@ -54,8 +54,7 @@ const tagsLabelsTest = async (
 ) => {
   process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
   const context = await ContextProxyFactory.create();
-
-  const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
+  const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
   const meta = new Meta({ ...getInputs({}), ...inputs }, context, repo);
 
   const version = meta.version;
@@ -602,6 +601,7 @@ describe('push', () => {
         tags: [
           `type=raw,value=mytag-{{branch}}`,
           `type=raw,value=mytag-{{date 'YYYYMMDD'}}`,
+          `type=raw,value=mytag-{{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}`,
           `type=raw,value=mytag-tag-{{tag}}`,
           `type=raw,value=mytag-baseref-{{base_ref}}`,
           `type=raw,value=mytag-defbranch,enable={{is_default_branch}}`
@@ -611,6 +611,7 @@ describe('push', () => {
         main: 'mytag-master',
         partial: [
           'mytag-20200110',
+          'mytag-20200110-093000',
           'mytag-tag-',
           'mytag-baseref-',
           'mytag-defbranch'
@@ -620,6 +621,7 @@ describe('push', () => {
       [
         'user/app:mytag-master',
         'user/app:mytag-20200110',
+        'user/app:mytag-20200110-093000',
         'user/app:mytag-tag-',
         'user/app:mytag-baseref-',
         'user/app:mytag-defbranch'
@@ -2630,6 +2632,34 @@ describe('schedule', () => {
         "org.opencontainers.image.licenses=MIT"
       ]
     ],
+    [
+      'schedule08',
+      'event_schedule.env',
+      {
+        images: ['user/app'],
+        tags: [
+          `type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}`
+        ]
+      } as Inputs,
+      {
+        main: '20200110-093000',
+        partial: [],
+        latest: false
+      } as Version,
+      [
+        'user/app:20200110-093000'
+      ],
+      [
+        "org.opencontainers.image.title=Hello-World",
+        "org.opencontainers.image.description=This your first repo!",
+        "org.opencontainers.image.url=https://github.com/octocat/Hello-World",
+        "org.opencontainers.image.source=https://github.com/octocat/Hello-World",
+        "org.opencontainers.image.version=20200110-093000",
+        "org.opencontainers.image.created=2020-01-10T00:30:00.000Z",
+        "org.opencontainers.image.revision=860c1904a1ce19322e91ac35af1ab07466440c37",
+        "org.opencontainers.image.licenses=MIT"
+      ]
+    ],
   ])('given %p with %p event', tagsLabelsTest);
 });
 
@@ -3307,10 +3337,9 @@ describe('json', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: unknown) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, "..","..","tests", 'fixtures', envFile)));
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
     const context = await ContextProxyFactory.create();
-
-    const repo = await RepoProxyFactory.create(process.env["GITHUB_TOKEN"] || '');
+    const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
 
     const jsonOutput = meta.getJSON();
@@ -3611,14 +3640,56 @@ describe('bake', () => {
         }
       }
     ]
-  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: Record<string,unknown>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures', envFile)));
+  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: unknown) => {
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname,  '..', '..', 'tests', 'fixtures', envFile)));
     const context = await ContextProxyFactory.create();
-
-    const repo = await RepoProxyFactory.create(process.env['GITHUB_TOKEN'] || '');
+    const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
 
     const bakeFile = meta.getBakeFile();
     expect(JSON.parse(fs.readFileSync(bakeFile, 'utf8'))).toEqual(exBakeDefinition);
+  });
+});
+
+describe('sepTags', () => {
+  // prettier-ignore
+  test.each([
+    [
+      'sepTags01',
+      'event_push_dev.env',
+      {
+        images: ['user/app'],
+        tags: [
+          `type=ref,event=branch`,
+          `type=raw,my`,
+          `type=raw,custom`,
+          `type=raw,tags`
+        ],
+        "sep-tags": " "
+      } as Inputs,
+      "user/app:dev user/app:my user/app:custom user/app:tags"
+    ],
+    [
+      'sepTags02',
+      'event_push_dev.env',
+      {
+        images: ['user/app'],
+        tags: [
+          `type=ref,event=branch`,
+          `type=raw,my`,
+          `type=raw,custom`,
+          `type=raw,tags`
+        ],
+        "sep-tags": ","
+      } as Inputs,
+      "user/app:dev,user/app:my,user/app:custom,user/app:tags"
+    ]
+  ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, expTags: string) => {
+    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname,  '..', '..', 'tests', 'fixtures', envFile)));
+    const context = await ContextProxyFactory.create();
+    const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
+    const meta = new Meta({...getInputs({}), ...inputs}, context, repo);
+
+    expect(meta.getTags().join(inputs["sep-tags"])).toEqual(expTags);
   });
 });
