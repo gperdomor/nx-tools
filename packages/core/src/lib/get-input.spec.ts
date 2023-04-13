@@ -138,6 +138,11 @@ describe('getInputs', () => {
         expect(getInput('my other input')).toBe('other-val');
       });
     });
+
+    it('getInput should use return empty string if no value is founded and no fallback provided', () => {
+      expect(getInput('non-existing-variable', { prefix: 'prefixed' })).toBe('');
+      expect(getInput('non-existing-variable')).toBe('');
+    });
   });
 
   describe('getBooleanInput', () => {

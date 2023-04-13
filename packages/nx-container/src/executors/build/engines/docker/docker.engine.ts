@@ -1,5 +1,5 @@
 import { ExecutorContext, names } from '@nrwl/devkit';
-import * as core from '@nx-tools/core';
+import { asyncForEach, exec, getBooleanInput, getExecOutput, logger } from '@nx-tools/core';
 import * as handlebars from 'handlebars';
 import { randomBytes } from 'node:crypto';
 import { Inputs } from '../../context';
@@ -27,14 +27,14 @@ export class Docker extends EngineAdapter {
     this.standalone = !(await docker.isAvailable());
 
     if (!inputs.quiet) {
-      core.startGroup('Docker info', GROUP_PREFIX);
+      logger.startGroup(GROUP_PREFIX, 'Docker info');
       if (this.standalone) {
-        core.info('Docker info skipped in standalone mode');
+        logger.info('Docker info skipped in standalone mode');
       } else {
-        await core.exec('docker', ['version'], {
+        await exec('docker', ['version'], {
           failOnStdErr: false,
         });
-        await core.exec('docker', ['info'], {
+        await exec('docker', ['info'], {
           failOnStdErr: false,
         });
       }
@@ -49,14 +49,14 @@ export class Docker extends EngineAdapter {
     this.buildxVersion = await buildx.getVersion();
 
     if (!inputs.quiet) {
-      core.startGroup('Buildx version');
+      logger.startGroup(GROUP_PREFIX, 'Buildx version');
       const versionCmd = buildx.getCommand(['version'], this.standalone);
-      await core.exec(versionCmd.command, versionCmd.args, {
+      await exec(versionCmd.command, versionCmd.args, {
         failOnStdErr: false,
       });
     }
 
-    this.createdBuilder = core.getBooleanInput('create-builder', {
+    this.createdBuilder = getBooleanInput('create-builder', {
       prefix: names(ctx?.projectName || '').constantName,
       fallback: 'false',
     });
@@ -64,27 +64,25 @@ export class Docker extends EngineAdapter {
     if (this.createdBuilder) {
       inputs.builder = inputs.builder || `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
 
-      core.info(`Creating builder ${inputs.builder}`);
+      logger.info(`Creating builder ${inputs.builder}`);
 
       const command = buildx.getCommand(['create', `--name=${inputs.builder}`], this.standalone);
-      await core
-        .getExecOutput(command.command, command.args, {
-          ignoreReturnCode: true,
-        })
-        .then((res) => {
-          if (res.stderr.length > 0 && res.exitCode != 0) {
-            throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
-          }
-        });
+      await getExecOutput(command.command, command.args, {
+        ignoreReturnCode: true,
+      }).then((res) => {
+        if (res.stderr.length > 0 && res.exitCode != 0) {
+          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
+        }
+      });
     }
   }
 
   async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
     // startGroup(`Running post build steps`, GROUP_PREFIX);
     if (this.createdBuilder) {
-      core.info(`Removing builder ${this.createdBuilder}`);
+      logger.info(`Removing builder ${this.createdBuilder}`);
       const command = buildx.getCommand(['rm', inputs.builder], this.standalone);
-      await core.getExecOutput(command.command, command.args, {
+      await getExecOutput(command.command, command.args, {
         ignoreReturnCode: true,
       });
     }
@@ -119,24 +117,24 @@ export class Docker extends EngineAdapter {
     buildxVersion: string
   ): Promise<Array<string>> {
     const args: Array<string> = ['build'];
-    await core.asyncForEach(inputs.addHosts, async (addHost) => {
+    await asyncForEach(inputs.addHosts, async (addHost) => {
       args.push('--add-host', addHost);
     });
     if (inputs.allow.length > 0) {
       args.push('--allow', inputs.allow.join(','));
     }
-    await core.asyncForEach(inputs.buildArgs, async (buildArg) => {
+    await asyncForEach(inputs.buildArgs, async (buildArg) => {
       args.push('--build-arg', buildArg);
     });
     if (buildx.satisfies(buildxVersion, '>=0.8.0')) {
-      await core.asyncForEach(inputs.buildContexts, async (buildContext) => {
+      await asyncForEach(inputs.buildContexts, async (buildContext) => {
         args.push('--build-context', buildContext);
       });
     }
-    await core.asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
+    await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
       args.push('--cache-from', cacheFrom);
     });
-    await core.asyncForEach(inputs.cacheTo, async (cacheTo) => {
+    await asyncForEach(inputs.cacheTo, async (cacheTo) => {
       args.push('--cache-to', cacheTo);
     });
     if (inputs.cgroupParent) {
@@ -151,30 +149,30 @@ export class Docker extends EngineAdapter {
     ) {
       args.push('--iidfile', await buildx.getImageIDFile());
     }
-    await core.asyncForEach(inputs.labels, async (label) => {
+    await asyncForEach(inputs.labels, async (label) => {
       args.push('--label', label);
     });
-    await core.asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
+    await asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
       args.push('--no-cache-filter', noCacheFilter);
     });
-    await core.asyncForEach(inputs.outputs, async (output) => {
+    await asyncForEach(inputs.outputs, async (output) => {
       args.push('--output', output);
     });
     if (inputs.platforms.length > 0) {
       args.push('--platform', inputs.platforms.join(','));
     }
-    await core.asyncForEach(inputs.secrets, async (secret) => {
+    await asyncForEach(inputs.secrets, async (secret) => {
       try {
         args.push('--secret', await buildx.getSecretString(secret));
       } catch (err) {
-        core.warning(err.message);
+        logger.warn(err.message);
       }
     });
-    await core.asyncForEach(inputs.secretFiles, async (secretFile) => {
+    await asyncForEach(inputs.secretFiles, async (secretFile) => {
       try {
         args.push('--secret', await buildx.getSecretFile(secretFile));
       } catch (err) {
-        core.warning(err.message);
+        logger.warn(err.message);
       }
     });
     if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {
@@ -183,16 +181,16 @@ export class Docker extends EngineAdapter {
     if (inputs.shmSize) {
       args.push('--shm-size', inputs.shmSize);
     }
-    await core.asyncForEach(inputs.ssh, async (ssh) => {
+    await asyncForEach(inputs.ssh, async (ssh) => {
       args.push('--ssh', ssh);
     });
-    await core.asyncForEach(inputs.tags, async (tag) => {
+    await asyncForEach(inputs.tags, async (tag) => {
       args.push('--tag', tag);
     });
     if (inputs.target) {
       args.push('--target', inputs.target);
     }
-    await core.asyncForEach(inputs.ulimit, async (ulimit) => {
+    await asyncForEach(inputs.ulimit, async (ulimit) => {
       args.push('--ulimit', ulimit);
     });
     return args;

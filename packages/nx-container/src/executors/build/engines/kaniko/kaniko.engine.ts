@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import * as core from '@nx-tools/core';
+import { asyncForEach, exec, logger } from '@nx-tools/core';
 import * as handlebars from 'handlebars';
 import { readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -27,9 +27,9 @@ export class Kaniko extends EngineAdapter {
     }
 
     if (!inputs.quiet) {
-      core.startGroup('Kaniko info', GROUP_PREFIX);
+      logger.startGroup(GROUP_PREFIX, 'Kaniko info');
       const cmd = kaniko.getCommand(['version']);
-      await core.exec(cmd.command, cmd.args, {
+      await exec(cmd.command, cmd.args, {
         failOnStdErr: false,
       });
     }
@@ -41,7 +41,7 @@ export class Kaniko extends EngineAdapter {
     const dir = await readdir('/kaniko');
     const toDelete = dir.filter((file) => !this.originalDirs.includes(file));
 
-    await core.asyncForEach(toDelete, async (fileOrDir) => {
+    await asyncForEach(toDelete, async (fileOrDir) => {
       await rm(join('/kaniko', fileOrDir), { force: true, recursive: true });
     });
   }
@@ -75,24 +75,24 @@ export class Kaniko extends EngineAdapter {
     buildxVersion: string*/
   ): Promise<Array<string>> {
     const args: Array<string> = [];
-    // await core.asyncForEach(inputs.addHosts, async (addHost) => {
+    // await asyncForEach(inputs.addHosts, async (addHost) => {
     //   args.push('--add-host', addHost);
     // });
     // if (inputs.allow.length > 0) {
     //   args.push('--allow', inputs.allow.join(','));
     // }
-    await core.asyncForEach(inputs.buildArgs, async (buildArg) => {
+    await asyncForEach(inputs.buildArgs, async (buildArg) => {
       args.push('--build-arg', buildArg);
     });
     // if (buildx.satisfies(buildxVersion, '>=0.8.0')) {
-    //   await core.asyncForEach(inputs.buildContexts, async (buildContext) => {
+    //   await asyncForEach(inputs.buildContexts, async (buildContext) => {
     //     args.push('--build-context', buildContext);
     //   });
     // }
-    await core.asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
+    await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
       args.push('--cache-repo', cacheFrom);
     });
-    // await core.asyncForEach(inputs.cacheTo, async (cacheTo) => {
+    // await asyncForEach(inputs.cacheTo, async (cacheTo) => {
     //   args.push('--cache-to', cacheTo);
     // });
     // if (inputs.cgroupParent) {
@@ -107,26 +107,26 @@ export class Kaniko extends EngineAdapter {
     // ) {
     //   args.push('--iidfile', await buildx.getImageIDFile());
     // }
-    await core.asyncForEach(inputs.labels, async (label) => {
+    await asyncForEach(inputs.labels, async (label) => {
       args.push('--label', label);
     });
-    // await core.asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
+    // await asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
     //   args.push('--no-cache-filter', noCacheFilter);
     // });
-    // await core.asyncForEach(inputs.outputs, async (output) => {
+    // await asyncForEach(inputs.outputs, async (output) => {
     //   args.push('--output', output);
     // });
     if (inputs.platforms.length > 0) {
       args.push('--customPlatform', inputs.platforms.join(','));
     }
-    // await core.asyncForEach(inputs.secrets, async (secret) => {
+    // await asyncForEach(inputs.secrets, async (secret) => {
     //   try {
     //     args.push('--secret', await buildx.getSecretString(secret));
     //   } catch (err) {
     //     core.warning(err.message);
     //   }
     // });
-    // await core.asyncForEach(inputs.secretFiles, async (secretFile) => {
+    // await asyncForEach(inputs.secretFiles, async (secretFile) => {
     //   try {
     //     args.push('--secret', await buildx.getSecretFile(secretFile));
     //   } catch (err) {
@@ -139,16 +139,16 @@ export class Kaniko extends EngineAdapter {
     // if (inputs.shmSize) {
     //   args.push('--shm-size', inputs.shmSize);
     // }
-    // await core.asyncForEach(inputs.ssh, async (ssh) => {
+    // await asyncForEach(inputs.ssh, async (ssh) => {
     //   args.push('--ssh', ssh);
     // });
-    await core.asyncForEach(inputs.tags, async (tag) => {
+    await asyncForEach(inputs.tags, async (tag) => {
       args.push('--destination', tag);
     });
     if (inputs.target) {
       args.push('--target', inputs.target);
     }
-    // await core.asyncForEach(inputs.ulimit, async (ulimit) => {
+    // await asyncForEach(inputs.ulimit, async (ulimit) => {
     //   args.push('--ulimit', ulimit);
     // });
     return args;

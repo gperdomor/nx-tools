@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-container",
-  "version": "5.0.0-alpha.1",
+  "version": "5.0.0-alpha.3",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -9,7 +9,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^14.0.0 || ^15.0.0",
+    "@nrwl/devkit": "^15.0.0 || ^16.0.0",
     "dotenv": ">=10.0.0"
   }
 }
