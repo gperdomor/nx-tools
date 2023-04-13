@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nrwl/devkit';
-import * as core from '@nx-tools/core';
+import { asyncForEach, exec, getExecOutput, logger } from '@nx-tools/core';
 import * as handlebars from 'handlebars';
 import { Inputs } from '../../context';
 import { EngineAdapter } from '../engine-adapter';
@@ -29,11 +29,11 @@ export class Podman extends EngineAdapter {
     }
 
     if (!inputs.quiet) {
-      core.startGroup('Podman info', GROUP_PREFIX);
-      await core.exec('podman', ['version'], {
+      logger.startGroup(GROUP_PREFIX, 'Podman info');
+      await exec('podman', ['version'], {
         failOnStdErr: false,
       });
-      await core.exec('podman', ['info'], {
+      await exec('podman', ['info'], {
         failOnStdErr: false,
       });
     }
@@ -41,8 +41,8 @@ export class Podman extends EngineAdapter {
     this.podmanVersion = await podman.getVersion();
 
     if (!inputs.quiet) {
-      core.startGroup('Podman version');
-      await core.exec('podman', ['version'], {
+      logger.startGroup(GROUP_PREFIX, 'Podman version');
+      await exec('podman', ['version'], {
         failOnStdErr: false,
       });
     }
@@ -50,17 +50,15 @@ export class Podman extends EngineAdapter {
 
   async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
     if (inputs.push) {
-      await core.asyncForEach(inputs.tags, async (tag) => {
+      await asyncForEach(inputs.tags, async (tag) => {
         const cmd = this.getCommand(['push', tag]);
-        await core
-          .getExecOutput(cmd.command, cmd.args, {
-            ignoreReturnCode: true,
-          })
-          .then((res) => {
-            if (res.stderr.length > 0 && res.exitCode != 0) {
-              throw new Error(`podman failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
-            }
-          });
+        await getExecOutput(cmd.command, cmd.args, {
+          ignoreReturnCode: true,
+        }).then((res) => {
+          if (res.stderr.length > 0 && res.exitCode != 0) {
+            throw new Error(`podman failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
+          }
+        });
       });
     }
   }
@@ -94,24 +92,24 @@ export class Podman extends EngineAdapter {
     podmanVersion: string
   ): Promise<Array<string>> {
     const args: Array<string> = ['build'];
-    await core.asyncForEach(inputs.addHosts, async (addHost) => {
+    await asyncForEach(inputs.addHosts, async (addHost) => {
       args.push('--add-host', addHost);
     });
     // if (inputs.allow.length > 0) {
     //   args.push('--allow', inputs.allow.join(','));
     // }
-    await core.asyncForEach(inputs.buildArgs, async (buildArg) => {
+    await asyncForEach(inputs.buildArgs, async (buildArg) => {
       args.push('--build-arg', buildArg);
     });
     if (podman.satisfies(podmanVersion, '>=4.2.0')) {
-      await core.asyncForEach(inputs.buildContexts, async (buildContext) => {
+      await asyncForEach(inputs.buildContexts, async (buildContext) => {
         args.push('--build-context', buildContext);
       });
     }
-    await core.asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
+    await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
       args.push('--cache-from', cacheFrom);
     });
-    await core.asyncForEach(inputs.cacheTo, async (cacheTo) => {
+    await asyncForEach(inputs.cacheTo, async (cacheTo) => {
       args.push('--cache-to', cacheTo);
     });
     if (inputs.cgroupParent) {
@@ -126,30 +124,30 @@ export class Podman extends EngineAdapter {
     ) {
       args.push('--iidfile', await podman.getImageIDFile());
     }
-    await core.asyncForEach(inputs.labels, async (label) => {
+    await asyncForEach(inputs.labels, async (label) => {
       args.push('--label', label);
     });
-    // await core.asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
+    // await asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
     //   args.push('--no-cache-filter', noCacheFilter);
     // });
-    await core.asyncForEach(inputs.outputs, async (output) => {
+    await asyncForEach(inputs.outputs, async (output) => {
       args.push('--output', output);
     });
     if (inputs.platforms.length > 0) {
       args.push('--platform', inputs.platforms.join(','));
     }
-    await core.asyncForEach(inputs.secrets, async (secret) => {
+    await asyncForEach(inputs.secrets, async (secret) => {
       try {
         args.push('--secret', await podman.getSecretString(secret));
       } catch (err) {
-        core.warning(err.message);
+        logger.warn(err.message);
       }
     });
-    await core.asyncForEach(inputs.secretFiles, async (secretFile) => {
+    await asyncForEach(inputs.secretFiles, async (secretFile) => {
       try {
         args.push('--secret', await podman.getSecretFile(secretFile));
       } catch (err) {
-        core.warning(err.message);
+        logger.warn(err.message);
       }
     });
     if (inputs.githubToken && !podman.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {
@@ -158,16 +156,16 @@ export class Podman extends EngineAdapter {
     if (inputs.shmSize) {
       args.push('--shm-size', inputs.shmSize);
     }
-    await core.asyncForEach(inputs.ssh, async (ssh) => {
+    await asyncForEach(inputs.ssh, async (ssh) => {
       args.push('--ssh', ssh);
     });
-    await core.asyncForEach(inputs.tags, async (tag) => {
+    await asyncForEach(inputs.tags, async (tag) => {
       args.push('--tag', tag);
     });
     if (inputs.target) {
       args.push('--target', inputs.target);
     }
-    await core.asyncForEach(inputs.ulimit, async (ulimit) => {
+    await asyncForEach(inputs.ulimit, async (ulimit) => {
       args.push('--ulimit', ulimit);
     });
     return args;
