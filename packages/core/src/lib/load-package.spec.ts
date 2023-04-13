@@ -1,6 +1,14 @@
 import { loadPackage } from './load-package';
 
 describe('loadPackage', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'error').mockImplementation(() => true);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   describe('when package is available', () => {
     it('should import package', async () => {
       const module = await loadPackage('@nrwl/js', 'ctx');
