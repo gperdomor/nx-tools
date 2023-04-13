@@ -1,5 +1,6 @@
-import * as core from '@nx-tools/core';
+import { logger } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
+import { GROUP_PREFIX } from './constants';
 
 export interface Image {
   name: string;
@@ -77,9 +78,9 @@ export function Transform(inputs: string[]): Image[] {
 }
 
 function output(images: Image[]): Image[] {
-  core.startGroup(`Processing images input`);
+  logger.startGroup(GROUP_PREFIX, `Processing images input`);
   for (const image of images) {
-    core.info(`name=${image.name},enable=${image.enable}`);
+    logger.info(`name=${image.name},enable=${image.enable}`);
   }
 
   return images;

@@ -1,4 +1,4 @@
-import * as core from '@nx-tools/core';
+import { logger } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 import { GROUP_PREFIX } from './constants';
 
@@ -77,9 +77,9 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  core.startGroup(`Processing tags input`, GROUP_PREFIX);
+  logger.startGroup(GROUP_PREFIX, `Processing tags input`);
   for (const tag of sorted) {
-    core.info(tag.toString());
+    logger.info(tag.toString());
   }
 
   return sorted;
