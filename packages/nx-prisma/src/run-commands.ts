@@ -1,5 +1,5 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
-import { getExecOutput, startGroup } from '@nx-tools/core';
+import { getExecOutput, logger } from '@nx-tools/core';
 
 export interface PrismaBuilderOptions {
   schema?: string;
@@ -20,12 +20,12 @@ export const runCommand = async <T extends PrismaBuilderOptions>(
   const cmd = `${getPackageManagerCommand().exec} ${command}`;
   const args = getArgs(options, ctx);
 
-  startGroup(description, 'Nx Prisma');
-
-  await getExecOutput(cmd, args, { ignoreReturnCode: true }).then((res) => {
-    if (res.stderr.length > 0 && res.exitCode != 0) {
-      throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
-    }
+  logger.group(description, async () => {
+    await getExecOutput(cmd, args, { ignoreReturnCode: true }).then((res) => {
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
+      }
+    });
   });
 
   return { success: true };

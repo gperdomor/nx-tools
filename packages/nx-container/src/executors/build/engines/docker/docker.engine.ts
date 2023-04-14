@@ -7,8 +7,6 @@ import { EngineAdapter } from '../engine-adapter';
 import * as buildx from './buildx';
 import * as docker from './docker';
 
-const GROUP_PREFIX = 'Nx Container - Engine: Docker';
-
 export class Docker extends EngineAdapter {
   private standalone: boolean;
   private createdBuilder = false;
@@ -27,17 +25,18 @@ export class Docker extends EngineAdapter {
     this.standalone = !(await docker.isAvailable());
 
     if (!inputs.quiet) {
-      logger.startGroup(GROUP_PREFIX, 'Docker info');
-      if (this.standalone) {
-        logger.info('Docker info skipped in standalone mode');
-      } else {
-        await exec('docker', ['version'], {
-          failOnStdErr: false,
-        });
-        await exec('docker', ['info'], {
-          failOnStdErr: false,
-        });
-      }
+      await logger.group(`Docker info`, async () => {
+        if (this.standalone) {
+          logger.info('Docker info skipped in standalone mode');
+        } else {
+          await exec('docker', ['version'], {
+            failOnStdErr: false,
+          });
+          await exec('docker', ['info'], {
+            failOnStdErr: false,
+          });
+        }
+      });
     }
 
     if (!(await buildx.isAvailable(this.standalone))) {
@@ -49,10 +48,11 @@ export class Docker extends EngineAdapter {
     this.buildxVersion = await buildx.getVersion();
 
     if (!inputs.quiet) {
-      logger.startGroup(GROUP_PREFIX, 'Buildx version');
-      const versionCmd = buildx.getCommand(['version'], this.standalone);
-      await exec(versionCmd.command, versionCmd.args, {
-        failOnStdErr: false,
+      await logger.group(`Buildx version`, async () => {
+        const versionCmd = buildx.getCommand(['version'], this.standalone);
+        await exec(versionCmd.command, versionCmd.args, {
+          failOnStdErr: false,
+        });
       });
     }
 

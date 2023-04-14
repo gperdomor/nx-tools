@@ -1,6 +1,5 @@
 import { logger } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
-import { GROUP_PREFIX } from './constants';
 
 export interface Flavor {
   latest: string;
@@ -76,12 +75,13 @@ export function Transform(inputs: string[]): Flavor {
     }
   }
 
-  logger.startGroup(GROUP_PREFIX, `Processing flavor input`);
-  logger.info(`latest=${flavor.latest}`);
-  logger.info(`prefix=${flavor.prefix}`);
-  logger.info(`prefixLatest=${flavor.prefixLatest}`);
-  logger.info(`suffix=${flavor.suffix}`);
-  logger.info(`suffixLatest=${flavor.suffixLatest}`);
+  logger.group(`Processing flavor input`, async () => {
+    logger.info(`latest=${flavor.latest}`);
+    logger.info(`prefix=${flavor.prefix}`);
+    logger.info(`prefixLatest=${flavor.prefixLatest}`);
+    logger.info(`suffix=${flavor.suffix}`);
+    logger.info(`suffixLatest=${flavor.suffixLatest}`);
+  });
 
   return flavor;
 }

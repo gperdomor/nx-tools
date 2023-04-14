@@ -1,6 +1,5 @@
 import { logger } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
-import { GROUP_PREFIX } from './constants';
 
 export enum Type {
   Schedule = 'schedule',
@@ -77,10 +76,11 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  logger.startGroup(GROUP_PREFIX, `Processing tags input`);
-  for (const tag of sorted) {
-    logger.info(tag.toString());
-  }
+  logger.group(`Processing tags input`, async () => {
+    for (const tag of sorted) {
+      logger.info(tag.toString());
+    }
+  });
 
   return sorted;
 }

@@ -1,5 +1,5 @@
 import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
-import { getExecOutput, getProjectRoot, startGroup } from '@nx-tools/core';
+import { getExecOutput, getProjectRoot, logger } from '@nx-tools/core';
 import { join } from 'node:path';
 import { SeedExecutorSchema } from './schema';
 
@@ -11,12 +11,12 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
   const command = `${getPackageManagerCommand().exec} ts-node`;
   const args = getArgs(options, ctx);
 
-  startGroup('Seeding Database', 'Nx Prisma');
-
-  await getExecOutput(command, args, { ignoreReturnCode: true }).then((res) => {
-    if (res.stderr.length > 0 && res.exitCode != 0) {
-      throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
-    }
+  logger.group('Seeding Database', async () => {
+    await getExecOutput(command, args, { ignoreReturnCode: true }).then((res) => {
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
+      }
+    });
   });
 
   return { success: true };

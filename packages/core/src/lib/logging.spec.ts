@@ -1,5 +1,9 @@
 import * as chalk from 'chalk';
+import * as os from 'node:os';
 import { logger } from './logging';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ci = require('ci-info');
 
 describe('Logging', () => {
   beforeEach(() => {
@@ -48,12 +52,57 @@ describe('Logging', () => {
     expect(console.warn).toHaveBeenCalledWith(chalk.bold(chalk.yellow('this is a warning message')));
   });
 
-  it('startGroup should call devkit info warn method', () => {
-    logger.startGroup('PREFIX', 'this is a group message');
-    expect(console.info).toHaveBeenCalledWith(
-      `\n${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` PREFIX `)))} ${chalk.bold(
-        'this is a group message'
-      )}\n`
-    );
+  describe('startGroup', () => {
+    it('should use github action syntaxt in Github Actions', () => {
+      jest.replaceProperty(ci, 'GITHUB_ACTIONS', true);
+      logger.startGroup('this is a group message');
+      expect(console.info).toHaveBeenCalledWith(`::group::this is a group message${os.EOL}`);
+    });
+
+    it('should use fallback systaxt', () => {
+      jest.replaceProperty(ci, 'GITHUB_ACTIONS', false);
+
+      logger.startGroup('this is a group message');
+      expect(console.info).toHaveBeenCalledWith(
+        `\n${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` this is a group message `)))}\n`
+      );
+    });
+  });
+
+  describe('endGroup', () => {
+    it('should use github action syntaxt in Github Actions', () => {
+      jest.replaceProperty(ci, 'GITHUB_ACTIONS', true);
+      logger.endGroup('this is a group message');
+      expect(console.info).toHaveBeenCalledWith(`::endgroup::${os.EOL}`);
+    });
+
+    it('should use fallback systaxt', () => {
+      jest.replaceProperty(ci, 'GITHUB_ACTIONS', false);
+
+      logger.endGroup('this is a group message');
+      expect(console.info).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('group wraps an async call in a group', () => {
+    it('Github Actions', async () => {
+      jest.replaceProperty(ci, 'GITHUB_ACTIONS', true);
+
+      const result = await logger.group('mygroup', async () => {
+        console.info('in my group\n');
+        return true;
+      });
+
+      expect(result).toBe(true);
+      assertWriteCalls([`::group::mygroup${os.EOL}`, 'in my group\n', `::endgroup::${os.EOL}`]);
+    });
   });
 });
+
+function assertWriteCalls(calls: string[]): void {
+  expect(console.info).toHaveBeenCalledTimes(calls.length);
+
+  for (let i = 0; i < calls.length; i++) {
+    expect(console.info).toHaveBeenNthCalledWith(i + 1, calls[i]);
+  }
+}

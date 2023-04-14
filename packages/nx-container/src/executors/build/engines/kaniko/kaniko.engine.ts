@@ -7,8 +7,6 @@ import { Inputs } from '../../context';
 import { EngineAdapter } from '../engine-adapter';
 import * as kaniko from './kaniko';
 
-const GROUP_PREFIX = 'Nx Container - Engine: Kaniko';
-
 export class Kaniko extends EngineAdapter {
   originalDirs: string[] = [];
 
@@ -27,10 +25,11 @@ export class Kaniko extends EngineAdapter {
     }
 
     if (!inputs.quiet) {
-      logger.startGroup(GROUP_PREFIX, 'Kaniko info');
-      const cmd = kaniko.getCommand(['version']);
-      await exec(cmd.command, cmd.args, {
-        failOnStdErr: false,
+      await logger.group(`Kaniko info`, async () => {
+        const cmd = kaniko.getCommand(['version']);
+        await exec(cmd.command, cmd.args, {
+          failOnStdErr: false,
+        });
       });
     }
 
@@ -75,105 +74,35 @@ export class Kaniko extends EngineAdapter {
     buildxVersion: string*/
   ): Promise<Array<string>> {
     const args: Array<string> = [];
-    // await asyncForEach(inputs.addHosts, async (addHost) => {
-    //   args.push('--add-host', addHost);
-    // });
-    // if (inputs.allow.length > 0) {
-    //   args.push('--allow', inputs.allow.join(','));
-    // }
     await asyncForEach(inputs.buildArgs, async (buildArg) => {
       args.push('--build-arg', buildArg);
     });
-    // if (buildx.satisfies(buildxVersion, '>=0.8.0')) {
-    //   await asyncForEach(inputs.buildContexts, async (buildContext) => {
-    //     args.push('--build-context', buildContext);
-    //   });
-    // }
     await asyncForEach(inputs.cacheFrom, async (cacheFrom) => {
       args.push('--cache-repo', cacheFrom);
     });
-    // await asyncForEach(inputs.cacheTo, async (cacheTo) => {
-    //   args.push('--cache-to', cacheTo);
-    // });
-    // if (inputs.cgroupParent) {
-    //   args.push('--cgroup-parent', inputs.cgroupParent);
-    // }
     if (inputs.file) {
       args.push('--dockerfile', inputs.file);
     }
-    // if (
-    //   !buildx.isLocalOrTarExporter(inputs.outputs) &&
-    //   (inputs.platforms.length == 0 || buildx.satisfies(buildxVersion, '>=0.4.2'))
-    // ) {
-    //   args.push('--iidfile', await buildx.getImageIDFile());
-    // }
     await asyncForEach(inputs.labels, async (label) => {
       args.push('--label', label);
     });
-    // await asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
-    //   args.push('--no-cache-filter', noCacheFilter);
-    // });
-    // await asyncForEach(inputs.outputs, async (output) => {
-    //   args.push('--output', output);
-    // });
     if (inputs.platforms.length > 0) {
       args.push('--customPlatform', inputs.platforms.join(','));
     }
-    // await asyncForEach(inputs.secrets, async (secret) => {
-    //   try {
-    //     args.push('--secret', await buildx.getSecretString(secret));
-    //   } catch (err) {
-    //     core.warning(err.message);
-    //   }
-    // });
-    // await asyncForEach(inputs.secretFiles, async (secretFile) => {
-    //   try {
-    //     args.push('--secret', await buildx.getSecretFile(secretFile));
-    //   } catch (err) {
-    //     core.warning(err.message);
-    //   }
-    // });
-    // if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {
-    //   args.push('--secret', await buildx.getSecretString(`GIT_AUTH_TOKEN=${inputs.githubToken}`));
-    // }
-    // if (inputs.shmSize) {
-    //   args.push('--shm-size', inputs.shmSize);
-    // }
-    // await asyncForEach(inputs.ssh, async (ssh) => {
-    //   args.push('--ssh', ssh);
-    // });
     await asyncForEach(inputs.tags, async (tag) => {
       args.push('--destination', tag);
     });
     if (inputs.target) {
       args.push('--target', inputs.target);
     }
-    // await asyncForEach(inputs.ulimit, async (ulimit) => {
-    //   args.push('--ulimit', ulimit);
-    // });
     return args;
   }
 
   private async getCommonArgs(inputs: Inputs /*, buildxVersion: string*/): Promise<Array<string>> {
     const args: Array<string> = [];
-    // if (inputs.builder) {
-    //   args.push('--builder', inputs.builder);
-    // }
-    // if (inputs.load) {
-    //   args.push('--load');
-    // }
-    // if (buildx.satisfies(buildxVersion, '>=0.6.0')) {
-    //   args.push('--metadata-file', await buildx.getMetadataFile());
-    // }
-    // if (inputs.network) {
-    //   args.push('--network', inputs.network);
-    // }
     if (!inputs.noCache) {
       args.push('--cache=true');
     }
-    // if (inputs.pull) {
-    //   args.push('--pull');
-    // }
     if (!inputs.push) {
       args.push('--no-push');
     }
