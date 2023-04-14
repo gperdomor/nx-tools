@@ -1,6 +1,5 @@
 import { logger } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
-import { GROUP_PREFIX } from './constants';
 
 export interface Image {
   name: string;
@@ -78,10 +77,11 @@ export function Transform(inputs: string[]): Image[] {
 }
 
 function output(images: Image[]): Image[] {
-  logger.startGroup(GROUP_PREFIX, `Processing images input`);
-  for (const image of images) {
-    logger.info(`name=${image.name},enable=${image.enable}`);
-  }
+  logger.group(`Processing images input`, async () => {
+    for (const image of images) {
+      logger.info(`name=${image.name},enable=${image.enable}`);
+    }
+  });
 
   return images;
 }

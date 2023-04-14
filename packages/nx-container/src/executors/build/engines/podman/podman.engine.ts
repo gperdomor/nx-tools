@@ -5,8 +5,6 @@ import { Inputs } from '../../context';
 import { EngineAdapter } from '../engine-adapter';
 import * as podman from './podman';
 
-const GROUP_PREFIX = 'Nx Container - Engine: Podman';
-
 export class Podman extends EngineAdapter {
   private podmanVersion: string;
 
@@ -29,21 +27,23 @@ export class Podman extends EngineAdapter {
     }
 
     if (!inputs.quiet) {
-      logger.startGroup(GROUP_PREFIX, 'Podman info');
-      await exec('podman', ['version'], {
-        failOnStdErr: false,
-      });
-      await exec('podman', ['info'], {
-        failOnStdErr: false,
+      await logger.group(`Podman info`, async () => {
+        await exec('podman', ['version'], {
+          failOnStdErr: false,
+        });
+        await exec('podman', ['info'], {
+          failOnStdErr: false,
+        });
       });
     }
 
     this.podmanVersion = await podman.getVersion();
 
     if (!inputs.quiet) {
-      logger.startGroup(GROUP_PREFIX, 'Podman version');
-      await exec('podman', ['version'], {
-        failOnStdErr: false,
+      await logger.group(`Podman version`, async () => {
+        await exec('podman', ['version'], {
+          failOnStdErr: false,
+        });
       });
     }
   }
@@ -95,9 +95,6 @@ export class Podman extends EngineAdapter {
     await asyncForEach(inputs.addHosts, async (addHost) => {
       args.push('--add-host', addHost);
     });
-    // if (inputs.allow.length > 0) {
-    //   args.push('--allow', inputs.allow.join(','));
-    // }
     await asyncForEach(inputs.buildArgs, async (buildArg) => {
       args.push('--build-arg', buildArg);
     });
@@ -127,9 +124,6 @@ export class Podman extends EngineAdapter {
     await asyncForEach(inputs.labels, async (label) => {
       args.push('--label', label);
     });
-    // await asyncForEach(inputs.noCacheFilters, async (noCacheFilter) => {
-    //   args.push('--no-cache-filter', noCacheFilter);
-    // });
     await asyncForEach(inputs.outputs, async (output) => {
       args.push('--output', output);
     });
@@ -173,15 +167,9 @@ export class Podman extends EngineAdapter {
 
   private async getCommonArgs(inputs: Inputs, podmanVersion: string): Promise<Array<string>> {
     const args: Array<string> = [];
-    // if (inputs.builder) {
-    //   args.push('--builder', inputs.builder);
-    // }
     if (inputs.load) {
       args.push('--load');
     }
-    // if (buildx.satisfies(podmanVersion, '>=0.6.0')) {
-    //   args.push('--metadata-file', await buildx.getMetadataFile());
-    // }
     if (inputs.network) {
       args.push('--network', inputs.network);
     }
@@ -191,9 +179,6 @@ export class Podman extends EngineAdapter {
     if (inputs.pull) {
       args.push('--pull');
     }
-    // if (inputs.push) {
-    //   args.push('--push');
-    // }
     return args;
   }
 }

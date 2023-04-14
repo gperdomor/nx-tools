@@ -1,7 +1,7 @@
 {
   "name": "nx-tools",
   "description": "NX Tools plugins",
-  "version": "5.0.0-alpha.2",
+  "version": "5.0.0-alpha.3",
   "license": "MIT",
   "scripts": {
     "commit": "cz",
@@ -10,7 +10,7 @@
   },
   "private": true,
   "engines": {
-    "node": "^14.18.0 || ^16.0.0 || >=18.0.0"
+    "node": ">=16.0.0 || >=18.0.0 || >=20.0.0"
   },
   "dependencies": {
     "@actions/exec": "1.1.1",

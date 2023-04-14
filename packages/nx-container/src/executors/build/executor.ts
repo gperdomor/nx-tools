@@ -9,8 +9,6 @@ import { EngineAdapter } from './engines/engine-adapter';
 import { EngineFactory } from './engines/engine.factory';
 import { DockerBuildSchema } from './schema';
 
-const GROUP_PREFIX = 'Nx Container';
-
 export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
   const tmpDir = context.tmpDir();
 
@@ -33,13 +31,11 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 
     if (options.metadata?.images) {
       const { getMetadata } = await loadPackage('@nx-tools/container-metadata', 'Nx Container Build Executor');
-      logger.startGroup(GROUP_PREFIX, 'Generating metadata');
       const meta = await getMetadata(options.metadata, ctx);
       inputs.labels = meta.getLabels();
       inputs.tags = meta.getTags();
     }
 
-    logger.startGroup(GROUP_PREFIX, `Starting build...`);
     const args: string[] = await engine.getArgs(inputs, defContext);
     const buildCmd = engine.getCommand(args);
     await getExecOutput(
@@ -61,19 +57,22 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
     const digest = await engine.getDigest(metadata);
 
     if (imageID) {
-      logger.startGroup(GROUP_PREFIX, `ImageID`);
-      logger.info(imageID);
-      context.setOutput('imageid', imageID, ctx);
+      await logger.group(`ImageID`, async () => {
+        logger.info(imageID);
+        context.setOutput('imageid', imageID, ctx);
+      });
     }
     if (digest) {
-      logger.startGroup(GROUP_PREFIX, `Digest`);
-      logger.info(digest);
-      context.setOutput('digest', digest, ctx);
+      await logger.group(`Digest`, async () => {
+        logger.info(digest);
+        context.setOutput('digest', digest, ctx);
+      });
     }
     if (metadata) {
-      logger.startGroup(GROUP_PREFIX, `Metadata`);
-      logger.info(metadata);
-      context.setOutput('metadata', metadata, ctx);
+      await logger.group(`Metadata`, async () => {
+        logger.info(metadata);
+        context.setOutput('metadata', metadata, ctx);
+      });
     }
   } finally {
     await cleanup(tmpDir);
@@ -84,8 +83,9 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
 
 async function cleanup(tmpDir: string): Promise<void> {
   if (tmpDir.length > 0 && existsSync(tmpDir)) {
-    logger.info(`Removing temp folder ${tmpDir}`);
-    await rm(tmpDir, { recursive: true });
+    await logger.group(`Removing temp folder ${tmpDir}`, async () => {
+      await rm(tmpDir, { recursive: true });
+    });
   }
 }
 

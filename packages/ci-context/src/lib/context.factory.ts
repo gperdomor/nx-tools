@@ -17,8 +17,6 @@ const ci = require('ci-info');
 
 export class ContextProxyFactory {
   public static async create(): Promise<RunnerContext> {
-    logger.startGroup('CI Context', 'Getting CI Provider');
-
     if (ci.AZURE_PIPELINES) {
       logger.info(`CI Provider: ${ci.name}`);
       return azure.context();
