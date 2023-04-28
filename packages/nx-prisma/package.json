@@ -12,8 +12,8 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^15.0.0 || ^16.0.0",
     "prisma": "^4.5.0",
-    "ts-node": "*"
+    "ts-node": "*",
+    "@nx/devkit": "16.0.0"
   }
 }

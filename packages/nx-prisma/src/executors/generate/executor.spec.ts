@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { getExecOutput } from '@nx-tools/core';
 import executor from './executor';
 import { GenerateExecutorSchema } from './schema';

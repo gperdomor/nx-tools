@@ -1,4 +1,4 @@
-import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
+import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 import { logger } from '@nx-tools/core';
 import { execSync } from 'node:child_process';
 import { getDefaultScheme } from '../../utils';

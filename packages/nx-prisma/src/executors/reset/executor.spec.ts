@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { execSync } from 'node:child_process';
 import executor from './executor';
 import { ResetExecutorSchema } from './schema';

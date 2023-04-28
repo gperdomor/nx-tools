@@ -7,6 +7,6 @@
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "peerDependencies": {
-    "@nrwl/devkit": "^15.0.0 || ^16.0.0"
+    "@nx/devkit": "16.0.0"
   }
 }

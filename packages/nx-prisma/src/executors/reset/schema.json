@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Reset executor",
   "description": "Reset your database and apply all migrations, all data will be lost.",
   "type": "object",

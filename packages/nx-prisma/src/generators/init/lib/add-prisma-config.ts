@@ -1,4 +1,4 @@
-import { generateFiles, joinPathFragments, ProjectConfiguration, stripIndents, Tree } from '@nrwl/devkit';
+import { generateFiles, joinPathFragments, ProjectConfiguration, stripIndents, Tree } from '@nx/devkit';
 import { InitGeneratorSchema } from '../schema';
 
 export function addPrismaConfig(

@@ -1,4 +1,4 @@
-import { addDependenciesToPackageJson, GeneratorCallback, Tree } from '@nrwl/devkit';
+import { addDependenciesToPackageJson, GeneratorCallback, Tree } from '@nx/devkit';
 import { prismaVersion } from '../utils/versions';
 
 export function addPrismaRequiredPackages(tree: Tree): GeneratorCallback {

@@ -1,4 +1,4 @@
-import { ExecutorContext, getPackageManagerCommand } from '@nrwl/devkit';
+import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 import { getExecOutput, getProjectRoot, logger } from '@nx-tools/core';
 import { join } from 'node:path';
 import { SeedExecutorSchema } from './schema';

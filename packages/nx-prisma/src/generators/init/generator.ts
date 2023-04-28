@@ -1,10 +1,4 @@
-import {
-  formatFiles,
-  GeneratorCallback,
-  readProjectConfiguration,
-  Tree,
-  updateProjectConfiguration,
-} from '@nrwl/devkit';
+import { formatFiles, GeneratorCallback, readProjectConfiguration, Tree, updateProjectConfiguration } from '@nx/devkit';
 import { addPrismaConfig } from './lib/add-prisma-config';
 import { addPrismaRequiredPackages } from './lib/add-prisma-required-packages';
 import { detectPrismaInstalledVersion } from './lib/detect-prisma-installed-version';

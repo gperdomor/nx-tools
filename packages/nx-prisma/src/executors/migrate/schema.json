@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Migrate executor",
   "description": "Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client).",
   "type": "object",
