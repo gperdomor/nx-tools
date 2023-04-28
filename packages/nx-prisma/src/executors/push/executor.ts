@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { PushExecutorSchema } from './schema';

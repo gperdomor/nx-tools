@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 import { expectCommandToHaveBeenCalled } from '../generate/executor.spec';
 import executor from './executor';
 import { PullExecutorSchema } from './schema';

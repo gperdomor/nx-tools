@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Resolve executor",
   "description": "Resolve issues with database migrations in deployment databases.",
   "type": "object",

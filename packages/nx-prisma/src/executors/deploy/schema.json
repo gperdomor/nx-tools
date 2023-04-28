@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Deploy executor",
   "description": "Apply pending migrations to update the database schema in production/staging.",
   "type": "object",

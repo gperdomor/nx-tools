@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Generate executor",
   "description": "Generate artifacts (e.g. Prisma Client).",
   "type": "object",

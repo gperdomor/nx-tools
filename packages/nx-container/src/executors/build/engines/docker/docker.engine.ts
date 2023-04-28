@@ -1,4 +1,4 @@
-import { ExecutorContext, names } from '@nrwl/devkit';
+import { ExecutorContext, names } from '@nx/devkit';
 import { asyncForEach, exec, getBooleanInput, getExecOutput, logger } from '@nx-tools/core';
 import * as handlebars from 'handlebars';
 import { randomBytes } from 'node:crypto';

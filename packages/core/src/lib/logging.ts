@@ -1,4 +1,4 @@
-import { logger as l } from '@nrwl/devkit';
+import { logger as l } from '@nx/devkit';
 import * as os from 'node:os';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chalk = require('chalk');

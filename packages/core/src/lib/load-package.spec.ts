@@ -11,16 +11,16 @@ describe('loadPackage', () => {
 
   describe('when package is available', () => {
     it('should import package', async () => {
-      const module = await loadPackage('@nrwl/js', 'ctx');
+      const module = await loadPackage('@nx/js', 'ctx');
 
-      expect(module).toEqual(await import('@nrwl/js'));
+      expect(module).toEqual(await import('@nx/js'));
     });
 
     it('should require package', async () => {
-      const module = await loadPackage('@nrwl/js', 'ctx', () => require('@nrwl/js'));
+      const module = await loadPackage('@nx/js', 'ctx', () => require('@nx/js'));
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      expect(module).toEqual(require('@nrwl/js'));
+      expect(module).toEqual(require('@nx/js'));
     });
 
     it('should call process.exit if package not exists', async () => {

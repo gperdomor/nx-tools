@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Status executor",
   "description": "Check the status of your database migrations.",
   "type": "object",

@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Prisma Studio executor",
   "description": "Browse your data with Prisma Studio.",
   "type": "object",

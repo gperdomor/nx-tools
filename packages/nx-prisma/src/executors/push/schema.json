@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "cli": "nx",
   "title": "Push executor",
   "description": "Push the Prisma schema state to the database.",
   "type": "object",

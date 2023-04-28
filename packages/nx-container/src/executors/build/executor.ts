@@ -1,4 +1,4 @@
-import { ExecutorContext, names } from '@nrwl/devkit';
+import { ExecutorContext, names } from '@nx/devkit';
 import { getExecOutput, getInput, getProjectRoot, interpolate, loadPackage, logger } from '@nx-tools/core';
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
