@@ -6,6 +6,11 @@
       "schema": "./src/executors/deploy/schema.json",
       "description": "Applies all pending migrations, and creates the database if it does not exist"
     },
+    "validate": {
+      "implementation": "./src/executors/validate/executor",
+      "schema": "./src/executors/validate/schema.json",
+      "description": "Validates your prisma schema"
+    },
     "generate": {
       "implementation": "./src/executors/generate/executor",
       "schema": "./src/executors/generate/schema.json",
