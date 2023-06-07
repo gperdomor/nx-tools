@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
-  "version": "4.0.3",
+  "version": "4.0.4",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/github": "^5.1.1",
-    "@nx-tools/core": "4.0.3",
+    "@nx-tools/core": "4.0.4",
     "ci-info": "^3.5.0"
   }
 }
