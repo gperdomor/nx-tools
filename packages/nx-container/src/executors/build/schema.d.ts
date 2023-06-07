@@ -27,11 +27,11 @@ export interface DockerBuildSchema {
   /**
    * List of external cache sources for buildx (eg. user/app:cache, type=local,src=path/to/dir)
    */
-  'cache-from'?: string[];
+  'cache-from'?: string | string[];
   /**
    * List of cache export destinations for buildx (eg. user/app:cache, type=local,dest=path/to/dir)
    */
-  'cache-to'?: string[];
+  'cache-to'?: string | string[];
   /**
    * Optional parent cgroup for the container used in the build
    */
