@@ -41,6 +41,7 @@ nx prisma-migrate appName
 nx prisma-pull appName
 nx prisma-push appName
 nx prisma-studio appName
+nx prisma-validate appName
 ```
 
 > Tip: You can change the location or rename your prisma file, but should live inside the project folder and the `options.schema` property of your project target needs to be updated with the relative path to the new schema location.
@@ -61,6 +62,7 @@ Here is a list of all the executors and generators available from this package:
 - seed: Seed your database.
 - status: Check the status of your database migrations.
 - studio: Browse your data with Prisma Studio.
+- validate: validate your Prisma schema.
 
 ### Generators
 
