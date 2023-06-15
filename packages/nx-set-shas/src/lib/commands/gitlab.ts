@@ -109,7 +109,7 @@ const findSuccessfulCommit = async (
   };
 
   const response = await fetch(
-    `https://gitlab.com/api/v4/projects/${project}/pipelines?${new URLSearchParams(params).toString()}`,
+    `${process.env['CI_API_V4_URL']}/projects/${project}/pipelines?${new URLSearchParams(params).toString()}`,
     {
       headers: token
         ? {
