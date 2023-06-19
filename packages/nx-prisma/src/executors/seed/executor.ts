@@ -11,7 +11,7 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
   const command = `${getPackageManagerCommand().exec} ts-node`;
   const args = getArgs(options, ctx);
 
-  logger.group('Seeding Database', async () => {
+  await logger.group('Seeding Database', async () => {
     await getExecOutput(command, args, { ignoreReturnCode: true }).then((res) => {
       if (res.stderr.length > 0 && res.exitCode != 0) {
         throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
