@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-set-shas",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "type": "commonjs",
   "bin": {
     "nx-set-shas": "./src/index.js"

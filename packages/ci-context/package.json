@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
