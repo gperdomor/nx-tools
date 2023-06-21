@@ -22,5 +22,5 @@
       "description": "Skip triggering seed."
     }
   },
-  "required": []
+  "required": ["force"]
 }

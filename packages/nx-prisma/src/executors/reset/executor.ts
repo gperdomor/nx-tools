@@ -23,7 +23,7 @@ const getArgs = (options: ResetExecutorSchema, ctx: ExecutorContext): string[] =
 
   args.push(`--schema=${schema}`);
 
-  if (options?.force) {
+  if (options.force) {
     args.push('--force');
   }
 
