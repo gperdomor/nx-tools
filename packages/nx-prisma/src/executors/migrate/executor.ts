@@ -1,5 +1,5 @@
-import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 import { logger } from '@nx-tools/core';
+import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 import { execSync } from 'node:child_process';
 import { getDefaultScheme } from '../../utils';
 import { MigrateExecutorSchema } from './schema';
@@ -8,7 +8,7 @@ export default async function run(options: MigrateExecutorSchema, ctx: ExecutorC
   const command = `${getPackageManagerCommand().exec} prisma migrate dev`;
   const args = getArgs(options, ctx);
 
-  logger.group('Migrating Database', async () => {
+  await logger.group('Migrating Database', async () => {
     execSync([command, ...args].join(' '), {
       stdio: 'inherit',
     });
