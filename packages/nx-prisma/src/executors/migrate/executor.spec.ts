@@ -20,10 +20,10 @@ const mockContext: Partial<ExecutorContext> = {
 
 describe('Migrate Executor', () => {
   it('empty options', async () => {
-    const options: MigrateExecutorSchema = {};
+    const options: MigrateExecutorSchema = { name: 'mig-name' };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
-      `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma`,
+      `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name=mig-name`,
       {
         stdio: 'inherit',
       }
@@ -31,32 +31,16 @@ describe('Migrate Executor', () => {
     expect(output.success).toBeTruthy();
   });
 
-  test.each([['name', 'my first migration']])(
-    'given %p option with %p value, should be handled has arg',
-    async (option: keyof MigrateExecutorSchema, value: string) => {
-      const options: MigrateExecutorSchema = {
-        [option]: value,
-      };
-      const output = await executor(options, mockContext as ExecutorContext);
-      expect(execSync).toHaveBeenCalledWith(
-        `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --${option}=${value}`,
-        {
-          stdio: 'inherit',
-        }
-      );
-      expect(output.success).toBeTruthy();
-    }
-  );
-
   test.each([['create-only'], ['skip-generate'], ['skip-seed']])(
     'given %p, should be handled has flag',
     async (flag: keyof MigrateExecutorSchema) => {
       const options: MigrateExecutorSchema = {
+        name: 'users',
         [flag]: true,
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(
-        `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --${flag}`,
+        `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name=users --${flag}`,
         {
           stdio: 'inherit',
         }

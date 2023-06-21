@@ -26,5 +26,5 @@
       "description": "Skip triggering generators (for example, Prisma Client)."
     }
   },
-  "required": []
+  "required": ["name"]
 }

@@ -77,11 +77,11 @@ export function Transform(inputs: string[]): Image[] {
 }
 
 function output(images: Image[]): Image[] {
-  logger.group(`Processing images input`, async () => {
-    for (const image of images) {
-      logger.info(`name=${image.name},enable=${image.enable}`);
-    }
-  });
-
+  const group = `Processing images input`;
+  logger.startGroup(group);
+  for (const image of images) {
+    logger.info(`name=${image.name},enable=${image.enable}`);
+  }
+  logger.endGroup(group);
   return images;
 }

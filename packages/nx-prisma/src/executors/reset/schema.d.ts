@@ -4,7 +4,7 @@ export interface ResetExecutorSchema extends PrismaBase {
   /**
    * Skip the confirmation prompt.
    */
-  force?: boolean;
+  force: boolean;
   /**
    * Skip triggering generators (for example, Prisma Client).
    */

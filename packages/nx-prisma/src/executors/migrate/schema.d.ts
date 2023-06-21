@@ -4,7 +4,7 @@ export interface MigrateExecutorSchema extends PrismaBase {
   /**
    * The name of the migration. If no name is provided, the CLI will prompt you.
    */
-  name?: string;
+  name: string;
   /**
    * Creates a new migration based on the changes in the schema but does not apply that migration.
    */

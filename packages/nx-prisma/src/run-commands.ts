@@ -1,5 +1,5 @@
-import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 import { getExecOutput, logger } from '@nx-tools/core';
+import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
 
 export interface PrismaBuilderOptions {
   schema?: string;
