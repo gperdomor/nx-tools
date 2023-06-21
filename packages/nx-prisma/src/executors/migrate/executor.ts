@@ -22,10 +22,7 @@ const getArgs = (options: MigrateExecutorSchema, ctx: ExecutorContext): string[]
   const schema = options?.schema ?? getDefaultScheme(ctx);
 
   args.push(`--schema=${schema}`);
-
-  if (options?.name) {
-    args.push(`--name=${options.name}`);
-  }
+  args.push(`--name=${options.name}`);
 
   if (options?.['create-only']) {
     args.push('--create-only');
