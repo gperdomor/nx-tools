@@ -52,6 +52,22 @@ export default async function (tree: Tree, options: InitGeneratorSchema): Promis
         executor: '@nx-tools/nx-prisma:studio',
         options: { schema: `${project.root}/prisma/schema.prisma` },
       },
+      'prisma-reset': {
+        executor: '@nx-tools/nx-prisma:reset',
+        options: { schema: `${project.root}/prisma/schema.prisma` },
+      },
+      'prisma-resolve': {
+        executor: '@nx-tools/nx-prisma:resolve',
+        options: { schema: `${project.root}/prisma/schema.prisma` },
+      },
+      'prisma-seed': {
+        executor: '@nx-tools/nx-prisma:seed',
+        options: { schema: `${project.root}/prisma/schema.prisma` },
+      },
+      'prisma-validate': {
+        executor: '@nx-tools/nx-prisma:validate',
+        options: { schema: `${project.root}/prisma/schema.prisma` },
+      },
     },
   });
 
