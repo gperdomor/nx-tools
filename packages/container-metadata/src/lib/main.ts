@@ -1,6 +1,6 @@
-import { ExecutorContext } from '@nx/devkit';
 import { RunnerContext as Context, ContextProxyFactory, RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import { logger } from '@nx-tools/core';
+import { ExecutorContext } from '@nx/devkit';
 import * as fs from 'node:fs';
 import { Inputs, getInputs } from './context';
 import { Meta, Version } from './meta';
@@ -13,7 +13,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
 
   const context: Context = await ContextProxyFactory.create();
   const repo: RepoMetadata = await RepoProxyFactory.create(inputs['github-token']);
-  logger.group(`Context info`, async () => {
+  await logger.group(`Context info`, async () => {
     logger.info(`eventName: ${context.eventName}`);
     logger.info(`sha: ${context.sha}`);
     logger.info(`ref: ${context.ref}`);
@@ -28,7 +28,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
   if (meta.version.main == undefined || meta.version.main.length == 0) {
     logger.warn(`No Docker image version has been generated. Check tags input.`);
   } else {
-    logger.group(`Docker image version`, async () => {
+    await logger.group(`Docker image version`, async () => {
       logger.info(version.main || '');
     });
   }
@@ -38,7 +38,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
   if (tags.length == 0) {
     logger.warn('No Docker tag has been generated. Check tags input.');
   } else {
-    logger.group(`Docker tags`, async () => {
+    await logger.group(`Docker tags`, async () => {
       for (const tag of tags) {
         logger.info(tag);
       }
@@ -47,7 +47,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
 
   // Docker labels
   const labels: Array<string> = meta.getLabels();
-  logger.group(`Docker labels`, async () => {
+  await logger.group(`Docker labels`, async () => {
     for (const label of labels) {
       logger.info(label);
     }
@@ -55,13 +55,13 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
 
   // JSON
   const jsonOutput = meta.getJSON();
-  logger.group(`JSON output`, async () => {
+  await logger.group(`JSON output`, async () => {
     logger.info(JSON.stringify(jsonOutput, null, 2));
   });
 
   // Bake file definition
   const bakeFile: string = meta.getBakeFile();
-  logger.group(`Bake definition file`, async () => {
+  await logger.group(`Bake definition file`, async () => {
     logger.info(fs.readFileSync(bakeFile, 'utf8'));
   });
 

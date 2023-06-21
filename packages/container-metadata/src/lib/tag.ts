@@ -76,11 +76,12 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  logger.group(`Processing tags input`, async () => {
-    for (const tag of sorted) {
-      logger.info(tag.toString());
-    }
-  });
+  const group = `Processing tags input`;
+  logger.startGroup(group);
+  for (const tag of sorted) {
+    logger.info(tag.toString());
+  }
+  logger.endGroup(group);
 
   return sorted;
 }

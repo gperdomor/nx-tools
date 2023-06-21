@@ -75,13 +75,15 @@ export function Transform(inputs: string[]): Flavor {
     }
   }
 
-  logger.group(`Processing flavor input`, async () => {
-    logger.info(`latest=${flavor.latest}`);
-    logger.info(`prefix=${flavor.prefix}`);
-    logger.info(`prefixLatest=${flavor.prefixLatest}`);
-    logger.info(`suffix=${flavor.suffix}`);
-    logger.info(`suffixLatest=${flavor.suffixLatest}`);
-  });
+  const group = 'Processing flavor input';
+
+  logger.startGroup(group);
+  logger.info(`latest=${flavor.latest}`);
+  logger.info(`prefix=${flavor.prefix}`);
+  logger.info(`prefixLatest=${flavor.prefixLatest}`);
+  logger.info(`suffix=${flavor.suffix}`);
+  logger.info(`suffixLatest=${flavor.suffixLatest}`);
+  logger.endGroup(group);
 
   return flavor;
 }
