@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import * as semver from 'semver';
 import * as context from '../../context';
+import { expandEnvVars } from '../../utils';
 
 export async function getImageIDFile(): Promise<string> {
   return path.join(context.tmpDir(), 'iidfile').split(path.sep).join(path.posix.sep);
@@ -65,6 +66,8 @@ export async function getSecret(kvp: string, file: boolean): Promise<string> {
       throw new Error(`secret file ${value} not found`);
     }
     value = fs.readFileSync(value, { encoding: 'utf-8' });
+  } else {
+    value = expandEnvVars(value);
   }
 
   const secretFile = context.tmpNameSync({
