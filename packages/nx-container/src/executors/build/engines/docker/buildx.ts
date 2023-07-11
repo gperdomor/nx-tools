@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import * as semver from 'semver';
 import * as context from '../../context';
-import { expandEnvVars } from '../../utils';
+import { interpolate } from '@nx-tools/core';
 
 export async function getImageIDFile(): Promise<string> {
   return path.join(context.tmpDir(), 'iidfile').split(path.sep).join(path.posix.sep);
@@ -67,7 +67,7 @@ export async function getSecret(kvp: string, file: boolean): Promise<string> {
     }
     value = fs.readFileSync(value, { encoding: 'utf-8' });
   } else {
-    value = expandEnvVars(value);
+    value = interpolate(value);
   }
 
   const secretFile = context.tmpNameSync({

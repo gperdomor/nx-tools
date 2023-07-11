@@ -32,4 +32,17 @@ describe('String interpolation', () => {
   ])('given command "%s", should return "%s"', (command: string, expected: string) => {
     expect(interpolate(command)).toEqual(expected);
   });
+
+  it('should expand ${HOME}', () => {
+    expect(interpolate('${HOME}')).toEqual(process.env['HOME']);
+  });
+
+  it('should expand $HOME', () => {
+    expect(interpolate('$HOME')).toEqual(process.env['HOME']);
+  });
+
+  it('should not expand', () => {
+    const value = 'HOME';
+    expect(interpolate(value)).toEqual(value);
+  });
 });
