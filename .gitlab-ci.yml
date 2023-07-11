@@ -1,0 +1,73 @@
+include:
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+
+stages:
+  - affected
+  - build
+
+default:
+  image: node:20.3
+
+variables:
+  CI: 'true'
+  NX_CLOUD_ACCESS_TOKEN: $NX_CLOUD_TOKEN
+  NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
+
+# Cache template
+.node-cache: &node-cache
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - '.npm'
+  policy: pull
+
+# Creating template for DTE agents
+.dte-agent:
+  interruptible: true
+  cache:
+    <<: *node-cache
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npx nx-cloud start-agent
+
+# Creating template for a job running DTE (orchestrator)
+.base-pipeline:
+  interruptible: true
+  only:
+    - main
+    - merge_requests
+  cache:
+    <<: *node-cache
+    policy: pull-push
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+    - NX_HEAD=$CI_COMMIT_SHA
+    - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
+  artifacts:
+    expire_in: 5 days
+    paths:
+      - node_modules/.cache/nx
+      - dist
+
+# Main job running DTE
+CI:
+  stage: affected
+  extends: .base-pipeline
+  script:
+    - npx nx-cloud start-ci-run --stop-agents-after="build"
+    - npx nx-cloud record -- npx nx format:check --base=$NX_BASE --head=$NX_HEAD
+    - npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=lint --parallel=3 & npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage & npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=e2e --parallel=3 --ci --code-coverage & npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=build --parallel=3
+  after_script:
+    - npx nx-cloud stop-all-agents
+
+# Create as many agents as you want
+nx-dte-agent1:
+  extends: .dte-agent
+  stage: affected
+nx-dte-agent2:
+  extends: .dte-agent
+  stage: affected
+# nx-dte-agent3:
+#   extends: .dte-agent
+#   stage: affected
