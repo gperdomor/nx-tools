@@ -12,9 +12,7 @@ export function detectPrismaInstalledVersion(tree: Tree): '3' | '4' | undefined 
 
   const version = checkAndCleanWithSemver('@prisma/client', prismaVersion);
   if (lt(version, '4.0.0')) {
-    throw new Error(
-      `The Tailwind CSS version "${prismaVersion}" is not supported. Please upgrade to v4.0.0 or higher.`
-    );
+    throw new Error(`The prisma version "${prismaVersion}" is not supported. Please upgrade to v4.0.0 or higher.`);
   }
 
   return lt(version, '4.0.0') ? '3' : '4';
