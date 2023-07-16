@@ -6,7 +6,7 @@ stages:
   - build
 
 default:
-  image: node:20.3
+  image: node:20.4
 
 variables:
   CI: 'true'
