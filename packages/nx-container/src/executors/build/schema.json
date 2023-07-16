@@ -131,7 +131,7 @@
       "items": {
         "type": "string"
       },
-      "description": "List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)"
+      "description": "List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken, NPM_TOKEN=${NPM_TOKEN})"
     },
     "secret-files": {
       "type": "array",
