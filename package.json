@@ -33,10 +33,10 @@
     "undici": "5.22.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.6.6",
-    "@commitlint/config-conventional": "17.6.6",
+    "@commitlint/cli": "17.6.7",
+    "@commitlint/config-conventional": "17.6.7",
     "@commitlint/config-nx-scopes": "17.6.4",
-    "@commitlint/cz-commitlint": "17.5.0",
+    "@commitlint/cz-commitlint": "17.6.7",
     "@nx/eslint-plugin": "16.5.5",
     "@nx/jest": "16.5.5",
     "@nx/js": "16.5.5",
