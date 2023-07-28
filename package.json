@@ -62,7 +62,7 @@
     "lint-staged": "13.2.3",
     "mocked-env": "1.3.5",
     "nx": "16.5.5",
-    "nx-cloud": "16.0.5",
+    "nx-cloud": "16.1.1",
     "prettier": "2.8.8",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",
