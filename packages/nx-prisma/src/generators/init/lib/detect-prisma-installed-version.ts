@@ -2,7 +2,7 @@ import { readJson, Tree } from '@nx/devkit';
 import { checkAndCleanWithSemver } from '@nx/workspace/src/utilities/version-utils';
 import { lt } from 'semver';
 
-export function detectPrismaInstalledVersion(tree: Tree): '3' | '4' | undefined {
+export function detectPrismaInstalledVersion(tree: Tree): '4' | '5' | undefined {
   const { dependencies, devDependencies } = readJson(tree, 'package.json');
   const prismaVersion = dependencies?.['@prisma/client'] ?? devDependencies?.['@prisma/client'];
 
@@ -15,5 +15,5 @@ export function detectPrismaInstalledVersion(tree: Tree): '3' | '4' | undefined 
     throw new Error(`The prisma version "${prismaVersion}" is not supported. Please upgrade to v4.0.0 or higher.`);
   }
 
-  return lt(version, '4.0.0') ? '3' : '4';
+  return lt(version, '5.0.0') ? '4' : '5';
 }

@@ -1,1 +1,1 @@
-export const prismaVersion = '^4.5.0';
+export const prismaVersion = '^5.1.1';

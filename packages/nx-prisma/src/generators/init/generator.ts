@@ -18,7 +18,7 @@ export default async function (tree: Tree, options: InitGeneratorSchema): Promis
     }
   }
 
-  addPrismaConfig(tree, options, project, prismaInstalledVersion ?? '4');
+  addPrismaConfig(tree, options, project);
 
   updateProjectConfiguration(tree, options.project, {
     ...project,
