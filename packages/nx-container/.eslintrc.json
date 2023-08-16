@@ -20,6 +20,13 @@
       "rules": {
         "@nx/nx-plugin-checks": "error"
       }
+    },
+    {
+      "files": ["*.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/dependency-checks": "error"
+      }
     }
   ]
 }

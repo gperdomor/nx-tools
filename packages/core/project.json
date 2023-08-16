@@ -15,17 +15,14 @@
       }
     },
     "publish": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "node tools/scripts/publish.mjs core {args.ver} {args.tag}"
-      },
+      "command": "node tools/scripts/publish.mjs core {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/core/**/*.ts"]
+        "lintFilePatterns": ["packages/core/**/*.ts", "packages/core/package.json"]
       }
     },
     "test": {

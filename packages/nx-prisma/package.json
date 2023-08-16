@@ -11,9 +11,15 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "dependencies": {
+    "@nx-tools/core": "*",
+    "semver": "7.5.4"
+  },
   "peerDependencies": {
+    "@nx/devkit": "^16.0.0",
+    "@nx/workspace": "^16.0.0",
     "prisma": "^4.5.0",
     "ts-node": "*",
-    "@nx/devkit": "^16.0.0"
+    "tslib": "^2.5.3"
   }
 }
