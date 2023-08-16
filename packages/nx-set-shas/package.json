@@ -4,5 +4,13 @@
   "type": "commonjs",
   "bin": {
     "nx-set-shas": "./src/index.js"
+  },
+  "dependencies": {
+    "commander": "9.5.0",
+    "colorette": "2.0.20",
+    "undici": "5.22.1"
+  },
+  "peerDependencies": {
+    "tslib": "^2.5.3"
   }
 }

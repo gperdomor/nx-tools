@@ -8,8 +8,16 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "dependencies": {
+    "@nx-tools/core": "*",
+    "tmp": "0.2.1",
+    "csv-parse": "5.4.0",
+    "semver": "7.5.4",
+    "handlebars": "4.7.7"
+  },
   "peerDependencies": {
     "dotenv": ">=10.0.0",
-    "@nx/devkit": "^16.0.0"
+    "@nx/devkit": "^16.0.0",
+    "tslib": "^2.5.3"
   }
 }

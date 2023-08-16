@@ -12,7 +12,8 @@
         "main": "packages/nx-set-shas/src/index.ts",
         "tsConfig": "packages/nx-set-shas/tsconfig.lib.json",
         "assets": ["packages/nx-set-shas/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "buildableProjectDepsInPackageJsonType": "dependencies",
+        "updateBuildableProjectDepsInPackageJson": true
       }
     },
     "publish": {
@@ -26,7 +27,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/nx-set-shas/**/*.ts"]
+        "lintFilePatterns": ["packages/nx-set-shas/**/*.ts", "packages/nx-set-shas/package.json"]
       }
     },
     "test": {

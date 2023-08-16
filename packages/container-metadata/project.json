@@ -11,22 +11,18 @@
         "outputPath": "dist/packages/container-metadata",
         "main": "packages/container-metadata/src/index.ts",
         "tsConfig": "packages/container-metadata/tsconfig.lib.json",
-        "assets": ["packages/container-metadata/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["packages/container-metadata/*.md"]
       }
     },
     "publish": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "node tools/scripts/publish.mjs container-metadata {args.ver} {args.tag}"
-      },
+      "command": "node tools/scripts/publish.mjs container-metadata {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/container-metadata/**/*.ts"]
+        "lintFilePatterns": ["packages/container-metadata/**/*.ts", "packages/container-metadata/package.json"]
       }
     },
     "test": {

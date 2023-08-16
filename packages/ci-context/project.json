@@ -11,22 +11,18 @@
         "outputPath": "dist/packages/ci-context",
         "main": "packages/ci-context/src/index.ts",
         "tsConfig": "packages/ci-context/tsconfig.lib.json",
-        "assets": ["packages/ci-context/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies"
+        "assets": ["packages/ci-context/*.md"]
       }
     },
     "publish": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "node tools/scripts/publish.mjs ci-context {args.ver} {args.tag}"
-      },
+      "command": "node tools/scripts/publish.mjs ci-context {args.ver} {args.tag}",
       "dependsOn": ["build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/ci-context/**/*.ts"]
+        "lintFilePatterns": ["packages/ci-context/**/*.ts", "packages/ci-context/package.json"]
       }
     },
     "test": {

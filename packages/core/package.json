@@ -6,7 +6,13 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
+  "dependencies": {
+    "@actions/exec": "1.1.1",
+    "chalk": "4.1.2",
+    "ci-info": "3.8.0"
+  },
   "peerDependencies": {
-    "@nx/devkit": "^16.0.0"
+    "@nx/devkit": "^16.0.0",
+    "tslib": "^2.5.3"
   }
 }
