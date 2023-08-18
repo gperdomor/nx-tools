@@ -27,3 +27,11 @@ export const commitExists = async (commitSha: string) => {
     return false;
   }
 };
+
+export const getHead = () => {
+  return execSync(`git rev-parse HEAD`, { encoding: 'utf-8' }).trim();
+};
+
+export const getBase = (branch: string) => {
+  return execSync(`git merge-base origin/${branch} HEAD`, { encoding: 'utf-8' }).trim();
+};
