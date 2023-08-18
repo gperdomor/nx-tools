@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Status executor",
-  "description": "Check the status of your database migrations.",
+  "title": "Prisma migrate status executor",
+  "description": "The prisma migrate status command looks up the migrations in migrations folder and the entries in the _prisma_migrations table and compiles information about the state of the migrations in your database.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     }
   },
   "required": []

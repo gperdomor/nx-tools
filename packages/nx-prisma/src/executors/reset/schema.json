@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Reset executor",
-  "description": "Reset your database and apply all migrations, all data will be lost.",
+  "title": "Prisma migrate reset executor",
+  "description": "This command deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "force": {
       "type": "boolean",

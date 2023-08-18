@@ -36,15 +36,19 @@
         ]
       }
     },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs nx-prisma {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "packages/nx-prisma/**/*.ts",
-          "packages/nx-prisma/generators.json",
+          "packages/nx-prisma/package.json",
           "packages/nx-prisma/executors.json",
-          "packages/nx-prisma/package.json"
+          "packages/nx-prisma/generators.json"
         ]
       }
     },

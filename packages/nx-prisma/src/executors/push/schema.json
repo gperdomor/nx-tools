@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Push executor",
-  "description": "Push the Prisma schema state to the database.",
+  "title": "Prisma db push executor",
+  "description": "The db push command pushes the state of your Prisma schema file to the database without using migrations. It creates the database if the database does not exist.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "skip-generate": {
       "type": "boolean",

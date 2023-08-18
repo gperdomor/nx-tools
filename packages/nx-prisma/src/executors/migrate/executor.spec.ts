@@ -19,6 +19,10 @@ const mockContext: Partial<ExecutorContext> = {
 };
 
 describe('Migrate Executor', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+  });
+
   it('empty options', async () => {
     const options: MigrateExecutorSchema = { name: 'mig-name' };
     const output = await executor(options, mockContext as ExecutorContext);

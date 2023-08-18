@@ -1,17 +1,17 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Pull executor",
-  "description": "Pull the schema from an existing database, updating the Prisma schema.",
+  "title": "Prisma db pull executor",
+  "description": "The db pull command connects to your database and adds Prisma models to your Prisma schema that reflect the current database schema.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "force": {
       "type": "boolean",
-      "description": "Force overwrite of manual changes made to schema."
+      "description": "Force overwrite of manual changes made to schema. The generated schema will be based on the introspected schema only."
     },
     "print": {
       "type": "boolean",

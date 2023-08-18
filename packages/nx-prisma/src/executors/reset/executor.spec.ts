@@ -19,6 +19,10 @@ const mockContext: Partial<ExecutorContext> = {
 };
 
 describe('Reset Executor', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+  });
+
   it('empty options', async () => {
     const options: ResetExecutorSchema = { force: true };
     const output = await executor(options, mockContext as ExecutorContext);

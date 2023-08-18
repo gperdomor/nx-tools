@@ -1,6 +1,5 @@
 import { getExecOutput, getProjectRoot, logger } from '@nx-tools/core';
-import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
-import { join } from 'node:path';
+import { ExecutorContext, getPackageManagerCommand, joinPathFragments } from '@nx/devkit';
 import { SeedExecutorSchema } from './schema';
 
 export default async function run(options: SeedExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
@@ -24,7 +23,7 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
 
 const getArgs = (options: SeedExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
-  const tsConfig = options?.tsConfig ?? join(getProjectRoot(ctx), 'tsconfig.json');
+  const tsConfig = options?.tsConfig ?? joinPathFragments(getProjectRoot(ctx), 'tsconfig.json');
 
   args.push(`--project=${tsConfig}`);
 
