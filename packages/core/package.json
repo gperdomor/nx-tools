@@ -1,15 +1,19 @@
 {
   "name": "@nx-tools/core",
-  "version": "5.0.3",
+  "version": "6.0.0-alpha.1",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
   "dependencies": {
     "@actions/exec": "1.1.1",
+    "@actions/io": "1.1.3",
     "chalk": "4.1.2",
-    "ci-info": "3.8.0"
+    "ci-info": "3.8.0",
+    "csv-parse": "5.4.0"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",

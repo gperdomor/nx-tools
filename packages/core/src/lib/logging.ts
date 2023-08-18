@@ -5,17 +5,8 @@ const chalk = require('chalk');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
 
-const toValue = (input: any): string => {
-  if (input === null || input === undefined) {
-    return '';
-  } else if (typeof input === 'string' || input instanceof String) {
-    return input as string;
-  }
-  return JSON.stringify(input);
-};
-
 const escapeData = (s: any): string => {
-  return toValue(s).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+  return s.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
 };
 
 /**
