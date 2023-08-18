@@ -1,7 +1,10 @@
 export { ExecListeners, ExecOptions, ExecOutput, exec, getExecOutput } from '@actions/exec';
+export { CopyOptions, MoveOptions, cp, findInPath, mkdirP, mv, rmRF, which } from '@actions/io';
 export { asyncForEach } from './lib/async-for-each';
 export { getBooleanInput, getInput, getMultilineInput, getPosixName } from './lib/get-input';
 export type { InputOptions } from './lib/get-input';
+export { getInputList } from './lib/get-input-list';
+export type { InputListOpts } from './lib/get-input-list';
 export { interpolate } from './lib/interpolate';
 export { loadPackage } from './lib/load-package';
 export * from './lib/logging';
