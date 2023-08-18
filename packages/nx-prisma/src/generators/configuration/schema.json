@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Configuration",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "database": {
+      "description": "The database provider for your schema.",
+      "type": "string",
+      "default": "postgresql",
+      "enum": ["cockroachdb", "mongodb", "mysql", "postgresql", "sqlite", "sqlserver"],
+      "x-prompt": {
+        "message": "Which data source connectors would you like to use?.",
+        "type": "list",
+        "items": [
+          {
+            "value": "cockroachdb",
+            "label": "CockroachDB"
+          },
+          {
+            "value": "mongodb",
+            "label": "MongoDB"
+          },
+          {
+            "value": "mysql",
+            "label": "MySQL"
+          },
+          {
+            "value": "postgresql",
+            "label": "PostgreSQL"
+          },
+          {
+            "value": "sqlite",
+            "label": "SQLite"
+          },
+          {
+            "value": "sqlserver",
+            "label": "Microsoft SQL Server"
+          }
+        ]
+      },
+      "x-priority": "important"
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add the Prisma setup to.",
+      "x-prompt": "What project would you like to add the Prisma setup to?",
+      "x-dropdown": "projects",
+      "x-priority": "important"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the prisma schema is placed."
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skips formatting the workspace after the generator completes."
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add dependencies to `package.json`"
+    }
+  },
+  "required": ["project"]
+}

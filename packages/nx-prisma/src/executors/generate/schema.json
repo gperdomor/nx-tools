@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Generate executor",
-  "description": "Generate artifacts (e.g. Prisma Client).",
+  "title": "Prisma generate executor",
+  "description": "The generate command generates assets like Prisma Client based on the generator and data model blocks defined in your schema.prisma file.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "data-proxy": {
       "type": "boolean",

@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Seed executor",
-  "description": "Seed your database",
+  "title": "Prisma db seed executor",
+  "description": "Seed your database.",
   "type": "object",
   "properties": {
     "script": {

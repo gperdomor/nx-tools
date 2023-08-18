@@ -1,17 +1,17 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Migrate executor",
-  "description": "Create a migration from changes in Prisma schema, apply it to the database, trigger generators (e.g. Prisma Client).",
+  "title": "Prisma migrate dev executor",
+  "description": "The migrate dev command updates your database using migrations during development and creates the database if it does not exist.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "name": {
       "type": "string",
-      "description": "The name of the migration. If no name is provided, the CLI will prompt you."
+      "description": "The name of the migration."
     },
     "create-only": {
       "type": "boolean",

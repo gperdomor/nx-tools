@@ -1,5 +1,5 @@
-import { ExecutorContext } from '@nx/devkit';
 import { getExecOutput } from '@nx-tools/core';
+import { ExecutorContext } from '@nx/devkit';
 import executor from './executor';
 import { GenerateExecutorSchema } from './schema';
 
@@ -23,6 +23,10 @@ export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
 };
 
 describe('Generate Executor', () => {
+  beforeEach(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+  });
+
   it('empty options', async () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);

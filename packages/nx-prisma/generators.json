@@ -1,12 +1,9 @@
 {
-  "$schema": "http://json-schema.org/schema",
-  "name": "nx-prisma",
-  "version": "0.0.1",
   "generators": {
-    "init": {
-      "factory": "./src/generators/init/generator",
-      "schema": "./src/generators/init/schema.json",
-      "description": "Initial setup for a prisma project"
+    "configuration": {
+      "factory": "./src/generators/configuration/generator",
+      "schema": "./src/generators/configuration/schema.json",
+      "description": "Add prisma configuration to a project."
     }
   }
 }

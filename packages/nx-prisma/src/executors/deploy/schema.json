@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Deploy executor",
-  "description": "Apply pending migrations to update the database schema in production/staging.",
+  "title": "Prisma migrate deploy executor",
+  "description": "The migrate deploy command applies all pending migrations, and creates the database if it does not exist. Primarily used in non-development environments.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     }
   },
   "required": []

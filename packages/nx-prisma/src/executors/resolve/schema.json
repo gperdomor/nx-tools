@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/schema",
   "version": 2,
-  "title": "Prisma Resolve executor",
-  "description": "Resolve issues with database migrations in deployment databases.",
+  "title": "Prisma migrate resolve executor",
+  "description": "The migrate resolve command allows you to solve migration history issues in production by marking a failed migration as already applied (supports baselining) or rolled back.",
   "type": "object",
   "properties": {
     "schema": {
       "type": "string",
-      "description": "The path to the prisma schema eg. 'prisma/schema.prisma'"
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
     },
     "applied": {
       "type": "string",
