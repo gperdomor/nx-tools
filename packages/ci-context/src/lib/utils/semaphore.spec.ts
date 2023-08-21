@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as semaphore from './semaphore';
+import { Semaphore } from './semaphore';
 
 describe('Semaphore Context', () => {
   let restore: RestoreFn;
@@ -24,14 +25,16 @@ describe('Semaphore Context', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper cotext values', async () => {
-      context = await semaphore.context();
+      context = await Semaphore.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'SEMAPHORE',
         actor: 'semaphore',
         eventName: 'semaphore-event-name',
         job: 'semaphore-job',
@@ -39,6 +42,7 @@ describe('Semaphore Context', () => {
         ref: 'refs/heads/semaphore-ref',
         runId: 10,
         runNumber: 100,
+        repoUrl: 'https://semaphore.com/gperdomor/nx-tools',
         sha: 'semaphore-sha',
       });
     });
@@ -57,15 +61,18 @@ describe('Semaphore Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await semaphore.context();
+        context = await Semaphore.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'SEMAPHORE',
           actor: 'semaphore',
           eventName: 'semaphore-event-name',
           job: 'semaphore-job',
+          payload: {},
           ref: 'refs/tags/semaphore-tag',
           runId: 10,
           runNumber: 100,
+          repoUrl: 'https://semaphore.com/gperdomor/nx-tools',
           sha: 'semaphore-sha',
         });
       });

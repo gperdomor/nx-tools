@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as drone from './drone';
+import { Drone } from './drone';
 
 describe('Drone Context', () => {
   let restore: RestoreFn;
@@ -25,14 +26,16 @@ describe('Drone Context', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper cotext values', async () => {
-      context = await drone.context();
+      context = await Drone.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'DRONE',
         actor: 'drone-actor',
         eventName: 'drone-event-name',
         job: 'drone-job',
@@ -40,6 +43,7 @@ describe('Drone Context', () => {
         ref: 'refs/heads/drone-ref',
         runId: 100,
         runNumber: 100,
+        repoUrl: 'https://drone.com/gperdomor/nx-tools',
         sha: 'drone-sha',
       });
     });
@@ -58,15 +62,18 @@ describe('Drone Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await drone.context();
+        context = await Drone.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'DRONE',
           actor: 'drone-actor',
           eventName: 'drone-event-name',
           job: 'drone-job',
+          payload: {},
           ref: 'refs/tags/drone-v1.0.0',
           runId: 100,
           runNumber: 100,
+          repoUrl: 'https://drone.com/gperdomor/nx-tools',
           sha: 'drone-sha',
         });
       });

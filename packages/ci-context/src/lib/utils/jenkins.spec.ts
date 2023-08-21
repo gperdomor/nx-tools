@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as jenkins from './jenkins';
+import { Jenkins } from './jenkins';
 
 describe('Jenkins Context', () => {
   let restore: RestoreFn;
@@ -16,7 +17,7 @@ describe('Jenkins Context', () => {
         CHANGE_AUTHOR: 'jenkins-actor',
         JOB_NAME: 'jenkins-job',
         BUILD_NUMBER: '40',
-        GIT_URL: 'https://gitlab.com/gperdomor/nx-tools',
+        GIT_URL: 'https://jenkins.com/gperdomor/nx-tools',
         JOB_BASE_NAME: 'nx-tools',
       },
       { clear: true }
@@ -24,14 +25,16 @@ describe('Jenkins Context', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper context values', async () => {
-      context = await jenkins.context();
+      context = await Jenkins.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'JENKINS',
         actor: 'jenkins-actor',
         eventName: 'pull_request',
         job: 'jenkins-job',
@@ -39,15 +42,17 @@ describe('Jenkins Context', () => {
         ref: 'refs/heads/jenkins-ref-slug',
         runId: 40,
         runNumber: 40,
+        repoUrl: 'https://jenkins.com/gperdomor/nx-tools',
         sha: 'jenkins-sha',
       });
     });
 
     it('Should be take proper context values - no pr', async () => {
       delete process.env['CHANGE_FORK'];
-      context = await jenkins.context();
+      context = await Jenkins.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'JENKINS',
         actor: 'jenkins-actor',
         eventName: 'unknown',
         job: 'jenkins-job',
@@ -55,6 +60,7 @@ describe('Jenkins Context', () => {
         ref: 'refs/heads/jenkins-ref-slug',
         runId: 40,
         runNumber: 40,
+        repoUrl: 'https://jenkins.com/gperdomor/nx-tools',
         sha: 'jenkins-sha',
       });
     });
@@ -65,9 +71,10 @@ describe('Jenkins Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await jenkins.context();
+        context = await Jenkins.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'JENKINS',
           actor: 'jenkins-actor',
           eventName: 'pull_request',
           job: 'jenkins-job',
@@ -75,6 +82,7 @@ describe('Jenkins Context', () => {
           ref: 'refs/tags/jenkins-tag',
           runId: 40,
           runNumber: 40,
+          repoUrl: 'https://jenkins.com/gperdomor/nx-tools',
           sha: 'jenkins-sha',
         });
       });
@@ -88,7 +96,7 @@ describe('Jenkins Context', () => {
       expect(repo).toMatchObject({
         default_branch: '',
         description: '',
-        html_url: 'https://gitlab.com/gperdomor/nx-tools',
+        html_url: 'https://jenkins.com/gperdomor/nx-tools',
         license: null,
         name: 'nx-tools',
       });

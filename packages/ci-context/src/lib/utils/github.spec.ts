@@ -1,23 +1,14 @@
-import { Context } from '@actions/github/lib/context';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as github from './github';
-
-jest.mock('./github', () => {
-  const actualModule = jest.requireActual('./github');
-  return {
-    __esModule: true,
-    ...actualModule,
-    context: jest.fn(() => Promise.resolve(new Context())),
-  };
-});
+import { Github } from './github';
 
 jest.mock('@actions/github', () => {
   const actualModule = jest.requireActual('@actions/github');
+
   return {
     __esModule: true,
     ...actualModule,
-    context: jest.fn(() => Promise.resolve(new Context())),
     getOctokit: jest.fn(() => ({
       rest: {
         repos: {
@@ -51,6 +42,7 @@ describe('GitHub Context', () => {
         GITHUB_JOB: 'github-job',
         GITHUB_RUN_NUMBER: '20',
         GITHUB_RUN_ID: '200',
+        GITHUB_REPOSITORY: 'gperdomor/nx-tools',
       },
       { clear: true }
     );
@@ -62,15 +54,18 @@ describe('GitHub Context', () => {
 
   describe('context', () => {
     it('Should be take proper context values', async () => {
-      context = await github.context();
+      context = await Github.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'GITHUB',
         actor: 'github-actor',
         eventName: 'github-event-name',
         job: 'github-job',
+        payload: {},
         ref: 'github-ref',
         runId: 200,
         runNumber: 20,
+        repoUrl: 'https://github.com/gperdomor/nx-tools',
         sha: 'github-sha',
       });
     });
@@ -84,7 +79,7 @@ describe('GitHub Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await github.repo('FAKE_TOKEN');
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: 'main',
         description: 'Nx Tools',
         html_url: 'https://github.com/gperdomor/nx-tools',

@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as travis from './travis';
+import { Travis } from './travis';
 
 describe('Travis Context', () => {
   let restore: RestoreFn;
@@ -24,14 +25,16 @@ describe('Travis Context', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper cotext values', async () => {
-      context = await travis.context();
+      context = await Travis.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'TRAVIS',
         actor: 'travis-actor',
         eventName: 'travis-event-name',
         job: 'travis-job',
@@ -39,6 +42,7 @@ describe('Travis Context', () => {
         ref: 'refs/heads/travis-ref-slug',
         runId: 100,
         runNumber: 10,
+        repoUrl: '',
         sha: 'travis-sha',
       });
     });
@@ -57,15 +61,18 @@ describe('Travis Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await travis.context();
+        context = await Travis.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'TRAVIS',
           actor: 'travis-actor',
           eventName: 'travis-event-name',
           job: 'travis-job',
+          payload: {},
           ref: 'refs/tags/travis-tag',
           runId: 100,
           runNumber: 10,
+          repoUrl: '',
           sha: 'travis-sha',
         });
       });

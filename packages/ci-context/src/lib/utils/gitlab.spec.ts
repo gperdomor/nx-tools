@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as gitlab from './gitlab';
+import { Gitlab } from './gitlab';
 
 describe('GitLab Context', () => {
   let restore: RestoreFn;
@@ -27,14 +28,16 @@ describe('GitLab Context', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper cotext values', async () => {
-      context = await gitlab.context();
+      context = await Gitlab.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'GITLAB',
         actor: 'gitlab-actor',
         eventName: 'gitlab-event-name',
         job: 'gitlab-job',
@@ -42,6 +45,7 @@ describe('GitLab Context', () => {
         ref: 'refs/heads/gitlab-ref-slug',
         runId: 100,
         runNumber: 10,
+        repoUrl: 'https://gitlab.com/gperdomor/nx-tools',
         sha: 'gitlab-sha',
       });
     });
@@ -60,15 +64,18 @@ describe('GitLab Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await gitlab.context();
+        context = await Gitlab.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'GITLAB',
           actor: 'gitlab-actor',
           eventName: 'gitlab-event-name',
           job: 'gitlab-job',
+          payload: {},
           ref: 'refs/tags/gitlab-tag',
           runId: 100,
           runNumber: 10,
+          repoUrl: 'https://gitlab.com/gperdomor/nx-tools',
           sha: 'gitlab-sha',
         });
       });
