@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { readFile } from 'fs/promises';
-import { propertiesToJson } from 'properties-file/content';
+import { getProperties } from 'properties-file';
 import * as url from 'url';
 import { RepoMetadata, RunnerContext } from '../interfaces';
 import { Git } from './git';
@@ -30,10 +30,10 @@ export class Teamcity {
   public static async getProperties() {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const buildPropertiesFile = await readFile(process.env['TEAMCITY_BUILD_PROPERTIES_FILE']!, 'utf8');
-    const buildProperties = propertiesToJson(buildPropertiesFile);
+    const buildProperties = getProperties(buildPropertiesFile);
 
     const configPropertiesFile = await readFile(buildProperties['teamcity.configuration.properties.file'], 'utf8');
-    const configProperties = propertiesToJson(configPropertiesFile);
+    const configProperties = getProperties(configPropertiesFile);
 
     return { buildProperties, configProperties };
   }
