@@ -12,7 +12,8 @@ jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetada
 });
 
 jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
-  return Promise.resolve(new Context());
+  const ctx = new Context();
+  return Promise.resolve({ ...ctx, name: 'GITHUB', repoUrl: '' });
 });
 
 jest.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {
