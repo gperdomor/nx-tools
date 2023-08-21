@@ -1,19 +1,25 @@
 import * as github from '@actions/github';
+import { Context } from '@actions/github/lib/context';
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export async function context(): Promise<RunnerContext> {
-  const { actor, eventName, job, ref, runId, runNumber, sha, payload } = github.context;
+export class Github {
+  public static async context(): Promise<RunnerContext> {
+    const ctx = new Context();
+    const { actor, eventName, job, ref, runId, runNumber, sha, serverUrl, payload } = ctx;
 
-  return {
-    actor,
-    eventName,
-    job,
-    payload,
-    ref,
-    runId,
-    runNumber,
-    sha,
-  };
+    return {
+      name: 'GITHUB',
+      actor,
+      eventName,
+      job,
+      payload,
+      ref,
+      runId,
+      runNumber,
+      repoUrl: `${serverUrl}/${ctx.repo.owner}/${ctx.repo.repo}`,
+      sha,
+    };
+  }
 }
 
 export async function repo(token?: string): Promise<RepoMetadata> {

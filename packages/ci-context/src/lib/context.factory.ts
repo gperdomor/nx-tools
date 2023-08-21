@@ -1,16 +1,16 @@
 import { logger } from '@nx-tools/core';
 import { RunnerContext } from './interfaces';
-import * as azure from './utils/azure-devops';
-import * as bitbucket from './utils/bitbucket';
-import * as circle from './utils/circle';
-import * as drone from './utils/drone';
-import * as github from './utils/github';
-import * as gitlab from './utils/gitlab';
-import * as jenkins from './utils/jenkins';
-import * as local from './utils/local';
-import * as semaphore from './utils/semaphore';
-import * as teamcity from './utils/teamcity';
-import * as travis from './utils/travis';
+import { Azure } from './utils/azure-devops';
+import { BitBucket } from './utils/bitbucket';
+import { Circle } from './utils/circle';
+import { Drone } from './utils/drone';
+import { Git } from './utils/git';
+import { Github } from './utils/github';
+import { Gitlab } from './utils/gitlab';
+import { Jenkins } from './utils/jenkins';
+import { Semaphore } from './utils/semaphore';
+import { Teamcity } from './utils/teamcity';
+import { Travis } from './utils/travis';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
@@ -19,59 +19,55 @@ export class ContextProxyFactory {
   public static async create(): Promise<RunnerContext> {
     if (ci.AZURE_PIPELINES) {
       logger.info(`CI Provider: ${ci.name}`);
-      return azure.context();
+      return Azure.context();
     }
 
     if (ci.BITBUCKET) {
       logger.info(`CI Provider: ${ci.name}`);
-      return bitbucket.context();
+      return BitBucket.context();
     }
 
     if (ci.CIRCLE) {
       logger.info(`CI Provider: ${ci.name}`);
-      return circle.context();
+      return Circle.context();
     }
 
     if (ci.DRONE) {
       logger.info(`CI Provider: ${ci.name}`);
-      return drone.context();
+      return Drone.context();
     }
 
     if (ci.GITHUB_ACTIONS) {
       logger.info(`CI Provider: ${ci.name}`);
-      return github.context();
+      return Github.context();
     }
 
     if (ci.GITLAB) {
       logger.info(`CI Provider: ${ci.name}`);
-      return gitlab.context();
+      return Gitlab.context();
     }
 
     if (ci.JENKINS) {
       logger.info(`CI Provider: ${ci.name}`);
-      return jenkins.context();
+      return Jenkins.context();
     }
 
     if (ci.SEMAPHORE) {
       logger.info(`CI Provider: ${ci.name}`);
-      return semaphore.context();
+      return Semaphore.context();
     }
 
     if (ci.TRAVIS) {
       logger.info(`CI Provider: ${ci.name}`);
-      return travis.context();
+      return Travis.context();
     }
 
     if (ci.TEAMCITY) {
       logger.info(`CI Provider: ${ci.name}`);
-      return teamcity.context();
+      return Teamcity.context();
     }
 
-    if (!ci.isCI || process.env['CI_CONTEXT_FALLBACK_TO_LOCAL']?.toLowerCase() === 'true') {
-      logger.info(`Unsupported CI Provider... Using Local Environment as fallback`);
-      return local.context();
-    }
-
-    throw new Error('Unsupported CI Provider');
+    logger.info(`Unsupported CI Provider... Using Git as fallback`);
+    return Git.context();
   }
 }

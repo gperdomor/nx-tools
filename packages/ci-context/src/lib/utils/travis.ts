@@ -1,19 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
-export async function context(): Promise<RunnerContext> {
-  return {
-    actor: process.env['USER']!,
-    eventName: process.env['TRAVIS_EVENT_TYPE']!,
-    job: process.env['TRAVIS_JOB_NAME']!,
-    payload: {},
-    ref: process.env['TRAVIS_TAG']
-      ? `refs/tags/${process.env['TRAVIS_TAG']}`
-      : `refs/heads/${process.env['TRAVIS_BRANCH']}`,
-    runId: parseInt(process.env['TRAVIS_BUILD_NUMBER']!, 10),
-    runNumber: parseInt(process.env['TRAVIS_BUILD_ID']!, 10),
-    sha: process.env['TRAVIS_COMMIT']!,
-  };
+export class Travis {
+  public static async context(): Promise<RunnerContext> {
+    return {
+      name: 'TRAVIS',
+      actor: process.env['USER']!,
+      eventName: process.env['TRAVIS_EVENT_TYPE']!,
+      job: process.env['TRAVIS_JOB_NAME']!,
+      payload: {},
+      ref: process.env['TRAVIS_TAG']
+        ? `refs/tags/${process.env['TRAVIS_TAG']}`
+        : `refs/heads/${process.env['TRAVIS_BRANCH']}`,
+      runId: parseInt(process.env['TRAVIS_BUILD_NUMBER']!, 10),
+      runNumber: parseInt(process.env['TRAVIS_BUILD_ID']!, 10),
+      repoUrl: '',
+      sha: process.env['TRAVIS_COMMIT']!,
+    };
+  }
 }
 
 export async function repo(): Promise<RepoMetadata> {

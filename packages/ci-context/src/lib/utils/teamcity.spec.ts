@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import type { RunnerContext } from '../interfaces';
 import * as teamcity from './teamcity';
+import { Teamcity } from './teamcity';
 
 const baseMockedFiles = {
   'build.properties': `
@@ -84,20 +85,20 @@ describe('TeamCity', () => {
 
   describe('context', () => {
     it('should return proper context values for branch', async () => {
-      context = await teamcity.context();
+      context = await Teamcity.context();
 
-      expect(context).toMatchInlineSnapshot(`
-        {
-          "actor": "ian",
-          "eventName": "Git",
-          "job": "code quality",
-          "payload": {},
-          "ref": "refs/heads/branch",
-          "runId": 61838662,
-          "runNumber": 1575,
-          "sha": "ba74e4fe1f1836c067d678acc54b966610f4b59e",
-        }
-      `);
+      expect(context).toEqual({
+        name: 'TEAMCITY',
+        actor: 'ian',
+        eventName: 'Git',
+        job: 'code quality',
+        payload: {},
+        ref: 'refs/heads/branch',
+        runId: 61838662,
+        runNumber: 1575,
+        repoUrl: 'https://git.repo.com/cool/project',
+        sha: 'ba74e4fe1f1836c067d678acc54b966610f4b59e',
+      });
     });
 
     it('should return proper context values for gerrit ref', async () => {
@@ -106,20 +107,20 @@ describe('TeamCity', () => {
       teamcity.git.build.vcs.branch.Cool___Project: refs/reviews/337733/9
       teamcity.build.branch: 337733/9
       `;
-      context = await teamcity.context();
+      context = await Teamcity.context();
 
-      expect(context).toMatchInlineSnapshot(`
-        {
-          "actor": "ian",
-          "eventName": "Git",
-          "job": "code quality",
-          "payload": {},
-          "ref": "refs/reviews/337733/9",
-          "runId": 61838662,
-          "runNumber": 1575,
-          "sha": "ba74e4fe1f1836c067d678acc54b966610f4b59e",
-        }
-      `);
+      expect(context).toEqual({
+        name: 'TEAMCITY',
+        actor: 'ian',
+        eventName: 'Git',
+        job: 'code quality',
+        payload: {},
+        ref: 'refs/reviews/337733/9',
+        runId: 61838662,
+        runNumber: 1575,
+        repoUrl: 'https://git.repo.com/cool/project',
+        sha: 'ba74e4fe1f1836c067d678acc54b966610f4b59e',
+      });
     });
   });
 
@@ -127,15 +128,13 @@ describe('TeamCity', () => {
     it('should return proper repo values for git', async () => {
       const repo = await teamcity.repo();
 
-      expect(repo).toMatchInlineSnapshot(`
-        {
-          "default_branch": "master",
-          "description": "",
-          "html_url": "https://git.repo.com/cool/project",
-          "license": null,
-          "name": "Cool project",
-        }
-      `);
+      expect(repo).toEqual({
+        default_branch: 'master',
+        description: '',
+        html_url: 'https://git.repo.com/cool/project',
+        license: null,
+        name: 'Cool project',
+      });
     });
 
     it('should return proper repo values for gerrit', async () => {
@@ -147,15 +146,13 @@ describe('TeamCity', () => {
 
       const repo = await teamcity.repo();
 
-      expect(repo).toMatchInlineSnapshot(`
-        {
-          "default_branch": "master",
-          "description": "",
-          "html_url": "https://gerrit.repo.com/q/project:cool%2Fproject",
-          "license": null,
-          "name": "Cool project",
-        }
-      `);
+      expect(repo).toEqual({
+        default_branch: 'master',
+        description: '',
+        html_url: 'https://gerrit.repo.com/q/project:cool%2Fproject',
+        license: null,
+        name: 'Cool project',
+      });
     });
   });
 });

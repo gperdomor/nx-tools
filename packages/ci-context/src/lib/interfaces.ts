@@ -6,6 +6,7 @@ export type RepoMetadata = Pick<
 >;
 
 export interface RunnerContext {
+  name: string;
   actor: string;
   eventName: string;
   job: string;
@@ -13,5 +14,6 @@ export interface RunnerContext {
   ref: string;
   runId: number;
   runNumber: number;
+  repoUrl: string;
   sha: string;
 }

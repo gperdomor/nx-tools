@@ -1,6 +1,7 @@
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as bitbucket from './bitbucket';
+import { BitBucket } from './bitbucket';
 
 describe('CircleCI Context', () => {
   let restore: RestoreFn;
@@ -17,20 +18,23 @@ describe('CircleCI Context', () => {
         BITBUCKET_BUILD_NUMBER: '50',
         BITBUCKET_REPO_FULL_NAME: 'gperdomor/nx-tools',
         BITBUCKET_WORKSPACE: 'nx-tools',
+        BITBUCKET_GIT_HTTP_ORIGIN: 'https://bitbucket.org/gperdomor/nx-tools',
       },
       { clear: true }
     );
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
   describe('context', () => {
     it('Should be take proper values', async () => {
-      context = await bitbucket.context();
+      context = await BitBucket.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'BITBUCKET',
         actor: 'bitbucket-actor-uuid',
         eventName: 'pull_request',
         job: 'bitbucket-job-uuid',
@@ -38,15 +42,17 @@ describe('CircleCI Context', () => {
         ref: 'refs/heads/bitbucket-ref-slug',
         runId: 50,
         runNumber: 50,
+        repoUrl: 'https://bitbucket.org/gperdomor/nx-tools',
         sha: 'bitbucket-sha',
       });
     });
 
     it('Should be take proper values - no pr', async () => {
       delete process.env['BITBUCKET_PR_ID'];
-      context = await bitbucket.context();
+      context = await BitBucket.context();
 
-      expect(context).toMatchObject({
+      expect(context).toEqual({
+        name: 'BITBUCKET',
         actor: 'bitbucket-actor-uuid',
         eventName: 'unknown',
         job: 'bitbucket-job-uuid',
@@ -54,6 +60,7 @@ describe('CircleCI Context', () => {
         ref: 'refs/heads/bitbucket-ref-slug',
         runId: 50,
         runNumber: 50,
+        repoUrl: 'https://bitbucket.org/gperdomor/nx-tools',
         sha: 'bitbucket-sha',
       });
     });
@@ -72,9 +79,10 @@ describe('CircleCI Context', () => {
       });
 
       it('Should be take proper context values', async () => {
-        context = await bitbucket.context();
+        context = await BitBucket.context();
 
-        expect(context).toMatchObject({
+        expect(context).toEqual({
+          name: 'BITBUCKET',
           actor: 'bitbucket-actor-uuid',
           eventName: 'pull_request',
           job: 'bitbucket-job-uuid',
@@ -82,6 +90,7 @@ describe('CircleCI Context', () => {
           ref: 'refs/tags/bitbucket-tag',
           runId: 50,
           runNumber: 50,
+          repoUrl: 'https://bitbucket.org/gperdomor/nx-tools',
           sha: 'bitbucket-sha',
         });
       });
@@ -92,7 +101,7 @@ describe('CircleCI Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await bitbucket.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: '',
         description: '',
         html_url: 'https://bitbucket.org/gperdomor/nx-tools',

@@ -62,6 +62,7 @@ describe('getInputs', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 
