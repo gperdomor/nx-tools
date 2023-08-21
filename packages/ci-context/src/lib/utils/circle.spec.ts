@@ -101,7 +101,7 @@ describe('CircleCI Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await circle.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: '',
         description: '',
         html_url: 'https://circle.com/gperdomor/nx-tools',

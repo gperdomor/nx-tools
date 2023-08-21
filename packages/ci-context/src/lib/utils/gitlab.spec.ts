@@ -86,7 +86,7 @@ describe('GitLab Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await gitlab.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: 'feature/ci-context-gitlab',
         description: '',
         html_url: 'https://gitlab.com/gperdomor/nx-tools',

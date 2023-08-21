@@ -93,7 +93,7 @@ describe('Jenkins Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await jenkins.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: '',
         description: '',
         html_url: 'https://jenkins.com/gperdomor/nx-tools',

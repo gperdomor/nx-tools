@@ -83,7 +83,7 @@ describe('Semaphore Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await semaphore.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: '',
         description: '',
         html_url: 'https://semaphore.com/gperdomor/nx-tools',

@@ -84,7 +84,7 @@ describe('Drone Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await drone.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: 'drone-main',
         description: '',
         html_url: 'https://drone.com/gperdomor/nx-tools',

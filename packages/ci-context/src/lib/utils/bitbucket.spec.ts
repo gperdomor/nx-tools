@@ -101,7 +101,7 @@ describe('CircleCI Context', () => {
     it('Should be take proper repo values', async () => {
       const repo = await bitbucket.repo();
 
-      expect(repo).toMatchObject({
+      expect(repo).toEqual({
         default_branch: '',
         description: '',
         html_url: 'https://bitbucket.org/gperdomor/nx-tools',
