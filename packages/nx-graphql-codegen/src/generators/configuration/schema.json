@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Configuration",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "project": {
+      "type": "string",
+      "description": "The name of the project to add the GraphQL Code Generator setup to.",
+      "x-prompt": "What project would you like to add the GraphQL Code Generator setup to?",
+      "x-dropdown": "projects"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the GraphQL Code Generator config file is placed.",
+      "x-prompt": "What directory would you like the GraphQL Code Generator config file is placed?"
+    },
+    "configFileType": {
+      "type": "string",
+      "description": "Options file type for GraphQL Code Generator configuration",
+      "$default": {
+        "index": 1
+      },
+      "x-priority": "important",
+      "x-prompt": {
+        "message": "Which type of file would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "ts",
+            "label": "ts"
+          },
+          {
+            "value": "yml",
+            "label": "yml"
+          }
+        ]
+      },
+      "default": "ts",
+      "alias": "e"
+    },
+    "schema": {
+      "type": "string",
+      "description": "A URL to your GraphQL endpoint.",
+      "x-prompt": "What URL would you like to your GraphQL endpoint?"
+    },
+    "skipFormat": {
+      "type": "boolean",
+      "description": "Skips formatting the workspace after the generator completes."
+    },
+    "skipPackageJson": {
+      "type": "boolean",
+      "default": false,
+      "description": "Do not add dependencies to `package.json`"
+    }
+  },
+  "required": ["project", "configFileType"]
+}

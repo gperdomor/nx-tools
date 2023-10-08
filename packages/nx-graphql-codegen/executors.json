@@ -1,0 +1,9 @@
+{
+  "executors": {
+    "generate": {
+      "implementation": "./src/executors/generate/executor",
+      "schema": "./src/executors/generate/schema.json",
+      "description": "The generate command generates the data types corresponding to the graphql schema"
+    }
+  }
+}
