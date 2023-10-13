@@ -1,0 +1,20 @@
+import type { CodegenConfig } from '@graphql-codegen/cli';
+
+const config: CodegenConfig = {
+  schema: ['<%= schema %>'],
+  documents: [],
+  overwrite: true,
+  generates: {
+    './src/graphql/interfaces/types.ts': {
+      config: {
+        scalars: { Date: Date, DateTime: Date, Object: Object },
+        withHooks: true,
+      },
+      plugins: [
+        'typescript',        
+      ],
+    },
+  },
+};
+
+export default config;

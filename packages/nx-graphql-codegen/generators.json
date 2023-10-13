@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "configuration": {
+      "factory": "./src/generators/configuration/generator",
+      "schema": "./src/generators/configuration/schema.json",
+      "description": "Add graphql-code-generator configuration to project"
+    }
+  }
+}

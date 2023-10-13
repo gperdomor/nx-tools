@@ -1,0 +1,13 @@
+schema:
+- <%= schema %>
+documents: []
+overwrite: true
+generates:
+  ./src/graphql/interfaces/types.ts:
+    config:
+      scalars:
+        Date: Date
+        DateTime: Date
+    plugins:
+    - "typescript"
+require: []
