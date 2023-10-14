@@ -11,7 +11,7 @@
     "@nx-tools/core": "6.0.0-alpha.1",
     "chalk": "4.1.2",
     "commander": "11.1.0",
-    "undici": "5.23.0"
+    "undici": "5.26.3"
   },
   "peerDependencies": {
     "tslib": "^2.5.3"
