@@ -1,6 +1,6 @@
-const { readFileSync, existsSync } = require('node:fs');
+import { existsSync, readFileSync } from 'node:fs';
 
-function checkLockFiles() {
+async function checkLockFiles() {
   const errors = [];
   if (existsSync('yarn.lock')) {
     errors.push('Invalid occurence of "yarn.lock" file. Please remove it and use only "package-lock.json"');
@@ -16,8 +16,7 @@ function checkLockFiles() {
       );
     }
 
-    // eslint-disable-next-line global-require
-    const packageJson = require('../../package-lock.json');
+    const { default: packageJson } = await import('../../package-lock.json', { assert: { type: 'json' } });
 
     if (packageJson.lockfileVersion !== 3) {
       errors.push(
@@ -30,11 +29,13 @@ function checkLockFiles() {
   return errors;
 }
 
-const invalid = checkLockFiles();
+console.log('🔒🔒🔒 Validating lock files 🔒🔒🔒\n');
+const invalid = await checkLockFiles();
 
 if (invalid.length > 0) {
   invalid.forEach((e) => console.log(e));
   process.exit(1);
 } else {
+  console.log('Lock file is valid 👍');
   process.exit(0);
 }

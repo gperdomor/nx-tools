@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "commit": "cz",
-    "check-lock-files": "node ./tools/scripts/check-lock-files.js",
+    "check-lock-files": "node ./tools/scripts/check-lock-files.mjs",
     "prepare": "is-ci || husky install"
   },
   "private": true,

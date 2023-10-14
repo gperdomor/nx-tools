@@ -27,15 +27,8 @@ const testEnvVars = {
   INPUT_BOOLEAN_INPUT_FALSE3: 'FALSE',
   INPUT_WRONG_BOOLEAN_INPUT: 'wrong',
   INPUT_WITH_TRAILING_WHITESPACE: '  some val  ',
-
   INPUT_MY_INPUT_LIST: 'val1\nval2\nval3',
-
-  // Save inputs
-  STATE_TEST_1: 'state_val',
-
-  // File Commands
-  GITHUB_PATH: '',
-  GITHUB_ENV: '',
+  INPUT_LIST_WITH_TRAILING_WHITESPACE: '  val1  \n  val2  \n  ',
 };
 
 describe('getPosixName', () => {
@@ -175,6 +168,26 @@ describe('getInputs', () => {
   describe('getMultilineInput', () => {
     it('getMultilineInput works', () => {
       expect(getMultilineInput('my input list')).toEqual(['val1', 'val2', 'val3']);
+    });
+
+    it('getMultilineInput trims whitespace by default', () => {
+      expect(getMultilineInput('list with trailing whitespace')).toEqual(['val1', 'val2']);
+    });
+
+    it('getMultilineInput trims whitespace when option is explicitly true', () => {
+      expect(
+        getMultilineInput('list with trailing whitespace', {
+          trimWhitespace: true,
+        })
+      ).toEqual(['val1', 'val2']);
+    });
+
+    it('getMultilineInput does not trim whitespace when option is false', () => {
+      expect(
+        getMultilineInput('list with trailing whitespace', {
+          trimWhitespace: false,
+        })
+      ).toEqual(['  val1  ', '  val2  ', '  ']);
     });
   });
 });

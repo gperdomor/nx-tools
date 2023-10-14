@@ -6,6 +6,11 @@ on:
       - main
   pull_request:
 
+# Needed for nx-set-shas within nx-cloud-main.yml, when run on the main branch
+permissions:
+  actions: read
+  contents: read
+
 jobs:
   main:
     name: Nx Cloud - Main Job
