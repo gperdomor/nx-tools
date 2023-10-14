@@ -19,7 +19,7 @@
     "@nx/devkit": "16.10.0",
     "@renovate/pep440": "1.0.0",
     "@swc/helpers": "0.5.3",
-    "ci-info": "3.8.0",
+    "ci-info": "3.9.0",
     "commander": "11.0.0",
     "csv-parse": "5.4.0",
     "handlebars": "4.7.7",
