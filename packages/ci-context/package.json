@@ -10,7 +10,7 @@
   "typings": "./src/index.d.ts",
   "dependencies": {
     "@nx-tools/core": "6.0.0-alpha.1",
-    "ci-info": "3.8.0",
+    "ci-info": "3.9.0",
     "@octokit/openapi-types": "12.11.0",
     "@actions/github": "5.1.1",
     "properties-file": "3.2.17"
