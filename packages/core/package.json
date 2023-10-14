@@ -13,7 +13,7 @@
     "@actions/io": "1.1.3",
     "chalk": "4.1.2",
     "ci-info": "3.9.0",
-    "csv-parse": "5.4.0"
+    "csv-parse": "5.5.2"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
