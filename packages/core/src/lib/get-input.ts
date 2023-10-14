@@ -6,10 +6,13 @@ import { names } from '@nx/devkit';
 export interface InputOptions {
   /** Optional. Whether the input is required. If required and not present, will throw. Defaults to false */
   required?: boolean;
+
   /** Optional. Whether leading/trailing whitespace will be trimmed for the input. Defaults to true */
   trimWhitespace?: boolean;
+
   /** Optional. Default value */
   fallback?: string;
+
   /** Optional. Default value */
   prefix?: string;
 }
@@ -41,11 +44,11 @@ export function getInput(name: string, options?: InputOptions): string {
     val = options.fallback;
   }
 
-  if (options && options.required && !val) {
+  if (options?.required && !val) {
     throw new Error(`Input required and not supplied: ${name}`);
   }
 
-  if (options && options.trimWhitespace === false) {
+  if (options?.trimWhitespace === false) {
     return val;
   }
 
@@ -65,7 +68,11 @@ export function getMultilineInput(name: string, options?: InputOptions): string[
     .split('\n')
     .filter((x) => x !== '');
 
-  return inputs;
+  if (options?.trimWhitespace === false) {
+    return inputs;
+  }
+
+  return inputs.map((input) => input.trim());
 }
 
 /**
