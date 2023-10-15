@@ -16,46 +16,38 @@ const ci = require('ci-info');
 
 export class RepoProxyFactory {
   public static async create(token: string): Promise<RepoMetadata> {
-    if (ci.AZURE_PIPELINES) {
-      return azure.repo();
-    }
+    switch (true) {
+      case ci.AZURE_PIPELINES:
+        return azure.repo();
 
-    if (ci.BITBUCKET) {
-      return bitbucket.repo();
-    }
+      case ci.BITBUCKET:
+        return bitbucket.repo();
 
-    if (ci.CIRCLE) {
-      return circle.repo();
-    }
+      case ci.CIRCLE:
+        return circle.repo();
 
-    if (ci.DRONE) {
-      return drone.repo();
-    }
+      case ci.DRONE:
+        return drone.repo();
 
-    if (ci.GITHUB_ACTIONS) {
-      return github.repo(token);
-    }
+      case ci.GITHUB_ACTIONS:
+        return github.repo(token);
 
-    if (ci.GITLAB) {
-      return gitlab.repo();
-    }
+      case ci.GITLAB:
+        return gitlab.repo();
 
-    if (ci.JENKINS) {
-      return jenkins.repo();
-    }
+      case ci.JENKINS:
+        return jenkins.repo();
 
-    if (ci.SEMAPHORE) {
-      return semaphore.repo();
-    }
+      case ci.SEMAPHORE:
+        return semaphore.repo();
 
-    if (ci.TRAVIS) {
-      return travis.repo();
-    }
+      case ci.TRAVIS:
+        return travis.repo();
 
-    if (ci.TEAMCITY) {
-      return teamcity.repo();
+      case ci.TEAMCITY:
+        return teamcity.repo();
+      default:
+        return git.repo();
     }
-
-    return git.repo();
   }
 }

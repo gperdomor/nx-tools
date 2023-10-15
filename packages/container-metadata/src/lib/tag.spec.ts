@@ -1,5 +1,14 @@
 import { DefaultPriorities, Parse, RefEvent, ShaFormat, Tag, Transform, Type } from './tag';
 
+beforeAll(() => {
+  jest.spyOn(console, 'info').mockImplementation(() => true);
+  jest.spyOn(console, 'log').mockImplementation(() => true);
+});
+
+afterAll(() => {
+  jest.clearAllMocks();
+});
+
 describe('transform', () => {
   // prettier-ignore
   test.each([
