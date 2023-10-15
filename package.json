@@ -29,7 +29,7 @@
     "properties-file": "3.3.4",
     "semver": "7.5.4",
     "tmp": "0.2.1",
-    "tslib": "2.5.3",
+    "tslib": "2.6.2",
     "undici": "5.26.3"
   },
   "devDependencies": {
