@@ -8,4 +8,5 @@ export type { InputListOpts } from './lib/get-input-list';
 export { interpolate } from './lib/interpolate';
 export { loadPackage } from './lib/load-package';
 export * from './lib/logging';
+export { tmpDir } from './lib/tmp-dir';
 export * from './lib/workspace';
