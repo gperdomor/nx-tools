@@ -8,7 +8,12 @@ export class Gitlab {
       actor: process.env['GITLAB_USER_LOGIN']!,
       eventName: process.env['CI_PIPELINE_SOURCE']!,
       job: process.env['CI_JOB_NAME']!,
-      payload: {},
+      payload: {
+        repository: {
+          default_branch: process.env['CI_DEFAULT_BRANCH']!,
+          private: process.env['CI_PROJECT_VISIBILITY'] === 'private',
+        },
+      },
       ref: process.env['CI_COMMIT_TAG']
         ? `refs/tags/${process.env['CI_COMMIT_TAG']}`
         : `refs/heads/${process.env['CI_COMMIT_REF_SLUG']}`,

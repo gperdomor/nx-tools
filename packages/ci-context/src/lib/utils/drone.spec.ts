@@ -39,7 +39,11 @@ describe('Drone Context', () => {
         actor: 'drone-actor',
         eventName: 'drone-event-name',
         job: 'drone-job',
-        payload: {},
+        payload: {
+          repository: {
+            private: false,
+          },
+        },
         ref: 'refs/heads/drone-ref',
         runId: 100,
         runNumber: 100,
@@ -54,6 +58,7 @@ describe('Drone Context', () => {
       beforeEach(() => {
         restore = mockedEnv({
           DRONE_COMMIT_REF: 'refs/tags/drone-v1.0.0',
+          DRONE_REPO_PRIVATE: 'true',
         });
       });
 
@@ -69,7 +74,11 @@ describe('Drone Context', () => {
           actor: 'drone-actor',
           eventName: 'drone-event-name',
           job: 'drone-job',
-          payload: {},
+          payload: {
+            repository: {
+              private: true,
+            },
+          },
           ref: 'refs/tags/drone-v1.0.0',
           runId: 100,
           runNumber: 100,

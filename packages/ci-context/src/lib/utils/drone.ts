@@ -8,7 +8,11 @@ export class Drone {
       actor: process.env['DRONE_COMMIT_AUTHOR']!,
       eventName: process.env['DRONE_BUILD_EVENT']!,
       job: process.env['DRONE_STAGE_NAME']!,
-      payload: {},
+      payload: {
+        repository: {
+          private: process.env['DRONE_REPO_PRIVATE'] === 'true',
+        },
+      },
       ref: process.env['DRONE_COMMIT_REF']!,
       runId: parseInt(process.env['DRONE_BUILD_NUMBER']!, 10),
       runNumber: parseInt(process.env['DRONE_BUILD_NUMBER']!, 10),

@@ -22,6 +22,7 @@ describe('GitLab Context', () => {
         CI_DEFAULT_BRANCH: 'main',
         CI_PROJECT_URL: 'https://gitlab.com/gperdomor/nx-tools',
         CI_PROJECT_NAME: 'nx-tools',
+        CI_PROJECT_VISIBILITY: 'public',
       },
       { clear: true }
     );
@@ -41,7 +42,12 @@ describe('GitLab Context', () => {
         actor: 'gitlab-actor',
         eventName: 'gitlab-event-name',
         job: 'gitlab-job',
-        payload: {},
+        payload: {
+          repository: {
+            default_branch: 'main',
+            private: false,
+          },
+        },
         ref: 'refs/heads/gitlab-ref-slug',
         runId: 100,
         runNumber: 10,
@@ -56,6 +62,7 @@ describe('GitLab Context', () => {
       beforeEach(() => {
         restore = mockedEnv({
           CI_COMMIT_TAG: 'gitlab-tag',
+          CI_PROJECT_VISIBILITY: 'private',
         });
       });
 
@@ -71,7 +78,12 @@ describe('GitLab Context', () => {
           actor: 'gitlab-actor',
           eventName: 'gitlab-event-name',
           job: 'gitlab-job',
-          payload: {},
+          payload: {
+            repository: {
+              default_branch: 'main',
+              private: true,
+            },
+          },
           ref: 'refs/tags/gitlab-tag',
           runId: 100,
           runNumber: 10,
