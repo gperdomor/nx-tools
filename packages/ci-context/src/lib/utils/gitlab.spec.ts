@@ -19,7 +19,7 @@ describe('GitLab Context', () => {
         CI_JOB_NAME: 'gitlab-job',
         CI_PIPELINE_ID: '10',
         CI_PIPELINE_IID: '100',
-        CI_DEFAULT_BRANCH: 'feature/ci-context-gitlab',
+        CI_DEFAULT_BRANCH: 'main',
         CI_PROJECT_URL: 'https://gitlab.com/gperdomor/nx-tools',
         CI_PROJECT_NAME: 'nx-tools',
       },
@@ -87,7 +87,7 @@ describe('GitLab Context', () => {
       const repo = await gitlab.repo();
 
       expect(repo).toEqual({
-        default_branch: 'feature/ci-context-gitlab',
+        default_branch: 'main',
         description: '',
         html_url: 'https://gitlab.com/gperdomor/nx-tools',
         license: null,
