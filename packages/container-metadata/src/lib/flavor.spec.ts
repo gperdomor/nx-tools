@@ -1,6 +1,15 @@
 import { Flavor, Transform } from './flavor';
 
 describe('transform', () => {
+  beforeAll(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+    jest.spyOn(console, 'log').mockImplementation(() => true);
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
+
   // prettier-ignore
   test.each([
     [

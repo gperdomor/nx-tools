@@ -1,11 +1,6 @@
-import { ExecutorContext, names } from '@nx/devkit';
+import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
-import { parse } from 'csv-parse/sync';
-import * as fs from 'node:fs';
-import * as os from 'node:os';
-import * as path from 'node:path';
-
-let _tmpDir: string;
+import { ExecutorContext, names } from '@nx/devkit';
 
 export interface Inputs {
   'bake-target': string;
@@ -18,13 +13,6 @@ export interface Inputs {
   tags: string[];
 }
 
-export function tmpDir(): string {
-  if (!_tmpDir) {
-    _tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'container-metadata-action-')).split(path.sep).join(path.posix.sep);
-  }
-  return _tmpDir;
-}
-
 export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inputs {
   const prefix = names(ctx?.projectName || '').constantName;
 
@@ -34,41 +22,50 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
       fallback: options['bake-target'] || 'container-metadata-action',
     }),
     'github-token': core.getInput('github-token'),
-    'sep-labels': core.getInput('sep-labels', { prefix, fallback: options['sep-labels'] || '\n' }),
-    'sep-tags': core.getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n' }),
-    flavor: getInputList('flavor', prefix, options.flavor, true).map((flavor) => core.interpolate(flavor)),
-    images: getInputList('images', prefix, options.images).map((image) => core.interpolate(image)),
-    labels: getInputList('labels', prefix, options.labels, true).map((label) => core.interpolate(label)),
-    tags: getInputList('tags', prefix, options.tags, true).map((tag) => core.interpolate(tag)),
+    'sep-labels': core.getInput('sep-labels', {
+      prefix,
+      fallback: options['sep-labels'] || '\n',
+      trimWhitespace: false,
+    }),
+    'sep-tags': core.getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n', trimWhitespace: false }),
+    flavor: core
+      .getInputList('flavor', { prefix, fallback: options.flavor, ignoreComma: true, comment: '#' })
+      .map((flavor) => core.interpolate(flavor)),
+    images: core
+      .getInputList('images', { prefix, fallback: options.images, ignoreComma: true, comment: '#' })
+      .map((image) => core.interpolate(image)),
+    labels: core
+      .getInputList('labels', { prefix, fallback: options.labels, ignoreComma: true, comment: '#' })
+      .map((label) => core.interpolate(label)),
+    tags: core
+      .getInputList('tags', { prefix, fallback: options.tags, ignoreComma: true, comment: '#' })
+      .map((tag) => core.interpolate(tag)),
   };
 }
 
-export function getInputList(name: string, prefix = '', fallback?: string[], ignoreComma?: boolean): string[] {
-  const res: Array<string> = [];
+export async function getContext(): Promise<RunnerContext> {
+  const context = await ContextProxyFactory.create();
 
-  const items = core.getInput(name, { prefix });
-  if (items == '') {
-    return fallback ?? res;
-  }
-
-  const records = parse(items, {
-    columns: false,
-    relaxQuotes: true,
-    comment: '#',
-    relaxColumnCount: true,
-    skipEmptyLines: true,
-  });
-
-  for (const record of records as Array<string[]>) {
-    if (record.length == 1) {
-      res.push(record[0]);
-      continue;
-    } else if (!ignoreComma) {
-      res.push(...record);
-      continue;
+  if (context.name === 'GITHUB') {
+    // Needs to override Git reference with pr ref instead of upstream branch ref
+    // for pull_request_target event
+    // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+    if (/pull_request_target/.test(context.eventName)) {
+      context.ref = `refs/pull/${context.payload.number}/merge`;
     }
-    res.push(record.join(','));
+
+    // DOCKER_METADATA_PR_HEAD_SHA env var can be used to set associated head
+    // SHA instead of commit SHA that triggered the workflow on pull request
+    // event.
+    if (/true/i.test(process.env.DOCKER_METADATA_PR_HEAD_SHA || '')) {
+      if (
+        (/pull_request/.test(context.eventName) || /pull_request_target/.test(context.eventName)) &&
+        context.payload?.pull_request?.head?.sha != undefined
+      ) {
+        context.sha = context.payload.pull_request.head.sha;
+      }
+    }
   }
 
-  return res.filter((item) => item).map((pat) => pat.trim());
+  return context;
 }

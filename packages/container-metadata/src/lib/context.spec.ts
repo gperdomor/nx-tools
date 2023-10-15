@@ -1,159 +1,130 @@
+import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
 import { getPosixName } from '@nx-tools/core';
+import * as dotenv from 'dotenv';
+import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import * as context from './context';
+import { Git } from 'packages/ci-context/src/lib/utils/git';
+import { Github } from 'packages/ci-context/src/lib/utils/github';
+import { Inputs, getContext, getInputs } from './context';
 
-jest.spyOn(context, 'tmpDir').mockImplementation((): string => {
-  const tmpDir = path.join('/tmp/.container-metadata-action-jest').split(path.sep).join(path.posix.sep);
-  if (!fs.existsSync(tmpDir)) {
-    fs.mkdirSync(tmpDir, { recursive: true });
-  }
-  return tmpDir;
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
-describe('getInputList', () => {
-  it('single line correctly', async () => {
-    await setInput('foo', 'bar');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar']);
+describe('getInputs', () => {
+  beforeEach(() => {
+    process.env = Object.keys(process.env).reduce((object, key) => {
+      if (!key.startsWith('INPUT_')) {
+        object[key] = process.env[key];
+      }
+      return object;
+    }, {} as NodeJS.ProcessEnv);
   });
 
-  it('multiline correctly', async () => {
-    setInput('foo', 'bar\nbaz');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz']);
-  });
+  // prettier-ignore
+  test.each([
+    [
+      0,
+      new Map<string, string>([
+        ['images', 'moby/buildkit\nghcr.io/moby/mbuildkit'],
+      ]),
+      {
+        "bake-target": 'container-metadata-action',
+        flavor: [],
+        "github-token": '',
+        images: ['moby/buildkit', 'ghcr.io/moby/mbuildkit'],
+        labels: [],
+        "sep-labels": '\n',
+        "sep-tags": '\n',
+        tags: [],
+      } as Inputs
+    ],
+    [
+      1,
+      new Map<string, string>([
+        ['bake-target', 'metadata'],
+        ['images', 'moby/buildkit'],
+        ['sep-labels', ','],
+        ['sep-tags', ','],
+      ]),
+      {
+        "bake-target": 'metadata',
+        flavor: [],
+        "github-token": '',
+        images: ['moby/buildkit'],
+        labels: [],
+        "sep-labels": ',',
+        "sep-tags": ',',
+        tags: [],
+      } as Inputs
+    ],
+    [
+      2,
+      new Map<string, string>([
+        ['images', 'moby/buildkit\n#comment\nghcr.io/moby/mbuildkit'],
+      ]),
+      {
+        "bake-target": 'container-metadata-action',
+        flavor: [],
+        "github-token": '',
+        images: ['moby/buildkit', 'ghcr.io/moby/mbuildkit'],
+        labels: [],
+        "sep-labels": '\n',
+        "sep-tags": '\n',
+        tags: [],
+      } as Inputs
+    ],
+  ])(
+    '[%d] given %p as inputs, returns %p',
+    async (num: number, inputs: Map<string, string>, expected: Inputs) => {
+      inputs.forEach((value: string, name: string) => {
+        setInput(name, value);
+      });
+      expect(await getInputs({})).toEqual(expected);
+    }
+  );
+});
 
-  it('empty lines correctly', async () => {
-    setInput('foo', 'bar\n\nbaz');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz']);
-  });
+describe('getContext', () => {
+  let restore: RestoreFn;
 
-  it('comment correctly', async () => {
-    setInput('foo', 'bar\n#com\n"#taken"\nhello#comment\nbaz');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', '#taken', 'hello', 'baz']);
-  });
-
-  it('comma correctly', async () => {
-    setInput('foo', 'bar,baz');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz']);
-  });
-
-  it('empty result correctly', async () => {
-    setInput('foo', 'bar,baz,');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz']);
-  });
-
-  it('different new lines correctly', async () => {
-    setInput('foo', 'bar\r\nbaz');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz']);
-  });
-
-  it('different new lines and comma correctly', async () => {
-    setInput('foo', 'bar\r\nbaz,bat');
-    const res = context.getInputList('foo');
-    expect(res).toEqual(['bar', 'baz', 'bat']);
-  });
-
-  it('multiline and ignoring comma correctly', async () => {
-    setInput('cache-from', 'user/app:cache\ntype=local,src=path/to/dir');
-    const res = context.getInputList('cache-from', '', undefined, true);
-    expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
-  });
-
-  it('different new lines and ignoring comma correctly', async () => {
-    setInput('cache-from', 'user/app:cache\r\ntype=local,src=path/to/dir');
-    const res = context.getInputList('cache-from', '', undefined, true);
-    expect(res).toEqual(['user/app:cache', 'type=local,src=path/to/dir']);
-  });
-
-  it('multiline values', async () => {
-    setInput(
-      'secrets',
-      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
-"MYSECRET=aaaaaaaa
-bbbbbbb
-ccccccccc"
-FOO=bar`
+  beforeEach(() => {
+    jest.resetModules();
+    restore = mockedEnv(
+      {
+        ...process.env,
+        ...dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures/event_create_branch.env'))),
+      },
+      { clear: true }
     );
-    const res = context.getInputList('secrets', '', undefined, true);
-    expect(res).toEqual([
-      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
-      `MYSECRET=aaaaaaaa
-bbbbbbb
-ccccccccc`,
-      'FOO=bar',
-    ]);
   });
 
-  it('multiline values with empty lines', async () => {
-    setInput(
-      'secrets',
-      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
-"MYSECRET=aaaaaaaa
-bbbbbbb
-ccccccccc"
-FOO=bar
-"EMPTYLINE=aaaa
-
-bbbb
-ccc"`
-    );
-    const res = context.getInputList('secrets', '', undefined, true);
-    expect(res).toEqual([
-      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
-      `MYSECRET=aaaaaaaa
-bbbbbbb
-ccccccccc`,
-      'FOO=bar',
-      `EMPTYLINE=aaaa
-
-bbbb
-ccc`,
-    ]);
+  afterEach(() => {
+    restore();
   });
 
-  it('multiline values without quotes', async () => {
-    setInput(
-      'secrets',
-      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
-MYSECRET=aaaaaaaa
-bbbbbbb
-ccccccccc
-FOO=bar`
-    );
-    const res = context.getInputList('secrets', '', undefined, true);
-    expect(res).toEqual([
-      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
-      'MYSECRET=aaaaaaaa',
-      'bbbbbbb',
-      'ccccccccc',
-      'FOO=bar',
-    ]);
+  it('workflow', async () => {
+    jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+      return Github.context();
+    });
+
+    const context = await getContext();
+    expect(context.ref).toEqual('refs/heads/dev');
+    expect(context.sha).toEqual('5f3331d7f7044c18ca9f12c77d961c4d7cf3276a');
   });
 
-  it('multiline values escape quotes', async () => {
-    setInput(
-      'secrets',
-      `GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789
-"MYSECRET=aaaaaaaa
-bbbb""bbb
-ccccccccc"
-FOO=bar`
-    );
-    const res = context.getInputList('secrets', '', undefined, true);
-    expect(res).toEqual([
-      'GIT_AUTH_TOKEN=abcdefgh,ijklmno=0123456789',
-      `MYSECRET=aaaaaaaa
-bbbb"bbb
-ccccccccc`,
-      'FOO=bar',
-    ]);
+  it('git', async () => {
+    jest.spyOn(Git, 'ref').mockResolvedValue('refs/heads/git-test');
+    jest.spyOn(Git, 'fullCommit').mockResolvedValue('git-test-sha');
+
+    jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+      return Git.context();
+    });
+
+    const context = await getContext();
+    expect(context.ref).toEqual('refs/heads/git-test');
+    expect(context.sha).toEqual('git-test-sha');
   });
 });
 

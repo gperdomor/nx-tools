@@ -6,13 +6,14 @@ import { Inputs, getInputs } from './context';
 import { Meta, Version } from './meta';
 
 export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
-  const inputs: Inputs = await getInputs(options, ctx);
+  const inputs: Inputs = getInputs(options, ctx);
   if (inputs.images.length == 0) {
     throw new Error(`images input required`);
   }
 
   const context: Context = await ContextProxyFactory.create();
   const repo: RepoMetadata = await RepoProxyFactory.create(inputs['github-token']);
+
   await logger.group(`Context info`, async () => {
     logger.info(`eventName: ${context.eventName}`);
     logger.info(`sha: ${context.sha}`);
@@ -61,7 +62,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
 
   // Bake file definition
   const bakeFile: string = meta.getBakeFile();
-  await logger.group(`Bake definition file`, async () => {
+  await logger.group(`Bake file definition`, async () => {
     logger.info(fs.readFileSync(bakeFile, 'utf8'));
   });
 
