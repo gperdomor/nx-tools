@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@actions/exec": "1.1.1",
-    "@actions/github": "5.1.1",
+    "@actions/github": "6.0.0",
     "@actions/io": "1.1.3",
     "@nx/devkit": "16.10.0",
     "@renovate/pep440": "1.0.0",
