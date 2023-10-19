@@ -1,11 +1,13 @@
 {
   "name": "@nx-tools/nx-container",
-  "version": "5.0.3",
+  "version": "6.0.0-alpha.1",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "./src/index.js",
+  "type": "commonjs",
+  "typings": "./src/index.d.ts",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
