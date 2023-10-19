@@ -2,37 +2,35 @@ import {
   formatFiles,
   generateFiles,
   ProjectConfiguration,
-  readNxJson,
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
 import * as path from 'path';
-import { InitGeneratorSchema } from './schema';
+import { DEFAULT_ENGINE, DEFAULT_TEMPLATE } from './constants';
+import { ConfigurationSchema } from './schema';
 
 function addFiles(tree: Tree, project: ProjectConfiguration, template) {
   const templateOptions = {
     projectName: project.name,
     template: '',
   };
-  generateFiles(tree, path.join(__dirname, 'files', template || 'empty'), project.root, templateOptions);
+  generateFiles(tree, path.join(__dirname, 'files', template), project.root, templateOptions);
 }
 
-export default async function (tree: Tree, options: InitGeneratorSchema) {
+export async function configurationGenerator(tree: Tree, options: ConfigurationSchema) {
   const project = readProjectConfiguration(tree, options.project);
-  const nx = readNxJson(tree);
 
   updateProjectConfiguration(tree, options.project, {
     ...project,
     targets: {
       ...project.targets,
       container: {
-        executor: '@nx-tools/nx-container:build',
+        executor: `@nx-tools/nx-container:${options.engine ?? DEFAULT_ENGINE}`,
         dependsOn: ['build'],
         options: {
-          engine: options.engine,
           metadata: {
-            images: [`${nx.npmScope}/${project.name}`],
+            images: [project.name],
             load: true,
             tags: [
               'type=schedule',
@@ -47,7 +45,7 @@ export default async function (tree: Tree, options: InitGeneratorSchema) {
     },
   });
 
-  addFiles(tree, project, options.template);
+  addFiles(tree, project, options.template ?? DEFAULT_TEMPLATE);
 
   if (!options.skipFormat) {
     await formatFiles(tree);
