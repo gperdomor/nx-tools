@@ -19,7 +19,7 @@
       "dependsOn": ["build"]
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/nx-set-shas/**/*.ts", "packages/nx-set-shas/package.json"]
