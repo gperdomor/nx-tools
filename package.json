@@ -30,7 +30,7 @@
     "semver": "7.5.4",
     "tmp": "0.2.1",
     "tslib": "2.6.2",
-    "undici": "5.26.4"
+    "undici": "5.26.5"
   },
   "devDependencies": {
     "@commitlint/cli": "17.8.0",
