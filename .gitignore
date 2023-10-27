@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 
 .env
+.nx/cache

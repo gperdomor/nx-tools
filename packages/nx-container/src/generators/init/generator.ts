@@ -32,7 +32,7 @@ export default async function (tree: Tree, options: InitGeneratorSchema) {
         options: {
           engine: options.engine,
           metadata: {
-            images: [`${nx.npmScope}/${project.name}`],
+            images: [`${project.name}`],
             load: true,
             tags: [
               'type=schedule',

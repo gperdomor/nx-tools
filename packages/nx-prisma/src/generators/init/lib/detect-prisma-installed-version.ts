@@ -1,5 +1,5 @@
 import { readJson, Tree } from '@nx/devkit';
-import { checkAndCleanWithSemver } from '@nx/workspace/src/utilities/version-utils';
+import { checkAndCleanWithSemver } from '@nx/devkit/src/utils/semver';
 import { lt } from 'semver';
 
 export function detectPrismaInstalledVersion(tree: Tree): '4' | '5' | undefined {

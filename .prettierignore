@@ -2,3 +2,5 @@
 /dist
 /coverage
 /tmp
+
+/.nx/cache

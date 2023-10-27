@@ -1,22 +1,22 @@
 {
   "name": "@nx-tools/container-metadata",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "dependencies": {
-    "@nx-tools/core": "5.0.3",
+    "@nx-tools/core": "5.1.0",
     "csv-parse": "5.4.0",
-    "@nx-tools/ci-context": "5.0.3",
+    "@nx-tools/ci-context": "5.1.0",
     "@renovate/pep440": "1.0.0",
     "handlebars": "4.7.7",
     "moment-timezone": "0.5.43",
     "semver": "7.5.4"
   },
   "peerDependencies": {
-    "@nx/devkit": "^16.0.0",
+    "@nx/devkit": "^16.0.0 || ^17.0.0",
     "dotenv": ">=10.0.0",
     "tslib": "^2.5.3"
   }
