@@ -6,7 +6,7 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import * as path from 'path';
+import * as path from 'node:path';
 import { DEFAULT_ENGINE, DEFAULT_TEMPLATE } from './constants';
 import { ConfigurationSchema } from './schema';
 
@@ -26,9 +26,10 @@ export async function configurationGenerator(tree: Tree, options: ConfigurationS
     targets: {
       ...project.targets,
       container: {
-        executor: `@nx-tools/nx-container:${options.engine ?? DEFAULT_ENGINE}`,
+        executor: `@nx-tools/nx-container:build`,
         dependsOn: ['build'],
         options: {
+          engine: options.engine ?? DEFAULT_ENGINE,
           metadata: {
             images: [project.name],
             load: true,
@@ -51,3 +52,5 @@ export async function configurationGenerator(tree: Tree, options: ConfigurationS
     await formatFiles(tree);
   }
 }
+
+export default configurationGenerator;

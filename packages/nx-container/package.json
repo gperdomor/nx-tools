@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-container",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
@@ -11,7 +11,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "5.0.3",
+    "@nx-tools/core": "6.0.0-alpha.2",
     "tmp": "0.2.1",
     "csv-parse": "5.5.2",
     "semver": "7.5.4",
@@ -21,5 +21,8 @@
     "dotenv": ">=16.0.0",
     "@nx/devkit": "^16.0.0 || ^17.0.0",
     "tslib": "^2.5.3"
+  },
+  "optionalDependencies": {
+    "@nx-tools/container-metadata": "6.0.0-alpha.2"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "@nx-tools/source",
   "description": "NX Tools plugins",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "license": "MIT",
   "scripts": {
     "commit": "cz",

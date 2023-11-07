@@ -13,11 +13,11 @@ export interface ConfigurationSchema {
   /**
    * Provide the container engine to be used.
    */
-  engine?: string;
+  engine?: 'docker' | 'podman' | 'kaniko';
   /**
    * Which type of app you are building?.
    */
-  template?: string;
+  template?: 'empty' | 'nest' | 'next' | 'nginx';
   /**
    * Skips formatting the workspace after the generator completes.
    */
