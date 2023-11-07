@@ -46,7 +46,10 @@ describe('configuration generator', () => {
 
       expect(project.targets).toMatchObject({
         container: {
-          executor: `@nx-tools/nx-container:${executor}`,
+          executor: `@nx-tools/nx-container:build`,
+          options: {
+            engine: executor,
+          },
         },
       });
     }

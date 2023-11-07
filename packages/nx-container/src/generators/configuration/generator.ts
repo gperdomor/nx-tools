@@ -26,9 +26,10 @@ export async function configurationGenerator(tree: Tree, options: ConfigurationS
     targets: {
       ...project.targets,
       container: {
-        executor: `@nx-tools/nx-container:${options.engine ?? DEFAULT_ENGINE}`,
+        executor: `@nx-tools/nx-container:build`,
         dependsOn: ['build'],
         options: {
+          engine: options.engine ?? DEFAULT_ENGINE,
           metadata: {
             images: [project.name],
             load: true,
