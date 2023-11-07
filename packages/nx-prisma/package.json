@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
@@ -14,7 +14,7 @@
   "executors": "./executors.json",
   "generators": "./generators.json",
   "dependencies": {
-    "@nx-tools/core": "6.0.0-alpha.1"
+    "@nx-tools/core": "6.0.0-alpha.2"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0 || ^17.0.0",
