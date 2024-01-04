@@ -14,11 +14,16 @@ export default async function run(options: GenerateExecutorSchema, ctx: Executor
 const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
   const schema = options?.schema ?? getDefaultScheme(ctx);
+  const generator = options?.generator;
 
   args.push(`--schema=${schema}`);
 
   if (options?.['data-proxy']) {
     args.push('--data-proxy');
+  }
+
+  if (generator) {
+    args.push('--generator=${generator}');
   }
 
   if (options?.watch) {

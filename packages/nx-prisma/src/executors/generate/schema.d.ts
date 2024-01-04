@@ -15,6 +15,10 @@ export interface GenerateExecutorSchema extends PrismaBase {
    */
   'data-proxy'?: boolean;
   /**
+   * Specifies the generator to use
+   */
+  generator?: string;
+  /**
    * The generate command will continue to watch the schema.prisma file and re-generate Prisma Client on file changes.
    */
   watch?: boolean;
