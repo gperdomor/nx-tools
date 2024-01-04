@@ -7,7 +7,7 @@
   "properties": {
     "generator": {
       "type": "string",
-      "description": "Specifies the generator to use."
+      "description": "Specifies the generator to use for generating prisma client."
     },
     "schema": {
       "type": "string",
