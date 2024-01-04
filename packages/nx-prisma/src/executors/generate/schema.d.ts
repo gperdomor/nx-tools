@@ -15,7 +15,7 @@ export interface GenerateExecutorSchema extends PrismaBase {
    */
   'data-proxy'?: boolean;
   /**
-   * Specifies the generator to use
+   * Specifies the generator to use for generating prisma client.
    */
   generator?: string;
   /**
