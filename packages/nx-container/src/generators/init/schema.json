@@ -7,72 +7,67 @@
     "project": {
       "type": "string",
       "description": "The name of the project to add the Container setup to.",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "What project would you like to add the Container setup to?"
+      "x-prompt": "What project would you like to add the Container setup to?",
+      "x-dropdown": "projects"
     },
     "engine": {
       "type": "string",
       "description": "Provide the container engine to be used.",
-      "$default": {
-        "index": 1
-      },
+      "default": "docker",
+      "enum": ["docker", "podman", "kaniko"],
       "x-prompt": {
         "message": "Which type of engine would you like to use?",
         "type": "list",
         "items": [
           {
             "value": "docker",
-            "label": "docker"
+            "label": "Docker"
           },
           {
             "value": "podman",
-            "label": "podman"
+            "label": "Podman"
           },
           {
             "value": "kaniko",
-            "label": "kaniko"
+            "label": "Kaniko"
           }
         ]
       },
-      "default": "docker",
       "alias": "e"
     },
     "template": {
       "type": "string",
       "description": "Which type of app you are building?.",
-      "$default": {
-        "index": 2
-      },
+      "default": "empty",
+      "enum": ["empty", "nest", "next", "nginx"],
       "x-prompt": {
         "message": "Which type of app you are building?",
         "type": "list",
         "items": [
           {
+            "value": "empty",
+            "label": "Empty Dockerfile"
+          },
+          {
             "value": "nest",
-            "label": "nest"
+            "label": "Nest Application"
           },
           {
             "value": "next",
-            "label": "next"
+            "label": "Next Application"
           },
           {
-            "value": "react-angular-spa",
-            "label": "react-angular-spa"
+            "value": "nginx",
+            "label": "Single Page Application"
           }
         ]
       },
-      "default": "",
       "alias": "t"
     },
     "skipFormat": {
       "type": "boolean",
       "description": "Skips formatting the workspace after the generator completes.",
-      "$default": {
-        "index": 3
-      }
+      "default": false
     }
   },
   "required": ["project"]
