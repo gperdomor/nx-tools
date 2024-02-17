@@ -42,28 +42,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/nx-graphql-codegen/**/*.ts",
-          "packages/nx-graphql-codegen/package.json",
-          "packages/nx-graphql-codegen/generators.json",
-          "packages/nx-graphql-codegen/executors.json"
-        ]
-      }
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/nx-graphql-codegen/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "jestConfig": "packages/nx-graphql-codegen/jest.config.ts"
       }
     }
   },
