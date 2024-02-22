@@ -5,6 +5,10 @@
   "description": "The generate command generates assets like Prisma Client based on the generator and data model blocks defined in your schema.prisma file.",
   "type": "object",
   "properties": {
+    "generator": {
+      "type": "string",
+      "description": "Specifies the generator to use for generating prisma client."
+    },
     "schema": {
       "type": "string",
       "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
