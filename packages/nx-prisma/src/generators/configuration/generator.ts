@@ -52,6 +52,10 @@ export async function configurationGenerator(tree: Tree, options: ConfigurationG
         executor: '@nx-tools/nx-prisma:deploy',
         ...executorOpts,
       },
+      'prisma-format': {
+        executor: '@nx-tools/nx-prisma:format',
+        ...executorOpts,
+      },
       'prisma-generate': {
         executor: '@nx-tools/nx-prisma:generate',
         ...executorOpts,

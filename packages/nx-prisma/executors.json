@@ -5,6 +5,11 @@
       "schema": "./src/executors/deploy/schema.json",
       "description": "The migrate deploy command applies all pending migrations, and creates the database if it does not exist. Primarily used in non-development environments."
     },
+    "format": {
+      "implementation": "./src/executors/format/executor",
+      "schema": "./src/executors/format/schema.json",
+      "description": "Formats the Prisma Schema Language of the Prisma schema file."
+    },
     "generate": {
       "implementation": "./src/executors/generate/executor",
       "schema": "./src/executors/generate/schema.json",

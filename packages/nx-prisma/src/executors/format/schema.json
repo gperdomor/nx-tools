@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "Prisma format executor",
+  "description": "Formats the Prisma Schema Language of the Prisma schema file.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "description": "Specifies the path to the desired schema.prisma file to be processed instead of the default path. Both absolute and relative paths are supported."
+    }
+  },
+  "required": []
+}
