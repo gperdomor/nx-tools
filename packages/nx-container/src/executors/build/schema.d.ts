@@ -69,6 +69,10 @@ export interface DockerBuildSchema {
    */
   platforms?: string[];
   /**
+   * Change or disable provenance attestations for the build result
+   */
+  provenance?: string;
+  /**
    * Always attempt to pull a newer version of the image (default false)
    */
   pull?: boolean;
