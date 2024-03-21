@@ -161,6 +161,9 @@ export class Docker extends EngineAdapter {
     if (inputs.platforms.length > 0) {
       args.push('--platform', inputs.platforms.join(','));
     }
+    if (inputs.provenance) {
+      args.push('--provenance', inputs.provenance);
+    }
     await asyncForEach(inputs.secrets, async (secret) => {
       try {
         args.push('--secret', await buildx.getSecretString(secret));
