@@ -7,8 +7,9 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
   if (!options.script) {
     throw new Error('You must specify a seed script file.');
   }
+  options.executeWith = options.executeWith ?? 'ts-node';
 
-  const command = `${getPackageManagerCommand().exec} ts-node`;
+  const command = `${getPackageManagerCommand().exec} ${options.executeWith}`;
   const args = getArgs(options, ctx);
 
   await logger.group('Seeding Database', async () => {
@@ -24,9 +25,10 @@ export default async function run(options: SeedExecutorSchema, ctx: ExecutorCont
 
 const getArgs = (options: SeedExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
+  const tsConfigArgName = options.executeWith === 'ts-node' ? 'project' : 'tsconfig';
   const tsConfig = options?.tsConfig ?? join(getProjectRoot(ctx), 'tsconfig.json');
 
-  args.push(`--project=${tsConfig}`);
+  args.push(`--${tsConfigArgName}=${tsConfig}`);
 
   args.push(options.script);
 

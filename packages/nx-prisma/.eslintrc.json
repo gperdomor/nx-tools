@@ -28,7 +28,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["prisma", "ts-node"]
+            "ignoredDependencies": ["prisma", "ts-node", "tsx"]
           }
         ]
       }
