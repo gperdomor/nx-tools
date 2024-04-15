@@ -14,7 +14,7 @@
     "@nx-tools/core": "6.0.0-alpha.2",
     "tmp": "0.2.1",
     "csv-parse": "5.5.2",
-    "semver": "7.5.4",
+    "semver": "7.6.0",
     "handlebars": "4.7.8"
   },
   "peerDependencies": {
