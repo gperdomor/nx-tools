@@ -23,7 +23,7 @@ describe('Status Executor', () => {
     const options: StatusExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma migrate status', [
+      expectCommandToHaveBeenCalled('pnpm exec prisma migrate status', [
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
       ])
     );
@@ -37,7 +37,7 @@ describe('Status Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma migrate status', [`--${option}=${value}`]));
+      expect(expectCommandToHaveBeenCalled('pnpm exec prisma migrate status', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );

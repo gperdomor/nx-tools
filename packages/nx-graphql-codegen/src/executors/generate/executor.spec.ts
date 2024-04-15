@@ -1,7 +1,7 @@
 import { getExecOutput } from '@nx-tools/core';
-import { GenerateExecutorSchema } from './schema';
-import executor from './executor';
 import { ExecutorContext } from '@nx/devkit';
+import executor from './executor';
+import { GenerateExecutorSchema } from './schema';
 
 jest.mock('@nx-tools/core', () => {
   const originalModule = jest.requireActual('@nx-tools/core');
@@ -30,7 +30,7 @@ describe('Generate Executor', () => {
   it('empty options', async () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
+    expect(expectCommandToHaveBeenCalled('pnpm exec graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
 
@@ -39,7 +39,7 @@ describe('Generate Executor', () => {
       config: 'workspace-root/apps/foo/codegen.ts',
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
+    expect(expectCommandToHaveBeenCalled('pnpm exec graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
 });

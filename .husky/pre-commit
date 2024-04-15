@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-npx --no -- validate-branch-name -r "^(master|main|develop){1}$|^(feature|fix|hotfix|release|renovate)/.+$"
-npx --no -- lint-staged
-npm run check-lock-files
+pnpm exec validate-branch-name -r "^(master|main|develop){1}$|^(feature|fix|hotfix|release|renovate)/.+$"
+pnpm exec lint-staged
+pnpm run check-lock-files
