@@ -13,7 +13,7 @@
     "ci-info": "3.9.0",
     "@octokit/openapi-types": "19.1.0",
     "@actions/github": "6.0.0",
-    "properties-file": "3.3.5"
+    "properties-file": "3.5.4"
   },
   "peerDependencies": {
     "tslib": "^2.5.3"
