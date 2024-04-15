@@ -13,7 +13,7 @@
   "dependencies": {
     "@nx-tools/core": "6.0.0-alpha.2",
     "tmp": "0.2.1",
-    "csv-parse": "5.5.2",
+    "csv-parse": "5.5.5",
     "semver": "7.6.0",
     "handlebars": "4.7.8"
   },

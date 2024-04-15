@@ -12,7 +12,7 @@
     "@nx-tools/ci-context": "6.0.0-alpha.2",
     "@nx-tools/core": "6.0.0-alpha.2",
     "@renovate/pep440": "1.0.0",
-    "csv-parse": "5.5.2",
+    "csv-parse": "5.5.5",
     "handlebars": "4.7.8",
     "moment-timezone": "0.5.43",
     "semver": "7.6.0"
