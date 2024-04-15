@@ -14,7 +14,7 @@
     "@renovate/pep440": "1.0.0",
     "csv-parse": "5.5.5",
     "handlebars": "4.7.8",
-    "moment-timezone": "0.5.43",
+    "moment-timezone": "0.5.45",
     "semver": "7.6.0"
   },
   "peerDependencies": {
