@@ -1,4 +1,3 @@
 {
-  "extends": ["@commitlint/config-conventional", "@commitlint/config-nx-scopes"],
-  "rules": {}
+  "extends": ["@commitlint/config-conventional", "@commitlint/config-nx-scopes"]
 }

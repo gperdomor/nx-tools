@@ -3,3 +3,4 @@
 /coverage
 /tmp
 /.nx/cache
+pnpm-lock.yaml
