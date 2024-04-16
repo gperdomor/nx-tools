@@ -21,7 +21,7 @@
     "@renovate/pep440": "1.0.0",
     "@swc/helpers": "0.5.3",
     "chalk": "4.1.2",
-    "ci-info": "3.9.0",
+    "ci-info": "4.0.0",
     "commander": "11.1.0",
     "csv-parse": "5.5.5",
     "handlebars": "4.7.8",
