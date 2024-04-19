@@ -28,6 +28,10 @@ export default async function (tree: Tree, options: InitGeneratorSchema): Promis
         executor: '@nx-tools/nx-prisma:generate',
         options: { schema: `${project.root}/prisma/schema.prisma` },
       },
+      'prisma-format': {
+        executor: '@nx-tools/nx-prisma:format',
+        options: { schema: `${project.root}/prisma/schema.prisma` },
+      },
       'prisma-migrate': {
         executor: '@nx-tools/nx-prisma:migrate',
         options: { schema: `${project.root}/prisma/schema.prisma` },
