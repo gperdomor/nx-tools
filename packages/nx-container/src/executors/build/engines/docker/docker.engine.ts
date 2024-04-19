@@ -1,5 +1,5 @@
-import { ExecutorContext, names } from '@nx/devkit';
 import { asyncForEach, exec, getBooleanInput, getExecOutput, logger } from '@nx-tools/core';
+import { ExecutorContext, names } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { randomBytes } from 'node:crypto';
 import { Inputs } from '../../context';
@@ -160,6 +160,12 @@ export class Docker extends EngineAdapter {
     });
     if (inputs.platforms.length > 0) {
       args.push('--platform', inputs.platforms.join(','));
+    }
+    if (inputs.provenance) {
+      args.push('--provenance', inputs.provenance);
+    }
+    if (inputs.sbom) {
+      args.push('--sbom', inputs.sbom);
     }
     await asyncForEach(inputs.secrets, async (secret) => {
       try {
