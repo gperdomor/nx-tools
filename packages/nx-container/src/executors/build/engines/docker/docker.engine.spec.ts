@@ -422,6 +422,25 @@ nproc=3`],
         '--metadata-file', '/tmp/.docker-build-push-jest/metadata-file',
         'https://github.com/docker/build-push-action.git#refs/heads/test-jest:subdir'
       ]
+    ],
+    [
+      17,
+      '0.11.2',
+      new Map<string, string>([
+        ['context', '.'],
+        ['load', 'false'],
+        ['no-cache', 'false'],
+        ['push', 'false'],
+        ['pull', 'false'],
+        ['provenance', 'false'],
+      ]),
+      [
+        'build',
+        '--iidfile', '/tmp/.docker-build-push-jest/iidfile',
+        '--provenance', 'false',
+        '--metadata-file', '/tmp/.docker-build-push-jest/metadata-file',
+        '.'
+      ]
     ]
   ])(
     '[%d] given %p with %p as inputs, returns %p',
