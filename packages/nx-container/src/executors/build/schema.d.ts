@@ -69,6 +69,10 @@ export interface DockerBuildSchema {
    */
   platforms?: string[];
   /**
+   * Change or disable provenance attestations for the build result
+   */
+  provenance?: string;
+  /**
    * Always attempt to pull a newer version of the image (default false)
    */
   pull?: boolean;
@@ -76,6 +80,10 @@ export interface DockerBuildSchema {
    * Push is a shorthand for --output=type=registry (default false)
    */
   push?: boolean;
+  /**
+   * Generate SBOM attestation for the build (shorthand for --attest=type=sbom)
+   */
+  sbom?: string;
   /**
    * List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
    */

@@ -46,6 +46,7 @@ describe('Build Executor', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     restore();
   });
 

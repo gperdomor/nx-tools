@@ -116,6 +116,11 @@
       },
       "description": "List of target platforms for build"
     },
+    "provenance": {
+      "type": "string",
+      "description": "Change or disable provenance attestations for the build result"
+    },
+
     "pull": {
       "type": "boolean",
       "description": "Always attempt to pull a newer version of the image (default false)",
@@ -125,6 +130,10 @@
       "type": "boolean",
       "description": "Push is a shorthand for --output=type=registry (default false)",
       "default": false
+    },
+    "sbom": {
+      "type": "string",
+      "description": "Generate SBOM attestation for the build (shorthand for --attest=type=sbom)"
     },
     "secrets": {
       "type": "array",

@@ -1,5 +1,5 @@
-import { ExecutorContext, names } from '@nx/devkit';
 import * as core from '@nx-tools/core';
+import { ExecutorContext, names } from '@nx/devkit';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
@@ -29,8 +29,10 @@ export interface Inputs {
   noCacheFilters: string[];
   outputs: string[];
   platforms: string[];
+  provenance: string;
   pull: boolean;
   push: boolean;
+  sbom: string;
   secretFiles: string[];
   secrets: string[];
   shmSize: string;
@@ -85,6 +87,8 @@ export async function getInputs(
     noCacheFilters: await getInputList('no-cache-filters', prefix, options['no-cache-filters']),
     outputs: await getInputList('outputs', prefix, options.outputs, true),
     platforms: await getInputList('platforms', prefix, options.platforms),
+    provenance: core.getInput('provenance'),
+    sbom: core.getInput('sbom'),
     pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
     push: core.getBooleanInput('push', { fallback: `${options.push || false}` }),
     secretFiles: await getInputList('secret-files', prefix, options['secret-files'], true),
