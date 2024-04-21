@@ -10,12 +10,12 @@
   "typings": "./src/index.d.ts",
   "dependencies": {
     "@nx-tools/core": "6.0.0-alpha.2",
-    "ci-info": "4.0.0",
-    "@octokit/openapi-types": "19.1.0",
-    "@actions/github": "6.0.0",
-    "properties-file": "3.5.4"
+    "ci-info": "^4.0.0",
+    "@octokit/openapi-types": "^19.1.0",
+    "@actions/github": "^6.0.0",
+    "properties-file": "^3.5.4"
   },
   "peerDependencies": {
-    "tslib": "^2.5.3"
+    "tslib": "^2.5.0"
   }
 }
