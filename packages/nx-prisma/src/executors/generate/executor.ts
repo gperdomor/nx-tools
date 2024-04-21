@@ -3,7 +3,10 @@ import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { GenerateExecutorSchema } from './schema';
 
-export default async function run(options: GenerateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: GenerateExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   return runCommand(options, ctx, {
     description: 'Generating Client',
     command: 'prisma generate',

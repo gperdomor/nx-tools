@@ -3,7 +3,10 @@ import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { DeployExecutorSchema } from './schema';
 
-export default async function run(options: DeployExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: DeployExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   return runCommand(options, ctx, {
     description: 'Deploying Database',
     command: 'prisma migrate deploy',

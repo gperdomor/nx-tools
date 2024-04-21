@@ -3,7 +3,10 @@ import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { StudioExecutorSchema } from './schema';
 
-export default async function run(options: StudioExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: StudioExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   return runCommand(options, ctx, {
     description: 'Running Prisma Studio',
     command: 'prisma studio',

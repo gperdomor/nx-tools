@@ -3,7 +3,10 @@ import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { StatusExecutorSchema } from './schema';
 
-export default async function run(options: StatusExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: StatusExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   return runCommand(options, ctx, {
     description: 'Getting Migration Status',
     command: 'prisma migrate status',
