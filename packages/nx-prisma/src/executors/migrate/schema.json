@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/schema",
+  "$schema": "https://json-schema.org/schema",
   "version": 2,
   "title": "Prisma migrate dev executor",
   "description": "The migrate dev command updates your database using migrations during development and creates the database if it does not exist.",

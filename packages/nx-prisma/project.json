@@ -3,6 +3,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-prisma/src",
   "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": ["type:plugin", "scope:nx-prisma"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -36,21 +45,10 @@
         ]
       }
     },
-    "publish": {
-      "command": "node tools/scripts/publish.mjs nx-prisma {args.ver} {args.tag}",
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "nx-release-publish": {
       "options": {
-        "jestConfig": "packages/nx-prisma/jest.config.ts"
+        "packageRoot": "dist/{projectRoot}"
       }
     }
-  },
-  "tags": ["type:plugin"]
+  }
 }

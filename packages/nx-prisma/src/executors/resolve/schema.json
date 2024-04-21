@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/schema",
+  "$schema": "https://json-schema.org/schema",
   "version": 2,
   "title": "Prisma migrate resolve executor",
   "description": "The migrate resolve command allows you to solve migration history issues in production by marking a failed migration as already applied (supports baselining) or rolled back.",

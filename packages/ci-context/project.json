@@ -3,6 +3,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/ci-context/src",
   "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": ["type:lib", "scope:nx-container"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -14,21 +23,10 @@
         "assets": ["packages/ci-context/*.md"]
       }
     },
-    "publish": {
-      "command": "node tools/scripts/publish.mjs ci-context {args.ver} {args.tag}",
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "nx-release-publish": {
       "options": {
-        "jestConfig": "packages/ci-context/jest.config.ts"
+        "packageRoot": "dist/{projectRoot}"
       }
     }
-  },
-  "tags": ["nx-container"]
+  }
 }

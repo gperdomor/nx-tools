@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/schema",
+  "$schema": "https://json-schema.org/schema",
   "version": 2,
   "title": "Prisma migrate deploy executor",
   "description": "The migrate deploy command applies all pending migrations, and creates the database if it does not exist. Primarily used in non-development environments.",
