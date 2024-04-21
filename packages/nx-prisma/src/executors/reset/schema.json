@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/schema",
+  "$schema": "https://json-schema.org/schema",
   "version": 2,
   "title": "Prisma migrate reset executor",
   "description": "This command deletes and recreates the database, or performs a 'soft reset' by removing all data, tables, indexes, and other artifacts.",

@@ -3,6 +3,15 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/core/src",
   "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": ["type:lib", "scope:shared"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
@@ -14,21 +23,10 @@
         "assets": ["packages/core/*.md"]
       }
     },
-    "publish": {
-      "command": "node tools/scripts/publish.mjs core {args.ver} {args.tag}",
-      "dependsOn": ["build"]
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "nx-release-publish": {
       "options": {
-        "jestConfig": "packages/core/jest.config.ts"
+        "packageRoot": "dist/{projectRoot}"
       }
     }
-  },
-  "tags": ["core"]
+  }
 }
