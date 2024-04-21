@@ -11,18 +11,16 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
+    "@nx-tools/container-metadata": "6.0.0-alpha.2",
     "@nx-tools/core": "6.0.0-alpha.2",
-    "tmp": "0.2.3",
-    "csv-parse": "5.5.5",
-    "semver": "7.6.0",
-    "handlebars": "4.7.8"
+    "csv-parse": "^5.5.5",
+    "handlebars": "^4.7.8",
+    "semver": "^7.6.0",
+    "tmp": "^0.2.3"
   },
   "peerDependencies": {
-    "dotenv": ">=16.0.0",
     "@nx/devkit": "^16.0.0 || ^17.0.0 || ^18.0.0",
-    "tslib": "^2.5.3"
-  },
-  "optionalDependencies": {
-    "@nx-tools/container-metadata": "6.0.0-alpha.2"
+    "dotenv": ">=16.0.0",
+    "tslib": "^2.5.0"
   }
 }
