@@ -32,9 +32,9 @@ dependencies:
   ci-info:
     specifier: 4.0.0
     version: 4.0.0
-  commander:
-    specifier: 11.1.0
-    version: 11.1.0
+  clipanion:
+    specifier: 4.0.0-rc.3
+    version: 4.0.0-rc.3(typanion@3.14.0)
   csv-parse:
     specifier: 5.5.5
     version: 5.5.5
@@ -62,9 +62,6 @@ dependencies:
   tslib:
     specifier: 2.6.2
     version: 2.6.2
-  undici:
-    specifier: 5.28.4
-    version: 5.28.4
 
 devDependencies:
   '@commitlint/cli':
@@ -4316,6 +4313,14 @@ packages:
       typanion: 3.14.0
     dev: true
 
+  /clipanion@4.0.0-rc.3(typanion@3.14.0):
+    resolution: {integrity: sha512-+rJOJMt2N6Oikgtfqmo/Duvme7uz3SIedL2b6ycgCztQMiTfr3aQh2DDyLHl+QUPClKMNpSg3gDJFvNQYIcq1g==}
+    peerDependencies:
+      typanion: '*'
+    dependencies:
+      typanion: 3.14.0
+    dev: false
+
   /cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
@@ -4382,6 +4387,7 @@ packages:
   /commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
+    dev: true
 
   /commander@7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
@@ -8833,7 +8839,6 @@ packages:
 
   /typanion@3.14.0:
     resolution: {integrity: sha512-ZW/lVMRabETuYCd9O9ZvMhAh8GslSqaUjxmK/JLPCh6l73CvLBiuXswj/+7LdnWOgYsQ130FqLzFz5aGT4I3Ug==}
-    dev: true
 
   /type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
