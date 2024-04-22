@@ -35,8 +35,10 @@ describe('getInputs', () => {
         "github-token": '',
         images: ['moby/buildkit', 'ghcr.io/moby/mbuildkit'],
         labels: [],
+        annotations: [],
         "sep-labels": '\n',
         "sep-tags": '\n',
+        "sep-annotations": '\n',
         tags: [],
       } as Inputs
     ],
@@ -47,6 +49,7 @@ describe('getInputs', () => {
         ['images', 'moby/buildkit'],
         ['sep-labels', ','],
         ['sep-tags', ','],
+        ['sep-annotations', ',']
       ]),
       {
         "bake-target": 'metadata',
@@ -54,8 +57,10 @@ describe('getInputs', () => {
         "github-token": '',
         images: ['moby/buildkit'],
         labels: [],
+        annotations: [],
         "sep-labels": ',',
         "sep-tags": ',',
+        "sep-annotations": ',',
         tags: [],
       } as Inputs
     ],
@@ -70,8 +75,10 @@ describe('getInputs', () => {
         "github-token": '',
         images: ['moby/buildkit', 'ghcr.io/moby/mbuildkit'],
         labels: [],
+        annotations: [],
         "sep-labels": '\n',
         "sep-tags": '\n',
+        "sep-annotations": '\n',
         tags: [],
       } as Inputs
     ],
@@ -94,9 +101,11 @@ describe('getContext', () => {
     restore = mockedEnv(
       {
         ...process.env,
-        ...dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'tests', 'fixtures/event_create_branch.env'))),
+        ...dotenv.parse(
+          fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures/event_create_branch.env'))
+        ),
       },
-      { clear: true }
+      { restore: true }
     );
   });
 

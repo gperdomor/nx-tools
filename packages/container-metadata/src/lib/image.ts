@@ -77,7 +77,7 @@ export function Transform(inputs: string[]): Image[] {
 }
 
 function output(images: Image[]): Image[] {
-  const group = `Processing images input`;
+  const group = 'Processing images input';
   logger.startGroup(group);
   for (const image of images) {
     logger.info(`name=${image.name},enable=${image.enable}`);

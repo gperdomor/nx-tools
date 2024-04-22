@@ -1,23 +1,25 @@
 import { parse } from 'csv-parse/sync';
 import { getInput } from './get-input';
 
-export interface InputListOpts {
+export interface ListOpts {
   ignoreComma?: boolean;
   comment?: string;
+  quote?: string | boolean | Buffer | null;
   prefix?: string;
   fallback?: string[];
-  quote?: string | boolean | Buffer | null;
 }
 
-export function getInputList(name: string, opts?: InputListOpts): string[] {
-  const res: Array<string> = [];
+export function getInputList(name: string, opts?: ListOpts): string[] {
+  return getList(getInput(name), opts);
+}
 
-  const items = getInput(name, { prefix: opts?.prefix });
-  if (items == '') {
+export function getList(input: string, opts?: ListOpts): string[] {
+  const res: Array<string> = [];
+  if (input == '') {
     return opts?.fallback ?? res;
   }
 
-  const records = parse(items, {
+  const records = parse(input, {
     columns: false,
     relaxQuotes: true,
     comment: opts?.comment,

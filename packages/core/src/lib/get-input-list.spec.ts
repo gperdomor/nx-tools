@@ -26,6 +26,12 @@ describe('getInputList', () => {
     expect(res).toEqual([]);
   });
 
+  it('fallback value correctly', async () => {
+    await setInput('foo', 'bar');
+    const res = getInputList('none-value', { fallback: ['this-is-fallback'] });
+    expect(res).toEqual(['this-is-fallback']);
+  });
+
   it('multiline correctly', async () => {
     setInput('foo', 'bar\nbaz');
     const res = getInputList('foo');
@@ -168,7 +174,7 @@ FOO=bar`
     setInput(
       'secrets',
       `"GPG_KEY=${pgp}"
-  FOO=bar`
+FOO=bar`
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([`GPG_KEY=${pgp}`, 'FOO=bar']);
@@ -193,10 +199,10 @@ ccccccccc`,
     ]);
   });
 
-  it('fallback value correctly', async () => {
-    await setInput('foo', 'bar');
-    const res = getInputList('none-value', { fallback: ['this-is-fallback'] });
-    expect(res).toEqual(['this-is-fallback']);
+  it('keep quotes', async () => {
+    const output = `type=image,"name=ghcr.io/nginxinc/nginx-unprivileged,docker.io/nginxinc/nginx-unprivileged",push-by-digest=true,name-canonical=true,push=true`;
+    setInput('outputs', output);
+    expect(getInputList('outputs', { ignoreComma: true, quote: false })).toEqual([output]);
   });
 });
 
