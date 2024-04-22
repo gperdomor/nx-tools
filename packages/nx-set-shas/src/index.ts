@@ -1,14 +1,24 @@
 #!/usr/bin/env node
-import { Command } from 'commander';
+import { logger } from '@nx-tools/core';
+import { Builtins, Cli } from 'clipanion';
 import { version } from '../package.json';
-import { gitlabCommand } from './lib/gitlab/command';
+import { GitLabCommand } from './lib/gitlab/command';
+import { Context } from './lib/types';
 
-const program = new Command();
+const cli = new Cli<Context>({
+  binaryName: `nx-set-shas`,
+  binaryLabel: `Nx set SHAs`,
+  binaryVersion: version,
+});
 
-program
-  .name('nx-set-shas')
-  .description('Sets the base and head SHAs required for `nx affected` commands in CI')
-  .addCommand(gitlabCommand())
-  .version(version, '-v, --version', 'Output the current version');
+cli.register(Builtins.DefinitionsCommand);
+cli.register(Builtins.HelpCommand);
+cli.register(Builtins.TokensCommand);
+cli.register(Builtins.VersionCommand);
 
-program.parse(process.argv);
+cli.register(GitLabCommand);
+
+cli.runExit(process.argv.slice(2), {
+  cwd: process.cwd(),
+  logger: logger,
+});

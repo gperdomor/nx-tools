@@ -2,18 +2,18 @@
   "name": "@nx-tools/nx-set-shas",
   "version": "6.0.0-alpha.2",
   "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
   "bin": {
     "nx-set-shas": "./src/index.js"
   },
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
   "dependencies": {
     "@nx-tools/core": "6.0.0-alpha.2",
-    "chalk": "4.1.2",
-    "commander": "11.1.0",
-    "undici": "5.28.4"
+    "clipanion": "^4.0.0-rc.3",
+    "chalk": "^4.1.2",
+    "semver": "^7.6.0"
   },
   "peerDependencies": {
-    "tslib": "^2.5.3"
+    "tslib": "^2.5.0"
   }
 }
