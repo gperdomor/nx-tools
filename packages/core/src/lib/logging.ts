@@ -10,6 +10,13 @@ const escapeData = (s: any): string => {
 };
 
 /**
+ * Gets whether Debug is on or not
+ */
+export function isDebug(): boolean {
+  return process.env['RUNNER_DEBUG'] === '1';
+}
+
+/**
  * Begin an output group.
  *
  * Output until the next `groupEnd` will be foldable in this group

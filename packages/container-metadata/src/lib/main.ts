@@ -1,16 +1,17 @@
 import { RunnerContext as Context, ContextProxyFactory, RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
-import { logger } from '@nx-tools/core';
+import { isDebug, logger } from '@nx-tools/core';
 import { ExecutorContext } from '@nx/devkit';
 import * as fs from 'node:fs';
 import { Inputs, getInputs } from './context';
 import { Meta, Version } from './meta';
 
+function setOutput(name: string, value: string) {
+  // core.setOutput(name, value);
+  // core.exportVariable(`DOCKER_METADATA_OUTPUT_${name.replace(/\W/g, '_').toUpperCase()}`, value);
+}
+
 export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContext): Promise<Meta> {
   const inputs: Inputs = getInputs(options, ctx);
-  if (inputs.images.length == 0) {
-    throw new Error(`images input required`);
-  }
-
   const context: Context = await ContextProxyFactory.create();
   const repo: RepoMetadata = await RepoProxyFactory.create(inputs['github-token']);
 
@@ -23,6 +24,12 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
     logger.info(`runId: ${context.runId}`);
   });
 
+  if (isDebug()) {
+    await logger.group(`Context payload`, async () => {
+      logger.info(JSON.stringify(context.payload, null, 2));
+    });
+  }
+
   const meta: Meta = new Meta(inputs, context, repo);
 
   const version: Version = meta.version;
@@ -33,6 +40,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
       logger.info(version.main || '');
     });
   }
+  setOutput('version', version.main || '');
 
   // Docker tags
   const tags: Array<string> = meta.getTags();
@@ -45,6 +53,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
       }
     });
   }
+  setOutput('tags', tags.join(inputs['sep-tags']));
 
   // Docker labels
   const labels: Array<string> = meta.getLabels();
@@ -52,19 +61,45 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
     for (const label of labels) {
       logger.info(label);
     }
+    setOutput('labels', labels.join(inputs['sep-labels']));
+  });
+
+  // Annotations
+  const annotationsRaw: Array<string> = meta.getAnnotations();
+  const annotationsLevels = process.env.DOCKER_METADATA_ANNOTATIONS_LEVELS || 'manifest';
+  await logger.group(`Annotations`, async () => {
+    const annotations: Array<string> = [];
+    for (const level of annotationsLevels.split(',')) {
+      annotations.push(
+        ...annotationsRaw.map((label) => {
+          const v = `${level}:${label}`;
+          logger.info(v);
+          return v;
+        })
+      );
+    }
+    setOutput(`annotations`, annotations.join(inputs['sep-annotations']));
   });
 
   // JSON
-  const jsonOutput = meta.getJSON();
+  const jsonOutput = meta.getJSON(annotationsLevels.split(','));
   await logger.group(`JSON output`, async () => {
     logger.info(JSON.stringify(jsonOutput, null, 2));
+    setOutput('json', JSON.stringify(jsonOutput));
   });
 
-  // Bake file definition
-  const bakeFile: string = meta.getBakeFile();
-  await logger.group(`Bake file definition`, async () => {
-    logger.info(fs.readFileSync(bakeFile, 'utf8'));
-  });
+  // Bake files
+  for (const kind of ['tags', 'labels', 'annotations:' + annotationsLevels]) {
+    const outputName = kind.split(':')[0];
+    const bakeFile: string = meta.getBakeFile(kind);
+    await logger.group(`Bake file definition (${outputName})`, async () => {
+      logger.info(fs.readFileSync(bakeFile, 'utf8'));
+      setOutput(`bake-file-${outputName}`, bakeFile);
+    });
+  }
+
+  // Bake file with tags and labels
+  setOutput(`bake-file`, `${meta.getBakeFileTagsLabels()}`);
 
   return meta;
 }

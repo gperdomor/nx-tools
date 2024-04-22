@@ -76,7 +76,7 @@ export function Transform(inputs: string[]): Tag[] {
     return 0;
   });
 
-  const group = `Processing tags input`;
+  const group = 'Processing tags input';
   logger.startGroup(group);
   for (const tag of sorted) {
     logger.info(tag.toString());

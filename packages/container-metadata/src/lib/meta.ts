@@ -443,24 +443,45 @@ export class Meta {
     if (!this.version.main) {
       return [];
     }
-    const tags: Array<string> = [];
-    for (const imageName of this.getImageNames()) {
-      tags.push(`${imageName}:${this.version.main}`);
+
+    const generateTags = (imageName: string, version: string): Array<string> => {
+      const tags: Array<string> = [];
+      const prefix = imageName !== '' ? `${imageName}:` : '';
+      tags.push(`${prefix}${version}`);
       for (const partial of this.version.partial) {
-        tags.push(`${imageName}:${partial}`);
+        tags.push(`${prefix}${partial}`);
       }
       if (this.version.latest) {
         const latestTag = `${this.flavor.prefixLatest ? this.flavor.prefix : ''}latest${
           this.flavor.suffixLatest ? this.flavor.suffix : ''
         }`;
-        tags.push(`${imageName}:${Meta.sanitizeTag(latestTag)}`);
+        tags.push(`${prefix}${Meta.sanitizeTag(latestTag)}`);
       }
+      return tags;
+    };
+
+    const tags: Array<string> = [];
+    const images = this.getImageNames();
+    if (images.length > 0) {
+      for (const imageName of images) {
+        tags.push(...generateTags(imageName, this.version.main));
+      }
+    } else {
+      tags.push(...generateTags('', this.version.main));
     }
     return tags;
   }
 
   public getLabels(): Array<string> {
-    const labels: Array<string> = [
+    return this.getOCIAnnotationsWithCustoms(this.inputs.labels);
+  }
+
+  public getAnnotations(): Array<string> {
+    return this.getOCIAnnotationsWithCustoms(this.inputs.annotations);
+  }
+
+  private getOCIAnnotationsWithCustoms(extra: string[]): Array<string> {
+    const res: Array<string> = [
       `org.opencontainers.image.title=${this.repo.name || ''}`,
       `org.opencontainers.image.description=${this.repo.description || ''}`,
       `org.opencontainers.image.url=${this.repo.html_url || ''}`,
@@ -470,11 +491,11 @@ export class Meta {
       `org.opencontainers.image.revision=${this.context.sha || ''}`,
       `org.opencontainers.image.licenses=${this.repo.license?.spdx_id || ''}`,
     ];
-    labels.push(...this.inputs.labels);
+    res.push(...extra);
 
     return Array.from(
       new Map<string, string>(
-        labels
+        res
           .map((label) => label.split('='))
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           .filter(([_key, ...values]) => values.length > 0)
@@ -485,7 +506,11 @@ export class Meta {
       .map(([key, value]) => `${key}=${value}`);
   }
 
-  public getJSON(): Record<string, unknown> {
+  public getJSON(alevels: string[]): unknown {
+    const annotations: Array<string> = [];
+    for (const level of alevels) {
+      annotations.push(...this.getAnnotations().map((label) => `${level}:${label}`));
+    }
     return {
       tags: this.getTags(),
       labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
@@ -496,38 +521,73 @@ export class Meta {
         res[matches[1]] = matches[2];
         return res;
       }, {}),
+      annotations: annotations,
     };
   }
 
-  public getBakeFile(): string {
-    const bakeFile = path.join(tmpDir(), 'container-metadata-action-bake.json');
-    fs.writeFileSync(
-      bakeFile,
-      JSON.stringify(
+  public getBakeFile(kind: string): string {
+    if (kind == 'tags') {
+      return this.generateBakeFile(
         {
-          target: {
-            [this.inputs['bake-target']]: {
-              tags: this.getTags(),
-              labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
-                const matches = label.match(/([^=]*)=(.*)/);
-                if (!matches) {
-                  return res;
-                }
-                res[matches[1]] = matches[2];
-                return res;
-              }, {}),
-              args: {
-                DOCKER_META_IMAGES: this.getImageNames().join(','),
-                DOCKER_META_VERSION: this.version.main,
-              },
-            },
+          tags: this.getTags(),
+          args: {
+            DOCKER_META_IMAGES: this.getImageNames().join(','),
+            DOCKER_META_VERSION: this.version.main,
           },
         },
-        null,
-        2
-      )
-    );
+        kind
+      );
+    } else if (kind == 'labels') {
+      return this.generateBakeFile(
+        {
+          labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
+            const matches = label.match(/([^=]*)=(.*)/);
+            if (!matches) {
+              return res;
+            }
+            res[matches[1]] = matches[2];
+            return res;
+          }, {}),
+        },
+        kind
+      );
+    } else if (kind.startsWith('annotations:')) {
+      const name = kind.split(':')[0];
+      const annotations: Array<string> = [];
+      for (const level of kind.split(':')[1].split(',')) {
+        annotations.push(...this.getAnnotations().map((label) => `${level}:${label}`));
+      }
+      return this.generateBakeFile(
+        {
+          annotations: annotations,
+        },
+        name
+      );
+    }
+    throw new Error(`Unknown bake file type: ${kind}`);
+  }
 
+  public getBakeFileTagsLabels(): string {
+    return this.generateBakeFile({
+      tags: this.getTags(),
+      labels: this.getLabels().reduce((res: Record<string, string>, label: string) => {
+        const matches = label.match(/([^=]*)=(.*)/);
+        if (!matches) {
+          return res;
+        }
+        res[matches[1]] = matches[2];
+        return res;
+      }, {}),
+      args: {
+        DOCKER_META_IMAGES: this.getImageNames().join(','),
+        DOCKER_META_VERSION: this.version.main,
+      },
+    });
+  }
+
+  private generateBakeFile(dt: Record<string, any>, suffix?: string): string {
+    const bakeFile = path.join(tmpDir(), `container-metadata-action-bake${suffix ? `-${suffix}` : ''}.json`);
+    fs.writeFileSync(bakeFile, JSON.stringify({ target: { [this.inputs['bake-target']]: dt } }, null, 2));
     return bakeFile;
   }
 

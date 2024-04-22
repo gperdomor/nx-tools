@@ -5,8 +5,10 @@ import { ExecutorContext, names } from '@nx/devkit';
 export interface Inputs {
   'bake-target': string;
   'github-token': string;
+  'sep-annotations': string;
   'sep-labels': string;
   'sep-tags': string;
+  annotations: string[];
   flavor: string[];
   images: string[];
   labels: string[];
@@ -22,12 +24,25 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
       fallback: options['bake-target'] || 'container-metadata-action',
     }),
     'github-token': core.getInput('github-token'),
+    'sep-annotations': core.getInput('sep-annotations', {
+      prefix,
+      fallback: options['sep-annotations'] || '\n',
+      trimWhitespace: false,
+    }),
     'sep-labels': core.getInput('sep-labels', {
       prefix,
       fallback: options['sep-labels'] || '\n',
       trimWhitespace: false,
     }),
     'sep-tags': core.getInput('sep-tags', { prefix, fallback: options['sep-tags'] || '\n', trimWhitespace: false }),
+    annotations: core
+      .getInputList('annotations', {
+        prefix,
+        fallback: options.annotations,
+        ignoreComma: true,
+        comment: '#',
+      })
+      .map((flavor) => core.interpolate(flavor)),
     flavor: core
       .getInputList('flavor', { prefix, fallback: options.flavor, ignoreComma: true, comment: '#' })
       .map((flavor) => core.interpolate(flavor)),
