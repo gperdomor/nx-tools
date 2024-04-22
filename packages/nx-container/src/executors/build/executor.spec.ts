@@ -1,4 +1,5 @@
 import { RepoMetadata } from '@nx-tools/ci-context';
+import { workspaceRoot } from '@nx/devkit';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
 import { run } from './executor';
@@ -43,6 +44,11 @@ describe('Build Executor', () => {
       CI_PIPELINE_ID: '1234',
       CI_PIPELINE_IID: '5678',
     });
+
+    // workaround for https://github.com/nrwl/nx/issues/20330
+    if (process.cwd() !== workspaceRoot) {
+      process.chdir(workspaceRoot);
+    }
   });
 
   afterEach(() => {

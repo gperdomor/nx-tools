@@ -1,4 +1,5 @@
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext } from '@nx-tools/ci-context';
+import { workspaceRoot } from '@nx/devkit';
 import * as dotenv from 'dotenv';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -41,8 +42,8 @@ beforeEach(() => {
   });
 
   // workaround for https://github.com/nrwl/nx/issues/20330
-  const projectDir = path.join(__dirname, '..', '..');
-  if (process.env.PWD !== projectDir) {
+  const projectDir = `${workspaceRoot}/packages/container-metadata`;
+  if (process.cwd() !== projectDir) {
     process.chdir(projectDir);
   }
 });
