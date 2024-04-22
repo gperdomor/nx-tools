@@ -30,7 +30,7 @@ describe('Generate Executor', () => {
   it('empty options', async () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('pnpm exec graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
+    expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
 
@@ -39,7 +39,7 @@ describe('Generate Executor', () => {
       config: 'workspace-root/apps/foo/codegen.ts',
     };
     const output = await executor(options, mockContext as ExecutorContext);
-    expect(expectCommandToHaveBeenCalled('pnpm exec graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
+    expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
 });

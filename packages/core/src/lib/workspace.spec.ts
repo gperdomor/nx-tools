@@ -6,7 +6,9 @@ const ctx1 = {
 
 const ctx2 = {
   root: 'workspace-folder',
-  workspace: { projects: { foo: { root: 'apps/foo' }, bar: { root: 'apps/bar' } } },
+  workspace: {
+    projects: { foo: { root: 'apps/foo' }, bar: { root: 'apps/bar' } },
+  },
 };
 
 describe('Workspace', () => {

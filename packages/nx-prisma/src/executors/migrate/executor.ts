@@ -4,7 +4,10 @@ import { execSync } from 'node:child_process';
 import { getDefaultScheme } from '../../utils';
 import { MigrateExecutorSchema } from './schema';
 
-export default async function run(options: MigrateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: MigrateExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   const command = `${getPackageManagerCommand().exec} prisma migrate dev`;
   const args = getArgs(options, ctx);
 

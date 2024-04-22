@@ -3,7 +3,10 @@ import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { ValidateExecutorSchema } from './schema';
 
-export default async function run(options: ValidateExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+export default async function runExecutor(
+  options: ValidateExecutorSchema,
+  ctx: ExecutorContext
+): Promise<{ success: true }> {
   return runCommand(options, ctx, {
     description: 'Validating schema',
     command: 'prisma validate',
