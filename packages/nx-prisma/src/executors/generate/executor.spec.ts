@@ -31,9 +31,7 @@ describe('Generate Executor', () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('pnpm exec prisma generate', [
-        '--schema=workspace-root/apps/foo/prisma/schema.prisma',
-      ])
+      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
     expect(output.success).toBeTruthy();
   });
@@ -45,7 +43,7 @@ describe('Generate Executor', () => {
         [option]: value,
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('pnpm exec prisma generate', [`--${option}=${value}`]));
+      expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );
@@ -58,7 +56,7 @@ describe('Generate Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(
-        expectCommandToHaveBeenCalled('pnpm exec prisma generate', [
+        expectCommandToHaveBeenCalled('npx prisma generate', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
           `--${flag}`,
         ])
@@ -75,11 +73,7 @@ describe('Generate Executor', () => {
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('pnpm exec prisma generate', [
-        '--schema=my-schema.schema',
-        '--data-proxy',
-        '--watch',
-      ])
+      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=my-schema.schema', '--data-proxy', '--watch'])
     );
     expect(output.success).toBeTruthy();
   });

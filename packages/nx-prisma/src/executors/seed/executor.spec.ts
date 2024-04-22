@@ -36,7 +36,7 @@ describe('Seed Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(
-        expectCommandToHaveBeenCalled('pnpm exec ts-node', [
+        expectCommandToHaveBeenCalled('npx ts-node', [
           '--project=workspace-folder/apps/foo/tsconfig.json',
           'custom-seed-file.ts',
         ])
@@ -50,7 +50,7 @@ describe('Seed Executor', () => {
         tsConfig: 'tsconfig.base.ts',
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('pnpm exec ts-node', ['--project=tsconfig.base.ts', 'seed.ts']));
+      expect(expectCommandToHaveBeenCalled('npx ts-node', ['--project=tsconfig.base.ts', 'seed.ts']));
       expect(output.success).toBeTruthy();
     });
   });
@@ -63,7 +63,7 @@ describe('Seed Executor', () => {
       };
       const output = await executor(options, mockContext as ExecutorContext);
       expect(
-        expectCommandToHaveBeenCalled('pnpm exec tsx', [
+        expectCommandToHaveBeenCalled('npx tsx', [
           '--tsconfig=workspace-folder/apps/foo/tsconfig.json',
           'custom-seed-file.ts',
         ])
@@ -78,7 +78,7 @@ describe('Seed Executor', () => {
         executeWith: 'tsx',
       };
       const output = await executor(options, mockContext as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('pnpm exec tsx', ['--tsconfig=tsconfig.base.ts', 'seed.ts']));
+      expect(expectCommandToHaveBeenCalled('npx tsx', ['--tsconfig=tsconfig.base.ts', 'seed.ts']));
       expect(output.success).toBeTruthy();
     });
   });

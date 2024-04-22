@@ -74,8 +74,12 @@
     "validate-branch-name": "1.3.0",
     "verdaccio": "^5.27.0"
   },
-  "packageManager": "pnpm@8.15.7+sha256.50783dd0fa303852de2dd1557cd4b9f07cb5b018154a6e76d0f40635d6cee019",
   "nx": {
     "includedScripts": []
+  },
+  "overrides": {
+    "@commitlint/config-nx-scopes": {
+      "nx": "$nx"
+    }
   }
 }
