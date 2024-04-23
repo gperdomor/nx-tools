@@ -32,6 +32,12 @@ describe('Docker Engine', () => {
     adapter = new Docker();
   });
 
+  beforeAll(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+    jest.spyOn(console, 'log').mockImplementation(() => true);
+    jest.spyOn(console, 'warn').mockImplementation(() => true);
+  });
+
   describe('getArgs', () => {
     beforeEach(() => {
       process.env = Object.keys(process.env).reduce((object, key) => {

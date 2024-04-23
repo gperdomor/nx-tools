@@ -1,4 +1,5 @@
 import { RepoMetadata } from '@nx-tools/ci-context';
+import { workspaceRoot } from '@nx/devkit';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
 import { run } from './executor';
@@ -33,6 +34,12 @@ jest.mock('@nx-tools/ci-context', () => {
 describe('Build Executor', () => {
   let restore: RestoreFn;
 
+  beforeAll(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+    jest.spyOn(console, 'log').mockImplementation(() => true);
+    jest.spyOn(console, 'warn').mockImplementation(() => true);
+  });
+
   beforeEach(() => {
     restore = mockedEnv({
       CI_PIPELINE_SOURCE: 'push',
@@ -43,6 +50,11 @@ describe('Build Executor', () => {
       CI_PIPELINE_ID: '1234',
       CI_PIPELINE_IID: '5678',
     });
+
+    // workaround for https://github.com/nrwl/nx/issues/20330
+    if (process.cwd() !== workspaceRoot) {
+      process.chdir(workspaceRoot);
+    }
   });
 
   afterEach(() => {

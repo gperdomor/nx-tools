@@ -4,7 +4,7 @@ import * as path from 'node:path';
 import * as semver from 'semver';
 import * as podman from './podman';
 
-const tmpNameSync = path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
+const tmpNameSync = path.join('/tmp/.podman-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep);
 const imageID = 'sha256:bfb45ab72e46908183546477a08f8867fc40cebadd00af54b071b097aed127a9';
 const metadata = `{
   "containerimage.config.digest": "sha256:059b68a595b22564a1cbc167af369349fdc2ecc1f7bc092c2235cbf601a795fd",
@@ -19,7 +19,7 @@ jest.mock('../../context', () => {
     __esModule: true,
     ...originalModule,
     tmpDir: jest.fn(() => {
-      const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
+      const tmpDir = path.join('/tmp/.podman-build-push-jest').split(path.sep).join(path.posix.sep);
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
