@@ -34,6 +34,12 @@ jest.mock('@nx-tools/ci-context', () => {
 describe('Build Executor', () => {
   let restore: RestoreFn;
 
+  beforeAll(() => {
+    jest.spyOn(console, 'info').mockImplementation(() => true);
+    jest.spyOn(console, 'log').mockImplementation(() => true);
+    jest.spyOn(console, 'warn').mockImplementation(() => true);
+  });
+
   beforeEach(() => {
     restore = mockedEnv({
       CI_PIPELINE_SOURCE: 'push',
