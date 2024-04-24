@@ -1,3 +1,45 @@
+## 6.0.0-alpha.3 (2024-04-24)
+
+### 🚀 Features
+
+- **ci-context:** migrating contexts from functions to classes ([3bf3ec3](https://github.com/gperdomor/nx-tools/commit/3bf3ec3))
+
+- **ci-context:** improve context for github, gitlab and drone ([5909b45](https://github.com/gperdomor/nx-tools/commit/5909b45))
+
+- **container-metadata:** align with container-metadata-action 5.5.1 ([1c8187e](https://github.com/gperdomor/nx-tools/commit/1c8187e))
+
+### 🩹 Fixes
+
+- **ci-context:** fix package.json ([be32489](https://github.com/gperdomor/nx-tools/commit/be32489))
+
+- **deps:** bump ci-info from 3.8.0 to v3.9.0 ([80a6c5a](https://github.com/gperdomor/nx-tools/commit/80a6c5a))
+
+- **deps:** bump properties-file from 3.2.17 to v3.3.3 ([d4cade6](https://github.com/gperdomor/nx-tools/commit/d4cade6))
+
+- **deps:** bump properties-file from 3.3.3 to v3.3.4 ([67e5d91](https://github.com/gperdomor/nx-tools/commit/67e5d91))
+
+- **deps:** bump @actions/github from 5.1.1 to v6 ([918397f](https://github.com/gperdomor/nx-tools/commit/918397f))
+
+- **deps:** bump properties-file from 3.3.4 to v3.3.5 ([2e17d20](https://github.com/gperdomor/nx-tools/commit/2e17d20))
+
+- **deps:** bump @octokit/openapi-types from 19.0.0 to v19.1.0 ([c26ad58](https://github.com/gperdomor/nx-tools/commit/c26ad58))
+
+- **deps:** bump properties-file from 3.3.5 to v3.5.4 ([85d4cfb](https://github.com/gperdomor/nx-tools/commit/85d4cfb))
+
+- **deps:** bump ci-info from 3.9.0 to v4 ([958e958](https://github.com/gperdomor/nx-tools/commit/958e958))
+
+- **ci-context:** relaxed dependencies ranges ([40a55fe](https://github.com/gperdomor/nx-tools/commit/40a55fe))
+
+- **deps:** bump @octokit/openapi-types to v22.1.0 ([55438af](https://github.com/gperdomor/nx-tools/commit/55438af))
+
+### ❤️ Thank You
+
+- Dan Iosif
+- Gustavo Perdomo
+- Lehoczky Zoltán @Lehoczky
+- Nicolas Dubois
+- Rene Bonilla
+
 # Changelog
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).

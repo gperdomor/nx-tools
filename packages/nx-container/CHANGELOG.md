@@ -1,3 +1,43 @@
+## 6.0.0-alpha.3 (2024-04-24)
+
+### 🚀 Features
+
+- add option to configure provenance ([914b361](https://github.com/gperdomor/nx-tools/commit/914b361))
+
+- **ci-context:** migrating contexts from functions to classes ([3bf3ec3](https://github.com/gperdomor/nx-tools/commit/3bf3ec3))
+
+- **nx-container:** revamped configuration generator ([7c98412](https://github.com/gperdomor/nx-tools/commit/7c98412))
+
+- **nx-container:** improved configuration generator ([eb88944](https://github.com/gperdomor/nx-tools/commit/eb88944))
+
+- **nx-container:** fix generator ([15eaea1](https://github.com/gperdomor/nx-tools/commit/15eaea1))
+
+- **nx-container:** fix generator ([27a1267](https://github.com/gperdomor/nx-tools/commit/27a1267))
+
+### 🩹 Fixes
+
+- **deps:** bump csv-parse from 5.4.0 to v5.5.2 ([1bae187](https://github.com/gperdomor/nx-tools/commit/1bae187))
+
+- **deps:** bump handlebars from 4.7.7 to v4.7.8 ([d56bf1a](https://github.com/gperdomor/nx-tools/commit/d56bf1a))
+
+- **deps:** bump semver from 7.5.4 to v7.6.0 ([8a9a0cd](https://github.com/gperdomor/nx-tools/commit/8a9a0cd))
+
+- **deps:** bump csv-parse from 5.5.2 to v5.5.5 ([db61460](https://github.com/gperdomor/nx-tools/commit/db61460))
+
+- **deps:** bump tmp from 0.2.1 to v0.2.3 ([e9b5b95](https://github.com/gperdomor/nx-tools/commit/e9b5b95))
+
+- **nx-container:** provenance 'false' ignored ([6868733](https://github.com/gperdomor/nx-tools/commit/6868733))
+
+- **nx-container:** relaxed dependencies ranges ([6f24d36](https://github.com/gperdomor/nx-tools/commit/6f24d36))
+
+### ❤️ Thank You
+
+- Dan Iosif
+- Gustavo Perdomo
+- Lehoczky Zoltán @Lehoczky
+- Nicolas Dubois
+- Rene Bonilla
+
 # Changelog
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).

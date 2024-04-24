@@ -1,3 +1,37 @@
+## 6.0.0-alpha.3 (2024-04-24)
+
+### 🚀 Features
+
+- **core:** added getInputList, cp, mv, rm, which, findInPath, mkdirP and rmRF functions ([0176741](https://github.com/gperdomor/nx-tools/commit/0176741))
+
+- **ci-context:** migrating contexts from functions to classes ([3bf3ec3](https://github.com/gperdomor/nx-tools/commit/3bf3ec3))
+
+- **core:** add support for trimWhitespace to getMultilineInput fn ([395ebbf](https://github.com/gperdomor/nx-tools/commit/395ebbf))
+
+- **core:** added funtion to get temp dir ([665f993](https://github.com/gperdomor/nx-tools/commit/665f993))
+
+- **container-metadata:** align with container-metadata-action 5.5.1 ([1c8187e](https://github.com/gperdomor/nx-tools/commit/1c8187e))
+
+### 🩹 Fixes
+
+- **deps:** bump ci-info from 3.8.0 to v3.9.0 ([80a6c5a](https://github.com/gperdomor/nx-tools/commit/80a6c5a))
+
+- **deps:** bump csv-parse from 5.4.0 to v5.5.2 ([1bae187](https://github.com/gperdomor/nx-tools/commit/1bae187))
+
+- **deps:** bump csv-parse from 5.5.2 to v5.5.5 ([db61460](https://github.com/gperdomor/nx-tools/commit/db61460))
+
+- **deps:** bump ci-info from 3.9.0 to v4 ([958e958](https://github.com/gperdomor/nx-tools/commit/958e958))
+
+- **core:** relaxed dependencies ranges ([273d968](https://github.com/gperdomor/nx-tools/commit/273d968))
+
+### ❤️ Thank You
+
+- Dan Iosif
+- Gustavo Perdomo
+- Lehoczky Zoltán @Lehoczky
+- Nicolas Dubois
+- Rene Bonilla
+
 # Changelog
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).

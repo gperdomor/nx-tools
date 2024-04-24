@@ -1,3 +1,29 @@
+## 6.0.0-alpha.3 (2024-04-24)
+
+### 🚀 Features
+
+- **nx-prisma:** better executors schemas descriptions ([d5dc51a](https://github.com/gperdomor/nx-tools/commit/d5dc51a))
+
+- ⚠️ **nx-prisma:** revamped configuration generator ([9edc1e9](https://github.com/gperdomor/nx-tools/commit/9edc1e9))
+
+- **nx-prisma:** allow to execute seeding script with `tsx` ([36e55c4](https://github.com/gperdomor/nx-tools/commit/36e55c4))
+
+### 🩹 Fixes
+
+- **nx-prisma:** relaxed dependencies ranges ([98b859f](https://github.com/gperdomor/nx-tools/commit/98b859f))
+
+#### ⚠️ Breaking Changes
+
+- **nx-prisma:** init generator is no longer available
+
+### ❤️ Thank You
+
+- Dan Iosif
+- Gustavo Perdomo
+- Lehoczky Zoltán @Lehoczky
+- Nicolas Dubois
+- Rene Bonilla
+
 # Changelog
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).

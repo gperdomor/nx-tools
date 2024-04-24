@@ -1,3 +1,35 @@
+## 6.0.0-alpha.3 (2024-04-24)
+
+### 🚀 Features
+
+- **container-metadata:** updates for feature parity with metadata-action 5.0.0 ([af9c55c](https://github.com/gperdomor/nx-tools/commit/af9c55c))
+
+- **container-metadata:** align with container-metadata-action 5.5.1 ([1c8187e](https://github.com/gperdomor/nx-tools/commit/1c8187e))
+
+### 🩹 Fixes
+
+- **deps:** bump csv-parse from 5.4.0 to v5.5.2 ([1bae187](https://github.com/gperdomor/nx-tools/commit/1bae187))
+
+- **deps:** bump handlebars from 4.7.7 to v4.7.8 ([d56bf1a](https://github.com/gperdomor/nx-tools/commit/d56bf1a))
+
+- **deps:** bump semver from 7.5.4 to v7.6.0 ([8a9a0cd](https://github.com/gperdomor/nx-tools/commit/8a9a0cd))
+
+- **deps:** bump csv-parse from 5.5.2 to v5.5.5 ([db61460](https://github.com/gperdomor/nx-tools/commit/db61460))
+
+- **deps:** bump moment-timezone from 0.5.43 to v0.5.45 ([6a8fc0d](https://github.com/gperdomor/nx-tools/commit/6a8fc0d))
+
+- **container-metadata:** relaxed dependencies ranges ([f55cb9b](https://github.com/gperdomor/nx-tools/commit/f55cb9b))
+
+- **deps:** bump @octokit/openapi-types to v22.1.0 ([55438af](https://github.com/gperdomor/nx-tools/commit/55438af))
+
+### ❤️ Thank You
+
+- Dan Iosif
+- Gustavo Perdomo
+- Lehoczky Zoltán @Lehoczky
+- Nicolas Dubois
+- Rene Bonilla
+
 # Changelog
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).

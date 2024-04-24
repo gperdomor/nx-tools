@@ -1,7 +1,7 @@
 {
   "name": "@nx-tools/source",
   "description": "NX Tools plugins",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "license": "MIT",
   "scripts": {
     "check-lock-files": "node ./tools/scripts/check-lock-files.mjs",
