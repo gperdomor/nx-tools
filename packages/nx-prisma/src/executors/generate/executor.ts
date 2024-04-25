@@ -26,7 +26,7 @@ const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[
   }
 
   if (generator) {
-    args.push('--generator=${generator}');
+    args.push(`--generator=${generator}`);
   }
 
   if (options?.watch) {
