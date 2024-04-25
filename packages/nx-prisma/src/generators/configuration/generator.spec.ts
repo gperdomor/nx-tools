@@ -26,6 +26,9 @@ describe('configuration generator', () => {
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
       },
+      'prisma-format': {
+        executor: '@nx-tools/nx-prisma:format',
+      },
       'prisma-generate': {
         executor: '@nx-tools/nx-prisma:generate',
       },
@@ -75,6 +78,12 @@ describe('configuration generator', () => {
     expect(project.targets).toEqual({
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
+        options: {
+          schema: 'apps/mypkg/custom-dir/schema.prisma',
+        },
+      },
+      'prisma-format': {
+        executor: '@nx-tools/nx-prisma:format',
         options: {
           schema: 'apps/mypkg/custom-dir/schema.prisma',
         },
@@ -158,6 +167,9 @@ describe('configuration generator', () => {
     expect(project.targets).toEqual({
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
+      },
+      'prisma-format': {
+        executor: '@nx-tools/nx-prisma:format',
       },
       'prisma-generate': {
         executor: '@nx-tools/nx-prisma:generate',
