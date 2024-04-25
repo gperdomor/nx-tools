@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'monthly'
       timezone: 'America/Santiago'
     commit-message:
       prefix: 'ci'

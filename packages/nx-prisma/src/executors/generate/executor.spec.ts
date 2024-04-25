@@ -69,11 +69,17 @@ describe('Generate Executor', () => {
     const options: GenerateExecutorSchema = {
       schema: 'my-schema.schema',
       'data-proxy': true,
+      generator: 'sample-generator',
       watch: true,
     };
     const output = await executor(options, mockContext as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=my-schema.schema', '--data-proxy', '--watch'])
+      expectCommandToHaveBeenCalled('npx prisma generate', [
+        '--schema=my-schema.schema',
+        '--data-proxy',
+        '--generator=sample-generator',
+        '--watch',
+      ])
     );
     expect(output.success).toBeTruthy();
   });
