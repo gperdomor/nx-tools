@@ -32,13 +32,12 @@ export class Git {
   }
 
   public static async ref(): Promise<string> {
-    return await Git.exec(['symbolic-ref', 'HEAD']).catch(() => {
-      // if it fails (for example in a detached HEAD state), falls back to
-      // using git tag or describe to get the exact matching tag name.
-      return Git.tag().then((tag) => {
-        return `refs/tags/${tag}`;
-      });
-    });
+    const isHeadDetached = await Git.isHeadDetached();
+    if (isHeadDetached) {
+      return await Git.getDetachedRef();
+    }
+
+    return await Git.exec(['symbolic-ref', 'HEAD']);
   }
 
   public static async fullCommit(): Promise<string> {
@@ -56,6 +55,44 @@ export class Git {
 
   public static async getCommitUserEmail(): Promise<string> {
     return await Git.exec(['log', '-1', '--pretty=format:%ae']);
+  }
+
+  private static async isHeadDetached(): Promise<boolean> {
+    return await Git.exec(['branch', '--show-current']).then((res) => {
+      return res.length == 0;
+    });
+  }
+
+  private static async getDetachedRef(): Promise<string> {
+    const res = await Git.exec(['show', '-s', '--pretty=%D']);
+
+    // Can be "HEAD, <tagname>" or "grafted, HEAD, <tagname>"
+    const refMatch = res.match(/^(grafted, )?HEAD, (.*)$/);
+
+    if (!refMatch || !refMatch[2]) {
+      throw new Error(`Cannot find detached HEAD ref in "${res}"`);
+    }
+
+    const ref = refMatch[2].trim();
+
+    // Tag refs are formatted as "tag: <tagname>"
+    if (ref.startsWith('tag: ')) {
+      return `refs/tags/${ref.split(':')[1].trim()}`;
+    }
+
+    // Branch refs are formatted as "<origin>/<branch-name>, <branch-name>"
+    const branchMatch = ref.match(/^[^/]+\/[^/]+, (.+)$/);
+    if (branchMatch) {
+      return `refs/heads/${branchMatch[1].trim()}`;
+    }
+
+    // Pull request merge refs are formatted as "pull/<number>/<state>"
+    const prMatch = ref.match(/^pull\/\d+\/(head|merge)$/);
+    if (prMatch) {
+      return `refs/${ref}`;
+    }
+
+    throw new Error(`Unsupported detached HEAD ref in "${res}"`);
   }
 
   private static async exec(args: string[] = []): Promise<string> {
