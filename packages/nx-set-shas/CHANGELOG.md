@@ -1,3 +1,7 @@
+# 6.0.0 (2024-05-07)
+
+This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.
+
 ## 6.0.0-alpha.3 (2024-04-24)
 
 ### 🚀 Features

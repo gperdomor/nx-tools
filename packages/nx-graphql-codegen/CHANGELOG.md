@@ -1,3 +1,15 @@
+# 1.0.0 (2024-05-07)
+
+### 🚀 Features
+
+- nx 19 support ([3922496](https://github.com/gperdomor/nx-tools/commit/3922496))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- Kaden Wilkinson @kdawgwilk
+- meehawk @meehawk
+
 ## 1.0.0-alpha.3 (2024-04-24)
 
 ### 🚀 Features
