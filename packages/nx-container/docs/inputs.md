@@ -5,8 +5,8 @@
 This builder can be customized using environment variables or values in your `project.json`. Environment variables takes precedence over harcoded values.
 
 > Tip: all environmet values needs to be prefixed with `INPUT_` so `INPUT_PUSH=true` will replace the `options.push` value of your `project.json` file
-
-> Note: For list values use a comma-delimited string, like `INPUT_TAGS=user/app:v1,user/app:latest`
+> 
+> Note: For list values use a comma-delimited string, like `INPUT_PLATFORMS=linux/amd64,linux/arm64`. For `INPUT_BUILD_ARGS` and `INPUT_TAGS` use a newline-delimited string. See [TROUBLESHOOTING.md](../TROUBLESHOOTING.md#) for more information.
 > Note: Replace a dash (-) with an underscore in environment variables, like `INPUT_CACHE_FROM='type=gha'`
 
 Following inputs can be used as `step.with` keys
