@@ -204,6 +204,22 @@ ccccccccc`,
     setInput('outputs', output);
     expect(getInputList('outputs', { ignoreComma: true, quote: false })).toEqual([output]);
   });
+
+  describe('prefix', () => {
+    it('getInputList should use return prefixed value if prefixed input exists', async () => {
+      await setInput('foo', 'bar');
+      await setInput('prefixed-foo', 'prefixed-bar');
+
+      const res = getInputList('foo', { prefix: 'prefixed' });
+      expect(res).toEqual(['prefixed-bar']);
+    });
+
+    it('getInputList should use return unprefixed value if prefixed input is missing', async () => {
+      await setInput('abc', 'bar,xyz');
+      expect(getInputList('abc', { prefix: 'prefixed' })).toEqual(['bar', 'xyz']);
+      expect(getInputList('abc')).toEqual(['bar', 'xyz']);
+    });
+  });
 });
 
 function setInput(name: string, value: string): void {
