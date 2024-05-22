@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-graphql-codegen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "commonjs",
   "author": "Rene Bonilla <rbonillajr@hotmail.com>",
   "repository": "https://github.com/gperdomor/nx-tools",
@@ -11,7 +11,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "6.0.0"
+    "@nx-tools/core": "6.0.1"
   },
   "peerDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

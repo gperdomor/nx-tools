@@ -1,3 +1,15 @@
+## 6.0.1 (2024-05-22)
+
+### 🩹 Fixes
+
+- **ci-context:** improved fallback context detection for detached ref ([1e18dc2](https://github.com/gperdomor/nx-tools/commit/1e18dc2))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- Kaden Wilkinson @kdawgwilk
+- meehawk @meehawk
+
 # 6.0.0 (2024-05-07)
 
 ### 🩹 Fixes

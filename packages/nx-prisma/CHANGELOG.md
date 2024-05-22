@@ -1,3 +1,23 @@
+## 6.0.1 (2024-05-22)
+
+### 🚀 Features
+
+- add generator flag support to specify generator ([d3d8736](https://github.com/gperdomor/nx-tools/commit/d3d8736))
+
+- nx 19 support ([3922496](https://github.com/gperdomor/nx-tools/commit/3922496))
+
+- **nx-prisma:** add support for prisma format ([d43cc65](https://github.com/gperdomor/nx-tools/commit/d43cc65))
+
+### 🩹 Fixes
+
+- **nx-prisma:** fix generator option in prisma generate command ([a626413](https://github.com/gperdomor/nx-tools/commit/a626413))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- Kaden Wilkinson @kdawgwilk
+- meehawk @meehawk
+
 # 6.0.0 (2024-05-07)
 
 ### 🚀 Features

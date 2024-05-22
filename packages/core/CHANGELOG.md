@@ -1,3 +1,19 @@
+## 6.0.1 (2024-05-22)
+
+### 🚀 Features
+
+- nx 19 support ([3922496](https://github.com/gperdomor/nx-tools/commit/3922496))
+
+### 🩹 Fixes
+
+- **core:** fix issue getting prefixed variables ([4990bf5](https://github.com/gperdomor/nx-tools/commit/4990bf5))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- Kaden Wilkinson @kdawgwilk
+- meehawk @meehawk
+
 # 6.0.0 (2024-05-07)
 
 ### 🚀 Features
