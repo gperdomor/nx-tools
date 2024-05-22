@@ -10,7 +10,7 @@ export interface ListOpts {
 }
 
 export function getInputList(name: string, opts?: ListOpts): string[] {
-  return getList(getInput(name), opts);
+  return getList(getInput(name, { prefix: opts?.prefix }), opts);
 }
 
 export function getList(input: string, opts?: ListOpts): string[] {
