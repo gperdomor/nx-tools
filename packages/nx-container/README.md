@@ -45,7 +45,7 @@ yarn add -D @nx-tools/container-metadata
 It's straightforward to setup your application:
 
 ```bash
-nx g @nx-tools/nx-container:init appName
+nx g @nx-tools/nx-container:configuration appName
 ```
 
 By default, the application will be configured with:
