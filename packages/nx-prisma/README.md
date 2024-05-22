@@ -24,7 +24,7 @@ yarn add -D @nx-tools/nx-prisma
 It's straightforward to setup your application:
 
 ```bash
-nx g @nx-tools/nx-prisma:init appName
+nx g @nx-tools/nx-prisma:configuration appName
 ```
 
 By default, the application will be configured with:
