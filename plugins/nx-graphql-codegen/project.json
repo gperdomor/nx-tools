@@ -1,7 +1,7 @@
 {
-  "name": "nx-prisma",
+  "name": "nx-graphql-codegen",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/nx-prisma/src",
+  "sourceRoot": "plugins/nx-graphql-codegen/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -11,34 +11,34 @@
       }
     }
   },
-  "tags": ["type:plugin", "scope:nx-prisma"],
+  "tags": ["type:plugin", "scope:nx-graphql-codegen"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/nx-prisma",
-        "main": "packages/nx-prisma/src/index.ts",
-        "tsConfig": "packages/nx-prisma/tsconfig.lib.json",
+        "outputPath": "dist/plugins/nx-graphql-codegen",
+        "main": "plugins/nx-graphql-codegen/src/index.ts",
+        "tsConfig": "plugins/nx-graphql-codegen/tsconfig.lib.json",
         "assets": [
-          "packages/nx-prisma/*.md",
+          "plugins/nx-graphql-codegen/*.md",
           {
-            "input": "./packages/nx-prisma/src",
+            "input": "./plugins/nx-graphql-codegen/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-prisma/src",
+            "input": "./plugins/nx-graphql-codegen/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-prisma",
+            "input": "./plugins/nx-graphql-codegen",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx-prisma",
+            "input": "./plugins/nx-graphql-codegen",
             "glob": "executors.json",
             "output": "."
           }

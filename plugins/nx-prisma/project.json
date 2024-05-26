@@ -1,7 +1,7 @@
 {
-  "name": "nx-container",
+  "name": "nx-prisma",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/nx-container/src",
+  "sourceRoot": "plugins/nx-prisma/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -11,34 +11,34 @@
       }
     }
   },
-  "tags": ["type:plugin", "scope:nx-container"],
+  "tags": ["type:plugin", "scope:nx-prisma"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/nx-container",
-        "main": "packages/nx-container/src/index.ts",
-        "tsConfig": "packages/nx-container/tsconfig.lib.json",
+        "outputPath": "dist/plugins/nx-prisma",
+        "main": "plugins/nx-prisma/src/index.ts",
+        "tsConfig": "plugins/nx-prisma/tsconfig.lib.json",
         "assets": [
-          "packages/nx-container/*.md",
+          "plugins/nx-prisma/*.md",
           {
-            "input": "./packages/nx-container/src",
+            "input": "./plugins/nx-prisma/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-container/src",
+            "input": "./plugins/nx-prisma/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-container",
+            "input": "./plugins/nx-prisma",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx-container",
+            "input": "./plugins/nx-prisma",
             "glob": "executors.json",
             "output": "."
           }
