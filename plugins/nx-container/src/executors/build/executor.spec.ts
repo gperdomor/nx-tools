@@ -7,7 +7,7 @@ import { DockerBuildSchema } from './schema';
 
 const options: DockerBuildSchema = {
   push: false,
-  file: 'packages/nx-container/tests/Dockerfile',
+  file: 'plugins/nx-container/tests/Dockerfile',
   load: true,
   tags: ['registry/node:latest'],
   metadata: {

@@ -1,7 +1,7 @@
 {
   "name": "nx-container",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/nx-container/src",
+  "sourceRoot": "plugins/nx-container/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -17,28 +17,28 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/nx-container",
-        "main": "packages/nx-container/src/index.ts",
-        "tsConfig": "packages/nx-container/tsconfig.lib.json",
+        "outputPath": "dist/plugins/nx-container",
+        "main": "plugins/nx-container/src/index.ts",
+        "tsConfig": "plugins/nx-container/tsconfig.lib.json",
         "assets": [
-          "packages/nx-container/*.md",
+          "plugins/nx-container/*.md",
           {
-            "input": "./packages/nx-container/src",
+            "input": "./plugins/nx-container/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-container/src",
+            "input": "./plugins/nx-container/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-container",
+            "input": "./plugins/nx-container",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx-container",
+            "input": "./plugins/nx-container",
             "glob": "executors.json",
             "output": "."
           }
