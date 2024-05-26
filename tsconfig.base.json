@@ -19,7 +19,7 @@
       "@nx-tools/container-metadata": ["packages/container-metadata/src/index.ts"],
       "@nx-tools/core": ["packages/core/src/index.ts"],
       "@nx-tools/nx-container": ["plugins/nx-container/src/index.ts"],
-      "@nx-tools/nx-graphql-codegen": ["packages/nx-graphql-codegen/src/index.ts"],
+      "@nx-tools/nx-graphql-codegen": ["plugins/nx-graphql-codegen/src/index.ts"],
       "@nx-tools/nx-prisma": ["plugins/nx-prisma/src/index.ts"],
       "@nx-tools/nx-set-shas": ["packages/nx-set-shas/src/index.ts"]
     }
