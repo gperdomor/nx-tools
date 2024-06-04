@@ -14,7 +14,7 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudAccessToken": "NWQ5YjFmMDAtZGE0Yi00N2FjLWJhODktZTYzMDI2ZGIyNzEzfHJlYWQ=",
+  "nxCloudAccessToken": "YTA4ZDcwNjQtMDZmNC00YjUyLTk5ZTMtN2E1ZDE1ZTkwMWYxfHJlYWQ=",
   "targetDefaults": {
     "@nx/js:tsc": {
       "cache": true,
