@@ -1,4 +1,5 @@
 // import * as exec from '@actions/exec';
+import * as core from '@nx-tools/core';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
@@ -28,6 +29,15 @@ jest.mock('../../context', () => {
     tmpNameSync: jest.fn(() => tmpNameSync),
   };
 });
+
+// jest.mock('@nx-tools/core', () => {
+//   const originalModule = jest.requireActual('@nx-tools/core');
+//   return {
+//     __esModule: true,
+//     ...originalModule,
+//     getExecOutput: jest.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
+//   };
+// });
 
 // jest.mock('@nx-tools/core', () => {
 //   const originalModule = jest.requireActual('@nx-tools/core');
@@ -93,7 +103,19 @@ describe('getDigest', () => {
 
 describe('getVersion', () => {
   it('valid', async () => {
+    const execSpy = jest.spyOn(core, 'getExecOutput').mockResolvedValue({
+      exitCode: 0,
+      stdout: 'podman version 5.0.0',
+      stderr: '',
+    });
+
     const version = await podman.getVersion();
+
+    expect(execSpy).toHaveBeenCalledWith('podman', ['--version'], {
+      silent: true,
+      ignoreReturnCode: true,
+    });
+    expect(version).toBe('5.0.0');
     expect(semver.valid(version)).not.toBeNull();
   }, 30000);
 });
