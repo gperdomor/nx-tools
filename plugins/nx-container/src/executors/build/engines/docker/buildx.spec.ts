@@ -1,4 +1,5 @@
 import * as exec from '@actions/exec';
+import * as core from '@nx-tools/core';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
@@ -100,7 +101,19 @@ describe('isAvailable standalone', () => {
 
 describe('getVersion', () => {
   it('valid', async () => {
+    const execSpy = jest.spyOn(core, 'getExecOutput').mockResolvedValue({
+      exitCode: 0,
+      stdout: 'github.com/docker/buildx v0.14.0-desktop.1 7b0470cffd54ccbf42976d2f75febc4532c85073',
+      stderr: '',
+    });
+
     const version = await buildx.getVersion();
+
+    expect(execSpy).toHaveBeenCalledWith('docker', ['buildx', 'version'], {
+      silent: true,
+      ignoreReturnCode: true,
+    });
+    expect(version).toBe('0.14.0');
     expect(semver.valid(version)).not.toBeNull();
   });
 });

@@ -18,23 +18,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Connect your workspace on nx.app and uncomment this to enable task distribution.
-      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-      # - run: pnpm exec nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
-
       - uses: pnpm/action-setup@v3
         with:
           version: 8
+
+      # Connect your workspace on nx.app and uncomment this to enable task distribution.
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+
       # Cache node_modules
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
+
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
 
-      - run: git branch --track main origin/main
-        if: ${{ github.event_name == 'pull_request' }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
+      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+      # - run: pnpm exec nx-cloud record -- echo Hello World
       - run: pnpm exec nx-cloud record -- nx format:check
       - run: pnpm exec nx affected -t lint test build
