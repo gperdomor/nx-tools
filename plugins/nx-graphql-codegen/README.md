@@ -19,7 +19,7 @@ npm install -D @nx-tools/nx-graphql-codegen
 We can use plugin with bash or Nx console.
 
 ```bash
-nx g @nx-tools/nx-graphql-codegen:init appName
+nx g @nx-tools/nx-graphql-codegen:configuration appName
 ```
 
 We can the call codegen generate with the followin command:
