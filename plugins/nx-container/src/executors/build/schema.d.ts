@@ -21,6 +21,10 @@ export interface DockerBuildSchema {
    */
   'build-args'?: string[];
   /**
+   * List of additional build contexts (e.g., name=path)
+   */
+  'build-contexts'?: string[];
+  /**
    * Builder instance (see setup-buildx action)
    */
   builder?: string;

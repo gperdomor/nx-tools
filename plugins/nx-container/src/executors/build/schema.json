@@ -34,6 +34,13 @@
       },
       "description": "List of build-time variables"
     },
+    "build-contexts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of additional build contexts (e.g., name=path)"
+    },
     "builder": {
       "type": "string",
       "description": "Builder instance (see setup-buildx action)"
