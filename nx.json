@@ -25,7 +25,7 @@
   "release": {
     "projectsRelationship": "independent",
     "version": {
-      "preVersionCommand": "pnpm dlx nx run-many -t build"
+      "preVersionCommand": "npx nx run-many -t build"
     },
     "changelog": {
       "projectChangelogs": {

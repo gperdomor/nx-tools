@@ -38,9 +38,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Fix for issue when working on the repo in a dev container
-.pnpm-store
 .nx/cache
 .nx/workspace-data
-
-.env
