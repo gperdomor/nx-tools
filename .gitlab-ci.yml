@@ -1,80 +1,28 @@
 include:
   - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
 
-stages:
-  - affected
-  - build
-
 default:
-  image: node:20.12
+  image: node:20
 
 variables:
   CI: 'true'
   NX_CLOUD_ACCESS_TOKEN: $NX_CLOUD_TOKEN
-  NX_CLOUD_DISTRIBUTED_EXECUTION_AGENT_COUNT: 2
 
-# Cache template
-.node-cache: &node-cache
-  key:
-    files:
-      - pnpm-lock.yaml
-  paths:
-    - .pnpm-store
-  policy: pull
-
-# Creating template for DTE agents
-.dte-agent:
-  interruptible: true
-  cache:
-    <<: *node-cache
-  before_script:
-    - corepack enable pnpm
-    - corepack install
-    - pnpm config set store-dir .pnpm-store
-    - pnpm install
-  script:
-    - pnpm exec nx-cloud start-agent
-
-# Creating template for a job running DTE (orchestrator)
-.base-pipeline:
+# Main job
+CI:
   interruptible: true
   only:
     - main
     - merge_requests
-  cache:
-    <<: *node-cache
-    policy: pull-push
-  before_script:
-    - corepack enable pnpm
-    - corepack install
-    - pnpm config set store-dir .pnpm-store
-    - pnpm install
+  script:
+    # Connect your workspace on nx.app and uncomment this to enable task distribution.
+    # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
+    - npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+
+    - npm ci
     - NX_HEAD=$CI_COMMIT_SHA
     - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
-  artifacts:
-    expire_in: 5 days
-    paths:
-      - node_modules/.cache/nx
-      - dist
 
-# Main job running DTE
-CI:
-  stage: affected
-  extends: .base-pipeline
-  script:
-    - pnpm exec nx-cloud start-ci-run --stop-agents-after="build"
-    - pnpm exec nx-cloud record -- pnpm exec nx format:check --base=$NX_BASE --head=$NX_HEAD
-    - pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD --target=lint --parallel=3 & pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD --target=test --parallel=3 --ci --code-coverage & pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD --target=e2e --parallel=3 --ci --code-coverage & pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD --target=build --parallel=3
-  after_script:
-    - pnpm exec nx-cloud stop-all-agents
-
-# Create as many agents as you want
-nx-dte-agent1:
-  extends: .dte-agent
-  stage: affected
-nx-dte-agent2:
-  extends: .dte-agent
-  stage: affected
-# nx-dte-agent3:
-#   extends: .dte-agent
-#   stage: affected
+    # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
+    # - npx nx-cloud record -- echo Hello World
+    - npx nx affected --base=$NX_BASE --head=$NX_HEAD -t lint test build
