@@ -139,7 +139,7 @@
     },
     "registry": {
       "type": "string",
-      "description": "Set the name of the destination container registry when using push=true"
+      "description": "Container registry to use as a prefix for the image name"
     },
     "secrets": {
       "type": "array",
