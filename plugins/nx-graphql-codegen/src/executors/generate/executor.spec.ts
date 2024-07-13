@@ -12,10 +12,12 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
@@ -27,18 +29,18 @@ describe('Generate Executor', () => {
     jest.spyOn(console, 'info').mockImplementation(() => true);
   });
 
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: GenerateExecutorSchema = {};
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
 
-  it('with config options', async () => {
+  it('can run with config options', async () => {
     const options: GenerateExecutorSchema = {
       config: 'workspace-root/apps/foo/codegen.ts',
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });

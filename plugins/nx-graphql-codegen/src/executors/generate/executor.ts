@@ -1,18 +1,15 @@
-import { GenerateExecutorSchema } from './schema';
-import { ExecutorContext } from '@nx/devkit';
-import { getDefaultScheme } from '../../utils';
+import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
+import { getDefaultScheme } from '../../utils';
+import { GenerateExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: GenerateExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<GenerateExecutorSchema> = async (options, ctx: ExecutorContext) => {
   return runCommand(options, ctx, {
     description: 'Generating types',
     command: 'graphql-codegen',
     getArgs,
   });
-}
+};
 
 const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -22,3 +19,5 @@ const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[
 
   return args;
 };
+
+export default runExecutor;
