@@ -90,7 +90,7 @@ export class Kaniko extends EngineAdapter {
       args.push('--customPlatform', inputs.platforms.join(','));
     }
     await asyncForEach(inputs.tags, async (tag) => {
-      args.push('--destination', tag);
+      args.push('--destination', inputs.registry ? `${inputs.registry}/${tag}` : tag);
     });
     if (inputs.target) {
       args.push('--target', inputs.target);
