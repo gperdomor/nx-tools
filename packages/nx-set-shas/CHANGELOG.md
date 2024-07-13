@@ -1,3 +1,13 @@
+## 6.1.0 (2024-07-13)
+
+### 🚀 Features
+
+- **nx-set-shas:** compiled using swc ([e0783e5](https://github.com/gperdomor/nx-tools/commit/e0783e5))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.1 (2024-05-22)
 
 This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.

@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-set-shas",
-  "version": "6.0.1",
+  "version": "6.1.0",
   "type": "commonjs",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
