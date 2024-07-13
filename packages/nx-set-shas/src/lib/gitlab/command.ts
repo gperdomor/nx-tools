@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Command, Option } from 'clipanion';
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
@@ -168,9 +167,7 @@ export class GitLabCommand extends Command<Context> {
       }
       lines.push(`NX_BASE=${BASE_SHA}`, `NX_HEAD=${HEAD_SHA}`);
       writeFileSync(output, lines.join('\n'), { encoding: 'utf-8' });
-      this.context.logger.info(
-        chalk.blue(`NX_BASE and NX_HEAD environment variables have been written to '${output}'\n`)
-      );
+      this.context.logger.info(`NX_BASE and NX_HEAD environment variables have been written to '${output}'\n`);
     }
 
     return 0;
