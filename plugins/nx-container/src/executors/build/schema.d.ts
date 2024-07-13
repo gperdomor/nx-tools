@@ -85,9 +85,9 @@ export interface DockerBuildSchema {
    */
   push?: boolean;
   /**
-   * Container registry to use as a prefix for the image name
+   * Container registries to deploy built images to
    */
-  registry?: string;
+  registries?: string[];
   /**
    * List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
    */
