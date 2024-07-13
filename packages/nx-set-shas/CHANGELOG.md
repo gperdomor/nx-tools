@@ -1,3 +1,13 @@
+## 6.1.1 (2024-07-13)
+
+### 🚀 Features
+
+- **nx-set-shas:** fix chalk import ([d4d5e35](https://github.com/gperdomor/nx-tools/commit/d4d5e35))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.1.0 (2024-07-13)
 
 ### 🚀 Features
