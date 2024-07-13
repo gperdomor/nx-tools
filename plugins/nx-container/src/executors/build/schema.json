@@ -137,6 +137,10 @@
       "description": "Push is a shorthand for --output=type=registry (default false)",
       "default": false
     },
+    "registry": {
+      "type": "string",
+      "description": "Set the name of the destination container registry when using push=true"
+    },
     "secrets": {
       "type": "array",
       "items": {
