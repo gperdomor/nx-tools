@@ -9,8 +9,8 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import { ConfigurationGeneratorSchema } from './schema';
 import { CODEGEN_DEFAULT_DIR, CODEGEN_VERSION, GRAPQH_VERSION } from './constants';
+import { ConfigurationGeneratorSchema } from './schema';
 
 export async function configurationGenerator(tree: Tree, options: ConfigurationGeneratorSchema) {
   const project = readProjectConfiguration(tree, options.project);
