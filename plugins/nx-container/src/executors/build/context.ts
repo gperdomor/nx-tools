@@ -90,7 +90,7 @@ export async function getInputs(
     provenance: core.getInput('provenance'),
     pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
     push: core.getBooleanInput('push', { fallback: `${options.push || false}` }),
-    registry: core.getInput('registry', { fallback: options['registry'] }),
+    registry: core.getInput('registry', { fallback: options.registry }),
     secretFiles: await getInputList('secret-files', prefix, options['secret-files'], true),
     secrets: await getInputList('secrets', prefix, options.secrets, true),
     shmSize: core.getInput('shm-size', { prefix, fallback: options['shm-size'] }),
