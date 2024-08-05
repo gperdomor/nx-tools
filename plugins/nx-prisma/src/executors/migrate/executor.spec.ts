@@ -12,10 +12,12 @@ jest.mock('node:child_process', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 describe('Migrate Executor', () => {
@@ -23,11 +25,11 @@ describe('Migrate Executor', () => {
     jest.spyOn(console, 'info').mockImplementation(() => true);
   });
 
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: MigrateExecutorSchema = { name: 'mig-name' };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(execSync).toHaveBeenCalledWith(
-      `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name=mig-name`,
+      `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="mig-name"`,
       {
         stdio: 'inherit',
       }
@@ -42,9 +44,9 @@ describe('Migrate Executor', () => {
         name: 'users',
         [flag]: true,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(execSync).toHaveBeenCalledWith(
-        `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name=users --${flag}`,
+        `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="users" --${flag}`,
         {
           stdio: 'inherit',
         }
@@ -61,9 +63,9 @@ describe('Migrate Executor', () => {
       'skip-generate': true,
       'skip-seed': true,
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(execSync).toHaveBeenCalledWith(
-      'npx prisma migrate dev --schema=my-schema.schema --name=migration-name --create-only --skip-generate --skip-seed',
+      'npx prisma migrate dev --schema=my-schema.schema --name="migration-name" --create-only --skip-generate --skip-seed',
       { stdio: 'inherit' }
     );
     expect(output.success).toBeTruthy();

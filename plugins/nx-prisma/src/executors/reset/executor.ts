@@ -1,13 +1,10 @@
 import { logger } from '@nx-tools/core';
-import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
+import { ExecutorContext, getPackageManagerCommand, PromiseExecutor } from '@nx/devkit';
 import { execSync } from 'node:child_process';
 import { getDefaultScheme } from '../../utils';
 import { ResetExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: ResetExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<ResetExecutorSchema> = async (options, ctx) => {
   const command = `${getPackageManagerCommand().exec} prisma migrate reset`;
   const args = getArgs(options, ctx);
 
@@ -18,7 +15,7 @@ export default async function runExecutor(
   });
 
   return { success: true };
-}
+};
 
 const getArgs = (options: ResetExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -40,3 +37,5 @@ const getArgs = (options: ResetExecutorSchema, ctx: ExecutorContext): string[] =
 
   return args;
 };
+
+export default runExecutor;

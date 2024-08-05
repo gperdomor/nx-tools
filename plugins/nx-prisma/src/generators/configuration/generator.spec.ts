@@ -1,6 +1,7 @@
 import { Tree, addProjectConfiguration, readProjectConfiguration, stripIndents } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { configurationGenerator } from './generator';
+import { ConfigurationGeneratorSchema } from './schema';
 
 describe('configuration generator', () => {
   let tree: Tree;
@@ -12,17 +13,19 @@ describe('configuration generator', () => {
   it('should run for non root projects', async () => {
     addProjectConfiguration(tree, 'mypkg', { root: 'apps/mypkg' });
 
-    await configurationGenerator(tree, { project: 'mypkg', database: 'postgresql' });
+    const options: ConfigurationGeneratorSchema = { project: 'mypkg', database: 'postgresql' };
 
-    const project = readProjectConfiguration(tree, 'mypkg');
+    await configurationGenerator(tree, options);
 
+    const config = readProjectConfiguration(tree, 'mypkg');
+
+    expect(config).toBeDefined();
     expect(tree.exists('./apps/mypkg/prisma/schema.prisma')).toBeTruthy();
 
     const contents = tree.read('./apps/mypkg/prisma/schema.prisma', 'utf-8');
 
     expect(contents).toMatch('provider = "postgresql"');
-
-    expect(project.targets).toEqual({
+    expect(config.targets).toEqual({
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
       },
@@ -65,17 +68,19 @@ describe('configuration generator', () => {
   it('should handle custom directory', async () => {
     addProjectConfiguration(tree, 'mypkg', { root: 'apps/mypkg' });
 
-    await configurationGenerator(tree, { project: 'mypkg', database: 'sqlite', directory: 'custom-dir' });
+    const options: ConfigurationGeneratorSchema = { project: 'mypkg', database: 'sqlite', directory: 'custom-dir' };
 
-    const project = readProjectConfiguration(tree, 'mypkg');
+    await configurationGenerator(tree, options);
 
+    const config = readProjectConfiguration(tree, 'mypkg');
+
+    expect(config).toBeDefined();
     expect(tree.exists('./apps/mypkg/custom-dir/schema.prisma')).toBeTruthy();
 
     const contents = tree.read('./apps/mypkg/custom-dir/schema.prisma', 'utf-8');
 
     expect(contents).toMatch('provider = "sqlite"');
-
-    expect(project.targets).toEqual({
+    expect(config.targets).toEqual({
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
         options: {
@@ -154,17 +159,19 @@ describe('configuration generator', () => {
   it('should work for root projects', async () => {
     addProjectConfiguration(tree, 'mypkg', { root: '.' });
 
-    await configurationGenerator(tree, { project: 'mypkg', database: 'mongodb' });
+    const options: ConfigurationGeneratorSchema = { project: 'mypkg', database: 'mongodb' };
 
-    const project = readProjectConfiguration(tree, 'mypkg');
+    await configurationGenerator(tree, options);
 
+    const config = readProjectConfiguration(tree, 'mypkg');
+
+    expect(config).toBeDefined();
     expect(tree.exists('./prisma/schema.prisma')).toBeTruthy();
 
     const contents = tree.read('./prisma/schema.prisma', 'utf-8');
 
     expect(contents).toMatch('provider = "mongodb"');
-
-    expect(project.targets).toEqual({
+    expect(config.targets).toEqual({
       'prisma-deploy': {
         executor: '@nx-tools/nx-prisma:deploy',
       },
@@ -209,7 +216,9 @@ describe('configuration generator', () => {
 
     addProjectConfiguration(tree, 'mypkg', { root: 'apps/mypkg' });
 
-    await configurationGenerator(tree, { project: 'mypkg', database: 'postgresql' });
+    const options: ConfigurationGeneratorSchema = { project: 'mypkg', database: 'postgresql' };
+
+    await configurationGenerator(tree, options);
 
     expect(tree.exists('./apps/mypkg/prisma/schema.prisma')).toBeTruthy();
 

@@ -1,11 +1,8 @@
 import { getExecOutput, getProjectRoot, logger } from '@nx-tools/core';
-import { ExecutorContext, getPackageManagerCommand, joinPathFragments } from '@nx/devkit';
+import { ExecutorContext, getPackageManagerCommand, joinPathFragments, PromiseExecutor } from '@nx/devkit';
 import { SeedExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: SeedExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<SeedExecutorSchema> = async (options, ctx) => {
   if (!options.script) {
     throw new Error('You must specify a seed script file.');
   }
@@ -23,7 +20,7 @@ export default async function runExecutor(
   });
 
   return { success: true };
-}
+};
 
 const getArgs = (options: SeedExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -36,3 +33,5 @@ const getArgs = (options: SeedExecutorSchema, ctx: ExecutorContext): string[] =>
 
   return args;
 };
+
+export default runExecutor;
