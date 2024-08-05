@@ -1,5 +1,4 @@
 import {
-  Tree,
   addDependenciesToPackageJson,
   formatFiles,
   generateFiles,
@@ -7,6 +6,7 @@ import {
   joinPathFragments,
   readProjectConfiguration,
   stripIndents,
+  Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
 import { PRISMA_DEFAULT_DIR, PRISMA_VERSION } from './constants';

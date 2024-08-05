@@ -1,15 +1,15 @@
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { FormatExecutorSchema } from './schema';
 
-export default async function run(options: FormatExecutorSchema, ctx: ExecutorContext): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<FormatExecutorSchema> = async (options, ctx) => {
   return runCommand(options, ctx, {
     description: 'Format schema',
     command: 'prisma format',
     getArgs,
   });
-}
+};
 
 const getArgs = (options: FormatExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -19,3 +19,5 @@ const getArgs = (options: FormatExecutorSchema, ctx: ExecutorContext): string[] 
 
   return args;
 };
+
+export default runExecutor;

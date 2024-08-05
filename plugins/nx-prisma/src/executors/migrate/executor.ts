@@ -1,13 +1,10 @@
 import { logger } from '@nx-tools/core';
-import { ExecutorContext, getPackageManagerCommand } from '@nx/devkit';
+import { ExecutorContext, getPackageManagerCommand, PromiseExecutor } from '@nx/devkit';
 import { execSync } from 'node:child_process';
 import { getDefaultScheme } from '../../utils';
 import { MigrateExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: MigrateExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<MigrateExecutorSchema> = async (options, ctx) => {
   const command = `${getPackageManagerCommand().exec} prisma migrate dev`;
   const args = getArgs(options, ctx);
 
@@ -18,14 +15,14 @@ export default async function runExecutor(
   });
 
   return { success: true };
-}
+};
 
 const getArgs = (options: MigrateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
   const schema = options?.schema ?? getDefaultScheme(ctx);
 
   args.push(`--schema=${schema}`);
-  args.push(`--name=${options.name}`);
+  args.push(`--name="${options.name}"`);
 
   if (options?.['create-only']) {
     args.push('--create-only');
@@ -41,3 +38,5 @@ const getArgs = (options: MigrateExecutorSchema, ctx: ExecutorContext): string[]
 
   return args;
 };
+
+export default runExecutor;

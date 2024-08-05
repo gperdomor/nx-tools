@@ -1,12 +1,9 @@
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { ResolveExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: ResolveExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: boolean }> {
+const runExecutor: PromiseExecutor<ResolveExecutorSchema> = async (options, ctx) => {
   if ((options.applied && options['rolled-back']) || (!options.applied && !options['rolled-back'])) {
     throw new Error('You must specify either --rolled-back or --applied.');
   }
@@ -16,7 +13,7 @@ export default async function runExecutor(
     command: 'prisma migrate resolve',
     getArgs,
   });
-}
+};
 
 const getArgs = (options: ResolveExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -34,3 +31,5 @@ const getArgs = (options: ResolveExecutorSchema, ctx: ExecutorContext): string[]
 
   return args;
 };
+
+export default runExecutor;

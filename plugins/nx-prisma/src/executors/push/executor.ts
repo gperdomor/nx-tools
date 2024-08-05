@@ -1,18 +1,15 @@
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { PushExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: PushExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<PushExecutorSchema> = async (options, ctx) => {
   return runCommand(options, ctx, {
     description: 'Pushing Database',
     command: 'prisma db push',
     getArgs,
   });
-}
+};
 
 const getArgs = (options: PushExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -34,3 +31,5 @@ const getArgs = (options: PushExecutorSchema, ctx: ExecutorContext): string[] =>
 
   return args;
 };
+
+export default runExecutor;

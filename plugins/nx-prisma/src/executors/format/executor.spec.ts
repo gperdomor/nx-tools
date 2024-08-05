@@ -12,16 +12,18 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 describe('Format Executor', () => {
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: FormatExecutorSchema = {};
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(
       expectCommandToHaveBeenCalled('npx prisma format', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
@@ -34,7 +36,7 @@ describe('Format Executor', () => {
       const options: FormatExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(expectCommandToHaveBeenCalled('npx prisma format', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
@@ -44,7 +46,7 @@ describe('Format Executor', () => {
     const options: FormatExecutorSchema = {
       schema: 'my-schema.schema',
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(expectCommandToHaveBeenCalled('npx prisma format', ['--schema=my-schema.schema']));
     expect(output.success).toBeTruthy();
   });

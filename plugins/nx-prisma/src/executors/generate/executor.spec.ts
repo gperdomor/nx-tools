@@ -12,10 +12,12 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
@@ -27,9 +29,9 @@ describe('Generate Executor', () => {
     jest.spyOn(console, 'info').mockImplementation(() => true);
   });
 
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: GenerateExecutorSchema = {};
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(
       expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
@@ -42,7 +44,7 @@ describe('Generate Executor', () => {
       const options: GenerateExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
@@ -54,7 +56,7 @@ describe('Generate Executor', () => {
       const options: GenerateExecutorSchema = {
         [flag]: true,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(
         expectCommandToHaveBeenCalled('npx prisma generate', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -72,7 +74,7 @@ describe('Generate Executor', () => {
       generator: 'sample-generator',
       watch: true,
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(
       expectCommandToHaveBeenCalled('npx prisma generate', [
         '--schema=my-schema.schema',

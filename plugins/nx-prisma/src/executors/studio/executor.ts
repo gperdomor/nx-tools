@@ -1,18 +1,15 @@
-import { ExecutorContext } from '@nx/devkit';
+import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { runCommand } from '../../run-commands';
 import { getDefaultScheme } from '../../utils';
 import { StudioExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: StudioExecutorSchema,
-  ctx: ExecutorContext
-): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<StudioExecutorSchema> = async (options, ctx) => {
   return runCommand(options, ctx, {
     description: 'Running Prisma Studio',
     command: 'prisma studio',
     getArgs,
   });
-}
+};
 
 const getArgs = (options: StudioExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
@@ -30,3 +27,5 @@ const getArgs = (options: StudioExecutorSchema, ctx: ExecutorContext): string[] 
 
   return args;
 };
+
+export default runExecutor;

@@ -12,10 +12,12 @@ jest.mock('node:child_process', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 describe('Reset Executor', () => {
@@ -23,9 +25,9 @@ describe('Reset Executor', () => {
     jest.spyOn(console, 'info').mockImplementation(() => true);
   });
 
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: ResetExecutorSchema = { force: true };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(execSync).toHaveBeenCalledWith(
       `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force`,
       {
@@ -42,7 +44,7 @@ describe('Reset Executor', () => {
         force: true,
         [option]: value,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset --${option}=${value} --force`, {
         stdio: 'inherit',
       });
@@ -57,7 +59,7 @@ describe('Reset Executor', () => {
         force: true,
         [flag]: true,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(execSync).toHaveBeenCalledWith(
         `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force --${flag}`,
         {
@@ -75,7 +77,7 @@ describe('Reset Executor', () => {
       'skip-generate': true,
       'skip-seed': true,
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate reset --schema=my-schema.schema --force --skip-generate --skip-seed',
       { stdio: 'inherit' }

@@ -12,17 +12,19 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const mockContext: Partial<ExecutorContext> = {
+const context: ExecutorContext = {
   root: 'workspace-root',
   workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
+  cwd: process.cwd(),
+  isVerbose: false,
 };
 
 describe('Resolve Executor', () => {
-  it('empty options', async () => {
+  it('can run with empty options', async () => {
     const options: ResolveExecutorSchema = {};
     expect.assertions(1);
-    await expect(executor(options, mockContext as ExecutorContext)).rejects.toThrowError(
+    await expect(executor(options, context)).rejects.toThrowError(
       'You must specify either --rolled-back or --applied.'
     );
   });
@@ -33,7 +35,7 @@ describe('Resolve Executor', () => {
       'rolled-back': 'add-products-table',
     };
     expect.assertions(1);
-    await expect(executor(options, mockContext as ExecutorContext)).rejects.toThrowError(
+    await expect(executor(options, context)).rejects.toThrowError(
       'You must specify either --rolled-back or --applied.'
     );
   });
@@ -47,7 +49,7 @@ describe('Resolve Executor', () => {
       const options: ResolveExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, mockContext as ExecutorContext);
+      const output = await executor(options, context);
       expect(
         expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -63,7 +65,7 @@ describe('Resolve Executor', () => {
       schema: 'custom.schema',
       applied: 'add_users_table',
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(
       expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
         '--schema=custom.schema',
@@ -78,7 +80,7 @@ describe('Resolve Executor', () => {
       schema: 'custom.schema',
       'rolled-back': 'add_users_table',
     };
-    const output = await executor(options, mockContext as ExecutorContext);
+    const output = await executor(options, context);
     expect(
       expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
         '--schema=custom.schema',

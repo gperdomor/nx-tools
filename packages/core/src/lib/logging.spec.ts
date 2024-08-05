@@ -1,9 +1,10 @@
-import * as chalk from 'chalk';
 import * as os from 'node:os';
 import { logger } from './logging';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ci = require('ci-info');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const chalk = require('chalk');
 
 describe('Logging', () => {
   beforeEach(() => {
