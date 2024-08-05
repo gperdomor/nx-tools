@@ -1,3 +1,17 @@
+## 6.1.0 (2024-08-05)
+
+### 🚀 Features
+
+- **nx-prisma:** move project to plugins directory ([08ea098](https://github.com/gperdomor/nx-tools/commit/08ea098))
+
+- **nx-prisma:** compiled using swc ([bd67998](https://github.com/gperdomor/nx-tools/commit/bd67998))
+
+- **nx-prisma:** fix package version ([7786cc8](https://github.com/gperdomor/nx-tools/commit/7786cc8))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.1 (2024-05-22)
 
 ### 🚀 Features
