@@ -1,7 +1,7 @@
 import { Tree, addProjectConfiguration, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { configurationGenerator } from './generator';
-import { ConfigurationSchema } from './schema';
+import { ConfigurationGeneratorSchema } from './schema';
 
 describe('configuration generator', () => {
   let tree: Tree;
@@ -26,7 +26,7 @@ describe('configuration generator', () => {
   ])(
     '%d - given projectName=%s, engine=%s and template=%s - should generate configuration for %s executor and proper dockerfile',
     async (_, projectName, engine: any, template: any, executor, text) => {
-      const options: ConfigurationSchema = { project: projectName, engine, template };
+      const options: ConfigurationGeneratorSchema = { project: projectName, engine, template };
 
       addProjectConfiguration(tree, projectName, { root: `apps/${projectName}` });
 

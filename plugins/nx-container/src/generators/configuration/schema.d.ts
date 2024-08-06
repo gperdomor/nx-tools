@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface ConfigurationSchema {
+export interface ConfigurationGeneratorSchema {
   /**
    * The name of the project to add the Container setup to.
    */

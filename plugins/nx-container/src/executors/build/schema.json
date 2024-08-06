@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/schema",
   "version": 2,
-  "title": "Docker Build executor",
+  "title": "Build executor",
   "description": "Builds an image using instructions from the Dockerfile and a specified build context directory.",
   "type": "object",
   "properties": {
