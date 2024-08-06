@@ -1,5 +1,4 @@
-// import * as exec from '@actions/exec';
-import * as core from '@nx-tools/core';
+import * as exec from '@actions/exec';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
@@ -103,7 +102,7 @@ describe('getDigest', () => {
 
 describe('getVersion', () => {
   it('valid', async () => {
-    const execSpy = jest.spyOn(core, 'getExecOutput').mockResolvedValue({
+    const execSpy = jest.spyOn(exec, 'getExecOutput').mockResolvedValue({
       exitCode: 0,
       stdout: 'podman version 5.0.0',
       stderr: '',
