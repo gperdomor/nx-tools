@@ -2,9 +2,9 @@ import { RepoMetadata } from '@nx-tools/ci-context';
 import { workspaceRoot } from '@nx/devkit';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
-import { DockerBuildSchema } from './schema';
+import { BuildExecutorSchema } from './schema';
 
-const options: DockerBuildSchema = {
+const options: BuildExecutorSchema = {
   push: false,
   file: 'plugins/nx-container/tests/Dockerfile',
   load: true,

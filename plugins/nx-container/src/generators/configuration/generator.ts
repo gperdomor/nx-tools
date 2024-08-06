@@ -8,7 +8,7 @@ import {
 } from '@nx/devkit';
 import * as path from 'node:path';
 import { DEFAULT_ENGINE, DEFAULT_TEMPLATE } from './constants';
-import { ConfigurationSchema } from './schema';
+import { ConfigurationGeneratorSchema } from './schema';
 
 function addFiles(tree: Tree, project: ProjectConfiguration, template) {
   const templateOptions = {
@@ -18,7 +18,7 @@ function addFiles(tree: Tree, project: ProjectConfiguration, template) {
   generateFiles(tree, path.join(__dirname, 'files', template), project.root, templateOptions);
 }
 
-export async function configurationGenerator(tree: Tree, options: ConfigurationSchema) {
+export async function configurationGenerator(tree: Tree, options: ConfigurationGeneratorSchema) {
   const project = readProjectConfiguration(tree, options.project);
 
   updateProjectConfiguration(tree, options.project, {

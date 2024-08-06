@@ -1,5 +1,5 @@
-import { ExecutorContext, names } from '@nx/devkit';
 import { getExecOutput, getInput, getProjectRoot, interpolate, loadPackage, logger } from '@nx-tools/core';
+import { names, PromiseExecutor } from '@nx/devkit';
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
@@ -7,9 +7,9 @@ import { join } from 'node:path';
 import * as context from './context';
 import { EngineAdapter } from './engines/engine-adapter';
 import { EngineFactory } from './engines/engine.factory';
-import { DockerBuildSchema } from './schema';
+import { BuildExecutorSchema } from './schema';
 
-export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Promise<{ success: true }> {
+const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) => {
   const tmpDir = context.tmpDir();
 
   try {
@@ -79,7 +79,7 @@ export async function run(options: DockerBuildSchema, ctx?: ExecutorContext): Pr
   }
 
   return { success: true };
-}
+};
 
 async function cleanup(tmpDir: string): Promise<void> {
   if (tmpDir.length > 0 && existsSync(tmpDir)) {
@@ -89,4 +89,4 @@ async function cleanup(tmpDir: string): Promise<void> {
   }
 }
 
-export default run;
+export default runExecutor;

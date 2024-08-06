@@ -1,11 +1,11 @@
-import { ExecutorContext, names } from '@nx/devkit';
 import * as core from '@nx-tools/core';
+import { ExecutorContext, names } from '@nx/devkit';
 import { parse } from 'csv-parse/sync';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import * as tmp from 'tmp';
-import { DockerBuildSchema } from './schema';
+import { BuildExecutorSchema } from './schema';
 
 let _defaultContext, _tmpDir: string;
 
@@ -61,7 +61,7 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
 
 export async function getInputs(
   defaultContext: string,
-  options: DockerBuildSchema,
+  options: BuildExecutorSchema,
   ctx?: ExecutorContext
 ): Promise<Inputs> {
   const prefix = names(ctx?.projectName || '').constantName;
