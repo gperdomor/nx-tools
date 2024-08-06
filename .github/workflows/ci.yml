@@ -16,6 +16,8 @@ env:
 jobs:
   main:
     runs-on: ubuntu-latest
+    concurrency:
+      group: nx-cloud
     steps:
       - uses: actions/checkout@v4
         with:
