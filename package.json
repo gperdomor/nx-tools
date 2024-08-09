@@ -28,7 +28,7 @@
     "moment-timezone": "0.5.45",
     "prisma": "5.14.0",
     "properties-file": "3.5.4",
-    "semver": "7.6.2",
+    "semver": "7.6.3",
     "tmp": "0.2.3",
     "tslib": "2.6.2"
   },
