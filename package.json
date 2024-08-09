@@ -33,10 +33,10 @@
     "tslib": "2.6.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.3.0",
+    "@commitlint/cli": "19.4.0",
     "@commitlint/config-conventional": "19.2.2",
     "@commitlint/config-nx-scopes": "19.3.1",
-    "@commitlint/cz-commitlint": "19.2.0",
+    "@commitlint/cz-commitlint": "19.4.0",
     "@nx/eslint": "19.5.7",
     "@nx/eslint-plugin": "19.5.7",
     "@nx/jest": "19.5.7",
