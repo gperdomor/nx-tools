@@ -16,8 +16,6 @@ env:
 jobs:
   main:
     runs-on: ubuntu-latest
-    concurrency:
-      group: nx-cloud
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,7 +23,9 @@ jobs:
 
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+      - name: Start Nx Agents
+        if: ${{ ! startsWith(github.ref, 'refs/renovate/') }}
+        run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
       # Cache node_modules
       - uses: actions/setup-node@v4
