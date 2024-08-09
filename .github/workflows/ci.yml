@@ -21,6 +21,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: echo "GH REF ${{ github.ref }}"
+      - run: echo "GH REF NAME ${{ github.ref_name }}"
+
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
       - name: Start Nx Agents
