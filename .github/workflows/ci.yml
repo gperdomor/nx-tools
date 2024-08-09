@@ -21,17 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: echo "GH REF ${{ github.ref }}"
-      - run: echo "GH REF NAME ${{ github.ref_name }}"
-      - run: echo "GH HEAD REF ${{ github.head_ref }}"
-      - run: echo "GITHUB_HEAD_REF=$GITHUB_HEAD_REF"
-      - run: echo "GITHUB_REF=$GITHUB_REF"
-      - run: echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
-
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
       - name: Start Nx Agents
-        if: ${{ ! startsWith(github.ref, 'refs/renovate/') }}
+        if: ${{  startsWith(github.head_ref, 'renovate/') }}
         run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
       # Cache node_modules
