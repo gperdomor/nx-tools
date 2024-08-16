@@ -31,7 +31,7 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
 
     if (options.metadata?.images) {
       const { getMetadata } = await loadPackage('@nx-tools/container-metadata', 'Nx Container Build Executor');
-      const meta = await getMetadata(options.metadata, ctx);
+      const meta = await getMetadata({ ...options.metadata, quiet: options.quiet }, ctx);
       inputs.labels = meta.getLabels();
       inputs.tags = meta.getTags();
     }

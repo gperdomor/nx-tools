@@ -30,6 +30,7 @@ describe('getInputs', () => {
         ['images', 'moby/buildkit\nghcr.io/moby/mbuildkit'],
       ]),
       {
+        quiet: false,
         "bake-target": 'container-metadata-action',
         flavor: [],
         "github-token": '',
@@ -52,6 +53,7 @@ describe('getInputs', () => {
         ['sep-annotations', ',']
       ]),
       {
+        quiet: false,
         "bake-target": 'metadata',
         flavor: [],
         "github-token": '',
@@ -70,6 +72,7 @@ describe('getInputs', () => {
         ['images', 'moby/buildkit\n#comment\nghcr.io/moby/mbuildkit'],
       ]),
       {
+        quiet: false,
         "bake-target": 'container-metadata-action',
         flavor: [],
         "github-token": '',

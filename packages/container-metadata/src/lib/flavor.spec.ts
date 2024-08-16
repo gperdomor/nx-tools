@@ -1,3 +1,4 @@
+import { logger } from '@nx-tools/core';
 import { Flavor, Transform } from './flavor';
 
 describe('transform', () => {
@@ -176,7 +177,7 @@ describe('transform', () => {
     ]
   ])('given %p attributes', async (inputs: string[], expected: Flavor, invalid: boolean) => {
     try {
-      const flavor = Transform(inputs);
+      const flavor = Transform(inputs, logger);
       expect(flavor).toEqual(expected);
     } catch (err) {
       if (!invalid) {
