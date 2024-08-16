@@ -29,7 +29,6 @@ Following inputs can be used as `step.with` keys
 | `platforms`           | List/CSV | List of [target platforms](https://github.com/docker/buildx#---platformvaluevalue) for build                                                                                      |
 | `pull`                | Bool     | Always attempt to pull a newer version of the image (default `false`)                                                                                                             |
 | `push`                | Bool     | [Push](https://github.com/docker/buildx#--push) is a shorthand for `--output=type=registry` (default `false`)                                                                     |
-| `quiet`               | Bool     | Run executor without printing engine info                                                                                                                                         |
 | `secret-files`        | List     | List of secret files to expose to the build (eg. key=filename, MY_SECRET=./secret.txt)                                                                                            |
 | `secrets`             | List     | List of secrets to expose to the build (eg. `key=value`, `GIT_AUTH_TOKEN=mytoken`, `NPM_TOKEN=${NPM_TOKEN}` will use the environment variable)                                    |
 | `shm-size`¹           | String   | Size of [`/dev/shm`](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-size-of-devshm---shm-size) (e.g., `2g`)                                         |
@@ -58,3 +57,9 @@ Following inputs can be used as `step.with` keys
 To check all possible options please check this [schema.json](../src/executors/build/schema.json) file
 
 > For deep explanation about metadata extraction, how the options works and see some config examples, please check [this](https://github.com/crazy-max/ghaction-docker-meta)
+
+### Environment variables
+
+| Name                 | Type    | Description                        |
+| -------------------- | ------- | ---------------------------------- |
+| `NX_CONTAINER_QUIET` | Boolean | Run executor without printing logs |

@@ -7,7 +7,6 @@
 
 export interface BuildExecutorSchema {
   engine?: 'docker' | 'podman' | 'kaniko';
-  quiet?: boolean;
   /**
    * List of customs host-to-IP mapping (e.g., docker:10.180.0.1)
    */

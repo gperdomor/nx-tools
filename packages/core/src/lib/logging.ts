@@ -62,4 +62,13 @@ async function group<T>(name: string, fn: () => Promise<T>): Promise<T> {
   return result;
 }
 
+const noop = () => {};
+
 export const logger = { ...l, startGroup, endGroup, group };
+
+if (process.env['NX_CONTAINER_QUIET']) {
+  for (const key of Object.keys(logger)) {
+    // @ts-ignore
+    logger[key] = noop;
+  }
+}

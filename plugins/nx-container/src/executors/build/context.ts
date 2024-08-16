@@ -10,7 +10,6 @@ import { BuildExecutorSchema } from './schema';
 let _defaultContext, _tmpDir: string;
 
 export interface Inputs {
-  quiet: boolean;
   addHosts: string[];
   allow: string[];
   buildArgs: string[];
@@ -67,7 +66,6 @@ export async function getInputs(
   const prefix = names(ctx?.projectName || '').constantName;
 
   return {
-    quiet: core.getBooleanInput('quiet', { prefix, fallback: `${options.quiet || false}` }),
     addHosts: await getInputList('add-hosts', prefix, options['add-hosts']),
     allow: await getInputList('allow', prefix, options.allow),
     buildArgs: await getInputList('build-args', prefix, options['build-args'], true),

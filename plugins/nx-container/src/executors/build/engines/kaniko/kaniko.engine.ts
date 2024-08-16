@@ -24,14 +24,12 @@ export class Kaniko extends EngineAdapter {
       );
     }
 
-    if (!inputs.quiet) {
-      await logger.group(`Kaniko info`, async () => {
-        const cmd = kaniko.getCommand(['version']);
-        await exec(cmd.command, cmd.args, {
-          failOnStdErr: false,
-        });
+    await logger.group(`Kaniko info`, async () => {
+      const cmd = kaniko.getCommand(['version']);
+      await exec(cmd.command, cmd.args, {
+        failOnStdErr: false,
       });
-    }
+    });
 
     this.originalDirs = await readdir('/kaniko');
   }

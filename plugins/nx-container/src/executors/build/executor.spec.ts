@@ -9,7 +9,6 @@ const options: BuildExecutorSchema = {
   file: 'plugins/nx-container/tests/Dockerfile',
   load: true,
   tags: ['registry/node:latest'],
-  quiet: true,
   metadata: {
     images: ['app/name'],
     tags: ['type=sha'],

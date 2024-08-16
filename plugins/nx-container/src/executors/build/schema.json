@@ -9,10 +9,6 @@
       "type": "string",
       "default": "docker"
     },
-    "quiet": {
-      "type": "boolean",
-      "default": false
-    },
     "add-hosts": {
       "type": "array",
       "items": {
