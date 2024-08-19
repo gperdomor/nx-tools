@@ -1,4 +1,4 @@
-import { logger } from '@nx-tools/core';
+import { logger as L } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 
 export enum Type {
@@ -51,7 +51,7 @@ export const DefaultPriorities: Record<Type, string> = {
   [Type.Sha]: '100',
 };
 
-export function Transform(inputs: string[]): Tag[] {
+export function Transform(inputs: string[], logger: typeof L): Tag[] {
   const tags: Tag[] = [];
   if (inputs.length == 0) {
     // prettier-ignore

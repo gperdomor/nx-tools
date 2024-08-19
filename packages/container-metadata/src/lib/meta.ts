@@ -1,5 +1,5 @@
 import { RunnerContext as Context, RepoMetadata } from '@nx-tools/ci-context';
-import { interpolate, logger, tmpDir } from '@nx-tools/core';
+import { interpolate, logger as L, tmpDir } from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
 import * as handlebars from 'handlebars';
 import moment from 'moment-timezone';
@@ -28,13 +28,16 @@ export class Meta {
   private readonly flavor: fcl.Flavor;
   private readonly date: Date;
 
-  constructor(inputs: Inputs, context: Context, repo: RepoMetadata) {
+  public readonly logger: typeof L = {} as typeof L;
+
+  constructor(inputs: Inputs, context: Context, repo: RepoMetadata, _logger: typeof L) {
+    this.logger = _logger;
     this.inputs = inputs;
     this.context = context;
     this.repo = repo;
-    this.images = icl.Transform(inputs.images);
-    this.tags = tcl.Transform(inputs.tags);
-    this.flavor = fcl.Transform(inputs.flavor);
+    this.images = icl.Transform(inputs.images, _logger);
+    this.tags = tcl.Transform(inputs.tags, _logger);
+    this.flavor = fcl.Transform(inputs.flavor, _logger);
     this.date = new Date();
     this.version = this.getVersion();
   }
@@ -145,7 +148,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!semver.valid(vraw)) {
-      logger.warn(`${vraw} is not a valid semver. More info: https://semver.org/`);
+      this.logger.warn(`${vraw} is not a valid semver. More info: https://semver.org/`);
       return version;
     }
 
@@ -179,7 +182,7 @@ export class Meta {
       vraw = this.context.ref.replace(/^refs\/tags\//g, '').replace(/\//g, '-');
     }
     if (!pep440.valid(vraw)) {
-      logger.warn(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
+      this.logger.warn(`${vraw} does not conform to PEP 440. More info: https://www.python.org/dev/peps/pep-0440`);
       return version;
     }
 
@@ -238,11 +241,11 @@ export class Meta {
       tmatch = vraw.match(tag.attrs['pattern']);
     }
     if (!tmatch) {
-      logger.warn(`${tag.attrs['pattern']} does not match ${vraw}.`);
+      this.logger.warn(`${tag.attrs['pattern']} does not match ${vraw}.`);
       return version;
     }
     if (typeof tmatch[tag.attrs['group'] as any] === 'undefined') {
-      logger.warn(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
+      this.logger.warn(`Group ${tag.attrs['group']} does not exist for ${tag.attrs['pattern']} pattern.`);
       return version;
     }
 

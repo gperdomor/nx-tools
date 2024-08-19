@@ -13,15 +13,15 @@ describe('configuration generator', () => {
   test.each([
     [1, 'myapp', 'docker', undefined, 'docker', undefined],
     [2, 'myapp', 'docker', 'nest', 'docker', 'CMD ["dumb-init", "node", "main.js"]'],
-    [3, 'myapp', 'docker', 'next', 'docker', 'ENV NEXT_TELEMETRY_DISABLED 1'],
+    [3, 'myapp', 'docker', 'next', 'docker', 'ENV NEXT_TELEMETRY_DISABLED=1'],
     [4, 'myapp', 'docker', 'nginx', 'docker', 'FROM docker.io/nginx:stable-alpine'],
     [5, 'myapp', 'podman', undefined, 'podman', undefined],
     [6, 'myapp', 'podman', 'nest', 'podman', 'CMD ["dumb-init", "node", "main.js"]'],
-    [7, 'myapp', 'podman', 'next', 'podman', 'ENV NEXT_TELEMETRY_DISABLED 1'],
+    [7, 'myapp', 'podman', 'next', 'podman', 'ENV NEXT_TELEMETRY_DISABLED=1'],
     [8, 'myapp', 'podman', 'nginx', 'podman', 'FROM docker.io/nginx:stable-alpine'],
     [9, 'myapp', 'kaniko', undefined, 'kaniko', undefined],
     [10, 'myapp', 'kaniko', 'nest', 'kaniko', 'CMD ["dumb-init", "node", "main.js"]'],
-    [11, 'myapp', 'kaniko', 'next', 'kaniko', 'ENV NEXT_TELEMETRY_DISABLED 1'],
+    [11, 'myapp', 'kaniko', 'next', 'kaniko', 'ENV NEXT_TELEMETRY_DISABLED=1'],
     [12, 'myapp', 'kaniko', 'nginx', 'kaniko', 'FROM docker.io/nginx:stable-alpine'],
   ])(
     '%d - given projectName=%s, engine=%s and template=%s - should generate configuration for %s executor and proper dockerfile',
@@ -39,7 +39,11 @@ describe('configuration generator', () => {
 
       if (text) {
         expect(contents.includes(text)).toBeTruthy();
-        expect(contents.includes(`COPY dist/apps/${projectName}/`)).toBeTruthy();
+        if (template !== 'next') {
+          expect(contents.includes(`COPY dist/apps/${projectName}/`)).toBeTruthy();
+        } else {
+          expect(contents.includes(`COPY apps/${projectName}/.next/standalone`)).toBeTruthy();
+        }
       } else {
         expect(contents).toBe('');
       }

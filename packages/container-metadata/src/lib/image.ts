@@ -1,4 +1,4 @@
-import { logger } from '@nx-tools/core';
+import { logger as L } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 
 export interface Image {
@@ -6,7 +6,7 @@ export interface Image {
   enable: boolean;
 }
 
-export function Transform(inputs: string[]): Image[] {
+export function Transform(inputs: string[], logger: typeof L): Image[] {
   let images: Image[] = [];
 
   // backward compatibility with old format
@@ -29,7 +29,7 @@ export function Transform(inputs: string[]): Image[] {
       }
     }
     if (!newformat) {
-      return output(images);
+      return output(images, logger);
     }
   }
 
@@ -73,10 +73,10 @@ export function Transform(inputs: string[]): Image[] {
     }
     images.push(image);
   }
-  return output(images);
+  return output(images, logger);
 }
 
-function output(images: Image[]): Image[] {
+function output(images: Image[], logger: typeof L): Image[] {
   const group = 'Processing images input';
   logger.startGroup(group);
   for (const image of images) {

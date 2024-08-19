@@ -3,6 +3,7 @@ import * as core from '@nx-tools/core';
 import { ExecutorContext, names } from '@nx/devkit';
 
 export interface Inputs {
+  quiet?: boolean;
   'bake-target': string;
   'github-token': string;
   'sep-annotations': string;
@@ -19,6 +20,7 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
   const prefix = names(ctx?.projectName || '').constantName;
 
   return {
+    quiet: options.quiet || false,
     'bake-target': core.getInput('bake-target', {
       prefix,
       fallback: options['bake-target'] || 'container-metadata-action',

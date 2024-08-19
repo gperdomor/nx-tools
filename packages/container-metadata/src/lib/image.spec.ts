@@ -1,3 +1,4 @@
+import { logger } from '@nx-tools/core';
 import { Image, Transform } from './image';
 
 describe('transform', () => {
@@ -96,7 +97,7 @@ describe('transform', () => {
     ]
   ])('given %p', async (l: string[], expected: Image[] | undefined, invalid: boolean) => {
     try {
-      const images = Transform(l);
+      const images = Transform(l, logger);
       expect(images).toEqual(expected);
     } catch (err) {
       if (!invalid) {

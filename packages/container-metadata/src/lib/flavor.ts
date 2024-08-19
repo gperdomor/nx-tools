@@ -1,4 +1,4 @@
-import { logger } from '@nx-tools/core';
+import { logger as L } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 
 export interface Flavor {
@@ -9,7 +9,7 @@ export interface Flavor {
   suffixLatest: boolean;
 }
 
-export function Transform(inputs: string[]): Flavor {
+export function Transform(inputs: string[], logger: typeof L): Flavor {
   const flavor: Flavor = {
     latest: 'auto',
     prefix: '',

@@ -1,3 +1,4 @@
+import { logger } from '@nx-tools/core';
 import { DefaultPriorities, Parse, RefEvent, ShaFormat, Tag, Transform, Type } from './tag';
 
 beforeAll(() => {
@@ -107,7 +108,7 @@ describe('transform', () => {
     ]
   ])('given %p', async (l: string[], expected: Tag[], invalid: boolean) => {
     try {
-      const tags = Transform(l);
+      const tags = Transform(l, logger);
       expect(tags).toEqual(expected);
     } catch (err) {
       if (!invalid) {
