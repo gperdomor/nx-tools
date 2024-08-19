@@ -1,3 +1,27 @@
+## 6.0.2 (2024-08-19)
+
+### 🚀 Features
+
+- **nx-container:** move project to plugins directory ([e76e956](https://github.com/gperdomor/nx-tools/commit/e76e956))
+
+- **nx-container:** compiled using swc ([462f575](https://github.com/gperdomor/nx-tools/commit/462f575))
+
+- **nx-container:** compiled using swc ([aeac6aa](https://github.com/gperdomor/nx-tools/commit/aeac6aa))
+
+- **nx-container:** improvements in docker templates ([2a5b1ac](https://github.com/gperdomor/nx-tools/commit/2a5b1ac))
+
+- **nx-container:** forward quiet option to metadata generation for quiet logs ([12acea1](https://github.com/gperdomor/nx-tools/commit/12acea1))
+
+- **nx-container:** update package versions ([7ec6b6f](https://github.com/gperdomor/nx-tools/commit/7ec6b6f))
+
+### 🧱 Updated Dependencies
+
+- Updated container-metadata to 6.0.2
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.1 (2024-05-22)
 
 ### 🚀 Features

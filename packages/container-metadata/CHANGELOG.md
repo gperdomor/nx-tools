@@ -1,3 +1,15 @@
+## 6.0.2 (2024-08-19)
+
+### 🚀 Features
+
+- **nx-container:** forward quiet option to metadata generation for quiet logs ([12acea1](https://github.com/gperdomor/nx-tools/commit/12acea1))
+
+- **nx-container:** update package versions ([7ec6b6f](https://github.com/gperdomor/nx-tools/commit/7ec6b6f))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.1 (2024-05-22)
 
 ### 🚀 Features
