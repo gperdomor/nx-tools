@@ -21,7 +21,9 @@ const context: ExecutorContext = {
 };
 
 export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
-  expect(getExecOutput).toHaveBeenCalledWith(cmd, args, { ignoreReturnCode: true });
+  expect(getExecOutput).toHaveBeenCalledWith(cmd, args, {
+    ignoreReturnCode: true,
+  });
 };
 
 describe('Generate Executor', () => {
@@ -50,7 +52,7 @@ describe('Generate Executor', () => {
     }
   );
 
-  test.each([['data-proxy'], ['watch']])(
+  test.each([['data-proxy'], ['accelerate'], ['no-engine'], ['no-hints'], ['allow-no-models'], ['watch']])(
     'given %p, should be handled has flag',
     async (flag: keyof GenerateExecutorSchema) => {
       const options: GenerateExecutorSchema = {
@@ -78,8 +80,8 @@ describe('Generate Executor', () => {
     expect(
       expectCommandToHaveBeenCalled('npx prisma generate', [
         '--schema=my-schema.schema',
-        '--data-proxy',
         '--generator=sample-generator',
+        '--data-proxy',
         '--watch',
       ])
     );

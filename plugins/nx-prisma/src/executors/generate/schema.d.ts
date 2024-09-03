@@ -11,9 +11,25 @@ import { PrismaBase } from '../../interfaces';
  */
 export interface GenerateExecutorSchema extends PrismaBase {
   /**
-   * The generate command will generate Prisma Client for use with the Data Proxy.
+   * The generate command will generate Prisma Client for use with the Data Proxy. Deprecated in Prisma ORM 5.2.0 and later.
    */
   'data-proxy'?: boolean;
+  /**
+   * The generate command will generate Prisma Client for use with Prisma Accelerate. Mutually exclusive with --data-proxy and --no-engine. Available in Prisma 5.1.0 and later.  Deprecated in Prisma ORM 5.2.0 and later.
+   */
+  accelerate?: boolean;
+  /**
+   * The generate command will generate Prisma Client without an accompanied engine for use with Prisma Accelerate. Mutually exclusive with --data-proxy and --accelerate. Available in Prisma ORM 5.2.0 and later.
+   */
+  'no-engine'?: boolean;
+  /**
+   * The generate command will generate Prisma Client without usage hints being printed to the terminal. Available in Prisma ORM 5.16.0 and later.
+   */
+  'no-hints'?: boolean;
+  /**
+   * The generate command will generate Prisma Client without generating any models.
+   */
+  'allow-no-models'?: boolean;
   /**
    * Specifies the generator to use for generating prisma client.
    */
