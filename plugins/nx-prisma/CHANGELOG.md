@@ -1,3 +1,18 @@
+## 6.2.0 (2024-10-02)
+
+### 🚀 Features
+
+- **nx-prisma:** add support for all prisma generate options ([08e7dd2](https://github.com/gperdomor/nx-tools/commit/08e7dd2))
+
+### 🩹 Fixes
+
+- **nx-prisma:** Upgraded prisma version ([fbb5767](https://github.com/gperdomor/nx-tools/commit/fbb5767))
+
+### ❤️ Thank You
+
+- Igor Urminček
+- Yaron Uliel @yaronuliel
+
 ## 6.1.0 (2024-08-05)
 
 ### 🚀 Features
