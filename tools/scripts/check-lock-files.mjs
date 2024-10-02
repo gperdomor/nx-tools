@@ -16,7 +16,7 @@ async function checkLockFiles() {
       );
     }
 
-    const { default: packageJson } = await import('../../package-lock.json', { assert: { type: 'json' } });
+    const { default: packageJson } = await import('../../package-lock.json', { with: { type: 'json' } });
 
     if (packageJson.lockfileVersion !== 3) {
       errors.push(
