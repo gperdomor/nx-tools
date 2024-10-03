@@ -17,9 +17,10 @@ describe('loadPackage', () => {
     });
 
     it('should require package', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const module = await loadPackage('@nx/js', 'ctx', () => require('@nx/js'));
 
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       expect(module).toEqual(require('@nx/js'));
     });
 

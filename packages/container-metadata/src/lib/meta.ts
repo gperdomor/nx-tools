@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RunnerContext as Context, RepoMetadata } from '@nx-tools/ci-context';
 import { interpolate, logger as L, tmpDir } from '@nx-tools/core';
 import * as pep440 from '@renovate/pep440';
@@ -337,7 +338,7 @@ export class Meta {
         const stm: any = hp.body[0];
         return stm['path']['parts'].length == 1 && stm['path']['parts'][0] == 'raw';
       }
-    } catch (err) {
+    } catch {
       return false;
     }
     return false;
@@ -500,7 +501,7 @@ export class Meta {
       new Map<string, string>(
         res
           .map((label) => label.split('='))
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
           .filter(([_key, ...values]) => values.length > 0)
           .map(([key, ...values]) => [key, values.join('=')] as [string, string])
       )

@@ -105,15 +105,28 @@ export class GitLabCommand extends Command<Context> {
       try {
         const baseResult = spawnSync('git', ['merge-base', `origin/${mainBranchName}`, 'HEAD'], { encoding: 'utf-8' });
         BASE_SHA = baseResult.stdout;
-      } catch (e: any) {
-        this.context.logger.error(`${e.message}\n`);
+      } catch (e) {
+        let message: string;
+        if (e instanceof Error) {
+          message = e.message;
+        } else {
+          message = String(e);
+        }
+
+        this.context.logger.error(`${message}\n`);
         return 1;
       }
     } else {
       try {
         BASE_SHA = await findSuccessfulCommit({ lastSuccessfulEvent, mainBranchName, project, token });
-      } catch (e: any) {
-        this.context.logger.error(`${e.message}\n`);
+      } catch (e) {
+        let message: string;
+        if (e instanceof Error) {
+          message = e.message;
+        } else {
+          message = String(e);
+        }
+        this.context.logger.error(`${message}\n`);
         return 1;
       }
 

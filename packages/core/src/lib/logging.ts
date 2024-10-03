@@ -1,11 +1,11 @@
 import { logger as l } from '@nx/devkit';
 import * as os from 'node:os';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const chalk = require('chalk');
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const ci = require('ci-info');
 
-const escapeData = (s: any): string => {
+const escapeData = (s: string): string => {
   return s.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
 };
 
@@ -28,6 +28,11 @@ function startGroup(name: string): void {
     return console.info(`::group::${escapeData(name)}${os.EOL}`);
   }
 
+  if (ci.GITLAB_CI) {
+    const time = Math.floor(Date.now() / 1000);
+    return console.log(`\x1b[0Ksection_start:${time}:${name}\r\x1b[0K${name}`);
+  }
+
   console.info(`${os.EOL}${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` ${name} `)))}${os.EOL}`);
 }
 
@@ -37,6 +42,10 @@ function startGroup(name: string): void {
 function endGroup(name: string): void {
   if (ci.GITHUB_ACTIONS) {
     return l.info(`::endgroup::${os.EOL}`);
+  }
+  if (ci.GITLAB_CI) {
+    const time = Math.floor(Date.now() / 1000);
+    return console.log(`\x1b[0Ksection_end:${time}:${name}\r\x1b[0K`);
   }
 }
 

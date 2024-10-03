@@ -2,19 +2,18 @@ import { RepoMetadata } from '@nx-tools/ci-context';
 import { workspaceRoot } from '@nx/devkit';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
-import { BuildExecutorSchema } from './schema';
 
-const options: BuildExecutorSchema = {
-  push: false,
-  file: 'plugins/nx-container/tests/Dockerfile',
-  load: true,
-  tags: ['registry/node:latest'],
-  quiet: true,
-  metadata: {
-    images: ['app/name'],
-    tags: ['type=sha'],
-  },
-};
+// const options: BuildExecutorSchema = {
+//   push: false,
+//   file: 'plugins/nx-container/tests/Dockerfile',
+//   load: true,
+//   tags: ['registry/node:latest'],
+//   quiet: true,
+//   metadata: {
+//     images: ['app/name'],
+//     tags: ['type=sha'],
+//   },
+// };
 
 jest.setTimeout(60 * 1000);
 
@@ -25,7 +24,8 @@ jest.mock('@nx-tools/ci-context', () => {
     ...originalModule,
     RepoProxyFactory: {
       ...originalModule.RepoProxyFactory,
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       create: jest.fn(() => <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'))),
     },
   };

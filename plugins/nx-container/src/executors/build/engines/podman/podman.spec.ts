@@ -168,7 +168,7 @@ describe('getSecret', () => {
       expect(secret).toEqual(`id=${exKey},src=${tmpNameSync}`);
       const secretValue = await fs.readFileSync(tmpNameSync, 'utf-8');
       expect(secretValue).toEqual(exValue);
-    } catch (err) {
+    } catch {
       expect(true).toBe(invalid);
     }
   });
