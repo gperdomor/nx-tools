@@ -1,5 +1,5 @@
-import { ExecutorContext } from '@nx/devkit';
 import { asyncForEach, exec, logger } from '@nx-tools/core';
+import { ExecutorContext } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { readdir, rm } from 'node:fs/promises';
 import { join } from 'node:path';
@@ -17,7 +17,7 @@ export class Kaniko extends EngineAdapter {
     };
   }
 
-  async initialize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
+  async initialize(inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     if (!(await kaniko.isAvailable())) {
       throw new Error(
         `Kaniko is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with kaniko.`
@@ -36,7 +36,7 @@ export class Kaniko extends EngineAdapter {
     this.originalDirs = await readdir('/kaniko');
   }
 
-  async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
+  async finalize(_inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     const dir = await readdir('/kaniko');
     const toDelete = dir.filter((file) => !this.originalDirs.includes(file));
 

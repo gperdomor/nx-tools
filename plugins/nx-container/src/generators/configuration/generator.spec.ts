@@ -25,7 +25,14 @@ describe('configuration generator', () => {
     [12, 'myapp', 'kaniko', 'nginx', 'kaniko', 'FROM docker.io/nginx:stable-alpine'],
   ])(
     '%d - given projectName=%s, engine=%s and template=%s - should generate configuration for %s executor and proper dockerfile',
-    async (_, projectName, engine: any, template: any, executor, text) => {
+    async (
+      _,
+      projectName,
+      engine: 'docker' | 'podman' | 'kaniko',
+      template: 'empty' | 'nest' | 'next' | 'nginx' | undefined,
+      executor,
+      text
+    ) => {
       const options: ConfigurationGeneratorSchema = { project: projectName, engine, template };
 
       addProjectConfiguration(tree, projectName, { root: `apps/${projectName}` });

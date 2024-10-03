@@ -63,7 +63,7 @@ describe('Git Context', () => {
       const execSpy = jest.spyOn(core, 'getExecOutput');
       try {
         await Git.remoteURL();
-      } catch (err) {
+      } catch {
         // noop
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['remote', 'get-url', 'origin'], {
@@ -222,7 +222,7 @@ describe('Git Context', () => {
       const execSpy = jest.spyOn(core, 'getExecOutput');
       try {
         await Git.fullCommit();
-      } catch (err) {
+      } catch {
         // noop
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['show', '--format=%H', 'HEAD', '--quiet', '--'], {
@@ -237,7 +237,7 @@ describe('Git Context', () => {
       const execSpy = jest.spyOn(core, 'getExecOutput');
       try {
         await Git.tag();
-      } catch (err) {
+      } catch {
         // noop
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['tag', '--points-at', 'HEAD', '--sort', '-version:creatordate'], {

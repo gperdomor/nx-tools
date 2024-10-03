@@ -40,13 +40,13 @@ export const findSuccessfulCommit = async ({
     signal: AbortSignal.timeout(5_000),
   });
 
-  const json: any = await response.json();
-
   let shas: string[];
 
   if (response.ok) {
-    shas = json.map((pipeline: { sha: string }) => pipeline.sha);
+    const json: { sha: string }[] = await response.json();
+    shas = json.map((pipeline) => pipeline.sha);
   } else {
+    const json: { message: string } = await response.json();
     throw new Error(json.message);
   }
 
@@ -91,9 +91,9 @@ async function commitExists(
       headers,
       signal: AbortSignal.timeout(5_000),
     });
-    let json: any = await response.json();
 
     if (!response.ok) {
+      const json: { message: string } = await response.json();
       throw new Error(json.message);
     }
 
@@ -107,12 +107,12 @@ async function commitExists(
       headers,
       signal: AbortSignal.timeout(5_000),
     });
-    json = await response.json();
     if (!response.ok) {
+      const json: { message: string } = await response.json();
       throw new Error(json.message);
     }
 
-    const commits = json;
+    const commits: { id: string }[] = await response.json();
 
     return commits.some((commit: { id: string }) => commit.id === commitSha);
   } catch {

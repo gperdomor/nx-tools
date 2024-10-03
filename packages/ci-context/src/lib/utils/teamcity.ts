@@ -28,7 +28,6 @@ export class Teamcity {
   }
 
   public static async getProperties() {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const buildPropertiesFile = await readFile(process.env['TEAMCITY_BUILD_PROPERTIES_FILE']!, 'utf8');
     const buildProperties = getProperties(buildPropertiesFile);
 

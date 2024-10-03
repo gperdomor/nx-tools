@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'ci-context',
   preset: '../../jest.preset.js',

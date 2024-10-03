@@ -5,7 +5,7 @@ import * as fs from 'node:fs';
 import { getInputs, Inputs } from './context';
 import { Meta, Version } from './meta';
 
-function setOutput(name: string, value: string) {
+function setOutput(_name: string, _value: string) {
   // core.setOutput(name, value);
   // core.exportVariable(`DOCKER_METADATA_OUTPUT_${name.replace(/\W/g, '_').toUpperCase()}`, value);
 }

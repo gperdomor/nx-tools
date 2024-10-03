@@ -1,5 +1,5 @@
-import { ExecutorContext } from '@nx/devkit';
 import { asyncForEach, exec, getExecOutput, logger } from '@nx-tools/core';
+import { ExecutorContext } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { Inputs } from '../../context';
 import { EngineAdapter } from '../engine-adapter';
@@ -19,7 +19,7 @@ export class Podman extends EngineAdapter {
     };
   }
 
-  async initialize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
+  async initialize(inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     if (!(await podman.isAvailable())) {
       throw new Error(
         `Podman is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with podman.`
@@ -48,7 +48,7 @@ export class Podman extends EngineAdapter {
     }
   }
 
-  async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
+  async finalize(inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     if (inputs.push) {
       await asyncForEach(inputs.tags, async (tag) => {
         const cmd = this.getCommand(['push', tag]);
@@ -165,7 +165,7 @@ export class Podman extends EngineAdapter {
     return args;
   }
 
-  private async getCommonArgs(inputs: Inputs, podmanVersion: string): Promise<Array<string>> {
+  private async getCommonArgs(inputs: Inputs, _podmanVersion: string): Promise<Array<string>> {
     const args: Array<string> = [];
     if (inputs.load) {
       args.push('--load');
