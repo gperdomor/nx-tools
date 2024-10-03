@@ -80,24 +80,24 @@ Just change `@nx-tools/nx-docker:build` to `@nx-tools/nx-container:build` in you
 
 - Advanced usage:
 
-  - [Multi-platform image](docs/advanced/multi-platform.md)
-  - [Isolated builders](docs/advanced/isolated-builders.md)
-  - [Push to multi-registries](docs/advanced/push-multiple-registries.md)
-  - [Cache](docs/advanced/cache.md)
-  - [Local registry](docs/advanced/local-registry.md)
-  - [Export image to Docker](docs/advanced/export-docker.md)
-  - [Handle tags and labels](docs/advanced/tags-labels.md)
+  - [Multi-platform image](plugins/nx-container/docs/advanced/multi-platform.md)
+  - [Isolated builders](plugins/nx-container/docs/advanced/isolated-builders.md)
+  - [Push to multi-registries](plugins/nx-container/docs/advanced/push-multiple-registries.md)
+  - [Cache](plugins/nx-container/docs/advanced/cache.md)
+  - [Local registry](plugins/nx-container/docs/advanced/local-registry.md)
+  - [Export image to Docker](plugins/nx-container/docs/advanced/export-docker.md)
+  - [Handle tags and labels](plugins/nx-container/docs/advanced/tags-labels.md)
 
 - Customizing
 
-  - [inputs](docs/inputs.md)
+  - [inputs](plugins/nx-container/docs/inputs.md)
 
 - Usage with CI
 
-  - [GitLab CI](docs/ci/gitlab-ci.md)
-  - [GitHub Actions](docs/ci/github-actions.md)
+  - [GitLab CI](plugins/nx-container/docs/ci/gitlab-ci.md)
+  - [GitHub Actions](plugins/nx-container/docs/ci/github-actions.md)
 
-- [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+- [TROUBLESHOOTING.md](plugins/nx-container/TROUBLESHOOTING.md)
 
 ## Package reference
 
