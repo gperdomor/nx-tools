@@ -1,3 +1,13 @@
+## 6.0.3 (2024-10-03)
+
+### 🩹 Fixes
+
+- **docs:** update doc links to point to correct plugin doc location ([40ea7ba](https://github.com/gperdomor/nx-tools/commit/40ea7ba))
+
+### ❤️ Thank You
+
+- WTPascoe @WTPascoe
+
 ## 6.0.2 (2024-08-19)
 
 ### 🚀 Features
