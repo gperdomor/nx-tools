@@ -1,10 +1,10 @@
 import * as core from '@nx-tools/core';
+import { interpolate } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 import fs from 'node:fs';
 import path from 'node:path';
 import * as semver from 'semver';
 import * as context from '../../context';
-import { interpolate } from '@nx-tools/core';
 
 export async function getImageIDFile(): Promise<string> {
   return path.join(context.tmpDir(), 'iidfile').split(path.sep).join(path.posix.sep);
@@ -61,13 +61,15 @@ export async function getSecret(kvp: string, file: boolean): Promise<string> {
     throw new Error(`${kvp} is not a valid secret`);
   }
 
+  const interpolated = interpolate(value);
+
   if (file) {
-    if (!fs.existsSync(value)) {
-      throw new Error(`secret file ${value} not found`);
+    if (!fs.existsSync(interpolated)) {
+      throw new Error(`secret file ${interpolated} not found`);
     }
-    value = fs.readFileSync(value, { encoding: 'utf-8' });
+    value = fs.readFileSync(interpolated, { encoding: 'utf-8' });
   } else {
-    value = interpolate(value);
+    value = interpolated;
   }
 
   const secretFile = context.tmpNameSync({
