@@ -1,3 +1,13 @@
+## 6.0.4 (2024-10-06)
+
+### 🩹 Fixes
+
+- **nx-container:** fix secret-files interpolation ([08b8f10](https://github.com/gperdomor/nx-tools/commit/08b8f10))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.3 (2024-10-03)
 
 ### 🩹 Fixes
