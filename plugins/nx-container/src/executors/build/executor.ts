@@ -38,19 +38,22 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
 
     const args: string[] = await engine.getArgs(inputs, defContext);
     const buildCmd = engine.getCommand(args);
-    await getExecOutput(
-      buildCmd.command,
-      buildCmd.args.map((arg) => interpolate(arg)),
-      {
-        ignoreReturnCode: true,
-      }
-    ).then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
-      }
-    });
 
-    await engine.finalize(inputs, ctx);
+    await logger.group('Build', async () => {
+      await getExecOutput(
+        buildCmd.command,
+        buildCmd.args.map((arg) => interpolate(arg)),
+        {
+          ignoreReturnCode: true,
+        }
+      ).then((res) => {
+        if (res.stderr.length > 0 && res.exitCode != 0) {
+          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
+        }
+      });
+
+      await engine.finalize(inputs, ctx);
+    });
 
     const imageID = await engine.getImageID();
     const metadata = await engine.getMetadata();
