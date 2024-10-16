@@ -1,3 +1,9 @@
+## 6.1.0 (2024-10-16)
+
+### 🧱 Updated Dependencies
+
+- Updated core to 6.1.0
+
 ## 6.0.1 (2024-05-22)
 
 ### 🩹 Fixes

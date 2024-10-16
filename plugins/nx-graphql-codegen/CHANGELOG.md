@@ -1,3 +1,19 @@
+## 1.1.0 (2024-10-16)
+
+### 🚀 Features
+
+- **nx-graphql-codegen:** move project to plugins directory ([e7b073f](https://github.com/gperdomor/nx-tools/commit/e7b073f))
+
+- **nx-graphql-codegen:** compiled using swc ([519133b](https://github.com/gperdomor/nx-tools/commit/519133b))
+
+### 🧱 Updated Dependencies
+
+- Updated core to 6.1.0
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 1.0.1 (2024-05-22)
 
 ### 🚀 Features

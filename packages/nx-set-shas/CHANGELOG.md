@@ -1,3 +1,17 @@
+## 6.2.0 (2024-10-16)
+
+### 🚀 Features
+
+- **nx-set-shas:** remove chalk dependency ([1514bae](https://github.com/gperdomor/nx-tools/commit/1514bae))
+
+### 🧱 Updated Dependencies
+
+- Updated core to 6.1.0
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.1.1 (2024-07-13)
 
 ### 🚀 Features
