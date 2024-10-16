@@ -38,6 +38,9 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
 
     const args: string[] = await engine.getArgs(inputs, defContext);
     const buildCmd = engine.getCommand(args);
+
+    logger.verbose(`Build command: ${buildCmd.command} ${buildCmd.args.join(' ')}`);
+
     await getExecOutput(
       buildCmd.command,
       buildCmd.args.map((arg) => interpolate(arg)),
@@ -45,6 +48,8 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
         ignoreReturnCode: true,
       }
     ).then((res) => {
+      logger.verbose(res.stdout);
+
       if (res.stderr.length > 0 && res.exitCode != 0) {
         throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
       }
