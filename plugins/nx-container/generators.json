@@ -4,6 +4,11 @@
       "factory": "./src/generators/configuration/generator",
       "schema": "./src/generators/configuration/schema.json",
       "description": "Configure Container builds for your application"
+    },
+    "init": {
+      "factory": "./src/generators/init/init",
+      "schema": "./src/generators/init/schema.json",
+      "description": "Init Container settings for your workspace"
     }
   }
 }
