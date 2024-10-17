@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@nx/container/plugin non-root project with Dockerfile should create nodes for non-root project with Dockerfile 1`] = `
+{
+  "projects": {
+    "apps/your-docker-app": {
+      "targets": {
+        "build": {
+          "dependsOn": [
+            "build",
+          ],
+          "executor": "@nx-tools/nx-container:build",
+          "options": {
+            "engine": "docker",
+            "metadata": {
+              "images": [
+                "my-docker-app",
+              ],
+              "load": true,
+              "tags": [
+                "type=schedule",
+                "type=ref,event=branch",
+                "type=ref,event=tag",
+                "type=ref,event=pr",
+                "type=sha,prefix=sha-",
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`@nx/container/plugin root project should create nodes with correct targets 1`] = `
+{
+  "projects": {
+    ".": {
+      "targets": {
+        "build": {
+          "dependsOn": [
+            "build",
+          ],
+          "executor": "@nx-tools/nx-container:build",
+          "options": {
+            "engine": "docker",
+            "metadata": {
+              "images": [
+                "my-docker-app",
+              ],
+              "load": true,
+              "tags": [
+                "type=schedule",
+                "type=ref,event=branch",
+                "type=ref,event=tag",
+                "type=ref,event=pr",
+                "type=sha,prefix=sha-",
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+}
+`;
