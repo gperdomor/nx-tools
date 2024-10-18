@@ -7,7 +7,7 @@ workflow:
     on_new_commit: conservative
 
 default:
-  image: node:22
+  image: node:22@sha256:52914850f1b78aecb53550a4923854d66945441cfbb9da80d1a4b054ccaf1753
 
 variables:
   CI: 'true'
