@@ -15,7 +15,23 @@
     },
     "data-proxy": {
       "type": "boolean",
-      "description": "The generate command will generate Prisma Client for use with the Data Proxy."
+      "description": "The generate command will generate Prisma Client for use with the Data Proxy. Deprecated in Prisma ORM 5.2.0 and later."
+    },
+    "accelerate": {
+      "type": "boolean",
+      "description": "The generate command will generate Prisma Client for use with Prisma Accelerate. Mutually exclusive with --data-proxy and --no-engine. Available in Prisma 5.1.0 and later.  Deprecated in Prisma ORM 5.2.0 and later."
+    },
+    "no-engine": {
+      "type": "boolean",
+      "description": "The generate command will generate Prisma Client without an accompanied engine for use with Prisma Accelerate. Mutually exclusive with --data-proxy and --accelerate. Available in Prisma ORM 5.2.0 and later."
+    },
+    "no-hints": {
+      "type": "boolean",
+      "description": "The generate command will generate Prisma Client without usage hints being printed to the terminal. Available in Prisma ORM 5.16.0 and later."
+    },
+    "allow-no-models": {
+      "type": "boolean",
+      "description": "The generate command will generate Prisma Client without generating any models."
     },
     "watch": {
       "type": "boolean",

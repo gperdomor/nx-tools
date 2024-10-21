@@ -12,9 +12,9 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.gitlab-ci.yml"]
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml", "{workspaceRoot}/.gitlab-ci.yml"]
   },
-  "nxCloudAccessToken": "YTA4ZDcwNjQtMDZmNC00YjUyLTk5ZTMtN2E1ZDE1ZTkwMWYxfHJlYWQ=",
+  "nxCloudId": "665f26ad97b7ef2700a63c6a",
   "targetDefaults": {
     "@nx/js:swc": {
       "cache": true,

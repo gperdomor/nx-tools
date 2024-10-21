@@ -18,17 +18,18 @@ const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[
 
   args.push(`--schema=${schema}`);
 
-  if (options?.['data-proxy']) {
-    args.push('--data-proxy');
-  }
-
   if (generator) {
     args.push(`--generator=${generator}`);
   }
 
-  if (options?.watch) {
-    args.push('--watch');
-  }
+  // Option list from https://www.prisma.io/docs/orm/reference/prisma-cli-reference#options-1
+  const generatorCommandFlags = ['data-proxy', 'accelerate', 'no-engine', 'no-hints', 'allow-no-models', 'watch'];
+
+  generatorCommandFlags.forEach((flag) => {
+    if (options[flag]) {
+      args.push(`--${flag}`);
+    }
+  });
 
   return args;
 };

@@ -1,3 +1,13 @@
+## 6.1.0 (2024-10-16)
+
+### 🚀 Features
+
+- **nx-prisma:** compiled using swc ([bd67998](https://github.com/gperdomor/nx-tools/commit/bd67998))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.0.1 (2024-05-22)
 
 ### 🚀 Features

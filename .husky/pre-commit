@@ -1,3 +1,2 @@
-npx --no -- validate-branch-name -r "^(master|main|develop|next){1}$|^(feature|fix|hotfix|release|renovate)/.+$"
 npx --no -- lint-staged
 npm run check-lock-files

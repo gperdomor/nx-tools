@@ -1,3 +1,30 @@
+## 6.1.0 (2024-10-16)
+
+### 🧱 Updated Dependencies
+
+- Updated container-metadata to 6.1.0
+- Updated core to 6.1.0
+
+## 6.0.4 (2024-10-06)
+
+### 🩹 Fixes
+
+- **nx-container:** fix secret-files interpolation ([08b8f10](https://github.com/gperdomor/nx-tools/commit/08b8f10))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
+## 6.0.3 (2024-10-03)
+
+### 🩹 Fixes
+
+- **docs:** update doc links to point to correct plugin doc location ([40ea7ba](https://github.com/gperdomor/nx-tools/commit/40ea7ba))
+
+### ❤️ Thank You
+
+- WTPascoe @WTPascoe
+
 ## 6.0.2 (2024-08-19)
 
 ### 🚀 Features

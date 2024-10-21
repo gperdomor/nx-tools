@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'container-metadata',
   preset: '../../jest.preset.js',

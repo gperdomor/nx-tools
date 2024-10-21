@@ -1,5 +1,5 @@
-import { ExecutorContext, names } from '@nx/devkit';
 import { asyncForEach, exec, getBooleanInput, getExecOutput, logger } from '@nx-tools/core';
+import { ExecutorContext, names } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { randomBytes } from 'node:crypto';
 import { Inputs } from '../../context';
@@ -77,7 +77,7 @@ export class Docker extends EngineAdapter {
     }
   }
 
-  async finalize(inputs: Inputs, ctx?: ExecutorContext): Promise<void> {
+  async finalize(inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     // startGroup(`Running post build steps`, GROUP_PREFIX);
     if (this.createdBuilder) {
       logger.info(`Removing builder ${this.createdBuilder}`);

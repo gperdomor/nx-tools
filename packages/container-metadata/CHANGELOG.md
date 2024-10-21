@@ -1,3 +1,10 @@
+## 6.1.0 (2024-10-16)
+
+### 🧱 Updated Dependencies
+
+- Updated ci-context to 6.1.0
+- Updated core to 6.1.0
+
 ## 6.0.2 (2024-08-19)
 
 ### 🚀 Features
