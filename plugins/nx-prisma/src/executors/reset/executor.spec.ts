@@ -14,7 +14,7 @@ jest.mock('node:child_process', () => {
 
 const context: ExecutorContext = {
   root: 'workspace-root',
-  workspace: { version: 2, projects: { foo: { root: 'apps/foo' } } },
+  projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
   cwd: process.cwd(),
   isVerbose: false,
