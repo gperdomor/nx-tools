@@ -1,3 +1,10 @@
+## 6.1.1 (2024-11-08)
+
+### 🧱 Updated Dependencies
+
+- Updated container-metadata to 6.1.1
+- Updated core to 6.1.1
+
 ## 6.1.0 (2024-10-16)
 
 ### 🧱 Updated Dependencies

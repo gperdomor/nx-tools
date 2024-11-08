@@ -1,3 +1,17 @@
+## 6.4.1 (2024-11-08)
+
+### 🩹 Fixes
+
+- **core:** fix getProjectRoot on newer Nx versions ([5dab651](https://github.com/gperdomor/nx-tools/commit/5dab651))
+
+### 🧱 Updated Dependencies
+
+- Updated core to 6.1.1
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.4.0 (2024-10-16)
 
 ### 🧱 Updated Dependencies
