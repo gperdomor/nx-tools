@@ -1,6 +1,6 @@
 import { Tree, readJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { initGenerator, hasContainerPlugin } from './init';
+import { initGenerator } from './init';
 
 describe('init generator', () => {
   let tree: Tree;

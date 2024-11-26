@@ -3,6 +3,32 @@
   "$id": "Configuration",
   "title": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "required": [],
+  "properties": {
+    "defaultEngine": {
+      "type": "string",
+      "description": "Provide the default container engine to be used.",
+      "default": "docker",
+      "enum": ["docker", "podman", "kaniko"],
+      "x-prompt": {
+        "message": "Which type of engine would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "docker",
+            "label": "Docker"
+          },
+          {
+            "value": "podman",
+            "label": "Podman"
+          },
+          {
+            "value": "kaniko",
+            "label": "Kaniko"
+          }
+        ]
+      },
+      "alias": "e"
+    }
+  }
 }
