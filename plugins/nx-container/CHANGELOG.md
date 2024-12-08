@@ -1,3 +1,22 @@
+## 6.2.0 (2024-12-08)
+
+### 🚀 Features
+
+- **nx-container:** add init generator ([150024b](https://github.com/gperdomor/nx-tools/commit/150024b))
+
+- **nx-container:** add inferred targets ([6d53fa5](https://github.com/gperdomor/nx-tools/commit/6d53fa5))
+
+- **nx-container:** improvements in inferred task ([#1164](https://github.com/gperdomor/nx-tools/pull/1164))
+
+### 🩹 Fixes
+
+- **nx-container:** fix lint errors ([09b4517](https://github.com/gperdomor/nx-tools/commit/09b4517))
+
+### ❤️ Thank You
+
+- Badeau, Jose
+- Gustavo Perdomo
+
 ## 6.1.1 (2024-11-08)
 
 ### 🧱 Updated Dependencies
