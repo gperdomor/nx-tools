@@ -29,6 +29,12 @@
         ]
       },
       "alias": "e"
+    },
+    "defaultRegistry": {
+      "type": "string",
+      "description": "Provide the default registry to be used.",
+      "default": "docker.io",
+      "alias": "r"
     }
   }
 }

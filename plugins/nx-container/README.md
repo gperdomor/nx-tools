@@ -19,24 +19,8 @@ This executor not handle registry login steps, so if you wanna push your contain
 Adding the Container plugin to an existing Nx workspace can be done with the following:
 
 ```bash
-npm install -D @nx-tools/nx-container
+nx add @nx-tools/nx-container
 ```
-
-```bash
-yarn add -D @nx-tools/nx-container
-```
-
-If you want an "automatic" tag management and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) for labels, you need to install the optional `@nx-tools/container-metadata` package:
-
-```bash
-npm install -D @nx-tools/container-metadata
-```
-
-```bash
-yarn add -D @nx-tools/container-metadata
-```
-
-> @nx-tools/container-metadata is the succesor of `@nx-tools/docker-metadata`.
 
 ## Using the Container Plugin
 
@@ -44,16 +28,42 @@ yarn add -D @nx-tools/container-metadata
 
 It's straightforward to setup your application:
 
+#### Using Inferred target (Project Crystal):
+
+It's straightforward to setup your application with 2 simple steps
+
+1. Run this command `nx g @nx-tools/nx-container:init` or add nx-container manually to the plugins array in your `nx.json` file, like is showed below:
+
+```
+    {
+      "plugin": "@nx-tools/nx-container",
+      "options": {
+        "defaultEngine": "docker",
+        "defaultRegistry": "docker.io"
+      }
+    }
+```
+
+2. Add a`Dockerfile` to your application
+
+> Note: This requires `@nx-tools/nx-container`verion `6.2.0` or above.
+
+#### Manual configuration
+
+To setup a `container` task, or override inferred task, you can use this command:
+
 ```bash
 nx g @nx-tools/nx-container:configuration appName
 ```
 
 By default, the application will be configured with:
 
-- A Dockerfile in the application root.
+- A Dockerfile in the application root (Will be created if no Dockerfile is present in app directory)
 - A target to build your application using the Docker engine.
 
 We can then build our application with the following command:
+
+### Build your application
 
 ```bash
 nx container appName

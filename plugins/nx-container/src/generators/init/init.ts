@@ -1,6 +1,14 @@
-import { GeneratorCallback, PluginConfiguration, readNxJson, runTasksInSerial, Tree, updateNxJson } from '@nx/devkit';
+import {
+  ExpandedPluginConfiguration,
+  GeneratorCallback,
+  PluginConfiguration,
+  readNxJson,
+  runTasksInSerial,
+  Tree,
+  updateNxJson,
+} from '@nx/devkit';
+import { ContainerPluginOptions } from '../../plugins';
 import { Schema } from './schema';
-import { DEFAULT_ENGINE } from '../configuration/constants';
 
 export async function initGenerator(tree: Tree, options: Schema): Promise<GeneratorCallback> {
   const tasks: GeneratorCallback[] = [];
@@ -10,10 +18,10 @@ export async function initGenerator(tree: Tree, options: Schema): Promise<Genera
   if (!hasContainerPlugin(nxJson)) {
     nxJson.plugins ??= [];
 
-    const pluginConfig: PluginConfiguration =
-      options.defaultEngine !== DEFAULT_ENGINE
-        ? { plugin: '@nx-tools/nx-container', options: { defaultEngine: options.defaultEngine } }
-        : '@nx-tools/nx-container';
+    const pluginConfig: ExpandedPluginConfiguration<ContainerPluginOptions> = {
+      plugin: '@nx-tools/nx-container',
+      options: { defaultEngine: options.defaultEngine, defaultRegistry: options.defaultRegistry },
+    };
 
     nxJson.plugins.push(pluginConfig);
     updateNxJson(tree, nxJson);

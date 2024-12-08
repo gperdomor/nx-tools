@@ -7,16 +7,17 @@ import {
   TargetConfiguration,
   writeJsonFile,
 } from '@nx/devkit';
-import { dirname, join } from 'path';
+import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash-for-create-nodes';
 import { getLockFileName } from '@nx/js';
 import { existsSync, readdirSync, readFileSync } from 'fs';
-import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash-for-create-nodes';
 import { workspaceDataDirectory } from 'nx/src/utils/cache-directory';
-import { DEFAULT_ENGINE } from '../generators/configuration/constants';
+import { dirname, join } from 'path';
+import { DEFAULT_ENGINE, DEFAULT_REGISTRY } from '../generators/configuration/constants';
 
 export interface ContainerPluginOptions {
   buildTargetName?: string;
   defaultEngine?: string;
+  defaultRegistry?: string;
 }
 
 const cachePath = join(workspaceDataDirectory, 'container.hash');
@@ -41,9 +42,9 @@ export const createNodes: CreateNodes<ContainerPluginOptions> = [
     options = normalizeOptions(options);
     const projectRoot = dirname(configFilePath);
 
-    // Do not create a project if project.json isn't there.
+    // Do not create a project if package.json and project.json isn't there.
     const siblingFiles = readdirSync(join(context.workspaceRoot, projectRoot));
-    if (!siblingFiles.includes('project.json')) {
+    if (!siblingFiles.includes('package.json') && !siblingFiles.includes('project.json')) {
       return {};
     }
 
@@ -51,7 +52,7 @@ export const createNodes: CreateNodes<ContainerPluginOptions> = [
       getLockFileName(detectPackageManager(context.workspaceRoot)),
     ]);
 
-    const projectName = buildProjectName(projectRoot, context.workspaceRoot);
+    const projectName = buildProjectName(projectRoot, context.workspaceRoot, options);
 
     targetsCache[hash] ??= buildTargets(projectRoot, options, projectName);
 
@@ -72,16 +73,23 @@ function buildTargets(projectRoot: string, options: ContainerPluginOptions, proj
       dependsOn: ['build'],
       options: {
         engine: options.defaultEngine,
-        metadata: {
-          images: [projectName],
-          load: true,
-          tags: [
-            'type=schedule',
-            'type=ref,event=branch',
-            'type=ref,event=tag',
-            'type=ref,event=pr',
-            'type=sha,prefix=sha-',
-          ],
+        tags: [`${projectName}:dev`],
+        load: true,
+      },
+      configurations: {
+        ci: {
+          load: false,
+          push: true,
+          metadata: {
+            images: [projectName],
+            tags: [
+              'type=schedule',
+              'type=ref,event=branch',
+              'type=ref,event=tag',
+              'type=ref,event=pr',
+              'type=sha,prefix=sha-',
+            ],
+          },
         },
       },
     },
@@ -90,23 +98,29 @@ function buildTargets(projectRoot: string, options: ContainerPluginOptions, proj
   return targets;
 }
 
-function buildProjectName(projectRoot: string, workspaceRoot: string): string | undefined {
+function buildProjectName(
+  projectRoot: string,
+  workspaceRoot: string,
+  options: ContainerPluginOptions
+): string | undefined {
   const packageJsonPath = join(workspaceRoot, projectRoot, 'package.json');
   const projectJsonPath = join(workspaceRoot, projectRoot, 'project.json');
   let name: string;
+  const registry = options.defaultRegistry.length ? `${options.defaultRegistry}/` : '';
   if (existsSync(projectJsonPath)) {
     const projectJson = parseJson(readFileSync(projectJsonPath, 'utf-8'));
-    name = projectJson.name;
+    name = `${registry}${projectJson.name}`;
   } else if (existsSync(packageJsonPath)) {
     const packageJson = parseJson(readFileSync(packageJsonPath, 'utf-8'));
-    name = packageJson.name;
+    name = `${registry}${packageJson.name}`;
   }
-  return name;
+  return name.replace(/@/gi, '');
 }
 
 function normalizeOptions(options: ContainerPluginOptions): ContainerPluginOptions {
   options ??= {};
   options.buildTargetName ??= 'container';
   options.defaultEngine ??= DEFAULT_ENGINE;
+  options.defaultRegistry ??= DEFAULT_REGISTRY;
   return options;
 }
