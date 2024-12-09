@@ -3,30 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/container-metadata/src",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
   "tags": ["type:lib", "scope:nx-container"],
-  "targets": {
-    "build": {
-      "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/container-metadata",
-        "main": "packages/container-metadata/src/index.ts",
-        "tsConfig": "packages/container-metadata/tsconfig.lib.json",
-        "assets": ["packages/container-metadata/*.md"]
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
-    }
-  }
+  "// targets": "to see all targets run: nx show project container-metadata --web",
+  "targets": {}
 }

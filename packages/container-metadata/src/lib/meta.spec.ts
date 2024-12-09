@@ -1,10 +1,10 @@
 import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext } from '@nx-tools/ci-context';
+import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
 import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
 import * as dotenv from 'dotenv';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Github } from 'packages/ci-context/src/lib/utils/github';
 import repoFixture from '../../__tests__/fixtures/repo.json';
 import { Inputs, getContext, getInputs } from './context';
 import { Meta, Version } from './meta';

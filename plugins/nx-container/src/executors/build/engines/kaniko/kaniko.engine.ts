@@ -45,15 +45,15 @@ export class Kaniko extends EngineAdapter {
     });
   }
 
-  async getImageID(): Promise<string> {
+  async getImageID(): Promise<string | undefined> {
     return kaniko.getImageID();
   }
 
-  async getMetadata(): Promise<string> {
+  async getMetadata(): Promise<string | undefined> {
     return kaniko.getMetadata();
   }
 
-  async getDigest(metadata: string): Promise<string> {
+  async getDigest(metadata: string): Promise<string | undefined> {
     return kaniko.getDigest(metadata);
   }
 

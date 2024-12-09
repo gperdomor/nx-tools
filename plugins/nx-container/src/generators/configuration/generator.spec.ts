@@ -1,7 +1,7 @@
 import { Tree, addProjectConfiguration, readProjectConfiguration } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { configurationGenerator } from './generator';
-import { ConfigurationGeneratorSchema } from './schema';
+import { ConfigurationGeneratorSchema, Engine, Template } from './schema';
 
 describe('configuration generator', () => {
   let tree: Tree;
@@ -23,15 +23,15 @@ describe('configuration generator', () => {
     [10, 'myapp', 'kaniko', 'nest', 'kaniko', 'CMD ["dumb-init", "node", "main.js"]'],
     [11, 'myapp', 'kaniko', 'next', 'kaniko', 'ENV NEXT_TELEMETRY_DISABLED=1'],
     [12, 'myapp', 'kaniko', 'nginx', 'kaniko', 'FROM docker.io/nginx:stable-alpine'],
-  ])(
+  ] as [number, string, Engine, Template | undefined, Engine, string | undefined][])(
     '%d - given projectName=%s, engine=%s and template=%s - should generate configuration for %s executor and proper dockerfile',
     async (
-      _,
-      projectName,
-      engine: 'docker' | 'podman' | 'kaniko',
-      template: 'empty' | 'nest' | 'next' | 'nginx' | undefined,
-      executor,
-      text
+      _: number,
+      projectName: string,
+      engine: Engine,
+      template: Template | undefined,
+      executor: Engine,
+      text: string | undefined
     ) => {
       const options: ConfigurationGeneratorSchema = { project: projectName, engine, template };
 
@@ -45,11 +45,11 @@ describe('configuration generator', () => {
       const contents = tree.read('./apps/myapp/Dockerfile', 'utf-8');
 
       if (text) {
-        expect(contents.includes(text)).toBeTruthy();
+        expect(contents?.includes(text)).toBeTruthy();
         if (template !== 'next') {
-          expect(contents.includes(`COPY dist/apps/${projectName}/`)).toBeTruthy();
+          expect(contents?.includes(`COPY dist/apps/${projectName}/`)).toBeTruthy();
         } else {
-          expect(contents.includes(`COPY apps/${projectName}/.next/standalone`)).toBeTruthy();
+          expect(contents?.includes(`COPY apps/${projectName}/.next/standalone`)).toBeTruthy();
         }
       } else {
         expect(contents).toBe('');

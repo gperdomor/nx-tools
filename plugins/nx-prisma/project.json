@@ -3,34 +3,27 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "plugins/nx-prisma/src",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
   "tags": ["type:plugin", "scope:nx-prisma"],
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/plugins/nx-prisma",
+        "outputPath": "plugins/nx-prisma/dist",
         "main": "plugins/nx-prisma/src/index.ts",
         "tsConfig": "plugins/nx-prisma/tsconfig.lib.json",
+        "rootDir": "plugins/nx-prisma/src",
+        "generatePackageJson": false,
         "assets": [
-          "plugins/nx-prisma/*.md",
           {
             "input": "./plugins/nx-prisma/src",
             "glob": "**/!(*.ts)",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-prisma/src",
             "glob": "**/*.d.ts",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-prisma",
@@ -43,11 +36,6 @@
             "output": "."
           }
         ]
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
       }
     }
   }

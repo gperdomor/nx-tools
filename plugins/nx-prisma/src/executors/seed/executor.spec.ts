@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-folder',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -26,7 +26,9 @@ describe('Seed Executor', () => {
       script: undefined,
     };
     expect.assertions(1);
-    await expect(executor(options, context)).rejects.toThrowError('You must specify a seed script file.');
+    await expect(executor(options, context as ExecutorContext)).rejects.toThrowError(
+      'You must specify a seed script file.'
+    );
   });
 
   describe('with ts-node', () => {
@@ -34,7 +36,7 @@ describe('Seed Executor', () => {
       const options: SeedExecutorSchema = {
         script: 'custom-seed-file.ts',
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(
         expectCommandToHaveBeenCalled('npx ts-node', [
           '--project=workspace-folder/apps/foo/tsconfig.json',
@@ -49,7 +51,7 @@ describe('Seed Executor', () => {
         script: 'seed.ts',
         tsConfig: 'tsconfig.base.ts',
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx ts-node', ['--project=tsconfig.base.ts', 'seed.ts']));
       expect(output.success).toBeTruthy();
     });
@@ -61,7 +63,7 @@ describe('Seed Executor', () => {
         script: 'custom-seed-file.ts',
         executeWith: 'tsx',
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(
         expectCommandToHaveBeenCalled('npx tsx', [
           '--tsconfig=workspace-folder/apps/foo/tsconfig.json',
@@ -77,7 +79,7 @@ describe('Seed Executor', () => {
         tsConfig: 'tsconfig.base.ts',
         executeWith: 'tsx',
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx tsx', ['--tsconfig=tsconfig.base.ts', 'seed.ts']));
       expect(output.success).toBeTruthy();
     });

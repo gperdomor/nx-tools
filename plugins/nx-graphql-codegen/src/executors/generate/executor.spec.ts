@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -31,7 +31,7 @@ describe('Generate Executor', () => {
 
   it('can run with empty options', async () => {
     const options: GenerateExecutorSchema = {};
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });
@@ -40,7 +40,7 @@ describe('Generate Executor', () => {
     const options: GenerateExecutorSchema = {
       config: 'workspace-root/apps/foo/codegen.ts',
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(expectCommandToHaveBeenCalled('npx graphql-codegen', ['--config=workspace-root/apps/foo/codegen.ts']));
     expect(output.success).toBeTruthy();
   });

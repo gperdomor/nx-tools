@@ -12,7 +12,7 @@ jest.mock('node:child_process', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -27,7 +27,7 @@ describe('Reset Executor', () => {
 
   it('can run with empty options', async () => {
     const options: ResetExecutorSchema = { force: true };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force`,
       {
@@ -39,12 +39,12 @@ describe('Reset Executor', () => {
 
   test.each([['schema', 'my-prisma-file.schema']])(
     'given %p option with %p value, should be handled has arg',
-    async (option: keyof ResetExecutorSchema, value: string) => {
+    async (option: string, value: string) => {
       const options: ResetExecutorSchema = {
         force: true,
         [option]: value,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(`npx prisma migrate reset --${option}=${value} --force`, {
         stdio: 'inherit',
       });
@@ -52,23 +52,20 @@ describe('Reset Executor', () => {
     }
   );
 
-  test.each([['skip-generate'], ['skip-seed']])(
-    'given %p, should be handled has flag',
-    async (flag: keyof ResetExecutorSchema) => {
-      const options: ResetExecutorSchema = {
-        force: true,
-        [flag]: true,
-      };
-      const output = await executor(options, context);
-      expect(execSync).toHaveBeenCalledWith(
-        `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force --${flag}`,
-        {
-          stdio: 'inherit',
-        }
-      );
-      expect(output.success).toBeTruthy();
-    }
-  );
+  test.each([['skip-generate'], ['skip-seed']])('given %p, should be handled has flag', async (flag: string) => {
+    const options: ResetExecutorSchema = {
+      force: true,
+      [flag]: true,
+    };
+    const output = await executor(options, context as ExecutorContext);
+    expect(execSync).toHaveBeenCalledWith(
+      `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force --${flag}`,
+      {
+        stdio: 'inherit',
+      }
+    );
+    expect(output.success).toBeTruthy();
+  });
 
   it('with all options', async () => {
     const options: ResetExecutorSchema = {
@@ -77,7 +74,7 @@ describe('Reset Executor', () => {
       'skip-generate': true,
       'skip-seed': true,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate reset --schema=my-schema.schema --force --skip-generate --skip-seed',
       { stdio: 'inherit' }

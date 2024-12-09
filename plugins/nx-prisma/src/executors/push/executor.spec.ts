@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -23,7 +23,7 @@ const context: ExecutorContext = {
 describe('Push Executor', () => {
   it('can run with empty options', async () => {
     const options: PushExecutorSchema = {};
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma db push', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
@@ -32,11 +32,11 @@ describe('Push Executor', () => {
 
   test.each([['schema', 'my-prisma-file.schema']])(
     'given %p option with %p value, should be included in the args array',
-    async (option: keyof PushExecutorSchema, value: string) => {
+    async (option: string, value: string) => {
       const options: PushExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx prisma db push', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
@@ -44,11 +44,11 @@ describe('Push Executor', () => {
 
   test.each([['skip-generate'], ['force-reset'], ['accept-data-loss']])(
     'given %p flag, should be included in the args array',
-    async (flag: keyof PushExecutorSchema) => {
+    async (flag: string) => {
       const options: PushExecutorSchema = {
         [flag]: true,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(
         expectCommandToHaveBeenCalled('npx prisma db push', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -66,7 +66,7 @@ describe('Push Executor', () => {
       'force-reset': true,
       'accept-data-loss': true,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma db push', [
         '--schema=my-schema.schema',

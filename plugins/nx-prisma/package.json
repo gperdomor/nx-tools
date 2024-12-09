@@ -9,8 +9,8 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "executors": "./executors.json",
   "generators": "./generators.json",
   "dependencies": {
@@ -18,7 +18,7 @@
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0",
-    "@swc/helpers": "~0.5.11",
+    "tslib": "^2.5.0",
     "prisma": "^5.0.0",
     "ts-node": "^10.0.0",
     "tsx": "^4.0.0"
@@ -27,5 +27,9 @@
     "tsx": {
       "optional": true
     }
-  }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ]
 }

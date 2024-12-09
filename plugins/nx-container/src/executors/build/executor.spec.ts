@@ -25,7 +25,6 @@ jest.mock('@nx-tools/ci-context', () => {
     RepoProxyFactory: {
       ...originalModule.RepoProxyFactory,
 
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
       create: jest.fn(() => <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'))),
     },
   };

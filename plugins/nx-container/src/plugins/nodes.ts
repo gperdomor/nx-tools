@@ -20,6 +20,8 @@ export interface ContainerPluginOptions {
   defaultRegistry?: string;
 }
 
+type NormalizedContainerPluginOptions = Required<ContainerPluginOptions>;
+
 const cachePath = join(workspaceDataDirectory, 'container.hash');
 const targetsCache = readTargetsCache();
 
@@ -39,7 +41,7 @@ export const createDependencies: CreateDependencies = () => {
 export const createNodes: CreateNodes<ContainerPluginOptions> = [
   '**/Dockerfile',
   async (configFilePath, options, context) => {
-    options = normalizeOptions(options);
+    const normalized = normalizeOptions(options);
     const projectRoot = dirname(configFilePath);
 
     // Do not create a project if package.json and project.json isn't there.
@@ -48,13 +50,13 @@ export const createNodes: CreateNodes<ContainerPluginOptions> = [
       return {};
     }
 
-    const hash = await calculateHashForCreateNodes(projectRoot, options, context, [
+    const hash = await calculateHashForCreateNodes(projectRoot, normalized, context, [
       getLockFileName(detectPackageManager(context.workspaceRoot)),
     ]);
 
-    const projectName = buildProjectName(projectRoot, context.workspaceRoot, options);
+    const projectName = buildProjectName(projectRoot, context.workspaceRoot, normalized);
 
-    targetsCache[hash] ??= buildTargets(projectRoot, options, projectName);
+    targetsCache[hash] ??= buildTargets(projectRoot, normalized, projectName);
 
     return {
       projects: {
@@ -66,7 +68,7 @@ export const createNodes: CreateNodes<ContainerPluginOptions> = [
   },
 ];
 
-function buildTargets(projectRoot: string, options: ContainerPluginOptions, projectName: string) {
+function buildTargets(projectRoot: string, options: NormalizedContainerPluginOptions, projectName: string) {
   const targets: Record<string, TargetConfiguration> = {
     [options.buildTargetName]: {
       executor: '@nx-tools/nx-container:build',
@@ -98,15 +100,11 @@ function buildTargets(projectRoot: string, options: ContainerPluginOptions, proj
   return targets;
 }
 
-function buildProjectName(
-  projectRoot: string,
-  workspaceRoot: string,
-  options: ContainerPluginOptions
-): string | undefined {
+function buildProjectName(projectRoot: string, workspaceRoot: string, options: ContainerPluginOptions): string {
   const packageJsonPath = join(workspaceRoot, projectRoot, 'package.json');
   const projectJsonPath = join(workspaceRoot, projectRoot, 'project.json');
-  let name: string;
-  const registry = options.defaultRegistry.length ? `${options.defaultRegistry}/` : '';
+  let name = '';
+  const registry = options.defaultRegistry?.length ? `${options.defaultRegistry}/` : '';
   if (existsSync(projectJsonPath)) {
     const projectJson = parseJson(readFileSync(projectJsonPath, 'utf-8'));
     name = `${registry}${projectJson.name}`;
@@ -117,10 +115,10 @@ function buildProjectName(
   return name.replace(/@/gi, '');
 }
 
-function normalizeOptions(options: ContainerPluginOptions): ContainerPluginOptions {
-  options ??= {};
-  options.buildTargetName ??= 'container';
-  options.defaultEngine ??= DEFAULT_ENGINE;
-  options.defaultRegistry ??= DEFAULT_REGISTRY;
-  return options;
+function normalizeOptions(options: ContainerPluginOptions | undefined): NormalizedContainerPluginOptions {
+  return {
+    buildTargetName: options?.buildTargetName ?? 'container',
+    defaultEngine: options?.defaultEngine ?? DEFAULT_ENGINE,
+    defaultRegistry: options?.defaultRegistry ?? DEFAULT_REGISTRY,
+  };
 }

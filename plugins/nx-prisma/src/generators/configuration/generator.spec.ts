@@ -225,7 +225,7 @@ describe('configuration generator', () => {
     try {
       await configurationGenerator(tree, { project: 'mypkg', database: 'postgresql' });
     } catch (e) {
-      expect(e.message).toEqual(
+      expect((e as Error).message).toEqual(
         stripIndents`The "apps/mypkg/prisma/schema.prisma" file already exists in the project "mypkg". Are you sure this is the right project to set up Prisma?
         If you are sure, you can remove the existing file and re-run the generator.`
       );

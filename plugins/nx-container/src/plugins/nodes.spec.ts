@@ -25,7 +25,7 @@ describe('@nx/container/plugin', () => {
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
     context = {
-      nxJsonConfiguration: readNxJson(tree),
+      nxJsonConfiguration: readNxJson(tree)!,
       workspaceRoot: '/',
       configFiles: [],
     };

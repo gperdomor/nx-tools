@@ -40,7 +40,7 @@ describe('Podman Engine', () => {
 
   describe('getArgs', () => {
     beforeEach(() => {
-      process.env = Object.keys(process.env).reduce((object, key) => {
+      process.env = Object.keys(process.env).reduce<NodeJS.ProcessEnv>((object, key) => {
         if (!key.startsWith('INPUT_')) {
           object[key] = process.env[key];
         }

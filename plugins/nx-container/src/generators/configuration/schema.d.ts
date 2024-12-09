@@ -4,6 +4,9 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
+type Engine = 'docker' | 'podman' | 'kaniko';
+type Template = 'empty' | 'nest' | 'next' | 'nginx';
+
 export interface ConfigurationGeneratorSchema {
   /**
    * The name of the project to add the Container setup to.
@@ -12,11 +15,11 @@ export interface ConfigurationGeneratorSchema {
   /**
    * Provide the container engine to be used.
    */
-  engine?: 'docker' | 'podman' | 'kaniko';
+  engine?: Engine;
   /**
    * Which type of app you are building?.
    */
-  template?: 'empty' | 'nest' | 'next' | 'nginx';
+  template?: Template;
   /**
    * Skips formatting the workspace after the generator completes.
    */

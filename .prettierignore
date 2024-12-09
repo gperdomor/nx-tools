@@ -4,3 +4,4 @@
 /tmp
 /.nx/cache
 /.nx/workspace-data
+/**/dist
