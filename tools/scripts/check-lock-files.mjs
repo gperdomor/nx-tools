@@ -8,12 +8,18 @@ async function checkLockFiles() {
   if (existsSync('pnpm-lock.yaml')) {
     errors.push('Invalid occurence of "pnpm-lock.yaml" file. Please remove it and use only "package-lock.json"');
   }
+  if (existsSync('bun.lockb')) {
+    errors.push('Invalid occurence of "bun.lockb" file. Please remove it and use only "package-lock.json"');
+  }
   try {
     const content = readFileSync('package-lock.json', 'utf-8');
     if (content.match(/localhost:487/)) {
       errors.push(
-        'The "package-lock.json" has reference to local npm repository ("localhost:4873"). Please use "registry.npmjs.org" in "package-lock.json"'
+        'The "package-lock.json" has reference to local repository ("localhost:4873"). Please use ensure you disable local registry before running "npm install"'
       );
+    }
+    if (content.match(/resolution: \{tarball/)) {
+      errors.push('The "package-lock.json" has reference to tarball package. Please use npm registry only');
     }
 
     const { default: packageJson } = await import('../../package-lock.json', { with: { type: 'json' } });
