@@ -6,25 +6,34 @@ exports[`@nx/container/plugin non-root project with Dockerfile should create nod
     "apps/your-docker-app": {
       "targets": {
         "build": {
+          "configurations": {
+            "ci": {
+              "load": false,
+              "metadata": {
+                "images": [
+                  "docker.io/my-docker-app",
+                ],
+                "tags": [
+                  "type=schedule",
+                  "type=ref,event=branch",
+                  "type=ref,event=tag",
+                  "type=ref,event=pr",
+                  "type=sha,prefix=sha-",
+                ],
+              },
+              "push": true,
+            },
+          },
           "dependsOn": [
             "build",
           ],
           "executor": "@nx-tools/nx-container:build",
           "options": {
             "engine": "docker",
-            "metadata": {
-              "images": [
-                "my-docker-app",
-              ],
-              "load": true,
-              "tags": [
-                "type=schedule",
-                "type=ref,event=branch",
-                "type=ref,event=tag",
-                "type=ref,event=pr",
-                "type=sha,prefix=sha-",
-              ],
-            },
+            "load": true,
+            "tags": [
+              "docker.io/my-docker-app:dev",
+            ],
           },
         },
       },
@@ -39,25 +48,34 @@ exports[`@nx/container/plugin root project should create nodes with correct targ
     ".": {
       "targets": {
         "build": {
+          "configurations": {
+            "ci": {
+              "load": false,
+              "metadata": {
+                "images": [
+                  "docker.io/my-docker-app",
+                ],
+                "tags": [
+                  "type=schedule",
+                  "type=ref,event=branch",
+                  "type=ref,event=tag",
+                  "type=ref,event=pr",
+                  "type=sha,prefix=sha-",
+                ],
+              },
+              "push": true,
+            },
+          },
           "dependsOn": [
             "build",
           ],
           "executor": "@nx-tools/nx-container:build",
           "options": {
             "engine": "docker",
-            "metadata": {
-              "images": [
-                "my-docker-app",
-              ],
-              "load": true,
-              "tags": [
-                "type=schedule",
-                "type=ref,event=branch",
-                "type=ref,event=tag",
-                "type=ref,event=pr",
-                "type=sha,prefix=sha-",
-              ],
-            },
+            "load": true,
+            "tags": [
+              "docker.io/my-docker-app:dev",
+            ],
           },
         },
       },

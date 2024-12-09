@@ -1,8 +1,8 @@
 import { type CreateNodesContext, readNxJson, Tree } from '@nx/devkit';
-import { createNodes } from './nodes';
 import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash-for-create-nodes';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-import { readdirSync, existsSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import { createNodes } from './nodes';
 
 jest.mock('fs', () => ({
   ...jest.requireActual('fs'),
@@ -90,10 +90,9 @@ describe('@nx/container/plugin', () => {
   describe('non-root project without project.json', () => {
     beforeEach(() => {
       tree.write('apps/no-project/Dockerfile', '');
-      tree.write('apps/no-project/package.json', JSON.stringify({ name: 'no-project-app' }));
     });
 
-    it('should not create nodes if project.json is missing', async () => {
+    it('should not create nodes if there is no project.json or package.json', async () => {
       const nodes = await createNodesFunction(
         'apps/no-project/Dockerfile',
         {
