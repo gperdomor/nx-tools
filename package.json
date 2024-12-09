@@ -6,7 +6,8 @@
   "scripts": {
     "check-lock-files": "node ./tools/scripts/check-lock-files.mjs",
     "commit": "cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "preinstall": "node ./tools/scripts/preinstall.mjs"
   },
   "private": true,
   "engines": {
