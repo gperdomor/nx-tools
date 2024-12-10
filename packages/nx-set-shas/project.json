@@ -3,30 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/nx-set-shas/src",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
   "tags": ["type:cli", "scope:nx-set-shas"],
-  "targets": {
-    "build": {
-      "executor": "@nx/js:swc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/nx-set-shas",
-        "main": "packages/nx-set-shas/src/index.ts",
-        "tsConfig": "packages/nx-set-shas/tsconfig.lib.json",
-        "assets": ["packages/nx-set-shas/*.md"]
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
-    }
-  }
+  "// targets": "to see all targets run: nx show project nx-set-shas --web",
+  "targets": {}
 }

@@ -3,34 +3,27 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "plugins/nx-graphql-codegen/src",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
   "tags": ["type:plugin", "scope:nx-graphql-codegen"],
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/plugins/nx-graphql-codegen",
+        "outputPath": "plugins/nx-graphql-codegen/dist",
         "main": "plugins/nx-graphql-codegen/src/index.ts",
         "tsConfig": "plugins/nx-graphql-codegen/tsconfig.lib.json",
+        "rootDir": "plugins/nx-graphql-codegen/src",
+        "generatePackageJson": false,
         "assets": [
-          "plugins/nx-graphql-codegen/*.md",
           {
             "input": "./plugins/nx-graphql-codegen/src",
             "glob": "**/!(*.ts)",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-graphql-codegen/src",
             "glob": "**/*.d.ts",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-graphql-codegen",
@@ -43,11 +36,6 @@
             "output": "."
           }
         ]
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
       }
     }
   }

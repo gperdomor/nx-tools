@@ -3,34 +3,27 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "plugins/nx-container/src",
   "projectType": "library",
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
-    }
-  },
   "tags": ["type:plugin", "scope:nx-container"],
   "targets": {
     "build": {
-      "executor": "@nx/js:swc",
+      "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/plugins/nx-container",
+        "outputPath": "plugins/nx-container/dist",
         "main": "plugins/nx-container/src/index.ts",
         "tsConfig": "plugins/nx-container/tsconfig.lib.json",
+        "rootDir": "plugins/nx-container/src",
+        "generatePackageJson": false,
         "assets": [
-          "plugins/nx-container/*.md",
           {
             "input": "./plugins/nx-container/src",
             "glob": "**/!(*.ts)",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-container/src",
             "glob": "**/*.d.ts",
-            "output": "./src"
+            "output": "."
           },
           {
             "input": "./plugins/nx-container",
@@ -43,11 +36,6 @@
             "output": "."
           }
         ]
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
       }
     }
   }

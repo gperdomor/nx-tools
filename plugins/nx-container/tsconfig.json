@@ -1,12 +1,17 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true
-  },
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/ci-context"
+    },
+    {
+      "path": "../../packages/container-metadata"
+    },
     {
       "path": "./tsconfig.lib.json"
     },

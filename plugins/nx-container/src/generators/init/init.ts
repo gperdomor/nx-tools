@@ -1,7 +1,7 @@
 import {
   ExpandedPluginConfiguration,
   GeneratorCallback,
-  PluginConfiguration,
+  NxJsonConfiguration,
   readNxJson,
   runTasksInSerial,
   Tree,
@@ -15,7 +15,7 @@ export async function initGenerator(tree: Tree, options: Schema): Promise<Genera
   const nxJson = readNxJson(tree);
 
   // Add container plugin to Nx configuration if not already present
-  if (!hasContainerPlugin(nxJson)) {
+  if (nxJson && !hasContainerPlugin(nxJson)) {
     nxJson.plugins ??= [];
 
     const pluginConfig: ExpandedPluginConfiguration<ContainerPluginOptions> = {
@@ -30,7 +30,7 @@ export async function initGenerator(tree: Tree, options: Schema): Promise<Genera
   return runTasksInSerial(...tasks);
 }
 
-function hasContainerPlugin(nxJson: { plugins?: PluginConfiguration[] }): boolean {
+function hasContainerPlugin(nxJson: NxJsonConfiguration): boolean {
   return (
     nxJson.plugins?.some((plugin) =>
       typeof plugin === 'string' ? plugin === '@nx-tools/nx-container' : plugin.plugin === '@nx-tools/nx-container'

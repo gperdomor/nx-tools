@@ -1,4 +1,4 @@
-import { Tree, readJson } from '@nx/devkit';
+import { PluginConfiguration, Tree, readJson, readNxJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { initGenerator } from './init';
 
@@ -14,12 +14,12 @@ describe('init generator', () => {
     await initGenerator(tree, {});
 
     // Read the nx.json file
-    const nxJson = readJson(tree, 'nx.json');
+    const nxJson = readNxJson(tree);
 
     // Check that the plugin has been added
-    expect(nxJson.plugins).toBeDefined();
+    expect(nxJson?.plugins).toBeDefined();
     expect(
-      nxJson.plugins.some((p) =>
+      nxJson?.plugins?.some((p: PluginConfiguration) =>
         typeof p === 'string' ? p === '@nx-tools/nx-container' : p.plugin === '@nx-tools/nx-container'
       )
     ).toBe(true);

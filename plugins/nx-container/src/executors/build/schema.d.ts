@@ -65,6 +65,10 @@ export interface BuildExecutorSchema {
    */
   'no-cache'?: boolean;
   /**
+   * Do not cache specified stages
+   */
+  'no-cache-filters'?: string[];
+  /**
    * List of output destinations (format: type=local,dest=path)
    */
   outputs?: string[];

@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -23,7 +23,7 @@ const context: ExecutorContext = {
 describe('Status Executor', () => {
   it('can run with empty options', async () => {
     const options: StatusExecutorSchema = {};
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma migrate status', [
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -34,11 +34,11 @@ describe('Status Executor', () => {
 
   test.each([['schema', 'my-prisma-file.schema']])(
     'given %p option with %p value, should be handled has arg',
-    async (option: keyof StatusExecutorSchema, value: string) => {
+    async (option: string, value: string) => {
       const options: StatusExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx prisma migrate status', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }

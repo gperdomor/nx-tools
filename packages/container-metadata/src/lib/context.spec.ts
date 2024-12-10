@@ -1,11 +1,11 @@
 import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
+import { Git } from '@nx-tools/ci-context/src/lib/utils/git';
+import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
 import { getPosixName } from '@nx-tools/core';
 import * as dotenv from 'dotenv';
 import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { Git } from 'packages/ci-context/src/lib/utils/git';
-import { Github } from 'packages/ci-context/src/lib/utils/github';
 import { Inputs, getContext, getInputs } from './context';
 
 beforeEach(() => {

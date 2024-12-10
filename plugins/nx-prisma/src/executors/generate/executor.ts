@@ -11,6 +11,8 @@ const runExecutor: PromiseExecutor<GenerateExecutorSchema> = async (options, ctx
   });
 };
 
+type Flag = 'data-proxy' | 'accelerate' | 'no-engine' | 'no-hints' | 'allow-no-models' | 'watch';
+
 const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[] => {
   const args = [];
   const schema = options?.schema ?? getDefaultScheme(ctx);
@@ -23,9 +25,16 @@ const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[
   }
 
   // Option list from https://www.prisma.io/docs/orm/reference/prisma-cli-reference#options-1
-  const generatorCommandFlags = ['data-proxy', 'accelerate', 'no-engine', 'no-hints', 'allow-no-models', 'watch'];
+  const generatorCommandFlags: Flag[] = [
+    'data-proxy',
+    'accelerate',
+    'no-engine',
+    'no-hints',
+    'allow-no-models',
+    'watch',
+  ];
 
-  generatorCommandFlags.forEach((flag) => {
+  generatorCommandFlags.forEach((flag: Flag) => {
     if (options[flag]) {
       args.push(`--${flag}`);
     }

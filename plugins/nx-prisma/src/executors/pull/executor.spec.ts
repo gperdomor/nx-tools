@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -23,7 +23,7 @@ const context: ExecutorContext = {
 describe('Pull Executor', () => {
   it('can run with empty options', async () => {
     const options: PullExecutorSchema = {};
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
@@ -32,21 +32,21 @@ describe('Pull Executor', () => {
 
   test.each([['schema', 'my-prisma-file.schema']])(
     'given %p option with %p value, should be handled has arg',
-    async (option: keyof PullExecutorSchema, value: string) => {
+    async (option: string, value: string) => {
       const options: PullExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     }
   );
 
-  test.each([['force'], ['print']])('given %p, should be handled has flag', async (flag: keyof PullExecutorSchema) => {
+  test.each([['force'], ['print']])('given %p, should be handled has flag', async (flag: string) => {
     const options: PullExecutorSchema = {
       [flag]: true,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma db pull', [
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -62,7 +62,7 @@ describe('Pull Executor', () => {
       force: true,
       print: true,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=my-schema.schema', '--force', '--print']));
     expect(output.success).toBeTruthy();
   });

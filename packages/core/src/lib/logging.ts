@@ -1,8 +1,6 @@
 import { logger as l } from '@nx/devkit';
 import * as os from 'node:os';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const chalk = require('chalk');
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const ci = require('ci-info');
 
 const escapeData = (s: string): string => {

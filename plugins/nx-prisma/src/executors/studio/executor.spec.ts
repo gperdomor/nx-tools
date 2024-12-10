@@ -12,7 +12,7 @@ jest.mock('@nx-tools/core', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -23,7 +23,7 @@ const context: ExecutorContext = {
 describe('Studio Executor', () => {
   it('can run with empty options', async () => {
     const options: StudioExecutorSchema = {};
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma studio', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
     );
@@ -36,11 +36,11 @@ describe('Studio Executor', () => {
     ['port', 5555],
   ])(
     'given %p option with %p value, should be included in the args array',
-    async (option: keyof Omit<StudioExecutorSchema, 'options'>, value: string) => {
+    async (option: string, value: string | number) => {
       const options: StudioExecutorSchema = {
         [option]: value,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(
         expectCommandToHaveBeenCalled('npx prisma studio', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
@@ -57,7 +57,7 @@ describe('Studio Executor', () => {
       browser: 'firefox',
       port: 6666,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(
       expectCommandToHaveBeenCalled('npx prisma studio', [
         '--schema=my-schema.schema',

@@ -2,8 +2,8 @@
   "name": "@nx-tools/nx-set-shas",
   "version": "6.2.1",
   "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "bin": {
     "nx-set-shas": "./src/index.js"
   },
@@ -13,6 +13,10 @@
     "semver": "^7.6.2"
   },
   "peerDependencies": {
-    "@swc/helpers": "~0.5.11"
-  }
+    "tslib": "^2.5.0"
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ]
 }

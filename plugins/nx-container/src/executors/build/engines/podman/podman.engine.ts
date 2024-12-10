@@ -6,7 +6,7 @@ import { EngineAdapter } from '../engine-adapter';
 import * as podman from './podman';
 
 export class Podman extends EngineAdapter {
-  private podmanVersion: string;
+  private podmanVersion = '';
 
   getPodmanVersion() {
     return this.podmanVersion;
@@ -63,15 +63,15 @@ export class Podman extends EngineAdapter {
     }
   }
 
-  async getImageID(): Promise<string> {
+  async getImageID(): Promise<string | undefined> {
     return podman.getImageID();
   }
 
-  async getMetadata(): Promise<string> {
+  async getMetadata(): Promise<string | undefined> {
     return podman.getMetadata();
   }
 
-  async getDigest(metadata: string): Promise<string> {
+  async getDigest(metadata: string): Promise<string | undefined> {
     return podman.getDigest(metadata);
   }
 
@@ -134,14 +134,14 @@ export class Podman extends EngineAdapter {
       try {
         args.push('--secret', await podman.getSecretString(secret));
       } catch (err) {
-        logger.warn(err.message);
+        logger.warn(this.getErrorMessage(err));
       }
     });
     await asyncForEach(inputs.secretFiles, async (secretFile) => {
       try {
         args.push('--secret', await podman.getSecretFile(secretFile));
       } catch (err) {
-        logger.warn(err.message);
+        logger.warn(this.getErrorMessage(err));
       }
     });
     if (inputs.githubToken && !podman.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {

@@ -20,6 +20,7 @@
     "@nx/devkit": "20.2.1",
     "@octokit/openapi-types": "22.2.0",
     "@renovate/pep440": "1.0.0",
+    "@types/tmp": "0.2.6",
     "chalk": "4.1.2",
     "ci-info": "4.0.0",
     "clipanion": "4.0.0-rc.3",
@@ -43,17 +44,14 @@
     "@nx/jest": "20.2.1",
     "@nx/js": "20.2.1",
     "@nx/plugin": "20.2.1",
-    "@nx/workspace": "20.2.1",
     "@prisma/client": "5.18.0",
     "@swc-node/register": "1.9.2",
-    "@swc/cli": "0.3.12",
+    "@swc/cli": "0.3.14",
     "@swc/core": "1.5.29",
     "@swc/helpers": "0.5.15",
-    "@swc/jest": "~0.2.36",
     "@types/jest": "29.5.12",
     "@types/node": "18.19.43",
     "@types/semver": "7.5.8",
-    "@typescript-eslint/parser": "^8.13.0",
     "commitizen": "4.3.1",
     "dotenv": "16.4.5",
     "eslint": "^9.8.0",
@@ -75,7 +73,21 @@
     "typescript-eslint": "^8.13.0",
     "verdaccio": "^5.31.1"
   },
+  "workspaces": [
+    "packages/**",
+    "plugins/**"
+  ],
   "nx": {
-    "includedScripts": []
+    "includedScripts": [],
+    "targets": {
+      "local-registry": {
+        "executor": "@nx/js:verdaccio",
+        "options": {
+          "port": 4873,
+          "config": ".verdaccio/config.yml",
+          "storage": "tmp/local-registry/storage"
+        }
+      }
+    }
   }
 }

@@ -6,8 +6,8 @@
   "repository": "https://github.com/gperdomor/nx-tools",
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "dependencies": {
     "@nx-tools/core": "6.1.1",
     "ci-info": "^4.0.0",
@@ -17,5 +17,9 @@
   },
   "peerDependencies": {
     "tslib": "^2.5.0"
-  }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ]
 }

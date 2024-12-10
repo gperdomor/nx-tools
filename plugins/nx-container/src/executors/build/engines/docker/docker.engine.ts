@@ -8,9 +8,9 @@ import * as buildx from './buildx';
 import * as docker from './docker';
 
 export class Docker extends EngineAdapter {
-  private standalone: boolean;
+  private standalone = true;
   private createdBuilder = false;
-  private buildxVersion: string;
+  private buildxVersion = '';
 
   getBuildxVersion() {
     return this.buildxVersion;
@@ -62,7 +62,7 @@ export class Docker extends EngineAdapter {
     });
 
     if (this.createdBuilder) {
-      inputs.builder = inputs.builder || `${ctx.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
+      inputs.builder = inputs.builder || `${ctx?.projectName}-${randomBytes(24).toString('hex').substring(0, 6)}`;
 
       logger.info(`Creating builder ${inputs.builder}`);
 
@@ -88,15 +88,15 @@ export class Docker extends EngineAdapter {
     }
   }
 
-  async getImageID(): Promise<string> {
+  async getImageID(): Promise<string | undefined> {
     return buildx.getImageID();
   }
 
-  async getMetadata(): Promise<string> {
+  async getMetadata(): Promise<string | undefined> {
     return buildx.getMetadata();
   }
 
-  async getDigest(metadata: string): Promise<string> {
+  async getDigest(metadata: string): Promise<string | undefined> {
     return buildx.getDigest(metadata);
   }
 
@@ -168,14 +168,14 @@ export class Docker extends EngineAdapter {
       try {
         args.push('--secret', await buildx.getSecretString(secret));
       } catch (err) {
-        logger.warn(err.message);
+        logger.warn(this.getErrorMessage(err));
       }
     });
     await asyncForEach(inputs.secretFiles, async (secretFile) => {
       try {
         args.push('--secret', await buildx.getSecretFile(secretFile));
       } catch (err) {
-        logger.warn(err.message);
+        logger.warn(this.getErrorMessage(err));
       }
     });
     if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {

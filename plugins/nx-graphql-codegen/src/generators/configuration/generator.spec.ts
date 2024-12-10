@@ -114,7 +114,7 @@ describe('configuration generator', () => {
     try {
       await configurationGenerator(tree, options);
     } catch (e) {
-      expect(e.message).toEqual(
+      expect((e as Error).message).toEqual(
         stripIndents`The "apps/mypkg/codegen.ts" file already exists in the project "${projectName}". Are you sure this is the right project to set up Grapqh Code Generator?
         If you are sure, you can remove the existing file and re-run the generator.`
       );

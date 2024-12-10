@@ -1,13 +1,19 @@
 import { ExecutorContext } from '@nx/devkit';
 import { getProjectRoot } from './workspace';
 
-const ctx1: ExecutorContext = {
+type CTX = Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'>;
+
+const ctx1: CTX = {
   root: 'workspace-folder',
   cwd: process.cwd(),
   isVerbose: false,
+  projectsConfigurations: {
+    version: 2,
+    projects: {},
+  },
 };
 
-const ctx2: ExecutorContext = {
+const ctx2: CTX = {
   root: 'workspace-folder',
   cwd: process.cwd(),
   isVerbose: false,
@@ -25,8 +31,8 @@ describe('Workspace', () => {
     [undefined, ctx2, 'workspace-folder'],
   ])(
     'given test data and projectName=%p, should return "%p"',
-    (projectName: string | undefined, ctx: ExecutorContext, expected: string) => {
-      expect(getProjectRoot({ ...ctx, projectName: projectName })).toEqual(expected);
+    (projectName: string | undefined, ctx: CTX, expected: string) => {
+      expect(getProjectRoot({ ...(ctx as ExecutorContext), projectName: projectName })).toEqual(expected);
     }
   );
 });

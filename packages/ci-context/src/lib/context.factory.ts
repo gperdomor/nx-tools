@@ -12,7 +12,6 @@ import { Semaphore } from './utils/semaphore';
 import { Teamcity } from './utils/teamcity';
 import { Travis } from './utils/travis';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const ci = require('ci-info');
 
 export class ContextProxyFactory {

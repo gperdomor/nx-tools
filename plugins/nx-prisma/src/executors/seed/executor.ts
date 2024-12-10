@@ -29,7 +29,8 @@ const getArgs = (options: SeedExecutorSchema, ctx: ExecutorContext): string[] =>
 
   args.push(`--${tsConfigArgName}=${tsConfig}`);
 
-  args.push(options.script);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  args.push(options.script!);
 
   return args;
 };

@@ -12,7 +12,7 @@ jest.mock('node:child_process', () => {
   };
 });
 
-const context: ExecutorContext = {
+const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
   projectsConfigurations: { version: 2, projects: { foo: { root: 'apps/foo' } } },
   projectName: 'foo',
@@ -27,7 +27,7 @@ describe('Migrate Executor', () => {
 
   it('can run with empty options', async () => {
     const options: MigrateExecutorSchema = { name: 'mig-name' };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="mig-name"`,
       {
@@ -39,12 +39,12 @@ describe('Migrate Executor', () => {
 
   test.each([['create-only'], ['skip-generate'], ['skip-seed']])(
     'given %p, should be handled has flag',
-    async (flag: keyof MigrateExecutorSchema) => {
+    async (flag: string) => {
       const options: MigrateExecutorSchema = {
         name: 'users',
         [flag]: true,
       };
-      const output = await executor(options, context);
+      const output = await executor(options, context as ExecutorContext);
       expect(execSync).toHaveBeenCalledWith(
         `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="users" --${flag}`,
         {
@@ -63,7 +63,7 @@ describe('Migrate Executor', () => {
       'skip-generate': true,
       'skip-seed': true,
     };
-    const output = await executor(options, context);
+    const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate dev --schema=my-schema.schema --name="migration-name" --create-only --skip-generate --skip-seed',
       { stdio: 'inherit' }

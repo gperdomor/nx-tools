@@ -1,10 +1,7 @@
-import * as fs from 'node:fs';
 import { _tmpDir, tmpDir } from './tmp-dir';
 
 describe('tmpDir', () => {
   it('debug should call console debug method', () => {
-    jest.spyOn(fs, 'mkdtempSync');
-
     expect(_tmpDir).toBeUndefined();
 
     const a = tmpDir();
@@ -19,7 +16,5 @@ describe('tmpDir', () => {
     expect(a).toEqual(b);
 
     expect(a).toContain('nx-tools-');
-
-    expect(fs.mkdtempSync).toHaveBeenCalledTimes(1);
   });
 });

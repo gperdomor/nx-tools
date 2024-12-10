@@ -93,7 +93,7 @@ export function isLocalOrTarExporter(outputs: string[]): boolean {
     if (record.length == 1 && !record[0].startsWith('type=')) {
       return true;
     }
-    for (const [key, value] of record.map((chunk) => chunk.split('=').map((item) => item.trim()))) {
+    for (const [key, value] of record.map((chunk: string) => chunk.split('=').map((item) => item.trim()))) {
       if (key == 'type' && (value == 'local' || value == 'tar')) {
         return true;
       }

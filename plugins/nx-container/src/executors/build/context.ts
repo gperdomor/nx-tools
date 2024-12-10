@@ -7,7 +7,7 @@ import * as path from 'node:path';
 import * as tmp from 'tmp';
 import { BuildExecutorSchema } from './schema';
 
-let _defaultContext, _tmpDir: string;
+let _defaultContext: string, _tmpDir: string;
 
 export interface Inputs {
   quiet: boolean;

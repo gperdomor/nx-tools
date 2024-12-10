@@ -11,7 +11,6 @@ import * as semaphore from './utils/semaphore';
 import * as teamcity from './utils/teamcity';
 import * as travis from './utils/travis';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const ci = require('ci-info');
 
 export class RepoProxyFactory {

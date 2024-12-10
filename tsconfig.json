@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./plugins/nx-container"
+    },
+    {
+      "path": "./plugins/nx-prisma"
+    },
+    {
+      "path": "./plugins/nx-graphql-codegen"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/ci-context"
+    },
+    {
+      "path": "./packages/container-metadata"
+    },
+    {
+      "path": "./packages/nx-set-shas"
+    }
+  ]
+}
