@@ -50,7 +50,7 @@
     "@swc/core": "1.5.29",
     "@swc/helpers": "0.5.15",
     "@types/jest": "29.5.12",
-    "@types/node": "18.19.43",
+    "@types/node": "18.19.67",
     "@types/semver": "7.5.8",
     "commitizen": "4.3.1",
     "dotenv": "16.4.5",
