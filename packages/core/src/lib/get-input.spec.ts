@@ -1,8 +1,7 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
 import { getBooleanInput, getInput, getMultilineInput, getPosixName } from './get-input';
 
-const testEnvVars = {
+const testEnvVars: NodeJS.ProcessEnv = {
   'my var': '',
   'special char var \r\n];': '',
   'my var2': '',
@@ -47,16 +46,14 @@ describe('getPosixName', () => {
 });
 
 describe('getInputs', () => {
-  let restore: RestoreFn;
   beforeEach(() => {
-    restore = mockedEnv({
-      ...testEnvVars,
+    Object.keys(testEnvVars).forEach((env) => {
+      vi.stubEnv(env, testEnvVars[env] as string);
     });
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.unstubAllEnvs();
   });
 
   describe('getInput', () => {
@@ -79,10 +76,6 @@ describe('getInputs', () => {
     it('getInput is case insensitive', () => {
       expect(getInput('My InPuT')).toBe('val');
     });
-
-    // it('getInput handles special characters', () => {
-    //   expect(getInput('special chars_\'\t"\\')).toBe('\'\t"\\ response');
-    // });
 
     it('getInput handles multiple spaces', () => {
       expect(getInput('multiple spaces variable')).toBe('I have multiple spaces');

@@ -5,8 +5,11 @@ module.exports = [
     files: ['**/*.json'],
     // Override or add rules here
     rules: {},
-    languageOptions: { parser: require('jsonc-eslint-parser') },
+    languageOptions: {
+      parser: require('jsonc-eslint-parser'),
+    },
   },
+
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
