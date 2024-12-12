@@ -1,14 +1,14 @@
 import { logger } from '@nx-tools/core';
+import { mockConsole } from '../test-utils.spec';
 import { Image, Transform } from './image';
 
 describe('transform', () => {
   beforeAll(() => {
-    jest.spyOn(console, 'info').mockImplementation(() => true);
-    jest.spyOn(console, 'log').mockImplementation(() => true);
+    mockConsole();
   });
 
   afterAll(() => {
-    jest.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   // prettier-ignore

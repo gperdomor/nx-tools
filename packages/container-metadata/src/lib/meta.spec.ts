@@ -1,45 +1,42 @@
-import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext } from '@nx-tools/ci-context';
-import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
+import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
-import * as dotenv from 'dotenv';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import repoFixture from '../../__tests__/fixtures/repo.json';
+import { mockConsole, stubEnvsFromFile } from '../test-utils.spec';
 import { Inputs, getContext, getInputs } from './context';
 import { Meta, Version } from './meta';
 
-jest.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
-  return <Promise<RepoMetadata>>(repoFixture as unknown);
-});
-
-jest.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {
-  return '2020-01-10T00:30:00.000Z';
-});
-
-jest.mock('moment-timezone', () => {
-  return () => (jest.requireActual('moment-timezone') as typeof import('moment-timezone'))('2020-01-10T00:30:00.000Z');
-});
+const ci = require('ci-info');
 
 beforeAll(() => {
-  jest.spyOn(console, 'info').mockImplementation(() => true);
-  jest.spyOn(console, 'log').mockImplementation(() => true);
-  jest.spyOn(console, 'warn').mockImplementation(() => true);
+  mockConsole();
+
+  vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(true);
+
+  vi.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
+    return <Promise<RepoMetadata>>(repoFixture as unknown);
+  });
+
+  vi.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {
+    return '2020-01-10T00:30:00.000Z';
+  });
+
+  vi.useFakeTimers();
+  vi.setSystemTime(new Date('2020-01-10T00:30:00.000Z'));
 });
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.useRealTimers();
+  vi.resetAllMocks();
 });
 
 beforeEach(() => {
-  jest.clearAllMocks();
   Object.keys(process.env).forEach(function (key) {
     if (key !== 'GITHUB_TOKEN' && key.startsWith('GITHUB_')) {
       delete process.env[key];
     }
-  });
-  jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
-    return Github.context();
   });
 
   // workaround for https://github.com/nrwl/nx/issues/20330
@@ -62,6 +59,10 @@ describe('isRawStatement', () => {
   });
 });
 
+const stubEnvs = (envFile: string) => {
+  stubEnvsFromFile(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile));
+};
+
 const tagsLabelsTest = async (
   name: string,
   envFile: string,
@@ -71,7 +72,7 @@ const tagsLabelsTest = async (
   exLabels: Array<string>,
   exAnnotations: Array<string> | undefined
 ) => {
-  process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
+  stubEnvs(envFile);
   const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
   const meta = new Meta({ ...getInputs({}), ...inputs }, await getContext(), repo, logger);
 
@@ -2984,11 +2985,11 @@ describe('pr-head-sha', () => {
       ]
     ],
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exVersion: Version, exTags: Array<string>, exLabelsAnnotations: Array<string>) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
-    process.env.DOCKER_METADATA_PR_HEAD_SHA = 'true';
+    stubEnvs(envFile);
+    vi.stubEnv('DOCKER_METADATA_PR_HEAD_SHA', "true");
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
+    const meta = new Meta({ ...getInputs({}), ...inputs }, await getContext(), repo, logger);
 
     const version = meta.version;
     expect(version).toEqual(exVersion);
@@ -4017,7 +4018,7 @@ describe('json', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exJSON: unknown) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
+    stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
@@ -4531,7 +4532,7 @@ describe('bakeFile', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeTags: unknown, exBakeLabels: unknown, exBakeAnnotations: unknown) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
+    stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
@@ -4593,7 +4594,7 @@ describe('bakeFileTagsLabels', () => {
       }
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, exBakeDefinition: unknown) => {
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
+    stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
@@ -4637,8 +4638,7 @@ describe('sepTags', () => {
       "user/app:dev,user/app:my,user/app:custom,user/app:tags"
     ]
   ])('given %p with %p event', async (name: string, envFile: string, inputs: Inputs, expTags: string) => {
-
-    process.env = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
+    stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
     const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
