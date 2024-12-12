@@ -2,24 +2,22 @@ import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
 import { Git } from '@nx-tools/ci-context/src/lib/utils/git';
 import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
 import { getPosixName } from '@nx-tools/core';
-import * as dotenv from 'dotenv';
-import mockedEnv, { RestoreFn } from 'mocked-env';
-import * as fs from 'node:fs';
 import * as path from 'node:path';
+import { stubEnvsFromFile } from '../test-utils.spec';
 import { Inputs, getContext, getInputs } from './context';
 
 beforeEach(() => {
-  jest.clearAllMocks();
+  vi.resetAllMocks();
 });
 
 describe('getInputs', () => {
   beforeEach(() => {
-    process.env = Object.keys(process.env).reduce((object, key) => {
+    process.env = Object.keys(process.env).reduce<NodeJS.ProcessEnv>((object, key) => {
       if (!key.startsWith('INPUT_')) {
         object[key] = process.env[key];
       }
       return object;
-    }, {} as NodeJS.ProcessEnv);
+    }, {});
   });
 
   // prettier-ignore
@@ -97,27 +95,16 @@ describe('getInputs', () => {
 });
 
 describe('getContext', () => {
-  let restore: RestoreFn;
-
   beforeEach(() => {
-    jest.resetModules();
-    restore = mockedEnv(
-      {
-        ...process.env,
-        ...dotenv.parse(
-          fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures/event_create_branch.env'))
-        ),
-      },
-      { restore: true }
-    );
+    stubEnvsFromFile(path.join(__dirname, '..', '..', '__tests__', 'fixtures/event_create_branch.env'));
   });
 
   afterEach(() => {
-    restore();
+    vi.unstubAllEnvs();
   });
 
   it('workflow', async () => {
-    jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+    vi.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
       return Github.context();
     });
 
@@ -127,10 +114,9 @@ describe('getContext', () => {
   });
 
   it('git', async () => {
-    jest.spyOn(Git, 'ref').mockResolvedValue('refs/heads/git-test');
-    jest.spyOn(Git, 'fullCommit').mockResolvedValue('git-test-sha');
-
-    jest.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+    vi.spyOn(Git, 'ref').mockResolvedValue('refs/heads/git-test');
+    vi.spyOn(Git, 'fullCommit').mockResolvedValue('git-test-sha');
+    vi.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
       return Git.context();
     });
 

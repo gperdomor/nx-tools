@@ -1,13 +1,13 @@
 import { logger } from '@nx-tools/core';
+import { mockConsole } from '../test-utils.spec';
 import { DefaultPriorities, Parse, RefEvent, ShaFormat, Tag, Transform, Type } from './tag';
 
 beforeAll(() => {
-  jest.spyOn(console, 'info').mockImplementation(() => true);
-  jest.spyOn(console, 'log').mockImplementation(() => true);
+  mockConsole();
 });
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.restoreAllMocks();
 });
 
 describe('transform', () => {
