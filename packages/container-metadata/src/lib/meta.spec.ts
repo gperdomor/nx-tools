@@ -1,11 +1,10 @@
 import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
-import * as dotenv from 'dotenv';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import repoFixture from '../../__tests__/fixtures/repo.json';
-import { mockConsole } from '../test-utils.spec';
+import { mockConsole, stubEnvsFromFile } from '../test-utils.spec';
 import { Inputs, getContext, getInputs } from './context';
 import { Meta, Version } from './meta';
 
@@ -61,11 +60,7 @@ describe('isRawStatement', () => {
 });
 
 const stubEnvs = (envFile: string) => {
-  const envs = dotenv.parse(fs.readFileSync(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile)));
-
-  Object.keys(envs).forEach((key) => {
-    vi.stubEnv(key, envs[key]);
-  });
+  stubEnvsFromFile(path.join(__dirname, '..', '..', '__tests__', 'fixtures', envFile));
 };
 
 const tagsLabelsTest = async (

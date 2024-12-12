@@ -7,8 +7,8 @@ export const mockConsole = () => {
   vi.spyOn(console, 'warn').mockImplementation(() => true);
 };
 
-export const stubEnvsFromFile = (envFile: string) => {
-  const envs = dotenv.parse(fs.readFileSync(envFile));
+export const stubEnvsFromFile = (path: string) => {
+  const envs = dotenv.parse(fs.readFileSync(path));
 
   Object.keys(envs).forEach((key) => {
     vi.stubEnv(key, envs[key]);
