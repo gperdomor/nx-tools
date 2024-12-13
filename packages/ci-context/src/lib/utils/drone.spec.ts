@@ -1,33 +1,26 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as drone from './drone';
 import { Drone } from './drone';
 
 describe('Drone Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        DRONE: 'true',
-        DRONE_BUILD_EVENT: 'drone-event-name',
-        DRONE_COMMIT_SHA: 'drone-sha',
-        DRONE_COMMIT_REF: 'refs/heads/drone-ref',
-        DRONE_STAGE_NAME: 'drone-job',
-        DRONE_COMMIT_AUTHOR: 'drone-actor',
-        DRONE_BUILD_NUMBER: '100',
-        DRONE_REPO_BRANCH: 'drone-main',
-        DRONE_REPO_LINK: 'https://drone.com/gperdomor/nx-tools',
-        DRONE_REPO: 'gperdomor/nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('DRONE', 'true');
+    vi.stubEnv('DRONE_BUILD_EVENT', 'drone-event-name');
+    vi.stubEnv('DRONE_COMMIT_SHA', 'drone-sha');
+    vi.stubEnv('DRONE_COMMIT_REF', 'refs/heads/drone-ref');
+    vi.stubEnv('DRONE_STAGE_NAME', 'drone-job');
+    vi.stubEnv('DRONE_COMMIT_AUTHOR', 'drone-actor');
+    vi.stubEnv('DRONE_BUILD_NUMBER', '100');
+    vi.stubEnv('DRONE_REPO_BRANCH', 'drone-main');
+    vi.stubEnv('DRONE_REPO_LINK', 'https://drone.com/gperdomor/nx-tools');
+    vi.stubEnv('DRONE_REPO', 'gperdomor/nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
@@ -53,17 +46,14 @@ describe('Drone Context', () => {
     });
 
     describe('When git tag is present', () => {
-      let restore: RestoreFn;
-
       beforeEach(() => {
-        restore = mockedEnv({
-          DRONE_COMMIT_REF: 'refs/tags/drone-v1.0.0',
-          DRONE_REPO_PRIVATE: 'true',
-        });
+        vi.stubEnv('DRONE_COMMIT_REF', 'refs/tags/drone-v1.0.0');
+        vi.stubEnv('DRONE_REPO_PRIVATE', 'true');
       });
 
       afterEach(() => {
-        restore();
+        vi.stubEnv('DRONE_COMMIT_REF', '');
+        vi.stubEnv('DRONE_REPO_PRIVATE', '');
       });
 
       it('Should be take proper context values', async () => {

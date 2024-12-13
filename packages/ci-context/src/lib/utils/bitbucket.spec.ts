@@ -1,32 +1,24 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as bitbucket from './bitbucket';
 import { BitBucket } from './bitbucket';
 
-describe('CircleCI Context', () => {
-  let restore: RestoreFn;
+describe('BitBucket Context', () => {
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        BITBUCKET_PR_ID: 'pr-id',
-        BITBUCKET_COMMIT: 'bitbucket-sha',
-        BITBUCKET_BRANCH: 'bitbucket-ref-slug',
-        BITBUCKET_STEP_TRIGGERER_UUID: 'bitbucket-actor-uuid',
-        BITBUCKET_STEP_UUID: 'bitbucket-job-uuid',
-        BITBUCKET_BUILD_NUMBER: '50',
-        BITBUCKET_REPO_FULL_NAME: 'gperdomor/nx-tools',
-        BITBUCKET_WORKSPACE: 'nx-tools',
-        BITBUCKET_GIT_HTTP_ORIGIN: 'https://bitbucket.org/gperdomor/nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('BITBUCKET_PR_ID', 'pr-id');
+    vi.stubEnv('BITBUCKET_COMMIT', 'bitbucket-sha');
+    vi.stubEnv('BITBUCKET_BRANCH', 'bitbucket-ref-slug');
+    vi.stubEnv('BITBUCKET_STEP_TRIGGERER_UUID', 'bitbucket-actor-uuid');
+    vi.stubEnv('BITBUCKET_STEP_UUID', 'bitbucket-job-uuid');
+    vi.stubEnv('BITBUCKET_BUILD_NUMBER', '50');
+    vi.stubEnv('BITBUCKET_REPO_FULL_NAME', 'gperdomor/nx-tools');
+    vi.stubEnv('BITBUCKET_WORKSPACE', 'nx-tools');
+    vi.stubEnv('BITBUCKET_GIT_HTTP_ORIGIN', 'https://bitbucket.org/gperdomor/nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
@@ -66,16 +58,8 @@ describe('CircleCI Context', () => {
     });
 
     describe('When git tag is present', () => {
-      let restore: RestoreFn;
-
       beforeEach(() => {
-        restore = mockedEnv({
-          BITBUCKET_TAG: 'bitbucket-tag',
-        });
-      });
-
-      afterEach(() => {
-        restore();
+        vi.stubEnv('BITBUCKET_TAG', 'bitbucket-tag');
       });
 
       it('Should be take proper context values', async () => {

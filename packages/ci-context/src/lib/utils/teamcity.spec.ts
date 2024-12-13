@@ -1,9 +1,8 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import type { RunnerContext } from '../interfaces';
 import * as teamcity from './teamcity';
 import { Teamcity } from './teamcity';
 
-const baseMockedFiles = {
+const files = {
   'build.properties': `
 build.number=1575
 build.vcs.number=ba74e4fe1f1836c067d678acc54b966610f4b59e
@@ -56,31 +55,28 @@ vcsroot.useAlternates: true
 `,
 };
 
-let mockedFiles = { ...baseMockedFiles };
+let mockedFiles = { ...files };
 
-jest.mock('fs/promises', () => ({
-  ...jest.requireActual('fs/promises'),
-  async readFile(fileName: keyof typeof mockedFiles) {
-    return mockedFiles[fileName];
-  },
-}));
+vi.mock('fs/promises', async (importOriginal) => {
+  return {
+    ...(await importOriginal<typeof import('fs/promises')>()),
+    async readFile(fileName: keyof typeof mockedFiles) {
+      return mockedFiles[fileName];
+    },
+  };
+});
 
 describe('TeamCity', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        TEAMCITY_BUILD_PROPERTIES_FILE: 'build.properties',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('TEAMCITY_BUILD_PROPERTIES_FILE', 'build.properties');
+    mockedFiles = { ...files };
   });
 
   afterEach(() => {
-    restore();
-    mockedFiles = { ...baseMockedFiles };
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {

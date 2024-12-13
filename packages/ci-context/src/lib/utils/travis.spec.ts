@@ -1,32 +1,24 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as travis from './travis';
 import { Travis } from './travis';
 
 describe('Travis Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        TRAVIS: 'true',
-        TRAVIS_EVENT_TYPE: 'travis-event-name',
-        TRAVIS_COMMIT: 'travis-sha',
-        TRAVIS_BRANCH: 'travis-ref-slug',
-        USER: 'travis-actor',
-        TRAVIS_JOB_NAME: 'travis-job',
-        TRAVIS_BUILD_ID: '10',
-        TRAVIS_BUILD_NUMBER: '100',
-        TRAVIS_REPO_SLUG: 'travis/nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('TRAVIS', 'true');
+    vi.stubEnv('TRAVIS_EVENT_TYPE', 'travis-event-name');
+    vi.stubEnv('TRAVIS_COMMIT', 'travis-sha');
+    vi.stubEnv('TRAVIS_BRANCH', 'travis-ref-slug');
+    vi.stubEnv('USER', 'travis-actor');
+    vi.stubEnv('TRAVIS_JOB_NAME', 'travis-job');
+    vi.stubEnv('TRAVIS_BUILD_ID', '10');
+    vi.stubEnv('TRAVIS_BUILD_NUMBER', '100');
+    vi.stubEnv('TRAVIS_REPO_SLUG', 'travis/nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
@@ -48,16 +40,8 @@ describe('Travis Context', () => {
     });
 
     describe('When git tag is present', () => {
-      let restore: RestoreFn;
-
       beforeEach(() => {
-        restore = mockedEnv({
-          TRAVIS_TAG: 'travis-tag',
-        });
-      });
-
-      afterEach(() => {
-        restore();
+        vi.stubEnv('TRAVIS_TAG', 'travis-tag');
       });
 
       it('Should be take proper context values', async () => {

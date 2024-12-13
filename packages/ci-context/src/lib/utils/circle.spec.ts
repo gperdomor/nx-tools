@@ -1,32 +1,25 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as circle from './circle';
 import { Circle } from './circle';
 
 describe('CircleCI Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        CIRCLECI: 'true',
-        CI_PULL_REQUEST: 'true',
-        CIRCLE_SHA1: 'circleci-sha',
-        CIRCLE_BRANCH: 'circleci-ref-slug',
-        CIRCLE_USERNAME: 'circleci-actor',
-        CIRCLE_JOB: 'circleci-job',
-        CIRCLE_BUILD_NUM: '30',
-        CIRCLE_REPOSITORY_URL: 'https://circle.com/gperdomor/nx-tools',
-        CIRCLE_PROJECT_REPONAME: 'nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('CIRCLECI', 'true');
+    vi.stubEnv('CI_PULL_REQUEST', 'true');
+    vi.stubEnv('CIRCLE_SHA1', 'circleci-sha');
+    vi.stubEnv('CIRCLE_BRANCH', 'circleci-ref-slug');
+    vi.stubEnv('CIRCLE_USERNAME', 'circleci-actor');
+    vi.stubEnv('CIRCLE_JOB', 'circleci-job');
+    vi.stubEnv('CIRCLE_BUILD_NUM', '30');
+    vi.stubEnv('CIRCLE_REPOSITORY_URL', 'https://circle.com/gperdomor/nx-tools');
+    vi.stubEnv('CIRCLE_PROJECT_REPONAME', 'nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
@@ -66,16 +59,12 @@ describe('CircleCI Context', () => {
     });
 
     describe('When git tag is present', () => {
-      let restore: RestoreFn;
-
       beforeEach(() => {
-        restore = mockedEnv({
-          CIRCLE_TAG: 'circleci-tag',
-        });
+        vi.stubEnv('CIRCLE_TAG', 'circleci-tag');
       });
 
       afterEach(() => {
-        restore();
+        vi.stubEnv('CIRCLE_TAG', '');
       });
 
       it('Should be take proper context values', async () => {

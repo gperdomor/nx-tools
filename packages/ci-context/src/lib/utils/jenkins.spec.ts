@@ -1,32 +1,25 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as jenkins from './jenkins';
 import { Jenkins } from './jenkins';
 
 describe('Jenkins Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        CI: 'true',
-        CHANGE_FORK: 'pull_request',
-        GIT_COMMIT: 'jenkins-sha',
-        BRANCH_NAME: 'jenkins-ref-slug',
-        CHANGE_AUTHOR: 'jenkins-actor',
-        JOB_NAME: 'jenkins-job',
-        BUILD_NUMBER: '40',
-        GIT_URL: 'https://jenkins.com/gperdomor/nx-tools',
-        JOB_BASE_NAME: 'nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('CI', 'true');
+    vi.stubEnv('CHANGE_FORK', 'pull_request');
+    vi.stubEnv('GIT_COMMIT', 'jenkins-sha');
+    vi.stubEnv('BRANCH_NAME', 'jenkins-ref-slug');
+    vi.stubEnv('CHANGE_AUTHOR', 'jenkins-actor');
+    vi.stubEnv('JOB_NAME', 'jenkins-job');
+    vi.stubEnv('BUILD_NUMBER', '40');
+    vi.stubEnv('GIT_URL', 'https://jenkins.com/gperdomor/nx-tools');
+    vi.stubEnv('JOB_BASE_NAME', 'nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
