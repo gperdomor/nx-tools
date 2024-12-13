@@ -1,35 +1,27 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as devops from './azure-devops';
 import { Azure } from './azure-devops';
 
 describe('Azure DevOps Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        BUILD_SOURCEVERSION: 'devops-sha',
-        BUILD_SOURCEVERSIONAUTHOR: 'devops-actor',
-        AGENT_JOBNAME: 'devops-job',
-        BUILD_BUILDID: '40',
-        BUILD_REPOSITORY_URI: 'https://azure.com/gperdomor/nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('BUILD_SOURCEVERSION', 'devops-sha');
+    vi.stubEnv('BUILD_SOURCEVERSIONAUTHOR', 'devops-actor');
+    vi.stubEnv('AGENT_JOBNAME', 'devops-job');
+    vi.stubEnv('BUILD_BUILDID', '40');
+    vi.stubEnv('BUILD_REPOSITORY_URI', 'https://azure.com/gperdomor/nx-tools');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
     describe('When building pull requests', () => {
       beforeEach(() => {
-        process.env['SYSTEM_PULLREQUEST_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
-        process.env['SYSTEM_PULLREQUEST_PULLREQUESTID'] = '123';
+        vi.stubEnv('SYSTEM_PULLREQUEST_SOURCEBRANCH', 'refs/heads/devops-ref-slug');
+        vi.stubEnv('SYSTEM_PULLREQUEST_PULLREQUESTID', '123');
       });
 
       it('Should be take proper context values', async () => {
@@ -52,7 +44,7 @@ describe('Azure DevOps Context', () => {
 
     describe('When building branches', () => {
       beforeEach(() => {
-        process.env['BUILD_SOURCEBRANCH'] = 'refs/heads/devops-ref-slug';
+        vi.stubEnv('BUILD_SOURCEBRANCH', 'refs/heads/devops-ref-slug');
       });
 
       it('Should be take proper context values', async () => {

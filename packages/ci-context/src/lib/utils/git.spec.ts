@@ -1,29 +1,22 @@
 import * as core from '@nx-tools/core';
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as local from './git';
 import { Git } from './git';
 
 describe('Git Context', () => {
-  let restore: RestoreFn;
-
   beforeEach(() => {
-    restore = mockedEnv({ PATH: process.env['PATH'] }, { clear: true });
-
-    jest.clearAllMocks();
-    jest.restoreAllMocks();
+    vi.stubEnv('PATH', process.env['PATH']!);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
   });
 
   describe('context', () => {
     it('Should be take proper cotext values', async () => {
-      jest.spyOn(Git, 'getCommitUserEmail').mockResolvedValue('local-actor');
-      jest.spyOn(Git, 'ref').mockResolvedValue('local-ref');
-      jest.spyOn(Git, 'remoteURL').mockResolvedValue('https://local-git.com/gperdomor/nx-tools');
-      jest.spyOn(Git, 'fullCommit').mockResolvedValue('local-sha');
+      vi.spyOn(Git, 'getCommitUserEmail').mockResolvedValue('local-actor');
+      vi.spyOn(Git, 'ref').mockResolvedValue('local-ref');
+      vi.spyOn(Git, 'remoteURL').mockResolvedValue('https://local-git.com/gperdomor/nx-tools');
+      vi.spyOn(Git, 'fullCommit').mockResolvedValue('local-sha');
 
       const context = await Git.context();
 
@@ -44,7 +37,7 @@ describe('Git Context', () => {
 
   describe('repo', () => {
     it('Should be take proper repo values', async () => {
-      jest.spyOn(Git, 'remoteURL').mockResolvedValue('https://local-git.com/gperdomor/nx-tools');
+      vi.spyOn(Git, 'remoteURL').mockResolvedValue('https://local-git.com/gperdomor/nx-tools');
 
       const repo = await local.repo();
 
@@ -60,7 +53,7 @@ describe('Git Context', () => {
 
   describe('remoteURL', () => {
     it('have been called', async () => {
-      const execSpy = jest.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'getExecOutput');
       try {
         await Git.remoteURL();
       } catch {
@@ -75,7 +68,7 @@ describe('Git Context', () => {
 
   describe('ref', () => {
     it('returns mocked ref', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -99,7 +92,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached tag ref', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -123,7 +116,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached tag ref (shallow clone)', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -147,7 +140,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached pull request merge ref (shallow clone)', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -171,7 +164,7 @@ describe('Git Context', () => {
     });
 
     it('should throws an error when detached HEAD ref is not supported', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -193,7 +186,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached branch ref', async () => {
-      jest.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -219,7 +212,7 @@ describe('Git Context', () => {
 
   describe('fullCommit', () => {
     it('have been called', async () => {
-      const execSpy = jest.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'getExecOutput');
       try {
         await Git.fullCommit();
       } catch {
@@ -234,7 +227,7 @@ describe('Git Context', () => {
 
   describe('tag', () => {
     it('have been called', async () => {
-      const execSpy = jest.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'getExecOutput');
       try {
         await Git.tag();
       } catch {

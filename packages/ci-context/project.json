@@ -4,6 +4,13 @@
   "sourceRoot": "packages/ci-context/src",
   "projectType": "library",
   "tags": ["type:lib", "scope:nx-container"],
-  "// targets": "to see all targets run: nx show project ci-context --web",
-  "targets": {}
+  "targets": {
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/packages/ci-context"
+      }
+    }
+  }
 }

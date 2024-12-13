@@ -1,18 +1,14 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as github from './github';
 import { Github } from './github';
 
-jest.mock('@actions/github', () => {
-  const actualModule = jest.requireActual('@actions/github');
-
+vi.mock('@actions/github', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...actualModule,
-    getOctokit: jest.fn(() => ({
+    ...(await importOriginal<typeof import('@actions/github')>()),
+    getOctokit: vi.fn(() => ({
       rest: {
         repos: {
-          get: jest.fn(() => ({
+          get: vi.fn(() => ({
             data: {
               default_branch: 'main',
               description: 'Nx Tools',
@@ -28,28 +24,22 @@ jest.mock('@actions/github', () => {
 });
 
 describe('GitHub Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        GITHUB_ACTIONS: 'true',
-        GITHUB_EVENT_NAME: 'github-event-name',
-        GITHUB_SHA: 'github-sha',
-        GITHUB_REF: 'github-ref',
-        GITHUB_ACTOR: 'github-actor',
-        GITHUB_JOB: 'github-job',
-        GITHUB_RUN_NUMBER: '20',
-        GITHUB_RUN_ID: '200',
-        GITHUB_REPOSITORY: 'gperdomor/nx-tools',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('GITHUB_ACTIONS', 'true');
+    vi.stubEnv('GITHUB_EVENT_NAME', 'github-event-name');
+    vi.stubEnv('GITHUB_SHA', 'github-sha');
+    vi.stubEnv('GITHUB_REF', 'github-ref');
+    vi.stubEnv('GITHUB_ACTOR', 'github-actor');
+    vi.stubEnv('GITHUB_JOB', 'github-job');
+    vi.stubEnv('GITHUB_RUN_NUMBER', '20');
+    vi.stubEnv('GITHUB_RUN_ID', '200');
+    vi.stubEnv('GITHUB_REPOSITORY', 'gperdomor/nx-tools');
   });
 
   afterEach(() => {
-    restore();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {

@@ -1,36 +1,29 @@
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import { RunnerContext } from '../interfaces';
 import * as gitlab from './gitlab';
 import { Gitlab } from './gitlab';
 
 describe('GitLab Context', () => {
-  let restore: RestoreFn;
   let context: RunnerContext;
 
   beforeEach(() => {
-    restore = mockedEnv(
-      {
-        GITLAB_CI: 'true',
-        CI_PIPELINE_SOURCE: 'gitlab-event-name',
-        CI_COMMIT_SHA: 'gitlab-sha',
-        CI_COMMIT_REF_SLUG: 'gitlab-ref-slug',
-        CI_JOB_ID: 'gitlab-action',
-        GITLAB_USER_LOGIN: 'gitlab-actor',
-        CI_JOB_NAME: 'gitlab-job',
-        CI_PIPELINE_ID: '10',
-        CI_PIPELINE_IID: '100',
-        CI_DEFAULT_BRANCH: 'main',
-        CI_PROJECT_URL: 'https://gitlab.com/gperdomor/nx-tools',
-        CI_PROJECT_NAME: 'nx-tools',
-        CI_PROJECT_VISIBILITY: 'public',
-      },
-      { clear: true }
-    );
+    vi.stubEnv('GITLAB_CI', 'true');
+    vi.stubEnv('CI_PIPELINE_SOURCE', 'gitlab-event-name');
+    vi.stubEnv('CI_COMMIT_SHA', 'gitlab-sha');
+    vi.stubEnv('CI_COMMIT_REF_SLUG', 'gitlab-ref-slug');
+    vi.stubEnv('CI_JOB_ID', 'gitlab-action');
+    vi.stubEnv('GITLAB_USER_LOGIN', 'gitlab-actor');
+    vi.stubEnv('CI_JOB_NAME', 'gitlab-job');
+    vi.stubEnv('CI_PIPELINE_ID', '10');
+    vi.stubEnv('CI_PIPELINE_IID', '100');
+    vi.stubEnv('CI_DEFAULT_BRANCH', 'main');
+    vi.stubEnv('CI_PROJECT_URL', 'https://gitlab.com/gperdomor/nx-tools');
+    vi.stubEnv('CI_PROJECT_NAME', 'nx-tools');
+    vi.stubEnv('CI_PROJECT_VISIBILITY', 'public');
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   describe('context', () => {
@@ -57,17 +50,14 @@ describe('GitLab Context', () => {
     });
 
     describe('When git tag is present', () => {
-      let restore: RestoreFn;
-
       beforeEach(() => {
-        restore = mockedEnv({
-          CI_COMMIT_TAG: 'gitlab-tag',
-          CI_PROJECT_VISIBILITY: 'private',
-        });
+        vi.stubEnv('CI_COMMIT_TAG', 'gitlab-tag');
+        vi.stubEnv('CI_PROJECT_VISIBILITY', 'private');
       });
 
       afterEach(() => {
-        restore();
+        vi.stubEnv('CI_COMMIT_TAG', '');
+        vi.stubEnv('CI_PROJECT_VISIBILITY', '');
       });
 
       it('Should be take proper context values', async () => {
