@@ -1,18 +1,16 @@
 import * as core from '@nx-tools/core';
 import * as docker from './docker';
 
-jest.mock('@nx-tools/core', () => {
-  const originalModule = jest.requireActual('@nx-tools/core');
+vi.mock('@nx-tools/core', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    getExecOutput: jest.fn(async () => Promise.resolve()),
+    ...(await importOriginal<typeof import('@nx-tools/core')>()),
+    getExecOutput: vi.fn(async () => Promise.resolve()),
   };
 });
 
 describe('isAvailable', () => {
   it('cli', () => {
-    const execSpy = jest.spyOn(core, 'getExecOutput');
+    const execSpy = vi.spyOn(core, 'getExecOutput');
     docker.isAvailable();
 
     expect(execSpy).toHaveBeenCalledWith(`docker`, undefined, {

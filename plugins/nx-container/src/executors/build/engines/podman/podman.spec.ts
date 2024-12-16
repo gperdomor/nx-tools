@@ -11,41 +11,21 @@ const metadata = `{
   "containerimage.digest": "sha256:b09b9482c72371486bb2c1d2c2a2633ed1d0b8389e12c8d52b9e052725c0c83c"
 }`;
 
-jest.setTimeout(10000);
+vi.setConfig({ testTimeout: 10_000 });
 
-jest.mock('../../context', () => {
-  const originalModule = jest.requireActual('../../context');
+vi.mock('../../context', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    tmpDir: jest.fn(() => {
+    ...(await importOriginal<typeof import('../../context')>()),
+    tmpDir: vi.fn(() => {
       const tmpDir = path.join('/tmp/.podman-build-push-jest').split(path.sep).join(path.posix.sep);
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
       return tmpDir;
     }),
-    tmpNameSync: jest.fn(() => tmpNameSync),
+    tmpNameSync: vi.fn(() => tmpNameSync),
   };
 });
-
-// jest.mock('@nx-tools/core', () => {
-//   const originalModule = jest.requireActual('@nx-tools/core');
-//   return {
-//     __esModule: true,
-//     ...originalModule,
-//     getExecOutput: jest.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
-//   };
-// });
-
-// jest.mock('@nx-tools/core', () => {
-//   const originalModule = jest.requireActual('@nx-tools/core');
-//   return {
-//     __esModule: true,
-//     ...originalModule,
-//     getExecOutput: jest.fn().mockResolvedValue('0.9.0'),
-//   };
-// });
 
 describe('getImageID', () => {
   it('matches', async () => {
@@ -90,10 +70,9 @@ describe('getDigest', () => {
 // });
 
 // describe('isAvailable', () => {
-//   const execSpy = jest.spyOn(exec, 'getExecOutput');
+//   const execSpy = vi.spyOn(exec, 'getExecOutput');
 //   podman.isAvailable();
 
-//   // eslint-disable-next-line jest/no-standalone-expect
 //   expect(execSpy).toHaveBeenCalledWith(`podman`, ['version'], {
 //     silent: true,
 //     ignoreReturnCode: true,
@@ -102,7 +81,7 @@ describe('getDigest', () => {
 
 describe('getVersion', () => {
   it('valid', async () => {
-    const execSpy = jest.spyOn(exec, 'getExecOutput').mockResolvedValue({
+    const execSpy = vi.spyOn(exec, 'getExecOutput').mockResolvedValue({
       exitCode: 0,
       stdout: 'podman version 5.0.0',
       stderr: '',

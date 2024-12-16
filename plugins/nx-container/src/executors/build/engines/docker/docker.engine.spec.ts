@@ -4,22 +4,20 @@ import * as context from '../../context';
 import { setInput } from '../../context.spec';
 import { Docker } from './docker.engine';
 
-jest.setTimeout(10000);
+vi.setConfig({ testTimeout: 10_000 });
 
-jest.mock('../../context', () => {
-  const originalModule = jest.requireActual('../../context');
+vi.mock('../../context', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    defaultContext: jest.fn(() => 'https://github.com/docker/build-push-action.git#refs/heads/test-jest'),
-    tmpDir: jest.fn(() => {
+    ...(await importOriginal<typeof import('../../context')>()),
+    defaultContext: vi.fn(() => 'https://github.com/docker/build-push-action.git#refs/heads/test-jest'),
+    tmpDir: vi.fn(() => {
       const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
       return tmpDir;
     }),
-    tmpNameSync: jest.fn(() =>
+    tmpNameSync: vi.fn(() =>
       path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep)
     ),
   };
@@ -33,9 +31,9 @@ describe('Docker Engine', () => {
   });
 
   beforeAll(() => {
-    jest.spyOn(console, 'info').mockImplementation(() => true);
-    jest.spyOn(console, 'log').mockImplementation(() => true);
-    jest.spyOn(console, 'warn').mockImplementation(() => true);
+    vi.spyOn(console, 'info').mockImplementation(() => true);
+    vi.spyOn(console, 'log').mockImplementation(() => true);
+    vi.spyOn(console, 'warn').mockImplementation(() => true);
   });
 
   describe('getArgs', () => {
@@ -451,7 +449,7 @@ nproc=3`],
   ])(
     '[%d] given %p with %p as inputs, returns %p',
     async (num: number, buildxVersion: string, inputs: Map<string, string>, expected: Array<string>) => {
-      jest.spyOn(adapter, "getBuildxVersion").mockReturnValue(buildxVersion)
+      vi.spyOn(adapter, "getBuildxVersion").mockReturnValue(buildxVersion)
 
       inputs.forEach((value: string, name: string) => {
         setInput(name, value);
