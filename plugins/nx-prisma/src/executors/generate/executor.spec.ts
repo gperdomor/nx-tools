@@ -3,12 +3,10 @@ import { ExecutorContext } from '@nx/devkit';
 import executor from './executor';
 import { GenerateExecutorSchema } from './schema';
 
-jest.mock('@nx-tools/core', () => {
-  const originalModule = jest.requireActual('@nx-tools/core');
+vi.mock('@nx-tools/core', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    getExecOutput: jest.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
+    ...(await importOriginal<typeof import('@nx-tools/core')>()),
+    getExecOutput: vi.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
   };
 });
 
@@ -28,7 +26,7 @@ export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
 
 describe('Generate Executor', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'info').mockImplementation(() => true);
+    vi.spyOn(console, 'info').mockImplementation(() => true);
   });
 
   it('can run with empty options', async () => {
