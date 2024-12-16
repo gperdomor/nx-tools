@@ -24,16 +24,6 @@
             "input": "./plugins/nx-container/src",
             "glob": "**/*.d.ts",
             "output": "."
-          },
-          {
-            "input": "./plugins/nx-container",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./plugins/nx-container",
-            "glob": "executors.json",
-            "output": "."
           }
         ]
       }
