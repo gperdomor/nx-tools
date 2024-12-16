@@ -24,18 +24,15 @@
             "input": "./plugins/nx-graphql-codegen/src",
             "glob": "**/*.d.ts",
             "output": "."
-          },
-          {
-            "input": "./plugins/nx-graphql-codegen",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./plugins/nx-graphql-codegen",
-            "glob": "executors.json",
-            "output": "."
           }
         ]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/plugins/nx-graphql-codegen"
       }
     }
   }

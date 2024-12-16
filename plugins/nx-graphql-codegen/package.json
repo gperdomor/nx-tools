@@ -21,6 +21,8 @@
   },
   "files": [
     "dist",
-    "!**/*.tsbuildinfo"
+    "!**/*.tsbuildinfo",
+    "generators.json",
+    "executors.json"
   ]
 }
