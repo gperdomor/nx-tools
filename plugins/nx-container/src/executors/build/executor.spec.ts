@@ -1,6 +1,5 @@
 import { RepoMetadata } from '@nx-tools/ci-context';
 import { workspaceRoot } from '@nx/devkit';
-import mockedEnv, { RestoreFn } from 'mocked-env';
 import * as path from 'node:path';
 
 // const options: BuildExecutorSchema = {
@@ -15,40 +14,36 @@ import * as path from 'node:path';
 //   },
 // };
 
-jest.setTimeout(60 * 1000);
+vi.setConfig({ testTimeout: 60 * 1_000 });
 
-jest.mock('@nx-tools/ci-context', () => {
-  const originalModule = jest.requireActual('@nx-tools/ci-context');
+vi.mock('@nx-tools/ci-context', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@nx-tools/ci-context')>();
+
   return {
-    __esModule: true,
-    ...originalModule,
+    ...original,
     RepoProxyFactory: {
-      ...originalModule.RepoProxyFactory,
+      ...original.RepoProxyFactory,
 
-      create: jest.fn(() => <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'))),
+      create: vi.fn(() => <Promise<RepoMetadata>>require(path.join(__dirname, 'fixtures', 'repo.json'))),
     },
   };
 });
 
 describe('Build Executor', () => {
-  let restore: RestoreFn;
-
   beforeAll(() => {
-    jest.spyOn(console, 'info').mockImplementation(() => true);
-    jest.spyOn(console, 'log').mockImplementation(() => true);
-    jest.spyOn(console, 'warn').mockImplementation(() => true);
+    vi.spyOn(console, 'info').mockImplementation(() => true);
+    vi.spyOn(console, 'log').mockImplementation(() => true);
+    vi.spyOn(console, 'warn').mockImplementation(() => true);
   });
 
   beforeEach(() => {
-    restore = mockedEnv({
-      CI_PIPELINE_SOURCE: 'push',
-      CI_COMMIT_SHA: '1234567890',
-      CI_COMMIT_REF_SLUG: 'feature/build',
-      GITLAB_USER_LOGIN: 'gperdomor',
-      CI_JOB_NAME: 'build-step',
-      CI_PIPELINE_ID: '1234',
-      CI_PIPELINE_IID: '5678',
-    });
+    vi.stubEnv('CI_PIPELINE_SOURCE', 'push');
+    vi.stubEnv('CI_COMMIT_SHA', '1234567890');
+    vi.stubEnv('CI_COMMIT_REF_SLUG', 'featue/build');
+    vi.stubEnv('GITLAB_USER_LOGIN', 'gperdomor');
+    vi.stubEnv('CI_JOB_NAME', 'buid-step');
+    vi.stubEnv('CI_PIPELINE_ID', '1234');
+    vi.stubEnv('CI_PIPELINE_IID', '5678');
 
     // workaround for https://github.com/nrwl/nx/issues/20330
     if (process.cwd() !== workspaceRoot) {
@@ -57,8 +52,8 @@ describe('Build Executor', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
-    restore();
+    vi.restoreAllMocks();
+    vi.unstubAllEnvs();
   });
 
   it('should pass', () => {
@@ -66,8 +61,8 @@ describe('Build Executor', () => {
   });
 
   // it('can run', async () => {
-  //   jest.spyOn(buildx, 'isAvailable').mockResolvedValue(true);
-  //   jest.spyOn(buildx, 'getVersion').mockResolvedValue('0.14.0');
+  //   vi.spyOn(buildx, 'isAvailable').mockResolvedValue(true);
+  //   vi.spyOn(buildx, 'getVersion').mockResolvedValue('0.14.0');
 
   //   const output = await run(options);
 

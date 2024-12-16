@@ -37,6 +37,13 @@
           }
         ]
       }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/plugins/nx-container"
+      }
     }
   }
 }

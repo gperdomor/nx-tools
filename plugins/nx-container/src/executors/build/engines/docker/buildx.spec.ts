@@ -12,30 +12,19 @@ const metadata = `{
   "containerimage.digest": "sha256:b09b9482c72371486bb2c1d2c2a2633ed1d0b8389e12c8d52b9e052725c0c83c"
 }`;
 
-jest.mock('../../context', () => {
-  const originalModule = jest.requireActual('../../context');
+vi.mock('../../context', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    tmpDir: jest.fn(() => {
+    ...(await importOriginal<typeof import('../../context')>()),
+    tmpDir: vi.fn(() => {
       const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
       return tmpDir;
     }),
-    tmpNameSync: jest.fn(() => tmpNameSync),
+    tmpNameSync: vi.fn(() => tmpNameSync),
   };
 });
-
-// jest.mock('@nx-tools/core', () => {
-//   const originalModule = jest.requireActual('@nx-tools/core');
-//   return {
-//     __esModule: true,
-//     ...originalModule,
-//     getExecOutput: jest.fn().mockResolvedValue('0.9.0'),
-//   };
-// });
 
 describe('getImageID', () => {
   it('matches', async () => {
@@ -80,28 +69,30 @@ describe('isLocalOrTarExporter', () => {
 });
 
 describe('isAvailable', () => {
-  const execSpy = jest.spyOn(exec, 'getExecOutput');
-  buildx.isAvailable();
+  it('standalone=false', () => {
+    const execSpy = vi.spyOn(exec, 'getExecOutput');
+    buildx.isAvailable();
 
-  expect(execSpy).toHaveBeenCalledWith(`docker`, ['buildx'], {
-    silent: true,
-    ignoreReturnCode: true,
+    expect(execSpy).toHaveBeenCalledWith(`docker`, ['buildx'], {
+      silent: true,
+      ignoreReturnCode: true,
+    });
   });
-});
 
-describe('isAvailable standalone', () => {
-  const execSpy = jest.spyOn(exec, 'getExecOutput');
-  buildx.isAvailable(true);
+  it('standalone=true', () => {
+    const execSpy = vi.spyOn(exec, 'getExecOutput');
+    buildx.isAvailable(true);
 
-  expect(execSpy).toHaveBeenCalledWith(`buildx`, [], {
-    silent: true,
-    ignoreReturnCode: true,
+    expect(execSpy).toHaveBeenCalledWith(`buildx`, [], {
+      silent: true,
+      ignoreReturnCode: true,
+    });
   });
 });
 
 describe('getVersion', () => {
   it('valid', async () => {
-    const execSpy = jest.spyOn(core, 'getExecOutput').mockResolvedValue({
+    const execSpy = vi.spyOn(core, 'getExecOutput').mockResolvedValue({
       exitCode: 0,
       stdout: 'github.com/docker/buildx v0.14.0-desktop.1 7b0470cffd54ccbf42976d2f75febc4532c85073',
       stderr: '',

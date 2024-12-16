@@ -110,20 +110,18 @@ PejgXO0uIRolYQ3sz2tMGhx1MfBqH64=
 =WbwB
 -----END PGP PRIVATE KEY BLOCK-----`;
 
-jest.mock('./context', () => {
-  const originalModule = jest.requireActual('./context');
+vi.mock('./context', async (importOriginal) => {
   return {
-    __esModule: true,
-    ...originalModule,
-    defaultContext: jest.fn(() => 'https://github.com/docker/build-push-action.git#refs/heads/test-jest'),
-    tmpDir: jest.fn(() => {
+    ...(await importOriginal<typeof import('./context')>()),
+    defaultContext: vi.fn(() => 'https://github.com/docker/build-push-action.git#refs/heads/test-jest'),
+    tmpDir: vi.fn(() => {
       const tmpDir = path.join('/tmp/.docker-build-push-jest').split(path.sep).join(path.posix.sep);
       if (!fs.existsSync(tmpDir)) {
         fs.mkdirSync(tmpDir, { recursive: true });
       }
       return tmpDir;
     }),
-    tmpNameSync: jest.fn(() =>
+    tmpNameSync: vi.fn(() =>
       path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep)
     ),
   };
