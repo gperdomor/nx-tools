@@ -4,6 +4,13 @@
   "sourceRoot": "packages/nx-set-shas/src",
   "projectType": "library",
   "tags": ["type:cli", "scope:nx-set-shas"],
-  "// targets": "to see all targets run: nx show project nx-set-shas --web",
-  "targets": {}
+  "targets": {
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{options.reportsDirectory}"],
+      "options": {
+        "reportsDirectory": "../../coverage/packages/nx-set-shas"
+      }
+    }
+  }
 }
