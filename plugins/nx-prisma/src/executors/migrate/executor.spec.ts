@@ -3,14 +3,7 @@ import { execSync } from 'node:child_process';
 import executor from './executor';
 import { MigrateExecutorSchema } from './schema';
 
-jest.mock('node:child_process', () => {
-  const originalModule = jest.requireActual('node:child_process');
-  return {
-    __esModule: true,
-    ...originalModule,
-    execSync: jest.fn(),
-  };
-});
+vi.mock('node:child_process');
 
 const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   root: 'workspace-root',
@@ -22,7 +15,11 @@ const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
 
 describe('Migrate Executor', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'info').mockImplementation(() => true);
+    vi.spyOn(console, 'info').mockImplementation(() => true);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('can run with empty options', async () => {
