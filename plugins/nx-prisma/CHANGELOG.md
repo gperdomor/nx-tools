@@ -1,3 +1,13 @@
+## 6.5.0 (2025-01-06)
+
+### 🚀 Features
+
+- **nx-prisma:** added prisma v6 support ([a30e91b](https://github.com/gperdomor/nx-tools/commit/a30e91b))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.4.1 (2024-11-08)
 
 ### 🩹 Fixes
