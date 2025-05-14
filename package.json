@@ -22,7 +22,7 @@
     "@renovate/pep440": "1.0.0",
     "@types/tmp": "0.2.6",
     "chalk": "4.1.2",
-    "ci-info": "4.0.0",
+    "ci-info": "4.2.0",
     "clipanion": "4.0.0-rc.3",
     "csv-parse": "5.5.6",
     "handlebars": "4.7.8",
