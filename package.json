@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@actions/exec": "1.1.1",
-    "@actions/github": "6.0.0",
+    "@actions/github": "6.0.1",
     "@actions/io": "1.1.3",
     "@nx/devkit": "21.0.3",
     "@octokit/openapi-types": "22.2.0",
