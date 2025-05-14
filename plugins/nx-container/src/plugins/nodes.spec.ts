@@ -3,10 +3,13 @@ import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash
 import { vol } from 'memfs';
 import { createNodes, PLUGIN_NAME } from './nodes';
 
-// tell vitest to use fs mock from __mocks__ folder
-// this can be done in a setup file if fs should always be mocked
-vi.mock('node:fs');
-vi.mock('node:fs/promises');
+// Mock fs everywhere else with the memfs version.
+vi.mock('node:fs', async () => {
+  const memfs = await vi.importActual('memfs');
+
+  // Support both `import fs from "node:fs"` and "import { readFileSync } from "node:fs"`
+  return { default: memfs.fs, ...(memfs.fs as any) };
+});
 
 vi.mock('@nx/devkit/src/utils/calculate-hash-for-create-nodes', () => {
   return {
