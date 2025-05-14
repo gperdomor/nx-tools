@@ -66,7 +66,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-environment-node": "29.7.0",
     "jiti": "2.4.2",
-    "lint-staged": "15.2.10",
+    "lint-staged": "15.5.2",
     "memfs": "4.15.0",
     "nx": "21.0.3",
     "prettier": "2.8.8",
