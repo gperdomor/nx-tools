@@ -21,5 +21,26 @@
   "files": [
     "dist",
     "!**/*.tsbuildinfo"
-  ]
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./src/lib/utils/git": {
+      "development": "./src/lib/utils/git.js",
+      "types": "./dist/lib/utils/git.d.ts",
+      "import": "./dist/lib/utils/git.js",
+      "default": "./dist/lib/utils/git.js"
+    },
+    "./src/lib/utils/github": {
+      "development": "./src/lib/utils/github.js",
+      "types": "./dist/lib/utils/github.d.ts",
+      "import": "./dist/lib/utils/github.js",
+      "default": "./dist/lib/utils/github.js"
+    }
+  }
 }

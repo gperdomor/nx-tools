@@ -33,5 +33,14 @@
     "!**/*.tsbuildinfo",
     "generators.json",
     "executors.json"
-  ]
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  }
 }

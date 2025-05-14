@@ -4,13 +4,5 @@
   "sourceRoot": "packages/container-metadata/src",
   "projectType": "library",
   "tags": ["type:lib", "scope:nx-container"],
-  "targets": {
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "reportsDirectory": "../../coverage/packages/container-metadata"
-      }
-    }
-  }
+  "targets": {}
 }
