@@ -4,13 +4,5 @@
   "sourceRoot": "packages/core/src",
   "projectType": "library",
   "tags": ["type:lib", "scope:shared"],
-  "targets": {
-    "test": {
-      "executor": "@nx/vite:test",
-      "outputs": ["{options.reportsDirectory}"],
-      "options": {
-        "reportsDirectory": "../../coverage/packages/core"
-      }
-    }
-  }
+  "targets": {}
 }
