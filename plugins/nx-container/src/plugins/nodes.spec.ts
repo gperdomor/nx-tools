@@ -1,8 +1,10 @@
-import { workspaceRoot, type CreateNodesContext } from '@nx/devkit';
+import { CreateNodesContextV2, workspaceRoot } from '@nx/devkit';
 import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash-for-create-nodes';
 import { vol } from 'memfs';
-import { createNodes } from './nodes';
+import { createNodes, PLUGIN_NAME } from './nodes';
 
+// tell vitest to use fs mock from __mocks__ folder
+// this can be done in a setup file if fs should always be mocked
 vi.mock('node:fs');
 vi.mock('node:fs/promises');
 
@@ -12,32 +14,24 @@ vi.mock('@nx/devkit/src/utils/calculate-hash-for-create-nodes', () => {
   };
 });
 
-describe('@nx/container/plugin', () => {
+describe(`Plugin: ${PLUGIN_NAME}`, () => {
+  const TEMP_WS_ROOT = '/workspace-root';
+  let context: CreateNodesContextV2;
   const createNodesFunction = createNodes[1];
-  let context: CreateNodesContext;
 
   beforeEach(() => {
+    // reset the state of in-memory fs
     vol.reset();
 
     context = {
-      workspaceRoot: '/workspace-root',
       nxJsonConfiguration: {
         namedInputs: {
           default: ['{projectRoot}/**/*'],
           production: ['!{projectRoot}/**/*.spec.ts'],
         },
       },
-      configFiles: [],
+      workspaceRoot: TEMP_WS_ROOT,
     };
-
-    // vol.fromJSON(
-    //   {
-    //     './proj/Dockerfile': '',
-    //     './proj/package.json': '{}',
-    //     './proj/project.json': '{}',
-    //   },
-    //   '/workspace-root'
-    // );
 
     // workaround for https://github.com/nrwl/nx/issues/20330
     const projectDir = `${workspaceRoot}/packages/container-metadata`;
@@ -48,163 +42,170 @@ describe('@nx/container/plugin', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    vol.reset();
   });
 
-  describe('root project', () => {
-    beforeEach(() => {
-      vol.fromJSON(
-        {
-          './Dockerfile': '',
-          './package.json': JSON.stringify({ name: 'my-docker-app' }),
-          './project.json': JSON.stringify({ name: 'my-docker-app' }),
-        },
-        '/workspace-root'
-      );
-    });
-    it('should create nodes with correct targets', async () => {
-      const nodes = await createNodesFunction(
-        'Dockerfile',
-        {
-          buildTargetName: 'build',
-          defaultEngine: 'docker',
-        },
-        context
-      );
+  it('should create nodes if there is a project.json', async () => {
+    vol.fromJSON(
+      {
+        './apps/app-with-project/Dockerfile': 'FROM node:lts',
+        './apps/app-with-project/index.ts': '',
+        './apps/app-with-project/project.json': JSON.stringify({ name: 'app-with-project' }),
+      },
+      TEMP_WS_ROOT
+    );
 
-      expect(nodes).toMatchInlineSnapshot(`
-        {
-          "projects": {
-            ".": {
-              "targets": {
-                "build": {
-                  "configurations": {
-                    "ci": {
-                      "load": false,
-                      "metadata": {
-                        "images": [
-                          "docker.io/my-docker-app",
-                        ],
-                        "tags": [
-                          "type=schedule",
-                          "type=ref,event=branch",
-                          "type=ref,event=tag",
-                          "type=ref,event=pr",
-                          "type=sha,prefix=sha-",
-                        ],
+    const nodes = await createNodesFunction(
+      [`${TEMP_WS_ROOT}/apps/app-with-project/Dockerfile`],
+      {
+        buildTargetName: 'build',
+        defaultEngine: 'docker',
+      },
+      context
+    );
+
+    expect(nodes).toMatchInlineSnapshot(`
+      [
+        [
+          "/workspace-root/apps/app-with-project/Dockerfile",
+          {
+            "projects": {
+              "/workspace-root/apps/app-with-project": {
+                "targets": {
+                  "build": {
+                    "configurations": {
+                      "ci": {
+                        "load": false,
+                        "metadata": {
+                          "images": [
+                            "docker.io/app-with-project",
+                          ],
+                          "tags": [
+                            "type=schedule",
+                            "type=ref,event=branch",
+                            "type=ref,event=tag",
+                            "type=ref,event=pr",
+                            "type=sha,prefix=sha-",
+                          ],
+                        },
+                        "push": true,
                       },
-                      "push": true,
                     },
-                  },
-                  "dependsOn": [
-                    "build",
-                  ],
-                  "executor": "@nx-tools/nx-container:build",
-                  "options": {
-                    "engine": "docker",
-                    "load": true,
-                    "tags": [
-                      "docker.io/my-docker-app:dev",
+                    "dependsOn": [
+                      "build",
                     ],
+                    "executor": "@nx-tools/nx-container:build",
+                    "options": {
+                      "engine": "docker",
+                      "load": true,
+                      "tags": [
+                        "docker.io/app-with-project:dev",
+                      ],
+                    },
                   },
                 },
               },
             },
           },
-        }
-      `);
-      expect(calculateHashForCreateNodes).toHaveBeenCalled();
-    });
+        ],
+      ]
+    `);
+    expect(calculateHashForCreateNodes).toHaveBeenCalled();
   });
 
-  describe('non-root project with Dockerfile', () => {
-    beforeEach(() => {
-      vol.fromJSON(
-        {
-          './apps/your-docker-app/Dockerfile': '',
-          './apps/your-docker-app/package.json': JSON.stringify({ name: 'my-docker-app' }),
-          './apps/your-docker-app/project.json': JSON.stringify({ name: 'my-docker-app' }),
-        },
-        '/workspace-root'
-      );
-    });
-    it('should create nodes for non-root project with Dockerfile', async () => {
-      const nodes = await createNodesFunction(
-        'apps/your-docker-app/Dockerfile',
-        {
-          buildTargetName: 'build',
-          defaultEngine: 'docker',
-        },
-        context
-      );
+  it('should create nodes if there is a package.json', async () => {
+    vol.fromJSON(
+      {
+        './apps/app-with-package/Dockerfile': 'FROM node:lts',
+        './apps/app-with-package/index.ts': '',
+        './apps/app-with-package/package.json': JSON.stringify({ name: 'app-with-package' }),
+      },
+      TEMP_WS_ROOT
+    );
 
-      expect(nodes).toMatchInlineSnapshot(`
-        {
-          "projects": {
-            "apps/your-docker-app": {
-              "targets": {
-                "build": {
-                  "configurations": {
-                    "ci": {
-                      "load": false,
-                      "metadata": {
-                        "images": [
-                          "docker.io/my-docker-app",
-                        ],
-                        "tags": [
-                          "type=schedule",
-                          "type=ref,event=branch",
-                          "type=ref,event=tag",
-                          "type=ref,event=pr",
-                          "type=sha,prefix=sha-",
-                        ],
+    const nodes = await createNodesFunction(
+      [`${TEMP_WS_ROOT}/apps/app-with-package/Dockerfile`],
+      {
+        buildTargetName: 'build',
+        defaultEngine: 'docker',
+      },
+      context
+    );
+
+    expect(nodes).toMatchInlineSnapshot(`
+      [
+        [
+          "/workspace-root/apps/app-with-package/Dockerfile",
+          {
+            "projects": {
+              "/workspace-root/apps/app-with-package": {
+                "targets": {
+                  "build": {
+                    "configurations": {
+                      "ci": {
+                        "load": false,
+                        "metadata": {
+                          "images": [
+                            "docker.io/app-with-package",
+                          ],
+                          "tags": [
+                            "type=schedule",
+                            "type=ref,event=branch",
+                            "type=ref,event=tag",
+                            "type=ref,event=pr",
+                            "type=sha,prefix=sha-",
+                          ],
+                        },
+                        "push": true,
                       },
-                      "push": true,
                     },
-                  },
-                  "dependsOn": [
-                    "build",
-                  ],
-                  "executor": "@nx-tools/nx-container:build",
-                  "options": {
-                    "engine": "docker",
-                    "load": true,
-                    "tags": [
-                      "docker.io/my-docker-app:dev",
+                    "dependsOn": [
+                      "build",
                     ],
+                    "executor": "@nx-tools/nx-container:build",
+                    "options": {
+                      "engine": "docker",
+                      "load": true,
+                      "tags": [
+                        "docker.io/app-with-package:dev",
+                      ],
+                    },
                   },
                 },
               },
             },
           },
-        }
-      `);
-      expect(calculateHashForCreateNodes).toHaveBeenCalled();
-    });
+        ],
+      ]
+    `);
+    expect(calculateHashForCreateNodes).toHaveBeenCalled();
   });
 
-  describe('non-root project without project.json', () => {
-    beforeEach(() => {
-      vol.fromJSON(
-        {
-          './apps/no-project/Dockerfile': '',
-        },
-        '/workspace-root'
-      );
-    });
+  it('should not create nodes if there is no project.json or package.json', async () => {
+    vol.fromJSON(
+      {
+        './apps/no-project/Dockerfile': 'FROM node:lts',
+        './apps/no-project/index.ts': '',
+      },
+      TEMP_WS_ROOT
+    );
 
-    it('should not create nodes if there is no project.json or package.json', async () => {
-      const nodes = await createNodesFunction(
-        'apps/no-project/Dockerfile',
-        {
-          buildTargetName: 'build',
-          defaultEngine: 'docker',
-        },
-        context
-      );
+    const nodes = await createNodesFunction(
+      [`${TEMP_WS_ROOT}/apps/no-project/Dockerfile`],
+      {
+        buildTargetName: 'build',
+        defaultEngine: 'docker',
+      },
+      context
+    );
 
-      expect(nodes).toEqual({});
-      expect(calculateHashForCreateNodes).not.toHaveBeenCalled();
-    });
+    expect(nodes).toMatchInlineSnapshot(`
+      [
+        [
+          "/workspace-root/apps/no-project/Dockerfile",
+          {},
+        ],
+      ]
+    `);
+    expect(calculateHashForCreateNodes).not.toHaveBeenCalled();
   });
 });
