@@ -1,6 +1,8 @@
 import {
   CreateDependencies,
-  CreateNodes,
+  CreateNodesContextV2,
+  createNodesFromFiles,
+  CreateNodesV2,
   detectPackageManager,
   parseJson,
   readJsonFile,
@@ -9,10 +11,12 @@ import {
 } from '@nx/devkit';
 import { calculateHashForCreateNodes } from '@nx/devkit/src/utils/calculate-hash-for-create-nodes';
 import { getLockFileName } from '@nx/js';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { workspaceDataDirectory } from 'nx/src/utils/cache-directory';
 import { dirname, join } from 'path';
 import { DEFAULT_ENGINE, DEFAULT_REGISTRY } from '../generators/configuration/constants';
+
+export const PLUGIN_NAME = '@nx-tools/nx-container';
 
 export interface ContainerPluginOptions {
   buildTargetName?: string;
@@ -38,35 +42,50 @@ export const createDependencies: CreateDependencies = () => {
   return [];
 };
 
-export const createNodes: CreateNodes<ContainerPluginOptions> = [
+export const createNodesV2: CreateNodesV2<ContainerPluginOptions> = [
   '**/Dockerfile',
-  async (configFilePath, options, context) => {
-    const normalized = normalizeOptions(options);
-    const projectRoot = dirname(configFilePath);
-
-    // Do not create a project if package.json and project.json isn't there.
-    const siblingFiles = readdirSync(join(context.workspaceRoot, projectRoot));
-    if (!siblingFiles.includes('package.json') && !siblingFiles.includes('project.json')) {
-      return {};
-    }
-
-    const hash = await calculateHashForCreateNodes(projectRoot, normalized, context, [
-      getLockFileName(detectPackageManager(context.workspaceRoot)),
-    ]);
-
-    const projectName = buildProjectName(projectRoot, context.workspaceRoot, normalized);
-
-    targetsCache[hash] ??= buildTargets(projectRoot, normalized, projectName);
-
-    return {
-      projects: {
-        [projectRoot]: {
-          targets: targetsCache[hash],
-        },
-      },
-    };
+  async (configFiles, options, context) => {
+    return await createNodesFromFiles(
+      (configFile, options, context) => createNodesInternal(configFile, options, context),
+      configFiles,
+      options,
+      context
+    );
   },
 ];
+
+export const createNodes = createNodesV2;
+
+async function createNodesInternal(
+  configFilePath: string,
+  options: ContainerPluginOptions | undefined,
+  context: CreateNodesContextV2
+) {
+  const normalized = normalizeOptions(options);
+  const projectRoot = dirname(configFilePath);
+
+  // Do not create a project if package.json and project.json isn't there.
+  const isProject = existsSync(join(projectRoot, 'project.json')) || existsSync(join(projectRoot, 'package.json'));
+  if (!isProject) {
+    return {};
+  }
+
+  const hash = await calculateHashForCreateNodes(projectRoot, normalized, context, [
+    getLockFileName(detectPackageManager(context.workspaceRoot)),
+  ]);
+
+  const projectName = buildProjectName(projectRoot, context.workspaceRoot, normalized);
+
+  targetsCache[hash] ??= buildTargets(projectRoot, normalized, projectName);
+
+  return {
+    projects: {
+      [projectRoot]: {
+        targets: targetsCache[hash],
+      },
+    },
+  };
+}
 
 function buildTargets(projectRoot: string, options: NormalizedContainerPluginOptions, projectName: string) {
   const targets: Record<string, TargetConfiguration> = {
@@ -101,8 +120,8 @@ function buildTargets(projectRoot: string, options: NormalizedContainerPluginOpt
 }
 
 function buildProjectName(projectRoot: string, workspaceRoot: string, options: ContainerPluginOptions): string {
-  const packageJsonPath = join(workspaceRoot, projectRoot, 'package.json');
-  const projectJsonPath = join(workspaceRoot, projectRoot, 'project.json');
+  const packageJsonPath = join(projectRoot, 'package.json');
+  const projectJsonPath = join(projectRoot, 'project.json');
   let name = '';
   const registry = options.defaultRegistry?.length ? `${options.defaultRegistry}/` : '';
   if (existsSync(projectJsonPath)) {
