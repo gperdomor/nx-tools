@@ -1,3 +1,21 @@
+## 6.2.0-beta.0 (2025-05-15)
+
+### 🚀 Features
+
+- move workspace to use typescript solution ([#1168](https://github.com/gperdomor/nx-tools/pull/1168))
+
+### 🩹 Fixes
+
+- fix ci ([#1201](https://github.com/gperdomor/nx-tools/pull/1201))
+
+### 🧱 Updated Dependencies
+
+- Updated core to 6.2.0-beta.0
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.1.1 (2024-11-08)
 
 ### 🧱 Updated Dependencies
