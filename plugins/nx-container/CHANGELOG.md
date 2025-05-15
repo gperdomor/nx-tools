@@ -1,3 +1,19 @@
+## 6.3.0 (2025-05-15)
+
+### 🏡 Chore
+
+- update readme files ([9b6b74c](https://github.com/gperdomor/nx-tools/commit/9b6b74c))
+
+### 🧱 Updated Dependencies
+
+- Updated container-metadata to 6.2.0
+- Updated ci-context to 6.2.0
+- Updated core to 6.2.0
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.3.0-beta.0 (2025-05-15)
 
 ### 🚀 Features
