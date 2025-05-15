@@ -71,6 +71,12 @@
     "version": {
       "preVersionCommand": "npx nx run-many -t build"
     },
+    "conventionalCommits": {
+      "types": {
+        "docs": true,
+        "chore": true
+      }
+    },
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github"
