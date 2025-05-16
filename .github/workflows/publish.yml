@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  publish:
+    # prevents this action from running on forks
+    if: github.repository == 'gperdomor/nx-tools'
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # needed for provenance data generation
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # include tags
+          filter: tree:0
+
+      - name: Install Node.js per package.json
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm ci
+        shell: bash
+
+      - name: Print Environment Info
+        run: npx nx report
+        shell: bash
+
+      - name: Publish packages
+        run: npx nx release publish --access=public
+        shell: bash
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

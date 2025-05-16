@@ -6,7 +6,11 @@
   "contributors": [
     "wSedlacek"
   ],
-  "repository": "https://github.com/gperdomor/nx-tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gperdomor/nx-tools",
+    "directory": "plugins/nx-prisma"
+  },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "main": "./dist/index.js",
