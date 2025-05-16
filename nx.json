@@ -67,7 +67,8 @@
     }
   },
   "release": {
-    "projectsRelationship": "independent",
+    "projects": ["packages/*", "plugins/*"],
+    "releaseTagPattern": "{version}",
     "version": {
       "preVersionCommand": "npx nx run-many -t build"
     },
@@ -78,7 +79,8 @@
       }
     },
     "changelog": {
-      "projectChangelogs": {
+      "projectChangelogs": true,
+      "workspaceChangelog": {
         "createRelease": "github"
       }
     }
