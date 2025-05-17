@@ -1,3 +1,7 @@
+## 6.7.1 (2025-05-17)
+
+This was a version bump only for nx-container to align it with other projects, there were no code changes.
+
 ## 6.7.0 (2025-05-17)
 
 ### 🚀 Features
