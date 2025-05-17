@@ -4,6 +4,11 @@
   "type": "commonjs",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gperdomor/nx-tools",
+    "directory": "packages/nx-set-shas"
+  },
   "bin": {
     "nx-set-shas": "./src/index.js"
   },
