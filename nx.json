@@ -70,7 +70,10 @@
     "projects": ["packages/*", "plugins/*"],
     "releaseTagPattern": "{version}",
     "version": {
-      "preVersionCommand": "npx nx run-many -t build"
+      "preVersionCommand": "npx nx run-many -t build",
+      "versionActionsOptions": {
+        "skipLockFileUpdate": true
+      }
     },
     "conventionalCommits": {
       "types": {

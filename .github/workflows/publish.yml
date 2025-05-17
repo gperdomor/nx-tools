@@ -35,6 +35,9 @@ jobs:
       - name: Print Environment Info
         run: npx nx report
         shell: bash
+      - name: Building packages
+        run: npx nx run-many --target=build
+        shell: bash
 
       - name: Publish packages
         run: npx nx release publish --access=public
