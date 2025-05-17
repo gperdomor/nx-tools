@@ -1,3 +1,13 @@
+## 6.7.0 (2025-05-17)
+
+### 🚀 Features
+
+- added provenance support ([732184f](https://github.com/gperdomor/nx-tools/commit/732184f))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 1.2.0 (2025-05-15)
 
 ### 🏡 Chore

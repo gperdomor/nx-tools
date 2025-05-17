@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
-  "version": "6.2.0",
+  "version": "6.7.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
@@ -13,7 +13,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "dependencies": {
-    "@nx-tools/core": "6.2.0",
+    "@nx-tools/core": "6.7.0",
     "ci-info": "^4.0.0",
     "@octokit/openapi-types": "^22.0.0",
     "@actions/github": "^6.0.0",
