@@ -13,7 +13,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@nx-tools/core": "6.7.1",
+    "@nx-tools/core": "workspace:*",
     "ci-info": "^4.0.0",
     "@octokit/openapi-types": "^22.0.0",
     "@actions/github": "^6.0.0",

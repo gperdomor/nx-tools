@@ -13,7 +13,7 @@
     "nx-set-shas": "./src/index.js"
   },
   "dependencies": {
-    "@nx-tools/core": "6.7.1",
+    "@nx-tools/core": "workspace:*",
     "clipanion": "^4.0.0-rc.3",
     "semver": "^7.6.2"
   },

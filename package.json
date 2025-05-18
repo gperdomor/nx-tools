@@ -73,10 +73,6 @@
     "vite": "6.3.5",
     "vitest": "3.1.3"
   },
-  "workspaces": [
-    "packages/*",
-    "plugins/*"
-  ],
   "nx": {
     "includedScripts": [],
     "targets": {
@@ -90,5 +86,5 @@
       }
     }
   },
-  "packageManager": "npm@11.4.0+sha512.759091a21ee805d9c842bcfe2878d6626c48a16a5ca73c1e1338fa8379951abfc2d273ec4ad12ede64bd294237c6719b3bcc518118d1affe8a38985fe5d29773"
+  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977"
 }
