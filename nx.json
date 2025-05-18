@@ -22,7 +22,9 @@
         },
         "build": {
           "targetName": "build",
-          "configName": "tsconfig.lib.json"
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
         }
       }
     },
@@ -47,17 +49,6 @@
       }
     }
   ],
-  "targetDefaults": {
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "@nx/vite:test": {
-      "cache": true,
-      "inputs": ["default", "^production"]
-    }
-  },
   "release": {
     "projects": ["packages/*", "plugins/*"],
     "releaseTagPattern": "{version}",
@@ -78,6 +69,16 @@
       "workspaceChangelog": {
         "createRelease": "github"
       }
+    }
+  },
+  "targetDefaults": {
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   }
 }
