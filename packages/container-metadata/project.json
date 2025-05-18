@@ -4,5 +4,6 @@
   "sourceRoot": "packages/container-metadata/src",
   "projectType": "library",
   "tags": ["type:lib", "scope:nx-container"],
+  "// targets": "to see all targets run: nx show project container-metadata --web",
   "targets": {}
 }
