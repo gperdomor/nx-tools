@@ -1,15 +1,19 @@
+import { consola } from 'consola';
 import { existsSync, readFileSync } from 'node:fs';
 
 async function checkLockFiles() {
   const errors = [];
-  if (existsSync('yarn.lock')) {
-    errors.push('Invalid occurence of "yarn.lock" file. Please remove it and use only "package-lock.json"');
-  }
   if (existsSync('pnpm-lock.yaml')) {
     errors.push('Invalid occurence of "pnpm-lock.yaml" file. Please remove it and use only "package-lock.json"');
   }
   if (existsSync('bun.lockb')) {
     errors.push('Invalid occurence of "bun.lockb" file. Please remove it and use only "package-lock.json"');
+  }
+  if (existsSync('bun.lock')) {
+    errors.push('Invalid occurence of "bun.lockb" file. Please remove it and use only "package-lock.json"');
+  }
+  if (existsSync('yarn.lock')) {
+    errors.push('Invalid occurence of "yarn.lock" file. Please remove it and use only "package-lock.json"');
   }
   try {
     const content = readFileSync('package-lock.json', 'utf-8');
@@ -35,13 +39,13 @@ async function checkLockFiles() {
   return errors;
 }
 
-console.log('🔒🔒🔒 Validating lock files 🔒🔒🔒\n');
+consola.start('🔒🔒🔒 Validating lock files 🔒🔒🔒');
 const invalid = await checkLockFiles();
 
 if (invalid.length > 0) {
-  invalid.forEach((e) => console.log(e));
+  invalid.forEach((e) => consola.error(e));
   process.exit(1);
 } else {
-  console.log('Lock file is valid 👍');
+  consola.success('Lock file is valid 👍');
   process.exit(0);
 }
