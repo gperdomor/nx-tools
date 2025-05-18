@@ -14,7 +14,7 @@
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
   "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "executors": "./executors.json",
   "generators": "./generators.json",
   "dependencies": {
