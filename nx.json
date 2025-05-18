@@ -53,7 +53,7 @@
     "projects": ["packages/*", "plugins/*"],
     "releaseTagPattern": "{version}",
     "version": {
-      "preVersionCommand": "npx nx run-many -t build",
+      "preVersionCommand": "pnpm dlx nx run-many -t build",
       "versionActionsOptions": {
         "skipLockFileUpdate": true
       }

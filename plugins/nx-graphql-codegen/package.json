@@ -15,7 +15,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "6.7.1"
+    "@nx-tools/core": "workspace:*"
   },
   "peerDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

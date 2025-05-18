@@ -15,8 +15,8 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/container-metadata": "6.7.1",
-    "@nx-tools/core": "6.7.1",
+    "@nx-tools/container-metadata": "workspace:*",
+    "@nx-tools/core": "workspace:*",
     "csv-parse": "^5.5.5",
     "handlebars": "^4.7.8",
     "semver": "^7.6.0",

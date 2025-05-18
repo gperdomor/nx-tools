@@ -13,8 +13,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@nx-tools/ci-context": "6.7.1",
-    "@nx-tools/core": "6.7.1",
+    "@nx-tools/ci-context": "workspace:*",
+    "@nx-tools/core": "workspace:*",
     "@renovate/pep440": "1.0.0",
     "csv-parse": "^5.5.5",
     "handlebars": "^4.7.8",

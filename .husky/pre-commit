@@ -1,2 +1,2 @@
-npx --no -- lint-staged
-npm run check-lock-files
+pnpm exec lint-staged
+pnpm run check-lock-files
