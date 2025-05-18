@@ -10,9 +10,6 @@
     "preinstall": "node ./tools/scripts/preinstall.mjs"
   },
   "private": true,
-  "engines": {
-    "node": ">=18.12.0 || >=20.0.0 || >=22.0.0"
-  },
   "dependencies": {
     "@actions/exec": "1.1.1",
     "@actions/github": "6.0.1",
@@ -76,8 +73,8 @@
     "vitest": "3.1.3"
   },
   "workspaces": [
-    "packages/**",
-    "plugins/**"
+    "packages/*",
+    "plugins/*"
   ],
   "nx": {
     "includedScripts": [],
