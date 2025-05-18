@@ -4,10 +4,10 @@
   "include": [],
   "references": [
     {
-      "path": "../../packages/core"
+      "path": "../../packages/ci-context"
     },
     {
-      "path": "../../packages/ci-context"
+      "path": "../../packages/core"
     },
     {
       "path": "../../packages/container-metadata"
