@@ -28,7 +28,7 @@
     "moment-timezone": "0.5.48",
     "prisma": "6.1.0",
     "properties-file": "3.5.12",
-    "semver": "7.7.1",
+    "semver": "7.7.2",
     "tmp": "0.2.3"
   },
   "devDependencies": {
