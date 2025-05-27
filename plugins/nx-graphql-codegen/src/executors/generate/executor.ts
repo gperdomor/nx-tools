@@ -17,6 +17,19 @@ const getArgs = (options: GenerateExecutorSchema, ctx: ExecutorContext): string[
 
   args.push(`--config=${config}`);
 
+  if (options?.silent) {
+    args.push('--silent');
+  }
+  if (options?.verbose) {
+    args.push('--verbose');
+  }
+  if (options?.debug) {
+    args.push('--debug');
+  }
+  if (options?.errorsOnly) {
+    args.push('--errors-only');
+  }
+
   return args;
 };
 
