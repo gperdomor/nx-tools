@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "check-format": "nx format:check --all",
     "check-lock-files": "node ./tools/scripts/check-lock-files.mjs",
     "commit": "cz",
-    "prepare": "husky",
-    "preinstall": "node ./tools/scripts/preinstall.mjs"
+    "preinstall": "node ./tools/scripts/preinstall.mjs",
+    "prepare": "husky || true"
   },
   "private": true,
   "dependencies": {
