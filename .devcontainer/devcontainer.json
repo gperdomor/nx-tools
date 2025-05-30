@@ -1,0 +1,38 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+  "name": "NxToolsDevContainer",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {}
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // 4211 = nx graph port
+  // 4873 = verdaccio (local npm registry) port
+  "forwardPorts": [4211, 4873],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
+        "mutantdino.resourcemonitor", // to monitor cpu, memory usage from the dev container
+        "nrwl.angular-console",
+        "vitest.explorer"
+      ],
+      "settings": {
+        "debug.javascript.autoAttachFilter": "disabled" // workaround for that issue: https://github.com/microsoft/vscode-js-debug/issues/374#issuecomment-622239998
+      }
+    }
+  },
+  // To improve disk performances when installing node modules
+  // See https://code.visualstudio.com/remote/advancedcontainers/improve-performance
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ],
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  "remoteUser": "root"
+}
