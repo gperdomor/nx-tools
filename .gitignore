@@ -47,5 +47,7 @@ test-output
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
+
+# Next.js
+.next
+out
