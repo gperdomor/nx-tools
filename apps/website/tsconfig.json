@@ -19,10 +19,10 @@
       }
     ],
     "paths": {
+      "@/.source": ["./.source/index.ts"],
       "@/*": ["./src/*"]
     },
     "outDir": "dist",
-    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
   "include": [
@@ -33,6 +33,8 @@
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
+    ".source/**/*.ts",
+    "source.config.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

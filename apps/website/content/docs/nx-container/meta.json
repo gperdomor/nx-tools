@@ -1,0 +1,6 @@
+{
+  "title": "Nx Container",
+  "description": "The Container plugin",
+  "icon": "Container",
+  "root": true
+}

@@ -51,3 +51,8 @@ vitest.config.*.timestamp*
 # Next.js
 .next
 out
+
+# Fumadocs
+.contentlayer
+.content-collections
+.source

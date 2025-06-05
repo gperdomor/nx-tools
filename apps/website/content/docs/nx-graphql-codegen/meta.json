@@ -1,0 +1,6 @@
+{
+  "title": "Nx GraphQL Codegen",
+  "description": "The GraphQL plugin",
+  "icon": "GitGraph",
+  "root": true
+}
