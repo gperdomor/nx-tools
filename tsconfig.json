@@ -23,6 +23,9 @@
     },
     {
       "path": "./packages/nx-set-shas"
+    },
+    {
+      "path": "./apps/website"
     }
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "title": "Nx Prisma",
+  "description": "The Prisma plugin",
+  "icon": "Pyramid",
+  "root": true
+}

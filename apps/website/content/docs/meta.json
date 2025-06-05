@@ -1,0 +1,3 @@
+{
+  "pages": ["nx-container", "nx-prisma", "nx-graphql-codegen"]
+}
