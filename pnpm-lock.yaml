@@ -29,6 +29,12 @@ importers:
       '@types/tmp':
         specifier: 0.2.6
         version: 0.2.6
+      '@vercel/analytics':
+        specifier: 1.5.0
+        version: 1.5.0(next@15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1))(react@19.0.0)
+      '@vercel/speed-insights':
+        specifier: 1.2.0
+        version: 1.2.0(next@15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1))(react@19.0.0)
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -3941,6 +3947,55 @@ packages:
     resolution: {integrity: sha512-hHKFx+opG5BA3/owMXon8ypwSotBGTdblG6oda/iOu9+OEYnk0cxD2uIcGyGT8jCK578kV+xMrNxqbn8Zjlpgw==}
     cpu: [x64]
     os: [win32]
+
+  '@vercel/analytics@1.5.0':
+    resolution: {integrity: sha512-MYsBzfPki4gthY5HnYN7jgInhAZ7Ac1cYDoRWFomwGHWEX7odTEzbtg9kf/QSo7XEsEAqlQugA6gJ2WS2DEa3g==}
+    peerDependencies:
+      '@remix-run/react': ^2
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@remix-run/react':
+        optional: true
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
+
+  '@vercel/speed-insights@1.2.0':
+    resolution: {integrity: sha512-y9GVzrUJ2xmgtQlzFP2KhVRoCglwfRQgjyfY607aU0hh0Un6d0OUyrJkjuAlsV18qR4zfoFPs/BiIj9YDS6Wzw==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19 || ^19.0.0-rc
+      svelte: '>= 4'
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@verdaccio/auth@8.0.0-next-8.15':
     resolution: {integrity: sha512-vAfzGOHbPcPXMCI90jqm/qSZ1OUBnOGzudZA3+YtherncdwADekvXbdJlZVclcfmZ0sRbfVG5Xpf88aETiwfcw==}
@@ -14841,6 +14896,16 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.7.8':
     optional: true
+
+  '@vercel/analytics@1.5.0(next@15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1))(react@19.0.0)':
+    optionalDependencies:
+      next: 15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1)
+      react: 19.0.0
+
+  '@vercel/speed-insights@1.2.0(next@15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1))(react@19.0.0)':
+    optionalDependencies:
+      next: 15.3.3(@babel/core@7.27.1)(babel-plugin-macros@3.1.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.1)
+      react: 19.0.0
 
   '@verdaccio/auth@8.0.0-next-8.15':
     dependencies:

@@ -8,6 +8,15 @@ const withMDX = createMDX();
  **/
 const nextConfig = {
   reactStrictMode: true,
+  redirects: async () => {
+    return [
+      {
+        source: '/docs',
+        destination: '/docs/nx-container',
+        permanent: false,
+      },
+    ];
+  },
   // Use this to set Nx-specific options
   // See: https://nx.dev/recipes/next/next-config-setup
   nx: {
