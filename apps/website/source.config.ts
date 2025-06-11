@@ -1,3 +1,5 @@
+import { remarkImage } from 'fumadocs-core/mdx-plugins';
+import { remarkInstall } from 'fumadocs-docgen';
 import { defineConfig, defineDocs, frontmatterSchema, metaSchema } from 'fumadocs-mdx/config';
 
 // You can customise Zod schemas for frontmatter and `meta.json` here
@@ -11,8 +13,15 @@ export const docs = defineDocs({
   },
 });
 
+const remarkInstallOptions = {
+  persist: {
+    id: 'package-manager',
+  },
+};
+
 export default defineConfig({
+  lastModifiedTime: 'git',
   mdxOptions: {
-    // MDX options
+    remarkPlugins: [[remarkInstall, remarkInstallOptions], remarkImage],
   },
 });

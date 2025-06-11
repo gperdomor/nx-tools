@@ -1,0 +1,24 @@
+---
+title: Multi-platform image
+description: How to build multi-platform images with Nx Container
+---
+
+You can build [multi-platform](https://docs.docker.com/build/building/multi-platform/) images using the `platforms` option, as shown in the following example:
+
+<Callout title="Note" type="info">
+  List of available platforms will be displayed and available through our [setup-buildx](https://github.com/docker/setup-buildx-action#about) action.
+
+  If you want support for more platforms, you can use QEMU with our [setup-qemu](https://github.com/docker/setup-qemu-action) action.
+</Callout>
+
+
+```json title="apps/your-app/project.json"
+"container": {
+  "executor": "@nx-tools/nx-container:build",
+  "options": {
+    "platforms": ["linux/amd64", "linux/arm64"],
+    "push": true,
+    "tags": ["user/app:latest"],
+  }
+}
+```

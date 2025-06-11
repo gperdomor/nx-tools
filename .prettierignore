@@ -6,3 +6,8 @@
 /.nx/workspace-data
 pnpm-lock.yaml
 /**/dist
+
+/**/.next
+*.mdx
+
+apps/website/.source

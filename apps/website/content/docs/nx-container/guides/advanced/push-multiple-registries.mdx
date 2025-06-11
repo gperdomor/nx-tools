@@ -1,0 +1,21 @@
+---
+title: Push to multi-registries
+description: How to push your Docker image to multiple registries using Nx Container
+---
+
+The following workflow will connect you to Docker Hub and GitHub Container Registry, and push the image to both registries
+
+```json title="apps/your-app/project.json"
+"container": {
+  "executor": "@nx-tools/nx-container:build",
+  "options": {
+    "push": true,
+    "tags": [
+      "user/app:latest",
+      "user/app:1.0.0",
+      "ghcr.io/user/app:latest",
+      "ghcr.io/user/app:1.0.0"
+    ],
+  }
+}
+```

@@ -14,14 +14,17 @@ export interface ConfigurationGeneratorSchema {
   project: string;
   /**
    * Provide the container engine to be used.
+   * @default docker
    */
-  engine?: Engine;
+  engine?: Engine & {};
   /**
    * Which type of app you are building?.
+   * @default empty
    */
-  template?: Template;
+  template?: Template & {};
   /**
    * Skips formatting the workspace after the generator completes.
+   * @default false
    */
   skipFormat?: boolean;
 }

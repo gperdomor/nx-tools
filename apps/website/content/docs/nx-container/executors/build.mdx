@@ -1,0 +1,86 @@
+---
+title: build
+description: Build an OCI image from a Dockerfile.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+## Examples
+
+<Tabs items={['Export to Docker', 'Push to multi-registries', 'Handle tags and labels']}>
+  <Tab value="Export to Docker">
+    You may want your build result to be available in the Docker client through `docker images` to be able to use it in another step of your workflow:
+
+    ```json title="apps/your-app/project.json"
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "load": true,
+        "tags": ["image-name:latest"],
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Push to multi-registries">
+    The following config will connect you to [DockerHub](https://github.com/docker/login-action#dockerhub) and [GitHub Container Registry](https://github.com/docker/login-action#github-container-registry) and push the image to these registries.
+
+    ```json title="apps/your-app/project.json"
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true,
+        "tags": [
+          "user/app:latest",
+          "user/app:1.0.0",
+          "ghcr.io/user/app:latest",
+          "ghcr.io/user/app:1.0.0"
+        ],
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Handle tags and labels">
+    If you want an "automatic" tag management and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) for labels, you can do it with a dedicated configuration option.
+    The following config will use the [Docker metadata package](https://github.com/gperdomor/nx-tools/tree/main/packages/container-metadata) to handle tags and labels based on CI events and Git metadata.
+
+    ```json title="apps/your-app/project.json"
+    "container": {
+      "executor": "@nx-tools/nx-container:build",
+      "options": {
+        "push": true,
+        "metadata": {
+          "images": ["name/app", "ghcr.io/username/app"],
+          "tags": [
+            "type=schedule",
+            "type=ref,event=branch",
+            "type=ref,event=tag",
+            "type=ref,event=pr",
+            "type=semver,pattern={{version}}",
+            "type=semver,pattern={{major}}.{{minor}}",
+            "type=semver,pattern={{major}}",
+            "type=sha"
+          ]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+  All options described here, can be customized using environment variables or values in your `project.json`. Environment variables takes precedence over harcoded values.
+
+<Callout title="Tip!" type="info">
+  All environment values needs to be prefixed with `INPUT_` so `INPUT_PUSH=true` will replace the `options.push` value of your `project.json` file
+
+  Note: For list values use a comma-delimited string, like `INPUT_PLATFORMS=linux/amd64,linux/arm64`. For `INPUT_BUILD_ARGS` and `INPUT_TAGS` use a newline-delimited string. See [FAQ page](/docs/nx-container/faq) for more information.
+
+  Note: Replace a dash (-) with an underscore in environment variables, like `INPUT_CACHE_FROM='type=gha'`
+</Callout>
+
+<AutoTypeTable path="../../plugins/nx-container/src/executors/build/schema.d.ts" name="BuildExecutorSchema" />
+
+#### Metadata
+
+<AutoTypeTable path="../../plugins/nx-container/src/executors/build/schema.d.ts" name="Metadata" />
