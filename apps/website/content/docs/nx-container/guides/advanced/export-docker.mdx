@@ -1,0 +1,18 @@
+---
+title: Export image to Docker
+description: Make your Docker image available in the Docker client.
+---
+
+You may want your build result to be available in the Docker client through docker images to be able to use it in another step of your workflow:
+
+```json title="apps/your-app/project.json"
+"container": {
+  "executor": "@nx-tools/nx-container:build",
+  "options": {
+    "load": true,
+    "tags": [
+      "user/app:latest",
+    ],
+  }
+}
+```

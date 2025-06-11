@@ -1,7 +1,12 @@
 export interface Schema {
   /**
-   * Provide the default container engine to be used.
+   * The default container engine to be used when building images
+   * @default docker
    */
   defaultEngine?: 'docker' | 'podman' | 'kaniko';
+  /**
+   * The default container registry to be used when building images
+   * @default docker.io
+   */
   defaultRegistry?: string;
 }

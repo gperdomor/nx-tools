@@ -1,0 +1,33 @@
+---
+title: configuation
+description: Configure Container builds for your application.
+---
+
+## @nx-tools/nx-container:configuration
+
+This generator is used for setup a existing app to use `nx-container`.
+
+It will create a `Dockerfile` file at the root of your project, or if there's already a `Dockerfile` file, it will be replaced with a new one based on your template selection.
+
+It will also add the `container` target to the `project.json` file of your project if is required.
+
+<Callout title="Your code will be modified!" type="error">
+    This generator will modify your code, so make sure to commit your changes before running it.
+</Callout>
+
+### Usage
+
+```bash
+nx g @nx-tools/nx-container:configuration
+```
+
+When running this generator, you will be prompted to provide the following:
+
+- The project, as the name of the project you want to generate the configuration for.
+- The engine, as the container engine you want to use (docker, podman, or kaniko).
+- The template, as the dockerfile template you want to use (empty, nest, next, nginx).
+
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-container/src/generators/configuration/schema.d.ts" name="ConfigurationGeneratorSchema" />

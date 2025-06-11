@@ -1,0 +1,7 @@
+{
+  "title": "Nx Container",
+  "description": "The Container plugin",
+  "icon": "Container",
+  "root": true,
+  "pages": ["---Overview---", "index", "faq", "---API---", "executors", "generators", "---Guides---", "...guides"]
+}

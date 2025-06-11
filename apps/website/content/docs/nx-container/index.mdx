@@ -1,0 +1,57 @@
+---
+title: Introduction
+description: The Nx Tools Container plugin contains executors and generators that are useful for work with OCI images in an Nx workspace.
+icon: Album
+---
+
+## Setting Up @nx-tools/nx-container
+
+### Installation
+
+In any Nx workspace, you can install `@nx-tools/nx-container` by running the following command:
+
+```package-install
+npx nx add @nx-tools/nx-container
+```
+
+### How @nx-tools/nx-container Infers Tasks
+
+The `@nx-tools/nx-container` plugin will add a `container` task to projects that have a `Dockerfile`.
+
+### View Inferred Tasks
+
+To view inferred tasks for a project, open the [project details view](https://nx.dev/concepts/inferred-tasks) in Nx Console or run `nx show project my-project` in the command line.
+
+### @nx-tools/nx-container Configuration
+
+The `@nx-tools/nx-container` plugin is configured in the `plugins` array in `nx.json`.
+
+```json title="nx.json"
+{
+  "plugins": [
+    {
+      "plugin": "@nx-tools/nx-container",
+      "options": {
+        "defaultEngine": "docker",
+        "defaultRegistry": "docker.io"
+      }
+    }
+  ]
+}
+```
+
+You can also set `podman` or `kaniko` as default engine and even change the default registry updating the corresponding options.
+
+```json title="nx.json"
+{
+  "plugins": [
+    {
+      "plugin": "@nx-tools/nx-container",
+      "options": {
+        "defaultEngine": "podman",
+        "defaultRegistry": "ghcr.io"
+      }
+    }
+  ]
+}
+```

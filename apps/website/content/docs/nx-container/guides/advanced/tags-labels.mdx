@@ -1,0 +1,30 @@
+---
+title: Tags and labels
+description: How to handle tags and labels in your Docker images using Nx Container
+---
+
+If you want an "automatic" tag management and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md)
+for labels, you can do it in a dedicated setup step. The following workflow will use the [container-metadata package](https://github.com/gperdomor/nx-tools/tree/main/packages/container-metadata)
+to handle tags and labels based on CI events and Git metadata.
+
+```json title="apps/your-app/project.json"
+"container": {
+  "executor": "@nx-tools/nx-container:build",
+  "options": {
+    "push": true,
+    "metadata": {
+      "images": ["name/app", "ghcr.io/username/app"],
+      "tags": [
+        "type=schedule",
+        "type=ref,event=branch",
+        "type=ref,event=tag",
+        "type=ref,event=pr",
+        "type=semver,pattern={{version}}",
+        "type=semver,pattern={{major}}.{{minor}}",
+        "type=semver,pattern={{major}}",
+        "type=sha"
+      ]
+    }
+  }
+}
+```

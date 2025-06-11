@@ -6,7 +6,15 @@
  */
 
 export interface BuildExecutorSchema {
+  /**
+   * The container engine to be used when building images
+   * @default docker
+   */
   engine?: 'docker' | 'podman' | 'kaniko';
+  /**
+   * Enables quiet mode, suppressing most of the output except for errors
+   * @default false
+   */
   quiet?: boolean;
   /**
    * List of customs host-to-IP mapping (e.g., docker:10.180.0.1)
@@ -41,11 +49,13 @@ export interface BuildExecutorSchema {
    */
   'cgroup-parent'?: string;
   /**
-   * Build's context is the set of files located in the specified PATH or URL (default .)
+   * Build's context is the set of files located in the specified PATH or URL
+   * @default .
    */
   context?: string;
   /**
    * Path to the Dockerfile (default Dockerfile)
+   * @default Dockerfile
    */
   file?: string;
   /**
@@ -54,6 +64,7 @@ export interface BuildExecutorSchema {
   labels?: string[];
   /**
    * Load is a shorthand for --output=type=docker (default false)
+   * @default false
    */
   load?: boolean;
   /**
@@ -62,6 +73,7 @@ export interface BuildExecutorSchema {
   network?: string;
   /**
    * Do not use cache when building the image (default false)
+   * @default false
    */
   'no-cache'?: boolean;
   /**
@@ -82,10 +94,12 @@ export interface BuildExecutorSchema {
   provenance?: string;
   /**
    * Always attempt to pull a newer version of the image (default false)
+   * @default false
    */
   pull?: boolean;
   /**
    * Push is a shorthand for --output=type=registry (default false)
+   * @default false
    */
   push?: boolean;
   /**
@@ -119,34 +133,39 @@ export interface BuildExecutorSchema {
   /**
    * Extract metadata from CI context
    */
-  metadata?: {
-    /**
-     * List of Docker images to use as base name for tags. Required.
-     */
-    images?: string[];
-    /**
-     * List of tags as key-value pair attributes
-     */
-    tags?: string[];
-    /**
-     * Flavors to apply
-     */
-    flavor?: string[];
-    /**
-     * List of custom labels
-     */
-    labels?: string[];
-    /**
-     * Separator to use for tags output (default '\n')
-     */
-    'sep-tags'?: string;
-    /**
-     * Separator to use for labels output (default '\n')
-     */
-    'sep-labels'?: string;
-    /**
-     * Bake target name (default container-metadata-action)
-     */
-    'bake-target'?: string;
-  };
+  metadata?: Metadata;
+}
+
+export interface Metadata {
+  /**
+   * List of Docker images to use as base name for tags. Required.
+   */
+  images?: string[];
+  /**
+   * List of tags as key-value pair attributes
+   */
+  tags?: string[];
+  /**
+   * Flavors to apply
+   */
+  flavor?: string[];
+  /**
+   * List of custom labels
+   */
+  labels?: string[];
+  /**
+   * Separator to use for tags output (default '\n')
+   * @default \n
+   */
+  'sep-tags'?: string;
+  /**
+   * Separator to use for labels output (default '\n')
+   * @default \n
+   */
+  'sep-labels'?: string;
+  /**
+   * Bake target name (default container-metadata-action)
+   * @default container-metadata-action
+   */
+  'bake-target'?: string;
 }

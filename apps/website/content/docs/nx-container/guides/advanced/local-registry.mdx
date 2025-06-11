@@ -1,9 +1,12 @@
-# Local registry
+---
+title: Local registry
+description: How to set up a local Docker registry for testing purposes.
+---
 
 For testing purposes you may need to create a [local registry](https://hub.docker.com/_/registry) to push images into:
 
-```json
-"docker": {
+```json title="apps/your-app/project.json"
+"container": {
   "executor": "@nx-tools/nx-container:build",
   "options": {
     "push": true,

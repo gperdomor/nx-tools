@@ -1,0 +1,37 @@
+---
+title: Frequently Asked Questions
+description: Answers to common questions from the community
+icon: CircleHelp
+---
+
+### INPUT_BUILD_ARGS is not working
+
+It's a common use case to pass build arguments to the docker command using environment variables, so the first thing you would run is something like this
+
+```bash
+INPUT_BUILD_ARGS=NODE_VERSION=24.0.0,NODE_ENV=production nx run node-app:container
+```
+
+But as you can notice, it do not work as you expect 😢
+
+The problem is because both variables should be separated by a new line instead a comma and you have two ways to do it
+
+#### Using dotenv
+
+Create a `.env` file in the root of the workspace with this content
+
+```bash
+INPUT_BUILD_ARGS="NODE_VERSION=24.0.0\nNODE_ENV=production"
+```
+
+Take a look of the `\n` between both variables, then run `nx run node-app:container`
+
+#### Inline execution
+
+Sadly, the string of the first option not work if you try to run `INPUT_BUILD_ARGS="NODE_VERSION=24.0.0\nNODE_ENV=production" nx run node-app:container`, in this case you need to use a new line instead of `\n` like the below image
+
+![image](/inline-execution.png)
+
+### INPUT_TAGS is not working with container-metadata
+
+This specific case is for the container-metadata tags, and is the same issue of [INPUT_BUILD_ARGS](#INPUT_BUILD_ARGS-is-not-working), please apply the same solutions described above
