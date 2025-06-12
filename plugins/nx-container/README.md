@@ -16,43 +16,53 @@
   </a>
 </p>
 
-# @nx-tools/nx-container
+The `@nx-tools/nx-container` plugin streamlines container image workflows in Nx monorepos by providing a unified interface for multiple container build engines and automated image management capabilities.
 
-The Nx Plugin for Containers contains executors, generators, and utilities for build and push containers images from your applications. It provides:
+## Key Features
 
-- Easy way to build container images with three different engines:
-  - [Buildx](https://github.com/docker/buildx) through [Moby BuildKit](https://github.com/moby/buildkit) builder toolkit.
-  - [Podman](https://docs.podman.io/en/latest/).
-  - [Kaniko](https://github.com/GoogleContainerTools/kaniko).
-- Automatic tag management and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) for labels,
-- Backward compatibility with `@nx-tools/nx-docker` api.
-- Generators to help to setup your apps quickly.
+- **Multi-Engine Support**: Build container images using your preferred container engine:
+  - [Docker Buildx](https://github.com/docker/buildx) with [Moby BuildKit](https://github.com/moby/buildkit) for advanced build features
+  - [Podman](https://docs.podman.io/en/latest/) for rootless and daemonless container builds
+  - [Kaniko](https://github.com/GoogleContainerTools/kaniko) for building containers in Kubernetes environments without Docker daemon
+- **Automated Image Management**: Intelligent tag generation and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) compliant labeling
+- **Project Scaffolding**: Code generators to quickly configure container builds for your applications
 
-This executor not handle registry login steps, so if you wanna push your container images to a remote registry, please setup the credentials using the `docker login` or `podman login`. For kaniko engine, you need to create the `/kaniko/.docker/config.json` according to this [documentation](https://github.com/GoogleContainerTools/kaniko#pushing-to-docker-hub).
+## Getting Started
 
-> This is the succesor of `@nx-tools/nx-docker`. For docs about nx-docker please go check [this](https://github.com/gperdomor/nx-tools/tree/nx-docker%403.0.5)
+### Installation
 
-## Setting up the Container plugin
+To add the `@nx-tools/nx-container` plugin to your Nx workspace, run the following command:
 
-Adding the Container plugin to an existing Nx workspace can be done with the following:
-
-```bash
-nx add @nx-tools/nx-container
+```package-install
+npx nx add @nx-tools/nx-container
 ```
 
-## Using the Container Plugin
+This command will:
 
-### Configuring an application
+- Install the plugin package
+- Configure the plugin in your `nx.json` file
+- Set up default configurations for your workspace
 
-It's straightforward to setup your application:
+### Task Inference
 
-#### Using Inferred target (Project Crystal):
+The plugin automatically detects projects suitable for containerization and adds a `container` task to any project containing a `Dockerfile`. This intelligent inference eliminates the need for manual task configuration in most cases.
 
-It's straightforward to setup your application with 2 simple steps
+### Viewing Inferred Tasks
 
-1. Run this command `nx g @nx-tools/nx-container:init` or add nx-container manually to the plugins array in your `nx.json` file, like is showed below:
+To inspect the automatically inferred tasks for any project:
 
-```
+- **Using Nx Console**: Open the [project details view](https://nx.dev/concepts/inferred-tasks) for comprehensive task visualization
+- **Using CLI**: Execute `nx show project <project-name>` to display project configuration and available tasks
+
+## Configuration
+
+### Plugin Configuration
+
+Configure the `@nx-tools/nx-container` plugin in your workspace's `nx.json` file within the `plugins` array:
+
+```json title="nx.json"
+{
+  "plugins": [
     {
       "plugin": "@nx-tools/nx-container",
       "options": {
@@ -60,28 +70,42 @@ It's straightforward to setup your application with 2 simple steps
         "defaultRegistry": "docker.io"
       }
     }
+  ]
+}
 ```
 
-2. Add a`Dockerfile` to your application
+### Alternative Engine Configuration
 
-> Note: This requires `@nx-tools/nx-container`verion `6.2.0` or above.
+You can customize the default build engine and registry to match your infrastructure requirements:
 
-#### Manual configuration
-
-To setup a `container` task, or override inferred task, you can use this command:
-
-```bash
-nx g @nx-tools/nx-container:configuration appName
+```json title="nx.json"
+{
+  "plugins": [
+    {
+      "plugin": "@nx-tools/nx-container",
+      "options": {
+        "defaultEngine": "podman",
+        "defaultRegistry": "ghcr.io"
+      }
+    }
+  ]
+}
 ```
 
-By default, the application will be configured with:
+**Supported Engines:**
 
-- A Dockerfile in the application root (Will be created if no Dockerfile is present in app directory)
-- A target to build your application using the Docker engine.
+- `docker` (default) - Standard Docker builds with BuildKit
+- `podman` - Rootless container builds
+- `kaniko` - Kubernetes-native builds without Docker daemon
 
-We can then build our application with the following command:
+**Common Registries:**
 
-### Build your application
+- `docker.io` - Docker Hub (default)
+- `ghcr.io` - GitHub Container Registry
+- `gcr.io` - Google Container Registry
+- Custom registry URLs
+
+## Build your application
 
 ```bash
 nx container appName
@@ -89,43 +113,26 @@ nx container appName
 
 To use a different engine, you need to update the `options.engine` property of your project target or use the INPUT_ENGINE environment variable. All possible values are `docker` (the default), `podman` and `kaniko`
 
-> Tip: You can set docker or podman engine in your project.json targets to use in your dev machine, and use INPUT_ENGINE env variable to use kaniko in your CI/CD pipelines.
-
-### Migrate from @nx-tools/nx-docker
-
-Just change `@nx-tools/nx-docker:build` to `@nx-tools/nx-container:build` in your project targets and you will continue building images using the [docker/buildx](https://github.com/docker/buildx) engine.
-
-```json
-"docker": {
-  "executor": "@nx-tools/nx-container:build",
-  "options": {
-    ...
-  }
-}
-```
+> [!IMPORTANT]
+> You can set docker or podman engine in your project.json targets to use in your dev machine, and use INPUT_ENGINE env variable to use kaniko in your CI/CD pipelines.
 
 ## More Documentation
 
 - Advanced usage:
 
-  - [Multi-platform image](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/multi-platform.md)
-  - [Isolated builders](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/isolated-builders.md)
-  - [Push to multi-registries](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/push-multiple-registries.md)
-  - [Cache](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/cache.md)
-  - [Local registry](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/local-registry.md)
-  - [Export image to Docker](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/export-docker.md)
-  - [Handle tags and labels](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/advanced/tags-labels.md)
-
-- Customizing
-
-  - [inputs](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/inputs.md)
+  - [Multi-platform image](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/multi-platform)
+  - [Push to multi-registries](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/push-multiple-registries)
+  - [Cache](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/cache)
+  - [Local registry](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/local-registry)
+  - [Export image to Docker](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/export-docker)
+  - [Handle tags and labels](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/tags-labels)
 
 - Usage with CI
 
-  - [GitLab CI](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/ci/gitlab-ci.md)
-  - [GitHub Actions](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/docs/ci/github-actions.md)
+  - [GitLab CI](https://nx-tools.vercel.app/docs/nx-container/guides/gitlab-ci)
+  - [GitHub Actions](https://nx-tools.vercel.app/docs/nx-container/guides/github-actions)
 
-- [TROUBLESHOOTING.md](https://github.com/gperdomor/nx-tools/blob/main/plugins/nx-container/TROUBLESHOOTING.md)
+- [Frequently Asked Questions](https://nx-tools.vercel.app/docs/nx-container/faq)
 
 ## Package reference
 
@@ -137,7 +144,8 @@ Here is a list of all the executors and generators available from this package:
 
 ### Generators
 
-- init: Setup required files to build your app.
+- init: Initialize Container settings for your workspace.
+- configuation: Configure Container builds for your application.
 
 ## Community
 
@@ -156,7 +164,7 @@ Join the growing Nx Tools community! We believe in building together and welcome
 - [GitHub Repository](https://github.com/gperdomor/nx-tools) - Source code, issues, and project management
 - [GitHub Discussions](https://github.com/gperdomor/nx-tools/discussions) - Community conversations and support
 - [NPM Package](https://www.npmjs.com/package/@nx-tools/nx-container) - Latest releases and installation information
-  <!-- - [Documentation](https://nx-tools.vercel.app) - Comprehensive guides and API reference -->
+- [Documentation](https://nx-tools.vercel.app) - Comprehensive guides and API reference
 - [Code of Conduct](https://github.com/gperdomor/nx-tools/blob/main/CODE_OF_CONDUCT.md) - Our community standards and expectations
 
 Your feedback and contributions help make Nx Tools better for everyone!

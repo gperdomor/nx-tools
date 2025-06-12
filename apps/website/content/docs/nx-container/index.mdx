@@ -1,30 +1,51 @@
 ---
 title: Introduction
-description: The Nx Tools Container plugin contains executors and generators that are useful for work with OCI images in an Nx workspace.
+description: The Nx Tools Container plugin provides comprehensive executors and generators for building and managing OCI-compliant container images within Nx workspaces.
 icon: Album
 ---
 
-## Setting Up @nx-tools/nx-container
+The `@nx-tools/nx-container` plugin streamlines container image workflows in Nx monorepos by providing a unified interface for multiple container build engines and automated image management capabilities.
+
+## Key Features
+
+- **Multi-Engine Support**: Build container images using your preferred container engine:
+  - [Docker Buildx](https://github.com/docker/buildx) with [Moby BuildKit](https://github.com/moby/buildkit) for advanced build features
+  - [Podman](https://docs.podman.io/en/latest/) for rootless and daemonless container builds
+  - [Kaniko](https://github.com/GoogleContainerTools/kaniko) for building containers in Kubernetes environments without Docker daemon
+- **Automated Image Management**: Intelligent tag generation and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) compliant labeling
+- **Project Scaffolding**: Code generators to quickly configure container builds for your applications
+
+## Getting Started
 
 ### Installation
 
-In any Nx workspace, you can install `@nx-tools/nx-container` by running the following command:
+To add the `@nx-tools/nx-container` plugin to your Nx workspace, run the following command:
 
 ```package-install
 npx nx add @nx-tools/nx-container
 ```
 
-### How @nx-tools/nx-container Infers Tasks
+This command will:
+- Install the plugin package
+- Configure the plugin in your `nx.json` file
+- Set up default configurations for your workspace
 
-The `@nx-tools/nx-container` plugin will add a `container` task to projects that have a `Dockerfile`.
+### Task Inference
 
-### View Inferred Tasks
+The plugin automatically detects projects suitable for containerization and adds a `container` task to any project containing a `Dockerfile`. This intelligent inference eliminates the need for manual task configuration in most cases.
 
-To view inferred tasks for a project, open the [project details view](https://nx.dev/concepts/inferred-tasks) in Nx Console or run `nx show project my-project` in the command line.
+### Viewing Inferred Tasks
 
-### @nx-tools/nx-container Configuration
+To inspect the automatically inferred tasks for any project:
 
-The `@nx-tools/nx-container` plugin is configured in the `plugins` array in `nx.json`.
+- **Using Nx Console**: Open the [project details view](https://nx.dev/concepts/inferred-tasks) for comprehensive task visualization
+- **Using CLI**: Execute `nx show project <project-name>` to display project configuration and available tasks
+
+## Configuration
+
+### Plugin Configuration
+
+Configure the `@nx-tools/nx-container` plugin in your workspace's `nx.json` file within the `plugins` array:
 
 ```json title="nx.json"
 {
@@ -40,7 +61,9 @@ The `@nx-tools/nx-container` plugin is configured in the `plugins` array in `nx.
 }
 ```
 
-You can also set `podman` or `kaniko` as default engine and even change the default registry updating the corresponding options.
+### Alternative Engine Configuration
+
+You can customize the default build engine and registry to match your infrastructure requirements:
 
 ```json title="nx.json"
 {
@@ -55,3 +78,26 @@ You can also set `podman` or `kaniko` as default engine and even change the defa
   ]
 }
 ```
+
+**Supported Engines:**
+- `docker` (default) - Standard Docker builds with BuildKit
+- `podman` - Rootless container builds
+- `kaniko` - Kubernetes-native builds without Docker daemon
+
+**Common Registries:**
+- `docker.io` - Docker Hub (default)
+- `ghcr.io` - GitHub Container Registry
+- `gcr.io` - Google Container Registry
+- Custom registry URLs
+
+## Build your application
+
+```bash
+nx container appName
+```
+
+To use a different engine, you need to update the `options.engine` property of your project target or use the INPUT_ENGINE environment variable. All possible values are `docker` (the default), `podman` and `kaniko`
+
+<Callout type="info">
+  For more details about all available options, please refer to the [build executor documentation](/docs/nx-container/executors/build).
+</Callout>
