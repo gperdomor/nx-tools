@@ -103,7 +103,7 @@ Join the growing Nx Tools community! We believe in building together and welcome
 - [GitHub Repository](https://github.com/gperdomor/nx-tools) - Source code, issues, and project management
 - [GitHub Discussions](https://github.com/gperdomor/nx-tools/discussions) - Community conversations and support
 - [NPM Package](https://www.npmjs.com/package/@nx-tools/nx-prisma) - Latest releases and installation information
-  <!-- - [Documentation](https://nx-tools.vercel.app) - Comprehensive guides and API reference -->
+- [Documentation](https://nx-tools.vercel.app) - Comprehensive guides and API reference
 - [Code of Conduct](https://github.com/gperdomor/nx-tools/blob/main/CODE_OF_CONDUCT.md) - Our community standards and expectations
 
 Your feedback and contributions help make Nx Tools better for everyone!

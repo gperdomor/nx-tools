@@ -1,13 +1,115 @@
 ---
-title: Overview of the Nx Tools Prisma Plugin
-description: The Nx Tools Prisma plugin contains executors and generators that are useful for work with Prisma ORM applications in an Nx workspace.
+title: Introduction
+description: The Nx Tools Prisma plugin provides comprehensive executors and generators for seamlessly integrating Prisma ORM into Nx workspaces.
+icon: Album
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+The `@nx-tools/nx-prisma` plugin delivers a complete Prisma integration for Nx monorepos, offering streamlined database workflows, automated schema management, and powerful code generation capabilities that scale with your application architecture.
 
-## What is Next?
+## Key Features
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+- **Complete Prisma CLI Integration**: Access all Prisma commands through Nx executors with proper dependency management
+- **Intelligent Project Setup**: Automated generators that configure Prisma with best practices for monorepo environments
+- **Database Workflow Management**: Streamlined migration, deployment, and schema synchronization processes
+- **Development Tools Integration**: Built-in Prisma Studio access and validation workflows
+- **Monorepo-Optimized**: Designed specifically for multi-project workspaces with shared database schemas
+
+## Getting Started
+
+### Installation
+
+To add the `@nx-tools/nx-prisma` plugin to your Nx workspace, run the following command:
+
+```package-install
+npx nx add @nx-tools/nx-prisma
+```
+
+{/* This command will:
+- Install the plugin package and its dependencies
+- Configure the plugin within your Nx workspace
+- Set up the necessary executors for Prisma operations */}
+
+## Project Configuration
+
+### Initial Setup
+
+Configure Prisma for your application using the configuration generator:
+
+```bash
+nx g @nx-tools/nx-prisma:configuration <project-name>
+```
+
+This generator automatically sets up:
+- **Prisma Schema**: Creates a `schema.prisma` file in your project root with sensible defaults
+{/* - **Database Configuration**: Configures database connection and provider settings */}
+- **Nx Targets**: Adds pre-configured executors for all common Prisma operations
+{/* - **Development Workflow**: Sets up generators, migrations, and database management tasks */}
+
+<Callout type="info">
+  **Schema Customization**: While the default configuration places the Prisma schema in the project root, you can relocate or rename your schema file. Ensure the `options.schema` property in your project targets reflects the correct relative path to maintain proper functionality.
+</Callout>
+
+## Available Operations
+
+Once configured, you can execute comprehensive Prisma workflows using the following commands:
+
+### Code Generation and Schema Management
+
+```bash
+# Generate Prisma Client and related artifacts
+nx prisma-generate <project-name>
+
+# Validate schema syntax and configuration
+nx prisma-validate <project-name>
+```
+
+### Database Operations
+
+```bash
+# Deploy pending migrations to production database
+nx prisma-deploy <project-name>
+
+# Create and apply new migrations
+nx prisma-migrate <project-name>
+
+# Pull database schema changes to Prisma schema
+nx prisma-pull <project-name>
+
+# Push schema changes directly to database (development)
+nx prisma-push <project-name>
+
+# Populate your database with predefined data
+nx prisma-seed <project-name>
+```
+
+### Development Tools
+
+```bash
+# Launch Prisma Studio for visual database management
+nx prisma-studio <project-name>
+
+# Format Prisma schema file
+nx prisma-format <project-name>
+
+# Reset the database and apply migrations
+nx prisma-reset <project-name>
+
+# Resolve Prisma schema conflicts
+nx prisma-resolve <project-name>
+```
+
+### Command Usage Patterns
+
+**Development Workflow:**
+1. Modify your Prisma schema
+2. Run `nx prisma-generate` to update the client
+3. Use `nx prisma-push` for rapid prototyping or `nx prisma-migrate` for production-ready changes
+4. Validate changes with `nx prisma-validate`
+
+**Production Deployment:**
+1. Apply migrations with `nx prisma-deploy`
+2. Generate optimized client with `nx prisma-generate`
+
+<Callout type="info">
+  **Advanced Configuration**: For detailed information about all available executor options, advanced use cases, and customization possibilities, refer to the [configuration generator documentation](/docs/nx-prisma/generators/configuration).
+</Callout>
