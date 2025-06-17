@@ -8,6 +8,22 @@
     "config": {
       "type": "string",
       "description": "Specifies the path to the desired graphql code generator config file to be processed instead of the default path. Both absolute and relative paths are supported."
+    },
+    "silent": {
+      "type": "boolean",
+      "description": "If true, the executor will not log any output to the console. Defaults to false."
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "If true, the executor will log additional information to the console. Defaults to false."
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "If true, the executor will log debug information to the console. Defaults to false."
+    },
+    "errorsOnly": {
+      "type": "boolean",
+      "description": "If true, the executor will only log errors to the console. Defaults to false."
     }
   },
   "required": []
