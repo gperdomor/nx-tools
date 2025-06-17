@@ -1,0 +1,51 @@
+---
+title: reset
+description: Resets the database by dropping all data and recreating the database structure.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Warning" type="warning">
+  This command is not supported on MongoDB. Use db push instead.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema', 'Force Reset']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-reset": {
+      "executor": "@nx-tools/nx-prisma:reset",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-reset": {
+      "executor": "@nx-tools/nx-prisma:reset",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Force Reset">
+    Skip confirmation prompts:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-reset": {
+      "executor": "@nx-tools/nx-prisma:reset",
+      "options": {
+        "schema": "prisma/schema.prisma",
+        "force": true
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/reset/schema.d.ts" name="ResetExecutorSchema" />

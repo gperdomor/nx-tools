@@ -1,0 +1,38 @@
+---
+title: validate
+description: Validates the Prisma schema file for syntax and semantic errors.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Info" type="info">
+  This command helps ensure your Prisma schema is valid before generating the client or applying migrations.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-validate": {
+      "executor": "@nx-tools/nx-prisma:validate",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-validate": {
+      "executor": "@nx-tools/nx-prisma:validate",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/validate/schema.d.ts" name="ValidateExecutorSchema" />
