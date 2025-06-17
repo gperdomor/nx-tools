@@ -1,0 +1,39 @@
+---
+title: seed
+description: Runs the database seed script to populate the database with initial data.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Info" type="info">
+  Database seeding is useful for populating your database with initial or test data during development.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Options']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-seed": {
+      "executor": "@nx-tools/nx-prisma:seed",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Options">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-seed": {
+      "executor": "@nx-tools/nx-prisma:seed",
+      "options": {
+        "script": "scripts/custom-seed.ts",
+        "executeWith": "tsx"
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/seed/schema.d.ts" name="SeedExecutorSchema" />

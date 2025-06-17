@@ -1,0 +1,34 @@
+---
+title: format
+description: Formats the Prisma Schema Language of the Prisma schema file.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-format": {
+      "executor": "@nx-tools/nx-prisma:format",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-format": {
+      "executor": "@nx-tools/nx-prisma:format",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/format/schema.d.ts" name="FormatExecutorSchema" />

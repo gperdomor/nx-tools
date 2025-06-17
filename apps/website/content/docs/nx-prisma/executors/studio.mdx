@@ -1,0 +1,51 @@
+---
+title: studio
+description: Launches Prisma Studio, a visual database browser and editor for your data.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Info" type="info">
+  Prisma Studio provides a web-based GUI to view and edit data in your database. It automatically opens in your default browser.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema', 'Custom Port']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-studio": {
+      "executor": "@nx-tools/nx-prisma:studio",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-studio": {
+      "executor": "@nx-tools/nx-prisma:studio",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Port">
+    Run Studio on a specific port:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-studio": {
+      "executor": "@nx-tools/nx-prisma:studio",
+      "options": {
+        "schema": "prisma/schema.prisma",
+        "port": 5556
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/studio/schema.d.ts" name="StudioExecutorSchema" />

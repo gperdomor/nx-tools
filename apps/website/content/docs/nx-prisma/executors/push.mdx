@@ -1,0 +1,51 @@
+---
+title: push
+description: Pushes the Prisma schema state directly to the database without creating migrations.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Warning" type="warning">
+  This command is intended for development and prototyping. Use migrations for production environments.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema', 'Force Push']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-push": {
+      "executor": "@nx-tools/nx-prisma:push",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-push": {
+      "executor": "@nx-tools/nx-prisma:push",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Force Push">
+    Force push changes even if data loss might occur:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-push": {
+      "executor": "@nx-tools/nx-prisma:push",
+      "options": {
+        "schema": "prisma/schema.prisma",
+        "acceptDataLoss": true
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/push/schema.d.ts" name="PushExecutorSchema" />

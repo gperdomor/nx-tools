@@ -1,0 +1,31 @@
+---
+title: configuration
+description: Configure Prisma for your application.
+---
+
+## @nx-tools/nx-prisma:configuration
+
+This generator is used for setup a existing app to use `nx-prisma`.
+
+It will create a `prisma.schema` file at the root of your project.
+
+It will also add several `prisma-*` related targets to the `project.json` file of your project.
+
+<Callout title="Your code will be modified!" type="error">
+    This generator will modify your code, so make sure to commit your changes before running it.
+</Callout>
+
+### Usage
+
+```bash
+nx g @nx-tools/nx-prisma:configuration
+```
+
+When running this generator, you will be prompted to provide the following:
+
+- The project, as the name of the project you want to generate the configuration for.
+- The database, as the type of database you want to use (e.g., PostgreSQL, MySQL, SQLite).
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/generators/configuration/schema.d.ts" name="ConfigurationGeneratorSchema" />

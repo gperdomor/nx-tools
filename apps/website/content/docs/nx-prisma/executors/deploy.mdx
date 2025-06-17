@@ -1,0 +1,38 @@
+---
+title: deploy
+description: Applies all pending migrations, and creates the database if it does not exist.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Warning" type="warning">
+  This command is not supported on MongoDB. Use db push instead.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-deploy": {
+      "executor": "@nx-tools/nx-prisma:deploy",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-deploy": {
+      "executor": "@nx-tools/nx-prisma:deploy",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/deploy/schema.d.ts" name="DeployExecutorSchema" />

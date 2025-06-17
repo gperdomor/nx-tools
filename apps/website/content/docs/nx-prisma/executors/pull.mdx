@@ -1,0 +1,51 @@
+---
+title: pull
+description: Pulls changes from the database schema and updates your Prisma schema file.
+---
+
+Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
+
+<Callout title="Info" type="info">
+  This command is useful when you want to synchronize your Prisma schema with changes made directly to the database.
+</Callout>
+
+## Examples
+
+<Tabs items={['Basic Config', 'Custom Schema', 'Force Pull']}>
+  <Tab value="Basic Config">
+    ```json title="apps/your-app/project.json"
+    "prisma-pull": {
+      "executor": "@nx-tools/nx-prisma:pull",
+    }
+    ```
+  </Tab>
+  <Tab value="Custom Schema">
+    You may want to use a custom schema file:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-pull": {
+      "executor": "@nx-tools/nx-prisma:pull",
+      "options": {
+        "schema": "custom-file.prisma",
+      }
+    }
+    ```
+  </Tab>
+  <Tab value="Force Pull">
+    Force pull changes even if data loss might occur:
+
+    ```json title="apps/your-app/project.json"
+    "prisma-pull": {
+      "executor": "@nx-tools/nx-prisma:pull",
+      "options": {
+        "schema": "prisma/schema.prisma",
+        "force": true
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-prisma/src/executors/pull/schema.d.ts" name="PullExecutorSchema" />

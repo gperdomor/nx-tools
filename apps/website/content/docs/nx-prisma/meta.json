@@ -2,5 +2,6 @@
   "title": "Nx Prisma",
   "description": "The Prisma plugin",
   "icon": "Pyramid",
-  "root": true
+  "root": true,
+  "pages": ["---Overview---", "index", "---API---", "executors", "generators"]
 }
