@@ -1,0 +1,25 @@
+---
+title: configuration
+description: Adds GraphQL Code Generator configuration to an existing project.
+---
+
+## @nx-tools/nx-prisma:configuration
+
+This generator sets up GraphQL Code Generator for your project by creating the necessary configuration files and updating your project's build targets.
+
+The configuration generator will:
+
+1. **Create Configuration File**: Generates a `codegen.ts` file with sensible defaults
+2. **Add Build Target**: Adds a `codegen-generate` target to your project.json
+3. **Install Dependencies**: Ensures required GraphQL Code Generator packages are installed
+4. **Setup Schema Path**: Configures the default schema location for your project
+
+### Usage
+
+```bash
+nx g @nx-tools/nx-graphql-codegen:configuration <project-name>
+```
+
+### Options:
+
+<AutoTypeTable path="../../plugins/nx-graphql-codegen/src/generators/configuration/schema.d.ts" name="ConfigurationGeneratorSchema" />
