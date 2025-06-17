@@ -1,3 +1,21 @@
+## 6.8.0 (2025-06-17)
+
+### 🚀 Features
+
+- **website:** initial nx-graphql-codegen docs ([#1255](https://github.com/gperdomor/nx-tools/pull/1255))
+- **nx-graphql-codegen:** add logging options to configuration ([#1246](https://github.com/gperdomor/nx-tools/pull/1246))
+- **nx-graphql-codegen:** updated config files to align with new plugin generators ([#1236](https://github.com/gperdomor/nx-tools/pull/1236))
+
+### 🏡 Chore
+
+- move to pnpm as package manager ([#1242](https://github.com/gperdomor/nx-tools/pull/1242))
+- update eslint configuration to ESM files ([#1228](https://github.com/gperdomor/nx-tools/pull/1228))
+
+### ❤️ Thank You
+
+- Daniel Schuba @DaSchTour
+- Gustavo Perdomo
+
 ## 6.7.1 (2025-05-17)
 
 This was a version bump only for nx-graphql-codegen to align it with other projects, there were no code changes.

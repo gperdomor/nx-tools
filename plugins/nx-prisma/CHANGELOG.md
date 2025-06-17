@@ -1,3 +1,19 @@
+## 6.8.0 (2025-06-17)
+
+### 🚀 Features
+
+- **website:** initial nx-prisma docs ([#1254](https://github.com/gperdomor/nx-tools/pull/1254))
+- **nx-prisma:** updated config files to align with new plugin generators ([#1237](https://github.com/gperdomor/nx-tools/pull/1237))
+
+### 🏡 Chore
+
+- move to pnpm as package manager ([#1242](https://github.com/gperdomor/nx-tools/pull/1242))
+- update eslint configuration to ESM files ([#1228](https://github.com/gperdomor/nx-tools/pull/1228))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.7.1 (2025-05-17)
 
 This was a version bump only for nx-prisma to align it with other projects, there were no code changes.

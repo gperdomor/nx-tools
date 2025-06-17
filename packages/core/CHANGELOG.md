@@ -1,3 +1,17 @@
+## 6.8.0 (2025-06-17)
+
+### 🚀 Features
+
+- **core:** updated config files to align with new library generators ([#1231](https://github.com/gperdomor/nx-tools/pull/1231))
+
+### 🏡 Chore
+
+- update eslint configuration to ESM files ([#1228](https://github.com/gperdomor/nx-tools/pull/1228))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.7.1 (2025-05-17)
 
 This was a version bump only for core to align it with other projects, there were no code changes.
