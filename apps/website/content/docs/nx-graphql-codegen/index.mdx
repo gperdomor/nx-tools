@@ -1,13 +1,131 @@
 ---
-title: Overview of the Nx Tools Graphql Code Generator Plugin
-description: The Nx Tools Graphql Code Generator plugin contains executors and generators that are useful for work with Graphql applications in an Nx workspace.
+title: Introduction
+description: The Nx Tools GraphQL Code Generator plugin provides comprehensive executors and generators for seamlessly integrating GraphQL code generation into Nx workspaces.
+icon: Album
 ---
 
-Welcome to the docs! You can start writing documents in `/content/docs`.
+The `@nx-tools/nx-graphql-codegen` plugin delivers a complete GraphQL code generation integration for Nx monorepos, offering streamlined development workflows, automated type generation from GraphQL schemas, and powerful tooling that scales with your GraphQL application architecture.
 
-## What is Next?
+## Key Features
 
-<Cards>
-  <Card title="Learn more about Next.js" href="https://nextjs.org/docs" />
-  <Card title="Learn more about Fumadocs" href="https://fumadocs.vercel.app" />
-</Cards>
+- **GraphQL Code Generator Integration**: Complete integration with the popular GraphQL Code Generator toolkit
+- **Type-Safe Development**: Automatically generate TypeScript types, React hooks, and other artifacts from your GraphQL schemas
+- **Monorepo-Optimized**: Designed specifically for multi-project workspaces with shared GraphQL schemas and operations
+- **Flexible Configuration**: Support for multiple GraphQL endpoints, custom plugins, and advanced generation options
+- **Development Workflow**: Streamlined setup and generation processes that integrate seamlessly with Nx build systems
+
+## Getting Started
+
+### Installation
+
+To add the `@nx-tools/nx-graphql-codegen` plugin to your Nx workspace, run the following command:
+
+```package-install
+npx nx add @nx-tools/nx-graphql-codegen
+```
+
+{/* This command will:
+- Install the plugin package and its dependencies
+- Configure the plugin within your Nx workspace
+- Set up the necessary executors for GraphQL code generation operations */}
+
+## Project Configuration
+
+### Initial Setup
+
+Configure GraphQL code generation for your application using the configuration generator:
+
+```bash
+nx g @nx-tools/nx-graphql-codegen:configuration <project-name>
+```
+
+This generator automatically sets up:
+- **GraphQL Codegen Configuration**: Creates a `codegen.ts` file with sensible defaults for your project
+- **Schema and Operations**: Configures paths for your GraphQL schema and operation files
+- **Output Generation**: Sets up TypeScript type generation and other configured outputs
+- **Nx Integration**: Adds pre-configured executors for running code generation as part of your build process
+
+### Configuration Options
+
+The generator supports various configuration options to match your GraphQL setup:
+- **Schema Sources**: Configure multiple schema sources (local files, remote endpoints, or introspection)
+- **Output Targets**: Generate TypeScript types, React hooks, Angular services, or custom outputs
+- **Plugin Configuration**: Customize GraphQL Code Generator plugins and their settings
+
+## Code Generation
+
+### Basic Usage
+
+To generate code from your GraphQL schema and operations:
+
+```bash
+nx codegen-generate <project-name>
+```
+
+This command will:
+1. Read your GraphQL schema from configured sources
+2. Process GraphQL operations and fragments
+3. Generate TypeScript types and other configured outputs
+4. Update generated files in your project
+
+### Generation Workflow
+
+**Development Process:**
+1. Define your GraphQL schema (`.graphql` or `.gql` files)
+2. Write GraphQL operations (queries, mutations, subscriptions)
+3. Run `nx codegen-generate` to generate types and utilities
+4. Import and use the generated types in your application code
+
+**Continuous Integration:**
+- Set up the generation as part of your build process
+- Ensure generated code is always up-to-date with schema changes
+- Validate that operations are compatible with the current schema
+
+### Watch Mode
+
+For continuous development, you can run the generator in watch mode to automatically regenerate code when schema or operations change:
+
+```bash
+nx codegen-generate <project-name> --watch
+```
+
+## Advanced Configuration
+
+### Multiple Schema Sources
+
+Configure multiple GraphQL endpoints or schema files:
+
+```yaml title="codegen.yml"
+schema:
+  - 'https://api.example.com/graphql'
+  - './libs/shared/schema/**/*.graphql'
+generates:
+  libs/api-types/src/generated/types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+```
+
+### Custom Plugins
+
+Extend code generation with custom plugins for specific frameworks or use cases:
+
+```yaml title="codegen.yml"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      withHooks: true
+      withComponent: false
+```
+
+<Callout type="info">
+  **Schema Management**: The plugin supports various schema sources including local files, remote GraphQL endpoints, and schema introspection. Configure multiple sources to aggregate schemas from different services.
+</Callout>
+
+<Callout type="info">
+  **Advanced Configuration**: For detailed information about all available configuration options, plugin settings, and advanced use cases, refer to the [GraphQL Code Generator documentation](https://www.graphql-code-generator.com/) and our [configuration generator documentation](/docs/nx-graphql-codegen/generators/configuration).
+</Callout>
