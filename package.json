@@ -26,7 +26,7 @@
     "clipanion": "4.0.0-rc.4",
     "csv-parse": "5.6.0",
     "fumadocs-core": "15.5.0",
-    "fumadocs-docgen": "2.0.0",
+    "fumadocs-docgen": "2.0.1",
     "fumadocs-mdx": "11.6.6",
     "fumadocs-typescript": "4.0.5",
     "fumadocs-ui": "15.5.0",
