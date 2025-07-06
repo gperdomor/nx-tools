@@ -18,13 +18,14 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           filter: tree:0
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
           run_install: false
 
@@ -34,10 +35,9 @@ jobs:
       # Uncomment this line to enable task distribution
       - run: pnpm dlx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
-      # Cache node_modules
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
