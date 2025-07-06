@@ -4,7 +4,7 @@ import * as path from 'node:path';
 
 // const options: BuildExecutorSchema = {
 //   push: false,
-//   file: 'plugins/nx-container/tests/Dockerfile',
+//   file: 'packages/nx-container/tests/Dockerfile',
 //   load: true,
 //   tags: ['registry/node:latest'],
 //   quiet: true,

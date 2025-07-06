@@ -2,7 +2,7 @@
 <!-- https://github.com/gperdomor/nx-tools/blob/main/CONTRIBUTING.md#-submitting-a-pr -->
 
 <!-- Please make sure that your commit message follows our format -->
-<!-- Example: `fix(nx): must begin with lowercase` -->
+<!-- Example: `fix(scope): must begin with lowercase` -->
 
 ## Current Behavior
 

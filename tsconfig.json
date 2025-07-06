@@ -4,16 +4,16 @@
   "files": [],
   "references": [
     {
-      "path": "./plugins/nx-container"
-    },
-    {
-      "path": "./plugins/nx-prisma"
-    },
-    {
-      "path": "./plugins/nx-graphql-codegen"
-    },
-    {
       "path": "./packages/core"
+    },
+    {
+      "path": "./packages/nx-container"
+    },
+    {
+      "path": "./packages/nx-prisma"
+    },
+    {
+      "path": "./packages/nx-graphql-codegen"
     },
     {
       "path": "./packages/ci-context"
