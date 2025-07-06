@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/plugins/nx-prisma',
+  cacheDir: '../../node_modules/.vite/packages/nx-graphql-codegen',
   plugins: [],
   // Uncomment this if you are using workers.
   // worker: {

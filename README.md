@@ -31,20 +31,20 @@
 
 ## Plugins
 
-| Plugin                                                                 | Description                                                                                                    |
-| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| [`@nx-tools/nx-container`](plugins/nx-container/README.md)             | First class support for Container builds in your Nx workspace. Docker, Podman and Kaniko engines are supported |
-| [`@nx-tools/nx-prisma`](plugins/nx-prisma/README.md)                   | First class support for [Prisma](https://prisma.io/) in your Nx workspace.                                     |
-| [`@nx-tools/nx-graphql-codegen`](plugins/nx-graphql-codegen/README.md) | First class support for [graphql code generator](https://the-guild.dev/graphql/codegen) in your Nx workspace.  |
+| Plugin                                                                  | Description                                                                                                    |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [`@nx-tools/nx-container`](packages/nx-container/README.md)             | First class support for Container builds in your Nx workspace. Docker, Podman and Kaniko engines are supported |
+| [`@nx-tools/nx-prisma`](packages/nx-prisma/README.md)                   | First class support for [Prisma](https://prisma.io/) in your Nx workspace.                                     |
+| [`@nx-tools/nx-graphql-codegen`](packages/nx-graphql-codegen/README.md) | First class support for [graphql code generator](https://the-guild.dev/graphql/codegen) in your Nx workspace.  |
 
 ## Packages
 
-| Package                                                                | Description                                                     |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [`@nx-tools/core`](plugins/core/README.md)                             | Core shared functions used by other packages or plugins         |
-| [`@nx-tools/ci-context`](plugins/ci-context/README.md)                 | Helpers functions to detect CI/GIT information from environment |
-| [`@nx-tools/container-metadata`](plugins/container-metadata/README.md) | Extract metadata for container builds                           |
-| [`@nx-tools/nx-set-shas`](plugins/nx-set-shas/README.md)               | Port of nx-set-shas action for GitLab                           |
+| Package                                                                 | Description                                                     |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------- |
+| [`@nx-tools/core`](packages/core/README.md)                             | Core shared functions used by other packages or plugins         |
+| [`@nx-tools/ci-context`](packages/ci-context/README.md)                 | Helpers functions to detect CI/GIT information from environment |
+| [`@nx-tools/container-metadata`](packages/container-metadata/README.md) | Extract metadata for container builds                           |
+| [`@nx-tools/nx-set-shas`](packages/nx-set-shas/README.md)               | Port of nx-set-shas action for GitLab                           |
 
 ## Community
 

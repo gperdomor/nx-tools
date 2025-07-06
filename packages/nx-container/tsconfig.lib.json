@@ -11,13 +11,13 @@
   "include": ["src/**/*.ts"],
   "references": [
     {
-      "path": "../../packages/ci-context/tsconfig.lib.json"
+      "path": "../ci-context/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/core/tsconfig.lib.json"
+      "path": "../core/tsconfig.lib.json"
     },
     {
-      "path": "../../packages/container-metadata/tsconfig.lib.json"
+      "path": "../container-metadata/tsconfig.lib.json"
     }
   ],
   "exclude": [
