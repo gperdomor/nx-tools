@@ -29,7 +29,7 @@ describe('Reset Executor', () => {
       `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force`,
       {
         stdio: 'inherit',
-      }
+      },
     );
     expect(output.success).toBeTruthy();
   });
@@ -46,7 +46,7 @@ describe('Reset Executor', () => {
         stdio: 'inherit',
       });
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   test.each([['skip-generate'], ['skip-seed']])('given %p, should be handled has flag', async (flag: string) => {
@@ -59,7 +59,7 @@ describe('Reset Executor', () => {
       `npx prisma migrate reset --schema=workspace-root/apps/foo/prisma/schema.prisma --force --${flag}`,
       {
         stdio: 'inherit',
-      }
+      },
     );
     expect(output.success).toBeTruthy();
   });
@@ -74,7 +74,7 @@ describe('Reset Executor', () => {
     const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate reset --schema=my-schema.schema --force --skip-generate --skip-seed',
-      { stdio: 'inherit' }
+      { stdio: 'inherit' },
     );
     expect(output.success).toBeTruthy();
   });

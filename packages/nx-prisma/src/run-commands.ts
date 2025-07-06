@@ -15,7 +15,7 @@ export interface PrismaCommands<T extends PrismaBuilderOptions> {
 export const runCommand = async <T extends PrismaBuilderOptions>(
   options: T,
   ctx: ExecutorContext,
-  { description, command, getArgs }: PrismaCommands<T>
+  { description, command, getArgs }: PrismaCommands<T>,
 ): Promise<{ success: true }> => {
   const cmd = `${getPackageManagerCommand().exec} ${command}`;
   const args = getArgs(options, ctx);

@@ -107,7 +107,7 @@ describe('getInputList', () => {
 "MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc"
-FOO=bar`
+FOO=bar`,
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([
@@ -130,7 +130,7 @@ FOO=bar
 "EMPTYLINE=aaaa
 
 bbbb
-ccc"`
+ccc"`,
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([
@@ -153,7 +153,7 @@ ccc`,
 MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc
-FOO=bar`
+FOO=bar`,
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([
@@ -170,7 +170,7 @@ FOO=bar`
     setInput(
       'secrets',
       `"GPG_KEY=${pgp}"
-FOO=bar`
+FOO=bar`,
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([`GPG_KEY=${pgp}`, 'FOO=bar']);
@@ -183,7 +183,7 @@ FOO=bar`
 "MYSECRET=aaaaaaaa
 bbbb""bbb
 ccccccccc"
-FOO=bar`
+FOO=bar`,
     );
     const res = getInputList('secrets', { ignoreComma: true });
     expect(res).toEqual([

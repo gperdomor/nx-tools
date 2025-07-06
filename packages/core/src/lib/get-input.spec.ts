@@ -153,7 +153,7 @@ describe('getInputs', () => {
     it('getBooleanInput handles wrong boolean input', () => {
       expect(() => getBooleanInput('wrong boolean input')).toThrow(
         'Input does not meet YAML 1.2 "Core Schema" specification: wrong boolean input\n' +
-          `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
+          `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``,
       );
     });
   });
@@ -171,7 +171,7 @@ describe('getInputs', () => {
       expect(
         getMultilineInput('list with trailing whitespace', {
           trimWhitespace: true,
-        })
+        }),
       ).toEqual(['val1', 'val2']);
     });
 
@@ -179,7 +179,7 @@ describe('getInputs', () => {
       expect(
         getMultilineInput('list with trailing whitespace', {
           trimWhitespace: false,
-        })
+        }),
       ).toEqual(['  val1  ', '  val2  ', '  ']);
     });
   });

@@ -26,7 +26,7 @@ export async function configurationGenerator(tree: Tree, options: ConfigurationG
       stripIndents`The "${joinPathFragments(destDir, 'schema.prisma')}" file already exists in the project "${
         project.name
       }". Are you sure this is the right project to set up Prisma?
-      If you are sure, you can remove the existing file and re-run the generator.`
+      If you are sure, you can remove the existing file and re-run the generator.`,
     );
   }
 

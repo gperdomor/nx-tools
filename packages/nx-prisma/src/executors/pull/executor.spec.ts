@@ -23,7 +23,7 @@ describe('Pull Executor', () => {
     const options: PullExecutorSchema = {};
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+      expectCommandToHaveBeenCalled('npx prisma db pull', ['--schema=workspace-root/apps/foo/prisma/schema.prisma']),
     );
     expect(output.success).toBeTruthy();
   });
@@ -37,7 +37,7 @@ describe('Pull Executor', () => {
       const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx prisma db pull', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   test.each([['force'], ['print']])('given %p, should be handled has flag', async (flag: string) => {
@@ -49,7 +49,7 @@ describe('Pull Executor', () => {
       expectCommandToHaveBeenCalled('npx prisma db pull', [
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
         `--${flag}`,
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });

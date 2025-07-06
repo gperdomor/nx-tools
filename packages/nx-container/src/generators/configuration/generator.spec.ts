@@ -31,7 +31,7 @@ describe('configuration generator', () => {
       engine: Engine,
       template: Template | undefined,
       executor: Engine,
-      text: string | undefined
+      text: string | undefined,
     ) => {
       const options: ConfigurationGeneratorSchema = { project: projectName, engine, template };
 
@@ -63,6 +63,6 @@ describe('configuration generator', () => {
           },
         },
       });
-    }
+    },
   );
 });

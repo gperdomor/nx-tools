@@ -41,7 +41,7 @@ export class Docker extends EngineAdapter {
 
     if (!(await buildx.isAvailable(this.standalone))) {
       throw new Error(
-        `Docker buildx is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with buildx.`
+        `Docker buildx is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with buildx.`,
       );
     }
 
@@ -114,7 +114,7 @@ export class Docker extends EngineAdapter {
     inputs: Inputs,
     defaultContext: string,
     context: string,
-    buildxVersion: string
+    buildxVersion: string,
   ): Promise<Array<string>> {
     const args: Array<string> = ['build'];
     await asyncForEach(inputs.addHosts, async (addHost) => {

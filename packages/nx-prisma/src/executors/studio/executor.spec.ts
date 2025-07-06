@@ -23,7 +23,7 @@ describe('Studio Executor', () => {
     const options: StudioExecutorSchema = {};
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma studio', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+      expectCommandToHaveBeenCalled('npx prisma studio', ['--schema=workspace-root/apps/foo/prisma/schema.prisma']),
     );
     expect(output.success).toBeTruthy();
   });
@@ -43,10 +43,10 @@ describe('Studio Executor', () => {
         expectCommandToHaveBeenCalled('npx prisma studio', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
           `--${option}=${value}`,
-        ])
+        ]),
       );
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   it('with all options', async () => {
@@ -61,7 +61,7 @@ describe('Studio Executor', () => {
         '--schema=my-schema.schema',
         '--browser=firefox',
         '--port=6666',
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });

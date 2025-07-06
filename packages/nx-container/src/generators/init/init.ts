@@ -33,7 +33,7 @@ export async function initGenerator(tree: Tree, options: Schema): Promise<Genera
 function hasContainerPlugin(nxJson: NxJsonConfiguration): boolean {
   return (
     nxJson.plugins?.some((plugin) =>
-      typeof plugin === 'string' ? plugin === '@nx-tools/nx-container' : plugin.plugin === '@nx-tools/nx-container'
+      typeof plugin === 'string' ? plugin === '@nx-tools/nx-container' : plugin.plugin === '@nx-tools/nx-container',
     ) ?? false
   );
 }
