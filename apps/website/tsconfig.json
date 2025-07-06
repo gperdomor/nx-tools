@@ -19,8 +19,8 @@
       }
     ],
     "paths": {
-      "@/.source": ["./.source/index.ts"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/.source": ["./.source/index.ts"]
     },
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
