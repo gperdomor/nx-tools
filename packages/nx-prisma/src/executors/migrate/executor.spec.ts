@@ -29,7 +29,7 @@ describe('Migrate Executor', () => {
       `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="mig-name"`,
       {
         stdio: 'inherit',
-      }
+      },
     );
     expect(output.success).toBeTruthy();
   });
@@ -46,10 +46,10 @@ describe('Migrate Executor', () => {
         `npx prisma migrate dev --schema=workspace-root/apps/foo/prisma/schema.prisma --name="users" --${flag}`,
         {
           stdio: 'inherit',
-        }
+        },
       );
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   it('with all options', async () => {
@@ -63,7 +63,7 @@ describe('Migrate Executor', () => {
     const output = await executor(options, context as ExecutorContext);
     expect(execSync).toHaveBeenCalledWith(
       'npx prisma migrate dev --schema=my-schema.schema --name="migration-name" --create-only --skip-generate --skip-seed',
-      { stdio: 'inherit' }
+      { stdio: 'inherit' },
     );
     expect(output.success).toBeTruthy();
   });

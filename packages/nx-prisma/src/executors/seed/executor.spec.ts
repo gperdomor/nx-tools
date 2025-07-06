@@ -25,7 +25,7 @@ describe('Seed Executor', () => {
     };
     expect.assertions(1);
     await expect(executor(options, context as ExecutorContext)).rejects.toThrowError(
-      'You must specify a seed script file.'
+      'You must specify a seed script file.',
     );
   });
 
@@ -39,7 +39,7 @@ describe('Seed Executor', () => {
         expectCommandToHaveBeenCalled('npx ts-node', [
           '--project=workspace-folder/apps/foo/tsconfig.json',
           'custom-seed-file.ts',
-        ])
+        ]),
       );
       expect(output.success).toBeTruthy();
     });
@@ -66,7 +66,7 @@ describe('Seed Executor', () => {
         expectCommandToHaveBeenCalled('npx tsx', [
           '--tsconfig=workspace-folder/apps/foo/tsconfig.json',
           'custom-seed-file.ts',
-        ])
+        ]),
       );
       expect(output.success).toBeTruthy();
     });

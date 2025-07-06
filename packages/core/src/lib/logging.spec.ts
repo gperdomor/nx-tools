@@ -64,7 +64,7 @@ describe('Logging', () => {
 
       logger.startGroup('this is a group message');
       expect(console.info).toHaveBeenCalledWith(
-        `\n${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` this is a group message `)))}\n`
+        `\n${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` this is a group message `)))}\n`,
       );
     });
   });

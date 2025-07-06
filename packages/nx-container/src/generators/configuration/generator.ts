@@ -60,7 +60,7 @@ export function hasContainerPlugin(tree: Tree): boolean {
   const nxJson = readNxJson(tree);
   return (
     nxJson?.plugins?.some((p) =>
-      typeof p === 'string' ? p === '@nx-tools/nx-container' : p.plugin === '@nx-tools/nx-container'
+      typeof p === 'string' ? p === '@nx-tools/nx-container' : p.plugin === '@nx-tools/nx-container',
     ) ?? false
   );
 }

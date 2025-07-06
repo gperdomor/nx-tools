@@ -137,12 +137,12 @@ export class GitLabCommand extends Command<Context> {
         } else {
           this.context.logger.warn('\n');
           this.context.logger.warn(
-            `WARNING: Unable to find a successful workflow run on 'origin/${mainBranchName}', or the latest successful workflow was connected to a commit which no longer exists on that branch (e.g. if that branch was rebased)\n`
+            `WARNING: Unable to find a successful workflow run on 'origin/${mainBranchName}', or the latest successful workflow was connected to a commit which no longer exists on that branch (e.g. if that branch was rebased)\n`,
           );
           this.context.logger.warn(`We are therefore defaulting to use HEAD~1 on 'origin/${mainBranchName}'\n`);
           this.context.logger.warn('\n');
           this.context.logger.warn(
-            `NOTE: You can instead make this a hard error by setting 'error-on-no-successful-workflow' on the action in your workflow.\n`
+            `NOTE: You can instead make this a hard error by setting 'error-on-no-successful-workflow' on the action in your workflow.\n`,
           );
           this.context.logger.warn('\n');
 
@@ -175,7 +175,7 @@ export class GitLabCommand extends Command<Context> {
       if (existsSync(output)) {
         const variables = readFileSync(output).toString('utf-8').split('\n');
         lines = variables.filter(
-          (variable) => !(variable.startsWith('NX_BASE') || variable.startsWith('NX_HEAD') || variable === '')
+          (variable) => !(variable.startsWith('NX_BASE') || variable.startsWith('NX_HEAD') || variable === ''),
         );
       }
       lines.push(`NX_BASE=${BASE_SHA}`, `NX_HEAD=${HEAD_SHA}`);

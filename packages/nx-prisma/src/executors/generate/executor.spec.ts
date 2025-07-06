@@ -33,7 +33,7 @@ describe('Generate Executor', () => {
     const options: GenerateExecutorSchema = {};
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=workspace-root/apps/foo/prisma/schema.prisma'])
+      expectCommandToHaveBeenCalled('npx prisma generate', ['--schema=workspace-root/apps/foo/prisma/schema.prisma']),
     );
     expect(output.success).toBeTruthy();
   });
@@ -47,7 +47,7 @@ describe('Generate Executor', () => {
       const output = await executor(options, context as ExecutorContext);
       expect(expectCommandToHaveBeenCalled('npx prisma generate', [`--${option}=${value}`]));
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   test.each([['data-proxy'], ['accelerate'], ['no-engine'], ['no-hints'], ['allow-no-models'], ['watch']])(
@@ -61,10 +61,10 @@ describe('Generate Executor', () => {
         expectCommandToHaveBeenCalled('npx prisma generate', [
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
           `--${flag}`,
-        ])
+        ]),
       );
       expect(output.success).toBeTruthy();
-    }
+    },
   );
 
   it('with all options', async () => {
@@ -81,7 +81,7 @@ describe('Generate Executor', () => {
         '--generator=sample-generator',
         '--data-proxy',
         '--watch',
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });

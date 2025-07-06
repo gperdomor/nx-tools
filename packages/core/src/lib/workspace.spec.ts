@@ -33,6 +33,6 @@ describe('Workspace', () => {
     'given test data and projectName=%p, should return "%p"',
     (projectName: string | undefined, ctx: CTX, expected: string) => {
       expect(getProjectRoot({ ...(ctx as ExecutorContext), projectName: projectName })).toEqual(expected);
-    }
+    },
   );
 });

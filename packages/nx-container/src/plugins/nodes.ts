@@ -49,7 +49,7 @@ export const createNodesV2: CreateNodesV2<ContainerPluginOptions> = [
       (configFile, options, context) => createNodesInternal(configFile, options, context),
       configFiles,
       options,
-      context
+      context,
     );
   },
 ];
@@ -59,7 +59,7 @@ export const createNodes = createNodesV2;
 async function createNodesInternal(
   configFilePath: string,
   options: ContainerPluginOptions | undefined,
-  context: CreateNodesContextV2
+  context: CreateNodesContextV2,
 ) {
   const normalized = normalizeOptions(options);
   const projectRoot = dirname(configFilePath);
