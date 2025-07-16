@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@actions/exec':
-        specifier: 1.1.1
-        version: 1.1.1
       '@actions/github':
         specifier: 6.0.1
         version: 6.0.1
@@ -23,9 +20,9 @@ importers:
       '@octokit/openapi-types':
         specifier: 22.2.0
         version: 22.2.0
-      '@renovate/pep440':
-        specifier: 1.0.0
-        version: 1.0.0
+      '@renovatebot/pep440':
+        specifier: 4.1.0
+        version: 4.1.0
       '@types/tmp':
         specifier: 0.2.6
         version: 0.2.6
@@ -89,6 +86,9 @@ importers:
       std-env:
         specifier: 3.9.0
         version: 3.9.0
+      tinyexec:
+        specifier: 1.0.1
+        version: 1.0.1
       tinyrainbow:
         specifier: 2.0.0
         version: 2.0.0
@@ -312,9 +312,9 @@ importers:
       '@nx/devkit':
         specifier: '>=18.0.0 <22.0.0'
         version: 21.2.2(nx@21.2.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.5.29(@swc/helpers@0.5.17)))
-      '@renovate/pep440':
-        specifier: 1.0.0
-        version: 1.0.0
+      '@renovatebot/pep440':
+        specifier: 4.1.0
+        version: 4.1.0
       csv-parse:
         specifier: ^5.5.5
         version: 5.6.0
@@ -333,9 +333,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@actions/exec':
-        specifier: ^1.1.1
-        version: 1.1.1
       '@actions/io':
         specifier: ^1.1.3
         version: 1.1.3
@@ -348,6 +345,9 @@ importers:
       std-env:
         specifier: 3.9.0
         version: 3.9.0
+      tinyexec:
+        specifier: 1.0.1
+        version: 1.0.1
       tinyrainbow:
         specifier: 2.0.0
         version: 2.0.0
@@ -446,9 +446,6 @@ importers:
         version: 2.8.1
 
 packages:
-
-  '@actions/exec@1.1.1':
-    resolution: {integrity: sha512-+sCcHHbVdk93a0XT19ECtO/gIXoxvdsgQLzb2fE2/5sIZmWQuluYyjPQtrtTHdU1YzTZ7bAPN4sITq2xi1679w==}
 
   '@actions/github@6.0.1':
     resolution: {integrity: sha512-xbZVcaqD4XnQAe35qSQqskb3SqIAfRyLBrHMd/8TuL7hJSz2QtbDwnNM8zWx4zO5l2fnGtseNE3MbEvD7BxVMw==}
@@ -1095,10 +1092,6 @@ packages:
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
-
-  '@babel/runtime-corejs3@7.27.1':
-    resolution: {integrity: sha512-909rVuj3phpjW6y0MCXAZ5iNeORePa6ldJvp2baWGcTjwqbBDDz6xoS5JHJ7lS88NlwLYj07ImL/8IUMtDZzTA==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/runtime@7.27.1':
     resolution: {integrity: sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==}
@@ -3339,8 +3332,9 @@ packages:
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
 
-  '@renovate/pep440@1.0.0':
-    resolution: {integrity: sha512-k3pZVxGEGpU7rpH507/9vxfFjuxX7qx4MSj9Fk+6zBsf/uZmAy8x97dNtZacbge7gP9TazbW1d7SEb5vsOmKlw==}
+  '@renovatebot/pep440@4.1.0':
+    resolution: {integrity: sha512-mo2RxnOSp78Njt1HmgMwjl6FapP4OyIS8HypJlymCvN7AIV2Xf5PmZfl/E3O1WWZ6IjKrfsEAaPWFMi8tnkq3g==}
+    engines: {node: ^20.9.0 || ^22.11.0, pnpm: ^9.0.0}
 
   '@repeaterjs/repeater@3.0.6':
     resolution: {integrity: sha512-Javneu5lsuhwNCryN+pXH93VPQ8g0dBX7wItHFgYiwQmzE1sVdg5tWHiOgHywzL2W21XQopa7IwIEnNbmeUJYA==}
@@ -5278,9 +5272,6 @@ packages:
 
   core-js-compat@3.42.0:
     resolution: {integrity: sha512-bQasjMfyDGyaeWKBIu33lHh9qlSR0MFE/Nmc6nMjf/iU9b3rSMdAYz1Baxrv4lPdGUsTqZudHA4jIGSJy0SWZQ==}
-
-  core-js-pure@3.42.0:
-    resolution: {integrity: sha512-007bM04u91fF4kMgwom2I5cQxAFIy8jVulgr9eozILl/SZE53QOqnW/+vviC+wQWLv+AunBG+8Q0TLoeSsSxRQ==}
 
   core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
@@ -10653,9 +10644,6 @@ packages:
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  xregexp@4.4.1:
-    resolution: {integrity: sha512-2u9HwfadaJaY9zHtRRnH6BY6CQVNQKkYm3oLtC9gJXXzfsbACg5X5e4EZZGVAH+YIfa+QA9lsFQTTe3HURF3ag==}
-
   xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
@@ -10726,10 +10714,6 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
-
-  '@actions/exec@1.1.1':
-    dependencies:
-      '@actions/io': 1.1.3
 
   '@actions/github@6.0.1':
     dependencies:
@@ -11558,10 +11542,6 @@ snapshots:
       '@babel/plugin-transform-typescript': 7.27.1(@babel/core@7.27.1)
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/runtime-corejs3@7.27.1':
-    dependencies:
-      core-js-pure: 3.42.0
 
   '@babel/runtime@7.27.1': {}
 
@@ -14389,9 +14369,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.1': {}
 
-  '@renovate/pep440@1.0.0':
-    dependencies:
-      xregexp: 4.4.1
+  '@renovatebot/pep440@4.1.0': {}
 
   '@repeaterjs/repeater@3.0.6': {}
 
@@ -16539,8 +16517,6 @@ snapshots:
   core-js-compat@3.42.0:
     dependencies:
       browserslist: 4.24.5
-
-  core-js-pure@3.42.0: {}
 
   core-util-is@1.0.2: {}
 
@@ -23187,10 +23163,6 @@ snapshots:
   xml-name-validator@4.0.0: {}
 
   xmlchars@2.2.0: {}
-
-  xregexp@4.4.1:
-    dependencies:
-      '@babel/runtime-corejs3': 7.27.1
 
   xtend@4.0.2: {}
 

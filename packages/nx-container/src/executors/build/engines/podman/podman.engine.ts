@@ -1,4 +1,4 @@
-import { asyncForEach, exec, getExecOutput, logger } from '@nx-tools/core';
+import { asyncForEach, exec, logger } from '@nx-tools/core';
 import { ExecutorContext } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { Inputs } from '../../context';
@@ -29,10 +29,10 @@ export class Podman extends EngineAdapter {
     if (!inputs.quiet) {
       await logger.group(`Podman info`, async () => {
         await exec('podman', ['version'], {
-          failOnStdErr: false,
+          throwOnError: false,
         });
         await exec('podman', ['info'], {
-          failOnStdErr: false,
+          throwOnError: false,
         });
       });
     }
@@ -42,7 +42,7 @@ export class Podman extends EngineAdapter {
     if (!inputs.quiet) {
       await logger.group(`Podman version`, async () => {
         await exec('podman', ['version'], {
-          failOnStdErr: false,
+          throwOnError: false,
         });
       });
     }
@@ -52,13 +52,13 @@ export class Podman extends EngineAdapter {
     if (inputs.push) {
       await asyncForEach(inputs.tags, async (tag) => {
         const cmd = this.getCommand(['push', tag]);
-        await getExecOutput(cmd.command, cmd.args, {
-          ignoreReturnCode: true,
-        }).then((res) => {
-          if (res.stderr.length > 0 && res.exitCode != 0) {
-            throw new Error(`podman failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
-          }
+        const res = await exec(cmd.command, cmd.args, {
+          throwOnError: false,
         });
+
+        if (res.stderr.length > 0 && res.exitCode != 0) {
+          throw new Error(`podman failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
+        }
       });
     }
   }

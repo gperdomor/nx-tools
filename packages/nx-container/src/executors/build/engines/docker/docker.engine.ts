@@ -1,4 +1,4 @@
-import { asyncForEach, exec, getBooleanInput, getExecOutput, logger } from '@nx-tools/core';
+import { asyncForEach, exec, getBooleanInput, logger } from '@nx-tools/core';
 import { ExecutorContext, names } from '@nx/devkit';
 import * as handlebars from 'handlebars';
 import { randomBytes } from 'node:crypto';
@@ -30,10 +30,10 @@ export class Docker extends EngineAdapter {
           logger.info('Docker info skipped in standalone mode');
         } else {
           await exec('docker', ['version'], {
-            failOnStdErr: false,
+            throwOnError: false,
           });
           await exec('docker', ['info'], {
-            failOnStdErr: false,
+            throwOnError: false,
           });
         }
       });
@@ -51,7 +51,7 @@ export class Docker extends EngineAdapter {
       await logger.group(`Buildx version`, async () => {
         const versionCmd = buildx.getCommand(['version'], this.standalone);
         await exec(versionCmd.command, versionCmd.args, {
-          failOnStdErr: false,
+          throwOnError: false,
         });
       });
     }
@@ -67,13 +67,13 @@ export class Docker extends EngineAdapter {
       logger.info(`Creating builder ${inputs.builder}`);
 
       const command = buildx.getCommand(['create', `--name=${inputs.builder}`], this.standalone);
-      await getExecOutput(command.command, command.args, {
-        ignoreReturnCode: true,
-      }).then((res) => {
-        if (res.stderr.length > 0 && res.exitCode != 0) {
-          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
-        }
+      const res = await exec(command.command, command.args, {
+        throwOnError: false,
       });
+
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)![0].trim()}`);
+      }
     }
   }
 
@@ -82,8 +82,8 @@ export class Docker extends EngineAdapter {
     if (this.createdBuilder) {
       logger.info(`Removing builder ${this.createdBuilder}`);
       const command = buildx.getCommand(['rm', inputs.builder], this.standalone);
-      await getExecOutput(command.command, command.args, {
-        ignoreReturnCode: true,
+      await exec(command.command, command.args, {
+        throwOnError: false,
       });
     }
   }
