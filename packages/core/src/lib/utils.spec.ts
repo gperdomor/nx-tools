@@ -1,5 +1,4 @@
-import { describe, expect, it } from 'vitest';
-import { toBoolean } from './utils';
+import { toBoolean } from './utils.js';
 
 describe('utils', () => {
   describe('toBoolean', () => {
