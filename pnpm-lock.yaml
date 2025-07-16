@@ -92,6 +92,9 @@ importers:
       semver:
         specifier: 7.7.2
         version: 7.7.2
+      std-env:
+        specifier: 3.9.0
+        version: 3.9.0
       tmp:
         specifier: 0.2.3
         version: 0.2.3

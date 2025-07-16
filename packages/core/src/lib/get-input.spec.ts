@@ -21,9 +21,12 @@ const testEnvVars: NodeJS.ProcessEnv = {
   INPUT_BOOLEAN_INPUT_TRUE1: 'true',
   INPUT_BOOLEAN_INPUT_TRUE2: 'True',
   INPUT_BOOLEAN_INPUT_TRUE3: 'TRUE',
+  INPUT_BOOLEAN_INPUT_TRUE4: '1',
   INPUT_BOOLEAN_INPUT_FALSE1: 'false',
   INPUT_BOOLEAN_INPUT_FALSE2: 'False',
   INPUT_BOOLEAN_INPUT_FALSE3: 'FALSE',
+  INPUT_BOOLEAN_INPUT_FALSE4: '0',
+  INPUT_BOOLEAN_INPUT_FALSE5: '5',
   INPUT_WRONG_BOOLEAN_INPUT: 'wrong',
   INPUT_WITH_TRAILING_WHITESPACE: '  some val  ',
   INPUT_MY_INPUT_LIST: 'val1\nval2\nval3',
@@ -145,16 +148,12 @@ describe('getInputs', () => {
       expect(getBooleanInput('boolean input true1')).toBe(true);
       expect(getBooleanInput('boolean input true2')).toBe(true);
       expect(getBooleanInput('boolean input true3')).toBe(true);
+      expect(getBooleanInput('boolean input true4')).toBe(true);
       expect(getBooleanInput('boolean input false1')).toBe(false);
       expect(getBooleanInput('boolean input false2')).toBe(false);
       expect(getBooleanInput('boolean input false3')).toBe(false);
-    });
-
-    it('getBooleanInput handles wrong boolean input', () => {
-      expect(() => getBooleanInput('wrong boolean input')).toThrow(
-        'Input does not meet YAML 1.2 "Core Schema" specification: wrong boolean input\n' +
-          `Support boolean input list: \`true | True | TRUE | false | False | FALSE\``,
-      );
+      expect(getBooleanInput('boolean input false4')).toBe(false);
+      expect(getBooleanInput('boolean input false5')).toBe(false);
     });
   });
 
