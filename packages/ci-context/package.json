@@ -14,10 +14,10 @@
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@nx-tools/core": "workspace:*",
-    "ci-info": "^4.0.0",
     "@octokit/openapi-types": "^22.0.0",
     "@actions/github": "^6.0.0",
-    "properties-file": "^3.5.4"
+    "properties-file": "^3.5.4",
+    "std-env": "3.9.0"
   },
   "peerDependencies": {
     "tslib": "^2.5.0"
