@@ -1,4 +1,4 @@
-import { getExecOutput, getProjectRoot, logger } from '@nx-tools/core';
+import { exec, getProjectRoot, logger } from '@nx-tools/core';
 import { ExecutorContext, getPackageManagerCommand, joinPathFragments, PromiseExecutor } from '@nx/devkit';
 import { SeedExecutorSchema } from './schema';
 
@@ -12,11 +12,11 @@ const runExecutor: PromiseExecutor<SeedExecutorSchema> = async (options, ctx) =>
   const args = getArgs(options, ctx);
 
   await logger.group('Seeding Database', async () => {
-    await getExecOutput(command, args, { ignoreReturnCode: true }).then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
-      }
-    });
+    const res = await exec(command, args, { throwOnError: false });
+
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
+    }
   });
 
   return { success: true };

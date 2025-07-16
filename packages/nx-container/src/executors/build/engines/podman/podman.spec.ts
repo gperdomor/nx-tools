@@ -1,4 +1,4 @@
-import * as exec from '@actions/exec';
+import * as core from '@nx-tools/core';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
@@ -54,34 +54,36 @@ describe('getDigest', () => {
   });
 });
 
-// describe('isLocalOrTarExporter', () => {
-//   test.each([
-//     [['type=registry,ref=user/app'], false],
-//     [['type=docker'], false],
-//     [['type=local,dest=./release-out'], true],
-//     [['type=tar,dest=/tmp/image.tar'], true],
-//     [['type=docker', 'type=tar,dest=/tmp/image.tar'], true],
-//     [['"type=tar","dest=/tmp/image.tar"'], true],
-//     [['" type= local" , dest=./release-out'], true],
-//     [['.'], true],
-//   ])('given %p returns %p', async (outputs: Array<string>, expected: boolean) => {
-//     expect(podman.isLocalOrTarExporter(outputs)).toEqual(expected);
-//   });
-// });
+describe('isLocalOrTarExporter', () => {
+  test.each([
+    [['type=registry,ref=user/app'], false],
+    [['type=docker'], false],
+    [['type=local,dest=./release-out'], true],
+    [['type=tar,dest=/tmp/image.tar'], true],
+    [['type=docker', 'type=tar,dest=/tmp/image.tar'], true],
+    [['"type=tar","dest=/tmp/image.tar"'], true],
+    [['" type= local" , dest=./release-out'], true],
+    [['.'], true],
+  ])('given %p returns %p', async (outputs: Array<string>, expected: boolean) => {
+    expect(podman.isLocalOrTarExporter(outputs)).toEqual(expected);
+  });
+});
 
-// describe('isAvailable', () => {
-//   const execSpy = vi.spyOn(exec, 'getExecOutput');
-//   podman.isAvailable();
+describe('isAvailable', () => {
+  it('cli', () => {
+    const execSpy = vi.spyOn(core, 'exec');
+    podman.isAvailable();
 
-//   expect(execSpy).toHaveBeenCalledWith(`podman`, ['version'], {
-//     silent: true,
-//     ignoreReturnCode: true,
-//   });
-// });
+    expect(execSpy).toHaveBeenCalledWith(`podman`, ['version'], {
+      silent: true,
+      throwOnError: false,
+    });
+  });
+});
 
 describe('getVersion', () => {
   it('valid', async () => {
-    const execSpy = vi.spyOn(exec, 'getExecOutput').mockResolvedValue({
+    const execSpy = vi.spyOn(core, 'exec').mockResolvedValue({
       exitCode: 0,
       stdout: 'podman version 5.0.0',
       stderr: '',
@@ -91,7 +93,7 @@ describe('getVersion', () => {
 
     expect(execSpy).toHaveBeenCalledWith('podman', ['--version'], {
       silent: true,
-      ignoreReturnCode: true,
+      throwOnError: false,
     });
     expect(version).toBe('5.0.0');
     expect(semver.valid(version)).not.toBeNull();

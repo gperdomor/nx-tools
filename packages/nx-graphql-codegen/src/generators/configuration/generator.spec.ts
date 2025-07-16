@@ -1,6 +1,5 @@
 import { Tree, addProjectConfiguration, readProjectConfiguration, stripIndents } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
-
 import { configurationGenerator } from './generator';
 import { ConfigurationGeneratorSchema } from './schema';
 

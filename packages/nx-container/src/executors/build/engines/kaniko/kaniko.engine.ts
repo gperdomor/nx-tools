@@ -28,7 +28,7 @@ export class Kaniko extends EngineAdapter {
       await logger.group(`Kaniko info`, async () => {
         const cmd = kaniko.getCommand(['version']);
         await exec(cmd.command, cmd.args, {
-          failOnStdErr: false,
+          throwOnError: false,
         });
       });
     }
