@@ -3,17 +3,19 @@ import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
+import * as stdEnv from 'std-env';
 import repoFixture from '../../__tests__/fixtures/repo.json';
 import { mockConsole, stubEnvsFromFile } from '../test-utils.spec';
 import { Inputs, getContext, getInputs } from './context';
 import { Meta, Version } from './meta';
 
-const ci = require('ci-info');
+// Mock dependencies
+vi.mock('std-env');
 
 beforeAll(() => {
   mockConsole();
 
-  vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(true);
+  vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
 
   vi.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
     return <Promise<RepoMetadata>>(repoFixture as unknown);

@@ -1,3 +1,4 @@
+import { provider } from 'std-env';
 import { RepoMetadata } from './interfaces';
 import * as azure from './utils/azure-devops';
 import * as bitbucket from './utils/bitbucket';
@@ -11,40 +12,39 @@ import * as semaphore from './utils/semaphore';
 import * as teamcity from './utils/teamcity';
 import * as travis from './utils/travis';
 
-const ci = require('ci-info');
-
 export class RepoProxyFactory {
   public static async create(token: string): Promise<RepoMetadata> {
-    switch (true) {
-      case ci.AZURE_PIPELINES:
+    switch (provider) {
+      case 'azure_pipelines':
         return azure.repo();
 
-      case ci.BITBUCKET:
+      case 'bitbucket':
         return bitbucket.repo();
 
-      case ci.CIRCLE:
+      case 'circle':
         return circle.repo();
 
-      case ci.DRONE:
+      case 'drone':
         return drone.repo();
 
-      case ci.GITHUB_ACTIONS:
+      case 'github_actions':
         return github.repo(token);
 
-      case ci.GITLAB:
+      case 'gitlab':
         return gitlab.repo();
 
-      case ci.JENKINS:
+      case 'jenkins':
         return jenkins.repo();
 
-      case ci.SEMAPHORE:
+      case 'semaphore':
         return semaphore.repo();
 
-      case ci.TRAVIS:
+      case 'travis':
         return travis.repo();
 
-      case ci.TEAMCITY:
+      case 'teamcity':
         return teamcity.repo();
+
       default:
         return git.repo();
     }

@@ -1,4 +1,5 @@
 import { logger } from '@nx-tools/core';
+import { provider } from 'std-env';
 import { RunnerContext } from './interfaces';
 import { Azure } from './utils/azure-devops';
 import { BitBucket } from './utils/bitbucket';
@@ -12,53 +13,43 @@ import { Semaphore } from './utils/semaphore';
 import { Teamcity } from './utils/teamcity';
 import { Travis } from './utils/travis';
 
-const ci = require('ci-info');
-
 export class ContextProxyFactory {
   public static async create(): Promise<RunnerContext> {
-    switch (true) {
-      case ci.AZURE_PIPELINES:
-        logger.info(`CI Provider: ${ci.name}`);
+    logger.info(`CI Provider: ${provider}`);
+
+    switch (provider) {
+      case 'azure_pipelines':
         return Azure.context();
 
-      case ci.BITBUCKET:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'bitbucket':
         return BitBucket.context();
 
-      case ci.CIRCLE:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'circle':
         return Circle.context();
 
-      case ci.DRONE:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'drone':
         return Drone.context();
 
-      case ci.GITHUB_ACTIONS:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'github_actions':
         return Github.context();
 
-      case ci.GITLAB:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'gitlab':
         return Gitlab.context();
 
-      case ci.JENKINS:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'jenkins':
         return Jenkins.context();
 
-      case ci.SEMAPHORE:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'semaphore':
         return Semaphore.context();
 
-      case ci.TRAVIS:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'travis':
         return Travis.context();
 
-      case ci.TEAMCITY:
-        logger.info(`CI Provider: ${ci.name}`);
+      case 'teamcity':
         return Teamcity.context();
 
       default:
-        logger.info(`Unsupported CI Provider... Using Git as fallback`);
+        logger.info(`Unsupported CI Provider "${provider}"... Using Git context as fallback`);
         return Git.context();
     }
   }

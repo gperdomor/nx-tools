@@ -9,7 +9,7 @@ export default [
         'error',
         {
           ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs}', '{projectRoot}/vite.config.{js,ts,mjs,mts}'],
-          ignoredDependencies: ['ci-info', 'dotenv'],
+          ignoredDependencies: ['dotenv', 'std-env'],
         },
       ],
     },

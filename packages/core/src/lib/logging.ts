@@ -1,18 +1,11 @@
 import { logger as l } from '@nx/devkit';
 import * as os from 'node:os';
-const chalk = require('chalk');
-const ci = require('ci-info');
+import { provider } from 'std-env';
+const c = require('chalk');
 
-const escapeData = (s: string): string => {
+export const escapeData = (s: string): string => {
   return s.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
 };
-
-/**
- * Gets whether Debug is on or not
- */
-export function isDebug(): boolean {
-  return process.env['RUNNER_DEBUG'] === '1';
-}
 
 /**
  * Begin an output group.
@@ -22,28 +15,31 @@ export function isDebug(): boolean {
  * @param name The name of the output group
  */
 function startGroup(name: string): void {
-  if (ci.GITHUB_ACTIONS) {
-    return console.info(`::group::${escapeData(name)}${os.EOL}`);
+  switch (provider) {
+    case 'github_actions':
+      return console.log(`::group::${escapeData(name)}${os.EOL}`);
+    case 'gitlab': {
+      const timestamp = Math.floor(Date.now() / 1000);
+      return console.log(`\x1b[0Ksection_start:${timestamp}:${name}[collapsed=${true}]\r\x1b[0K${name}`);
+    }
+    default:
+      console.log(`${os.EOL}${c.cyan('>')} ${c.inverse(c.bold(c.cyan(` ${name} `)))}${os.EOL}`);
   }
-
-  if (ci.GITLAB_CI) {
-    const time = Math.floor(Date.now() / 1000);
-    return console.log(`\x1b[0Ksection_start:${time}:${name}\r\x1b[0K${name}`);
-  }
-
-  console.info(`${os.EOL}${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` ${name} `)))}${os.EOL}`);
 }
 
 /**
  * End an output group.
  */
 function endGroup(name: string): void {
-  if (ci.GITHUB_ACTIONS) {
-    return l.info(`::endgroup::${os.EOL}`);
-  }
-  if (ci.GITLAB_CI) {
-    const time = Math.floor(Date.now() / 1000);
-    return console.log(`\x1b[0Ksection_end:${time}:${name}\r\x1b[0K`);
+  switch (provider) {
+    case 'github_actions':
+      return console.log(`::endgroup::${os.EOL}`);
+    case 'gitlab': {
+      const timestamp = Math.floor(Date.now() / 1000);
+      return console.log(`\x1b[0Ksection_end:${timestamp}:${name}\r\x1b[0K`);
+    }
+    default:
+      return console.log(os.EOL);
   }
 }
 
@@ -69,4 +65,15 @@ async function group<T>(name: string, fn: () => Promise<T>): Promise<T> {
   return result;
 }
 
-export const logger = { ...l, startGroup, endGroup, group };
+export const logger = {
+  warn: l.warn,
+  error: l.error,
+  info: l.info,
+  log: l.log,
+  debug: l.debug,
+  fatal: l.fatal,
+  verbose: l.verbose,
+  startGroup,
+  endGroup,
+  group,
+};
