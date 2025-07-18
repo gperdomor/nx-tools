@@ -21,8 +21,8 @@
     "@nx-tools/core": "workspace:*"
   },
   "peerDependencies": {
-    "@nx/devkit": "^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-    "tslib": "^2.5.0",
+    "@nx/devkit": ">=18.0.0 <22.0.0",
+    "tslib": "^2.6.0",
     "prisma": "^5.0.0 || ^6.0.0",
     "ts-node": "^10.0.0",
     "tsx": "^4.0.0"
@@ -31,6 +31,9 @@
     "tsx": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "files": [
     "dist",

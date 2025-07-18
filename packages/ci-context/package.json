@@ -20,7 +20,10 @@
     "std-env": "3.9.0"
   },
   "peerDependencies": {
-    "tslib": "^2.5.0"
+    "tslib": "^2.6.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "files": [
     "dist",
