@@ -298,7 +298,7 @@ importers:
         specifier: 3.9.0
         version: 3.9.0
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
   packages/container-metadata:
@@ -328,7 +328,7 @@ importers:
         specifier: ^7.6.0
         version: 7.7.2
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
   packages/core:
@@ -352,7 +352,7 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
   packages/nx-container:
@@ -388,7 +388,7 @@ importers:
         specifier: ^0.2.3
         version: 0.2.3
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
   packages/nx-graphql-codegen:
@@ -406,7 +406,7 @@ importers:
         specifier: ^10.0.0
         version: 10.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@types/node@18.19.100)(typescript@5.8.3)
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
   packages/nx-prisma:
@@ -424,7 +424,7 @@ importers:
         specifier: ^10.0.0
         version: 10.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@types/node@18.19.100)(typescript@5.8.3)
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
       tsx:
         specifier: ^4.0.0
@@ -442,7 +442,7 @@ importers:
         specifier: ^7.6.2
         version: 7.7.2
       tslib:
-        specifier: ^2.5.0
+        specifier: ^2.6.0
         version: 2.8.1
 
 packages:
