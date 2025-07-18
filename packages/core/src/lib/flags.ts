@@ -1,5 +1,5 @@
 import { env, isDebug as stdIsDebug } from 'std-env';
-import { toBoolean } from './utils';
+import { toBoolean } from './utils.js';
 
 /**
  * Detect if debugging is enabled by checking `DEBUG` or `RUNNER_DEBUG` environment variables.
@@ -12,7 +12,7 @@ import { toBoolean } from './utils';
  *
  * @example
  * ```typescript
- * import { isDebug } from './flags';
+ * import { isDebug } from '@nx-tools/core';
  *
  * if (isDebug) {
  *   console.log('Debug mode enabled');

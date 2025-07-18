@@ -1,7 +1,7 @@
 import { logger as l } from '@nx/devkit';
 import * as os from 'node:os';
 import { provider } from 'std-env';
-const c = require('chalk');
+import c from 'tinyrainbow';
 
 export const escapeData = (s: string): string => {
   return s.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
