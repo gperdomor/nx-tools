@@ -32,6 +32,9 @@
       "optional": true
     }
   },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "files": [
     "dist",
     "!**/*.tsbuildinfo",

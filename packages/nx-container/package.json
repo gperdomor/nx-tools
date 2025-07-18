@@ -29,6 +29,9 @@
     "dotenv": ">=16.0.0",
     "tslib": "^2.6.0"
   },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "files": [
     "dist",
     "!**/*.tsbuildinfo",

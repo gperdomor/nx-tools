@@ -25,6 +25,9 @@
     "@nx/devkit": ">=18.0.0 <22.0.0",
     "tslib": "^2.6.0"
   },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "files": [
     "dist",
     "!**/*.tsbuildinfo"
