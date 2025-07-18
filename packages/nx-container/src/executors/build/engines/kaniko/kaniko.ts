@@ -43,22 +43,21 @@ export async function getDigest(metadata: string | undefined): Promise<string | 
 }
 
 export async function isAvailable(): Promise<boolean> {
-  const cmd = getCommand(['version']);
-  return await core
-    .getExecOutput(cmd.command, cmd.args, {
-      ignoreReturnCode: true,
+  try {
+    const cmd = getCommand(['version']);
+    const res = await core.exec(cmd.command, cmd.args, {
+      throwOnError: false,
       silent: true,
-    })
-    .then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        return false;
-      }
-      return res.exitCode == 0;
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch((error) => {
-      return false;
     });
+
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      return false;
+    }
+
+    return res.exitCode == 0;
+  } catch {
+    return false;
+  }
 }
 
 export function getCommand(args: Array<string>) {

@@ -53,7 +53,7 @@ describe('Git Context', () => {
 
   describe('remoteURL', () => {
     it('have been called', async () => {
-      const execSpy = vi.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'exec');
       try {
         await Git.remoteURL();
       } catch {
@@ -61,14 +61,14 @@ describe('Git Context', () => {
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['remote', 'get-url', 'origin'], {
         silent: true,
-        ignoreReturnCode: true,
+        throwOnError: false,
       });
     });
   });
 
   describe('ref', () => {
     it('returns mocked ref', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -83,7 +83,7 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       const ref = await Git.ref();
@@ -92,7 +92,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached tag ref', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -107,7 +107,7 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       const ref = await Git.ref();
@@ -116,7 +116,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached tag ref (shallow clone)', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -131,7 +131,7 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       const ref = await Git.ref();
@@ -140,7 +140,7 @@ describe('Git Context', () => {
     });
 
     it('returns mocked detached pull request merge ref (shallow clone)', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -155,7 +155,7 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       const ref = await Git.ref();
@@ -164,7 +164,7 @@ describe('Git Context', () => {
     });
 
     it('should throws an error when detached HEAD ref is not supported', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -179,14 +179,14 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       await expect(Git.ref()).rejects.toThrow('Cannot find detached HEAD ref in "wrong, HEAD, tag: 8.0.0"');
     });
 
     it('returns mocked detached branch ref', async () => {
-      vi.spyOn(core, 'getExecOutput').mockImplementation((cmd, args): Promise<core.ExecOutput> => {
+      vi.spyOn(core, 'exec').mockImplementation((cmd, args): Promise<core.ExecResult> => {
         const fullCmd = `${cmd} ${args?.join(' ')}`;
         let result = '';
         switch (fullCmd) {
@@ -201,7 +201,7 @@ describe('Git Context', () => {
           stdout: result,
           stderr: '',
           exitCode: 0,
-        });
+        }) as unknown as Promise<core.ExecResult>;
       });
 
       const ref = await Git.ref();
@@ -212,7 +212,7 @@ describe('Git Context', () => {
 
   describe('fullCommit', () => {
     it('have been called', async () => {
-      const execSpy = vi.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'exec');
       try {
         await Git.fullCommit();
       } catch {
@@ -220,14 +220,14 @@ describe('Git Context', () => {
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['show', '--format=%H', 'HEAD', '--quiet', '--'], {
         silent: true,
-        ignoreReturnCode: true,
+        throwOnError: false,
       });
     });
   });
 
   describe('tag', () => {
     it('have been called', async () => {
-      const execSpy = vi.spyOn(core, 'getExecOutput');
+      const execSpy = vi.spyOn(core, 'exec');
       try {
         await Git.tag();
       } catch {
@@ -235,7 +235,7 @@ describe('Git Context', () => {
       }
       expect(execSpy).toHaveBeenCalledWith(`git`, ['tag', '--points-at', 'HEAD', '--sort', '-version:creatordate'], {
         silent: true,
-        ignoreReturnCode: true,
+        throwOnError: false,
       });
     });
   });

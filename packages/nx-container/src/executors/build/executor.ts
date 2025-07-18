@@ -1,4 +1,4 @@
-import { getExecOutput, getInput, getProjectRoot, interpolate, loadPackage, logger } from '@nx-tools/core';
+import { exec, getInput, getProjectRoot, interpolate, logger } from '@nx-tools/core';
 import { names, PromiseExecutor } from '@nx/devkit';
 import 'dotenv/config';
 import { existsSync } from 'node:fs';
@@ -30,7 +30,7 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
     await engine.initialize(inputs, ctx);
 
     if (options.metadata?.images) {
-      const { getMetadata } = await loadPackage('@nx-tools/container-metadata', 'Nx Container Build Executor');
+      const { getMetadata } = await import('@nx-tools/container-metadata');
       const meta = await getMetadata({ ...options.metadata, quiet: options.quiet }, ctx);
       inputs.labels = meta.getLabels();
       inputs.tags = meta.getTags();
@@ -40,17 +40,18 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
     const buildCmd = engine.getCommand(args);
 
     await logger.group('Build', async () => {
-      await getExecOutput(
+      const res = await exec(
         buildCmd.command,
         buildCmd.args.map((arg) => interpolate(arg)),
         {
-          ignoreReturnCode: true,
+          throwOnError: true,
+          nodeOptions: { stdio: 'inherit' },
         },
-      ).then((res) => {
-        if (res.stderr.length > 0 && res.exitCode != 0) {
-          throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
-        }
-      });
+      );
+
+      if (res.stderr.length > 0 && res.exitCode != 0) {
+        throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
+      }
 
       await engine.finalize(inputs, ctx);
     });

@@ -1,13 +1,12 @@
-import { getExecOutput } from '@nx-tools/core';
+import * as core from '@nx-tools/core';
 import { ExecutorContext } from '@nx/devkit';
 import executor from './executor';
 import { GenerateExecutorSchema } from './schema';
 
-vi.mock('@nx-tools/core', async (importOriginal) => {
-  return {
-    ...(await importOriginal<typeof import('@nx-tools/core')>()),
-    getExecOutput: vi.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
-  };
+vi.spyOn(core, 'exec').mockResolvedValue({
+  stderr: '',
+  stdout: 'mocked output',
+  exitCode: 0,
 });
 
 const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
@@ -18,9 +17,14 @@ const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
   isVerbose: false,
 };
 
-export const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
-  expect(getExecOutput).toHaveBeenCalledWith(cmd, args, { ignoreReturnCode: true });
+const expectCommandToHaveBeenCalled = (cmd: string, args: string[]) => {
+  expect(core.exec).toHaveBeenCalledWith(cmd, args, { throwOnError: false });
 };
+
+// Reset mocks after each test
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 describe('Generate Executor', () => {
   beforeEach(() => {

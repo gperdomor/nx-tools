@@ -112,38 +112,35 @@ export function hasGitAuthToken(secrets: string[]): boolean {
 }
 
 export async function isAvailable(): Promise<boolean> {
-  const cmd = getCommand(['version']);
-  return await core
-    .getExecOutput(cmd.command, cmd.args, {
-      ignoreReturnCode: true,
+  try {
+    const cmd = getCommand(['version']);
+    const res = await core.exec(cmd.command, cmd.args, {
+      throwOnError: false,
       silent: true,
-    })
-    .then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        return false;
-      }
-      return res.exitCode == 0;
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch((error) => {
-      return false;
     });
+
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      return false;
+    }
+
+    return res.exitCode == 0;
+  } catch {
+    return false;
+  }
 }
 
 export async function getVersion(): Promise<string> {
   const cmd = getCommand(['--version']);
+  const res = await core.exec(cmd.command, cmd.args, {
+    throwOnError: false,
+    silent: true,
+  });
 
-  return await core
-    .getExecOutput(cmd.command, cmd.args, {
-      ignoreReturnCode: true,
-      silent: true,
-    })
-    .then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(res.stderr.trim());
-      }
-      return parseVersion(res.stdout.trim());
-    });
+  if (res.stderr.length > 0 && res.exitCode != 0) {
+    throw new Error(res.stderr.trim());
+  }
+
+  return parseVersion(res.stdout.trim());
 }
 
 export function parseVersion(stdout: string): string {
