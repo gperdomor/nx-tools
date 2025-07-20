@@ -9,7 +9,6 @@ export type { ListOpts } from './lib/get-input-list.js';
 export { getBooleanInput, getInput, getMultilineInput, getPosixName } from './lib/get-input.js';
 export type { InputOptions } from './lib/get-input.js';
 export { interpolate } from './lib/interpolate.js';
-export { loadPackage } from './lib/load-package.js';
 export { logger } from './lib/logging.js';
 export { tmpDir } from './lib/tmp-dir.js';
 export { toBoolean } from './lib/utils.js';
