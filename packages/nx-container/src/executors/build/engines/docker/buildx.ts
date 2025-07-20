@@ -1,5 +1,4 @@
-import * as core from '@nx-tools/core';
-import { interpolate } from '@nx-tools/core';
+import { exec, interpolate } from '@nx-tools/core';
 import { parse } from 'csv-parse/sync';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -112,37 +111,35 @@ export function hasGitAuthToken(secrets: string[]): boolean {
 }
 
 export async function isAvailable(standalone?: boolean): Promise<boolean> {
-  const cmd = getCommand([], standalone);
-  return await core
-    .getExecOutput(cmd.command, cmd.args, {
-      ignoreReturnCode: true,
+  try {
+    const cmd = getCommand([], standalone);
+    const res = await exec(cmd.command, cmd.args, {
+      throwOnError: false,
       silent: true,
-    })
-    .then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        return false;
-      }
-      return res.exitCode == 0;
-    })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    .catch((error) => {
-      return false;
     });
+
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      return false;
+    }
+
+    return res.exitCode == 0;
+  } catch {
+    return false;
+  }
 }
 
 export async function getVersion(standalone?: boolean): Promise<string> {
   const cmd = getCommand(['version'], standalone);
-  return await core
-    .getExecOutput(cmd.command, cmd.args, {
-      ignoreReturnCode: true,
-      silent: true,
-    })
-    .then((res) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(res.stderr.trim());
-      }
-      return parseVersion(res.stdout.trim());
-    });
+  const res = await exec(cmd.command, cmd.args, {
+    throwOnError: false,
+    silent: true,
+  });
+
+  if (res.stderr.length > 0 && res.exitCode != 0) {
+    throw new Error(res.stderr.trim());
+  }
+
+  return parseVersion(res.stdout.trim());
 }
 
 export function parseVersion(stdout: string): string {

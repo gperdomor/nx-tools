@@ -1,4 +1,3 @@
-import * as exec from '@actions/exec';
 import * as core from '@nx-tools/core';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
@@ -70,29 +69,29 @@ describe('isLocalOrTarExporter', () => {
 
 describe('isAvailable', () => {
   it('standalone=false', () => {
-    const execSpy = vi.spyOn(exec, 'getExecOutput');
+    const execSpy = vi.spyOn(core, 'exec');
     buildx.isAvailable();
 
     expect(execSpy).toHaveBeenCalledWith(`docker`, ['buildx'], {
       silent: true,
-      ignoreReturnCode: true,
+      throwOnError: false,
     });
   });
 
   it('standalone=true', () => {
-    const execSpy = vi.spyOn(exec, 'getExecOutput');
+    const execSpy = vi.spyOn(core, 'exec');
     buildx.isAvailable(true);
 
     expect(execSpy).toHaveBeenCalledWith(`buildx`, [], {
       silent: true,
-      ignoreReturnCode: true,
+      throwOnError: false,
     });
   });
 });
 
 describe('getVersion', () => {
   it('valid', async () => {
-    const execSpy = vi.spyOn(core, 'getExecOutput').mockResolvedValue({
+    const execSpy = vi.spyOn(core, 'exec').mockResolvedValue({
       exitCode: 0,
       stdout: 'github.com/docker/buildx v0.14.0-desktop.1 7b0470cffd54ccbf42976d2f75febc4532c85073',
       stderr: '',
@@ -102,7 +101,7 @@ describe('getVersion', () => {
 
     expect(execSpy).toHaveBeenCalledWith('docker', ['buildx', 'version'], {
       silent: true,
-      ignoreReturnCode: true,
+      throwOnError: false,
     });
     expect(version).toBe('0.14.0');
     expect(semver.valid(version)).not.toBeNull();

@@ -1,4 +1,4 @@
-import { ExecOutput, getExecOutput } from '@nx-tools/core';
+import { exec } from '@nx-tools/core';
 import { RepoMetadata, RunnerContext } from '../interfaces';
 
 export class Git {
@@ -18,17 +18,17 @@ export class Git {
   }
 
   public static async remoteURL(): Promise<string> {
-    return await Git.exec(['remote', 'get-url', 'origin']).then((rurl) => {
+    let rurl = await Git.exec(['remote', 'get-url', 'origin']);
+
+    if (rurl.length == 0) {
+      rurl = await Git.exec(['remote', 'get-url', 'upstream']);
+
       if (rurl.length == 0) {
-        return Git.exec(['remote', 'get-url', 'upstream']).then((rurl) => {
-          if (rurl.length == 0) {
-            throw new Error(`Cannot find remote URL for origin or upstream`);
-          }
-          return rurl;
-        });
+        throw new Error(`Cannot find remote URL for origin or upstream`);
       }
-      return rurl;
-    });
+    }
+
+    return rurl;
   }
 
   public static async ref(): Promise<string> {
@@ -96,15 +96,16 @@ export class Git {
   }
 
   private static async exec(args: string[] = []): Promise<string> {
-    return await getExecOutput(`git`, args, {
-      ignoreReturnCode: true,
+    const result = await exec(`git`, args, {
+      throwOnError: false,
       silent: true,
-    }).then((res: ExecOutput) => {
-      if (res.stderr.length > 0 && res.exitCode != 0) {
-        throw new Error(res.stderr);
-      }
-      return res.stdout.trim();
     });
+
+    if (result.stderr.length > 0 && result.exitCode != 0) {
+      throw new Error(result.stderr);
+    }
+
+    return result.stdout.trim();
   }
 }
 

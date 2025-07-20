@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RunnerContext as Context, RepoMetadata } from '@nx-tools/ci-context';
 import { interpolate, logger as L, tmpDir } from '@nx-tools/core';
-import * as pep440 from '@renovate/pep440';
+import * as pep440 from '@renovatebot/pep440';
 import * as handlebars from 'handlebars';
 import moment from 'moment-timezone';
 import * as fs from 'node:fs';
@@ -189,11 +189,11 @@ export class Meta {
 
     let latest = false;
     const pver = pep440.explain(vraw);
-    if (pver.is_prerelease || pver.is_postrelease || pver.is_devrelease) {
+    if (pver?.is_prerelease || pver?.is_postrelease || pver?.is_devrelease) {
       if (Meta.isRawStatement(tag.attrs['pattern'])) {
         vraw = this.setValue(vraw, tag);
       } else {
-        vraw = this.setValue(pep440.clean(vraw), tag);
+        vraw = this.setValue(pep440.clean(vraw) as string, tag);
       }
     } else {
       vraw = this.setValue(

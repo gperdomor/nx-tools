@@ -1,13 +1,13 @@
+import * as core from '@nx-tools/core';
 import { ExecutorContext } from '@nx/devkit';
 import { expectCommandToHaveBeenCalled } from '../generate/executor.spec';
 import executor from './executor';
 import { StatusExecutorSchema } from './schema';
 
-vi.mock('@nx-tools/core', async (importOriginal) => {
-  return {
-    ...(await importOriginal<typeof import('@nx-tools/core')>()),
-    getExecOutput: vi.fn(async () => Promise.resolve({ stderr: '', exitCode: 0 })),
-  };
+vi.spyOn(core, 'exec').mockResolvedValue({
+  stderr: '',
+  stdout: 'mocked output',
+  exitCode: 0,
 });
 
 const context: Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'> = {
