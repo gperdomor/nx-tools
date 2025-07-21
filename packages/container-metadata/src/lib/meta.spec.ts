@@ -1,4 +1,4 @@
-import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
+import { ContextProxyFactory, RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
 import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
 import * as fs from 'node:fs';
@@ -6,7 +6,7 @@ import * as path from 'node:path';
 import * as stdEnv from 'std-env';
 import repoFixture from '../../__tests__/fixtures/repo.json';
 import { mockConsole, stubEnvsFromFile } from '../test-utils.spec.js';
-import { Inputs, getContext, getInputs } from './context.js';
+import { Inputs, getInputs } from './context.js';
 import { Meta, Version } from './meta.js';
 
 // Mock dependencies
@@ -76,7 +76,7 @@ const tagsLabelsTest = async (
 ) => {
   stubEnvs(envFile);
   const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-  const meta = new Meta({ ...getInputs({}), ...inputs }, await getContext(), repo, logger);
+  const meta = new Meta({ ...getInputs({}), ...inputs }, await ContextProxyFactory.create(), repo, logger);
 
   const version = meta.version;
   expect(version).toEqual(exVersion);
@@ -2991,7 +2991,7 @@ describe('pr-head-sha', () => {
     vi.stubEnv('DOCKER_METADATA_PR_HEAD_SHA', "true");
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({ ...getInputs({}), ...inputs }, await getContext(), repo, logger);
+    const meta = new Meta({ ...getInputs({}), ...inputs }, await ContextProxyFactory.create(), repo, logger);
 
     const version = meta.version;
     expect(version).toEqual(exVersion);
@@ -4023,7 +4023,7 @@ describe('json', () => {
     stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
+    const meta = new Meta({...getInputs({}), ...inputs}, await ContextProxyFactory.create(), repo, logger);
 
     const jsonOutput = meta.getJSON(['manifest']);
     expect(jsonOutput).toEqual(exJSON);
@@ -4537,7 +4537,7 @@ describe('bakeFile', () => {
     stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
+    const meta = new Meta({...getInputs({}), ...inputs}, await ContextProxyFactory.create(), repo, logger);
 
     const bakeFileTags = meta.getBakeFile('tags');
     expect(JSON.parse(fs.readFileSync(bakeFileTags, 'utf8'))).toEqual(exBakeTags);
@@ -4599,7 +4599,7 @@ describe('bakeFileTagsLabels', () => {
     stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
+    const meta = new Meta({...getInputs({}), ...inputs}, await ContextProxyFactory.create(), repo, logger);
 
     const bakeFile = meta.getBakeFileTagsLabels();
     expect(JSON.parse(fs.readFileSync(bakeFile, 'utf8'))).toEqual(exBakeDefinition);
@@ -4643,7 +4643,7 @@ describe('sepTags', () => {
     stubEnvs(envFile);
 
     const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');
-    const meta = new Meta({...getInputs({}), ...inputs}, await getContext(), repo, logger);
+    const meta = new Meta({...getInputs({}), ...inputs}, await ContextProxyFactory.create(), repo, logger);
 
     expect(meta.getTags().join(inputs["sep-tags"])).toEqual(expTags);
   });
