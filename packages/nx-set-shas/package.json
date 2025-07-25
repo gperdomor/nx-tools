@@ -1,31 +1,29 @@
 {
   "name": "@nx-tools/nx-set-shas",
-  "version": "6.8.0",
-  "type": "commonjs",
+  "version": "7.0.0-alpha.1",
+  "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/gperdomor/nx-tools",
     "directory": "packages/nx-set-shas"
   },
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "pnpm exec oclif manifest && pnpm exec oclif readme"
+  },
   "bin": {
-    "nx-set-shas": "./src/index.js"
-  },
-  "dependencies": {
-    "@nx-tools/core": "workspace:*",
-    "clipanion": "^4.0.0-rc.3",
-    "semver": "^7.6.2"
-  },
-  "peerDependencies": {
-    "tslib": "^2.6.0"
+    "nx-set-shas": "./bin/run.js"
   },
   "engines": {
     "node": ">=20.19.0"
   },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
+  "keywords": [
+    "nx-set-shas",
+    "nx-tools",
+    "oclif"
   ],
   "exports": {
     "./package.json": "./package.json",
@@ -35,5 +33,35 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
+  },
+  "files": [
+    "bin",
+    "dist",
+    "oclif.manifest.json",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "@nx-tools/core": "workspace:*",
+    "@oclif/core": "4.5.2",
+    "@oclif/plugin-help": "6.2.31",
+    "@oclif/plugin-plugins": "5.4.45",
+    "semver": "7.7.2"
+  },
+  "peerDependencies": {
+    "tslib": "^2.6.0"
+  },
+  "oclif": {
+    "bin": "nx-set-shas",
+    "dirname": "nx-set-shas",
+    "commands": "./dist/commands",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ],
+    "hooks": {
+      "init": "./dist/lib/hooks/node-version"
+    },
+    "topicSeparator": " ",
+    "topics": {}
   }
 }
