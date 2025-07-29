@@ -137,6 +137,11 @@
       "description": "Push is a shorthand for --output=type=registry (default false)",
       "default": false
     },
+    "sbom": {
+      "type": "boolean",
+      "description": "Generate SBOM attestation for the build (shorthand for --attest type=sbom)",
+      "default": false
+    },
     "secrets": {
       "type": "array",
       "items": {
