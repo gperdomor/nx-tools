@@ -103,6 +103,11 @@ export interface BuildExecutorSchema {
    */
   push?: boolean;
   /**
+   * Generate SBOM attestation, shorthand for --attest type=sbom (default false)
+   * @default false
+   */
+  sbom?: boolean;
+  /**
    * List of secrets to expose to the build (eg. key=string, GIT_AUTH_TOKEN=mytoken)
    */
   secrets?: string[];

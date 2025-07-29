@@ -181,6 +181,9 @@ export class Docker extends EngineAdapter {
     if (inputs.githubToken && !buildx.hasGitAuthToken(inputs.secrets) && context.startsWith(defaultContext)) {
       args.push('--secret', await buildx.getSecretString(`GIT_AUTH_TOKEN=${inputs.githubToken}`));
     }
+    if (inputs.sbom) {
+      args.push('--attest', 'type=sbom');
+    }
     if (inputs.shmSize) {
       args.push('--shm-size', inputs.shmSize);
     }
