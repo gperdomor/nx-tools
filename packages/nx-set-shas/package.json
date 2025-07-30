@@ -10,7 +10,7 @@
     "directory": "packages/nx-set-shas"
   },
   "bin": {
-    "nx-set-shas": "./src/index.js"
+    "nx-set-shas": "./dist/index.js"
   },
   "dependencies": {
     "@nx-tools/core": "workspace:*",
