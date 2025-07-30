@@ -1,3 +1,13 @@
+## 6.8.1 (2025-07-30)
+
+### 🩹 Fixes
+
+- **nx-set-shas:** fix bin package field ([a43309e](https://github.com/gperdomor/nx-tools/commit/a43309e))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features
