@@ -37,7 +37,7 @@ To build your container images with Github Actions, you have two different optio
           - name: 'Install Dependencies'
             run: npm install
           - name: Derive appropriate SHAs for base and head for `nx affected` commands
-            uses: nrwl/nx-set-shas@v3
+            uses: nrwl/nx-set-shas@v4
           - name: 'Build images'
             run: INPUT_GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
     ```
@@ -65,7 +65,7 @@ To build your container images with Github Actions, you have two different optio
           - name: 'Install Dependencies'
             run: npm install
           - name: Derive appropriate SHAs for base and head for `nx affected` commands
-            uses: nrwl/nx-set-shas@v3
+            uses: nrwl/nx-set-shas@v4
           - name: 'Build images'
             run: npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
     ```
