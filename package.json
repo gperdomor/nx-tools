@@ -17,7 +17,6 @@
     "@nx/devkit": "21.3.5",
     "@oclif/core": "4.5.2",
     "@oclif/plugin-help": "6.2.31",
-    "@oclif/plugin-plugins": "5.4.45",
     "@octokit/openapi-types": "22.2.0",
     "@renovatebot/pep440": "4.1.0",
     "@types/tmp": "0.2.6",

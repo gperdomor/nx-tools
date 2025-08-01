@@ -12,7 +12,7 @@ export default [
             '{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}',
             '{projectRoot}/vite.config.{js,ts,mjs,mts}',
           ],
-          ignoredDependencies: ['@oclif/plugin-help', '@oclif/plugin-plugins'],
+          ignoredDependencies: ['@oclif/plugin-help'],
         },
       ],
     },

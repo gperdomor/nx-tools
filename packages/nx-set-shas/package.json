@@ -44,7 +44,6 @@
     "@nx-tools/core": "workspace:*",
     "@oclif/core": "4.5.2",
     "@oclif/plugin-help": "6.2.31",
-    "@oclif/plugin-plugins": "5.4.45",
     "semver": "7.7.2"
   },
   "peerDependencies": {
@@ -55,8 +54,7 @@
     "dirname": "nx-set-shas",
     "commands": "./dist/commands",
     "plugins": [
-      "@oclif/plugin-help",
-      "@oclif/plugin-plugins"
+      "@oclif/plugin-help"
     ],
     "hooks": {
       "init": "./dist/lib/hooks/node-version"

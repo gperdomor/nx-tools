@@ -1,6 +1,6 @@
 import { Hook } from '@oclif/core';
-import { lt } from 'semver';
 import { colorize } from '@oclif/core/ux';
+import { lt } from 'semver';
 
 const MIN_NODE_VERSION = '20.19.0';
 
