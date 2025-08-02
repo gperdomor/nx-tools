@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as jenkins from './jenkins';
-import { Jenkins } from './jenkins';
+import { RunnerContext } from '../interfaces.js';
+import * as jenkins from './jenkins.js';
+import { Jenkins } from './jenkins.js';
 
 describe('Jenkins Context', () => {
   let context: RunnerContext;

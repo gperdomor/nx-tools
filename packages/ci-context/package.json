@@ -1,7 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
   "version": "6.8.0",
-  "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -10,25 +9,10 @@
   },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
+  "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "dependencies": {
-    "@nx-tools/core": "workspace:*",
-    "@octokit/openapi-types": "^22.0.0",
-    "@actions/github": "^6.0.0",
-    "properties-file": "^3.5.4",
-    "std-env": "3.9.0"
-  },
-  "peerDependencies": {
-    "tslib": "^2.6.0"
-  },
-  "engines": {
-    "node": ">=20.19.0"
-  },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -49,5 +33,22 @@
       "import": "./dist/lib/utils/github.js",
       "default": "./dist/lib/utils/github.js"
     }
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "@nx-tools/core": "workspace:*",
+    "@octokit/openapi-types": "^22.0.0",
+    "@actions/github": "^6.0.0",
+    "properties-file": "^3.5.4",
+    "std-env": "3.9.0"
+  },
+  "peerDependencies": {
+    "tslib": "^2.6.0"
   }
 }
