@@ -1,4 +1,3 @@
-import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
 import * as core from '@nx-tools/core';
 import { ExecutorContext, names } from '@nx/devkit';
 
@@ -58,31 +57,4 @@ export function getInputs(options: Partial<Inputs>, ctx?: ExecutorContext): Inpu
       .getInputList('tags', { prefix, fallback: options.tags, ignoreComma: true, comment: '#' })
       .map((tag) => core.interpolate(tag)),
   };
-}
-
-export async function getContext(): Promise<RunnerContext> {
-  const context = await ContextProxyFactory.create();
-
-  if (context.name === 'GITHUB') {
-    // Needs to override Git reference with pr ref instead of upstream branch ref
-    // for pull_request_target event
-    // https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
-    if (/pull_request_target/.test(context.eventName)) {
-      context.ref = `refs/pull/${context.payload.number}/merge`;
-    }
-
-    // DOCKER_METADATA_PR_HEAD_SHA env var can be used to set associated head
-    // SHA instead of commit SHA that triggered the workflow on pull request
-    // event.
-    if (/true/i.test(process.env.DOCKER_METADATA_PR_HEAD_SHA || '')) {
-      if (
-        (/pull_request/.test(context.eventName) || /pull_request_target/.test(context.eventName)) &&
-        context.payload?.pull_request?.head?.sha != undefined
-      ) {
-        context.sha = context.payload.pull_request.head.sha;
-      }
-    }
-  }
-
-  return context;
 }

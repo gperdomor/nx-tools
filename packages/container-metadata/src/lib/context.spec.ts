@@ -1,10 +1,5 @@
-import { ContextProxyFactory, RunnerContext } from '@nx-tools/ci-context';
-import { Git } from '@nx-tools/ci-context/src/lib/utils/git';
-import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
 import { getPosixName } from '@nx-tools/core';
-import * as path from 'node:path';
-import { stubEnvsFromFile } from '../test-utils.spec.js';
-import { Inputs, getContext, getInputs } from './context.js';
+import { Inputs, getInputs } from './context.js';
 
 beforeEach(() => {
   vi.resetAllMocks();
@@ -92,38 +87,6 @@ describe('getInputs', () => {
       expect(await getInputs({})).toEqual(expected);
     }
   );
-});
-
-describe('getContext', () => {
-  beforeEach(() => {
-    stubEnvsFromFile(path.join(__dirname, '..', '..', '__tests__', 'fixtures/event_create_branch.env'));
-  });
-
-  afterEach(() => {
-    vi.unstubAllEnvs();
-  });
-
-  it('workflow', async () => {
-    vi.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
-      return Github.context();
-    });
-
-    const context = await getContext();
-    expect(context.ref).toEqual('refs/heads/dev');
-    expect(context.sha).toEqual('5f3331d7f7044c18ca9f12c77d961c4d7cf3276a');
-  });
-
-  it('git', async () => {
-    vi.spyOn(Git, 'ref').mockResolvedValue('refs/heads/git-test');
-    vi.spyOn(Git, 'fullCommit').mockResolvedValue('git-test-sha');
-    vi.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
-      return Git.context();
-    });
-
-    const context = await getContext();
-    expect(context.ref).toEqual('refs/heads/git-test');
-    expect(context.sha).toEqual('git-test-sha');
-  });
 });
 
 function setInput(name: string, value: string): void {
