@@ -1,3 +1,13 @@
+## 6.8.2 (2025-08-02)
+
+### 🚀 Features
+
+- **nx-container:** support for sbom attestations ([d3ff31d](https://github.com/gperdomor/nx-tools/commit/d3ff31d))
+
+### ❤️ Thank You
+
+- Karl-E. Kiel @kekielst
+
 ## 6.8.1 (2025-07-30)
 
 This was a version bump only for nx-container to align it with other projects, there were no code changes.

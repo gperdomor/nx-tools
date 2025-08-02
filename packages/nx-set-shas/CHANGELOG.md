@@ -1,3 +1,7 @@
+## 6.8.2 (2025-08-02)
+
+This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.
+
 ## 6.8.1 (2025-07-30)
 
 ### 🩹 Fixes
