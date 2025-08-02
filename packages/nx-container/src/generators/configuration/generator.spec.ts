@@ -19,10 +19,6 @@ describe('configuration generator', () => {
     [6, 'myapp', 'podman', 'nest', 'podman', 'CMD ["dumb-init", "node", "main.js"]'],
     [7, 'myapp', 'podman', 'next', 'podman', 'ENV NEXT_TELEMETRY_DISABLED=1'],
     [8, 'myapp', 'podman', 'nginx', 'podman', 'FROM docker.io/nginx:stable-alpine'],
-    [9, 'myapp', 'kaniko', undefined, 'kaniko', undefined],
-    [10, 'myapp', 'kaniko', 'nest', 'kaniko', 'CMD ["dumb-init", "node", "main.js"]'],
-    [11, 'myapp', 'kaniko', 'next', 'kaniko', 'ENV NEXT_TELEMETRY_DISABLED=1'],
-    [12, 'myapp', 'kaniko', 'nginx', 'kaniko', 'FROM docker.io/nginx:stable-alpine'],
   ] as [number, string, Engine, Template | undefined, Engine, string | undefined][])(
     '%d - given projectName=%s, engine=%s and template=%s - should generate configuration for %s executor and proper dockerfile',
     async (

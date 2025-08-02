@@ -9,7 +9,7 @@
       "type": "string",
       "description": "Provide the default container engine to be used.",
       "default": "docker",
-      "enum": ["docker", "podman", "kaniko"],
+      "enum": ["docker", "podman"],
       "x-prompt": {
         "message": "Which type of engine would you like to use?",
         "type": "list",
@@ -21,10 +21,6 @@
           {
             "value": "podman",
             "label": "Podman"
-          },
-          {
-            "value": "kaniko",
-            "label": "Kaniko"
           }
         ]
       },

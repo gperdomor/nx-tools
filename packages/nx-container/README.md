@@ -23,7 +23,6 @@ The `@nx-tools/nx-container` plugin streamlines container image workflows in Nx 
 - **Multi-Engine Support**: Build container images using your preferred container engine:
   - [Docker Buildx](https://github.com/docker/buildx) with [Moby BuildKit](https://github.com/moby/buildkit) for advanced build features
   - [Podman](https://docs.podman.io/en/latest/) for rootless and daemonless container builds
-  - [Kaniko](https://github.com/GoogleContainerTools/kaniko) for building containers in Kubernetes environments without Docker daemon
 - **Automated Image Management**: Intelligent tag generation and [OCI Image Format Specification](https://github.com/opencontainers/image-spec/blob/master/annotations.md) compliant labeling
 - **Project Scaffolding**: Code generators to quickly configure container builds for your applications
 
@@ -96,7 +95,6 @@ You can customize the default build engine and registry to match your infrastruc
 
 - `docker` (default) - Standard Docker builds with BuildKit
 - `podman` - Rootless container builds
-- `kaniko` - Kubernetes-native builds without Docker daemon
 
 **Common Registries:**
 
@@ -111,10 +109,10 @@ You can customize the default build engine and registry to match your infrastruc
 nx container appName
 ```
 
-To use a different engine, you need to update the `options.engine` property of your project target or use the INPUT_ENGINE environment variable. All possible values are `docker` (the default), `podman` and `kaniko`
+To use a different engine, you need to update the `options.engine` property of your project target or use the INPUT_ENGINE environment variable. All possible values are `docker` (the default) and `podman`
 
 > [!IMPORTANT]
-> You can set docker or podman engine in your project.json targets to use in your dev machine, and use INPUT_ENGINE env variable to use kaniko in your CI/CD pipelines.
+> You can set docker or podman engine in your project.json targets to use in your dev machine, and use INPUT_ENGINE env variable to use docker in your CI/CD pipelines.
 
 ## More Documentation
 

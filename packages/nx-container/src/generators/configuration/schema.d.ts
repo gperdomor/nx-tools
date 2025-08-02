@@ -4,7 +4,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-type Engine = 'docker' | 'podman' | 'kaniko';
+type Engine = 'docker' | 'podman';
 type Template = 'empty' | 'nest' | 'next' | 'nginx';
 
 export interface ConfigurationGeneratorSchema {
