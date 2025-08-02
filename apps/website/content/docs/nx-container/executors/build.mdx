@@ -6,7 +6,7 @@ description: Build an OCI image from a Dockerfile.
 Options can be configured in project.json when defining the executor, or when invoking it. Read more about how to configure targets and executors here: https://nx.dev/reference/project-configuration#targets.
 
 <Callout title="Note" type="warning">
-  This executor not handle registry login steps, so if you wanna push your container images to a remote registry, please setup the credentials using the `docker login` or `podman login`. For kaniko engine, you need to create the `/kaniko/.docker/config.json` according to this [documentation](https://github.com/GoogleContainerTools/kaniko#pushing-to-docker-hub).
+  This executor not handle registry login steps, so if you wanna push your container images to a remote registry, please setup the credentials using the `docker login` or `podman login`.
 </Callout>
 
 ## Examples

@@ -7,11 +7,10 @@ To build your container images with Gitlab CI we provide a set of custom builder
 
 - [gperdomor/nx-docker](https://hub.docker.com/r/gperdomor/nx-docker) with Node, Docker and Buildx preintalled. Required to use `docker` engine.
 - [gperdomor/nx-podman](https://hub.docker.com/r/gperdomor/nx-podman) with Node and Podman preintalled. Required to use `podman` engine.
-- [gperdomor/nx-kaniko](https://hub.docker.com/r/gperdomor/nx-kaniko) with Node and Kaniko preintalled. Required to use `kaniko` engine.
 
 ## Examples:
 
-<Tabs items={['Docker', 'Podman','Kaniko']}>
+<Tabs items={['Docker', 'Podman']}>
   <Tab value="Docker">
     You may want your build result to be available in the Docker client through `docker images` to be able to use it in another step of your workflow:
     ```yml title=".gitlab-ci.yml"
@@ -54,29 +53,5 @@ To build your container images with Gitlab CI we provide a set of custom builder
       script:
         - npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=2
     ```
-  </Tab>
-  <Tab value="Kaniko">
-    You may want your build result to be available in the Docker client through `docker images` to be able to use it in another step of your workflow:
-    ```yml title=".gitlab-ci.yml"
-    build-with-kaniko:
-      image: gperdomor/nx-kaniko:24.0.0-alpine
-      variables:
-        # Nx Container
-        INPUT_PUSH: 'true' # To push your image to the registry
-        INPUT_ENGINE: 'kaniko' # Overriding engine of project.json files
-      before_script:
-        - npm i
-        - NX_HEAD=$CI_COMMIT_SHA
-        - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
-        # Login to registry
-        - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n $CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD | base64)\"}}}" > /kaniko/.docker/config.json
-      script:
-        - npx nx affected --base=$NX_BASE --head=$NX_HEAD --target=container --parallel=1
-    ```
-
-    <Callout title="Tip!" type="info">
-      Kaniko don't support parallel builds, so we need to build one application at time with `--parallel=1`
-    </Callout>
-
   </Tab>
 </Tabs>
