@@ -1,7 +1,6 @@
 {
   "name": "@nx-tools/container-metadata",
   "version": "6.8.0",
-  "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -10,8 +9,26 @@
   },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
+  "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
   "dependencies": {
     "@nx-tools/ci-context": "workspace:*",
     "@nx-tools/core": "workspace:*",
@@ -24,21 +41,5 @@
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <22.0.0",
     "tslib": "^2.6.0"
-  },
-  "engines": {
-    "node": ">=20.19.0"
-  },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "development": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
   }
 }
