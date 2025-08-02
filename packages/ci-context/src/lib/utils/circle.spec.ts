@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as circle from './circle';
-import { Circle } from './circle';
+import { RunnerContext } from '../interfaces.js';
+import * as circle from './circle.js';
+import { Circle } from './circle.js';
 
 describe('CircleCI Context', () => {
   let context: RunnerContext;

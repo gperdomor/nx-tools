@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as gitlab from './gitlab';
-import { Gitlab } from './gitlab';
+import { RunnerContext } from '../interfaces.js';
+import * as gitlab from './gitlab.js';
+import { Gitlab } from './gitlab.js';
 
 describe('GitLab Context', () => {
   let context: RunnerContext;
