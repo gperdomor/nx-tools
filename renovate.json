@@ -1,11 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["gitlab>renovate-runner/renovate-config:nx"],
-  "ignorePaths": ["**/Dockerfile__template__"],
-  "packageRules": [
-    {
-      "matchSourceUrls": ["https://github.com/fuma-nama/fumadocs**"],
-      "groupName": "fumadocs monorepo"
-    }
-  ]
+  "extends": ["gitlab>renovate-runner/renovate-config:nx"]
 }
