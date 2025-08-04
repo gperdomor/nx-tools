@@ -89,7 +89,7 @@
     "jsdom": "22.1.0",
     "jsonc-eslint-parser": "2.4.0",
     "lint-staged": "16.1.2",
-    "memfs": "4.23.0",
+    "memfs": "4.36.0",
     "nx": "21.3.5",
     "oclif": "4.22.1",
     "postcss": "8.5.6",
