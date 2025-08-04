@@ -35,7 +35,7 @@
     "moment-timezone": "0.5.48",
     "next": "~15.4.0",
     "prisma": "6.1.0",
-    "properties-file": "3.5.12",
+    "properties-file": "3.5.13",
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "semver": "7.7.2",
