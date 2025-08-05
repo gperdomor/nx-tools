@@ -1,3 +1,7 @@
+## 7.0.0-alpha.2 (2025-08-05)
+
+This was a version bump only for ci-context to align it with other projects, there were no code changes.
+
 ## 7.0.0-alpha.1 (2025-08-05)
 
 ### 🚀 Features
