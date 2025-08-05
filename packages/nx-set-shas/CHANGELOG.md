@@ -1,3 +1,27 @@
+## 7.0.0-alpha.1 (2025-08-05)
+
+### 🚀 Features
+
+- **nx-set-shas:** from clipanion to oclif ([#1287](https://github.com/gperdomor/nx-tools/pull/1287))
+
+### 🩹 Fixes
+
+- **deps:** bump @oclif/plugin-help from 6.2.31 to v6.2.32 ([#1303](https://github.com/gperdomor/nx-tools/pull/1303))
+
+### 🏡 Chore
+
+- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/nx-tools/commit/c8412d2))
+- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/nx-tools/commit/dc121be))
+
+### ⚠️ Breaking Changes
+
+- update supported Node.js versions to 20.19.x and later
+- update supported tslib versions to 2.6.x and later
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features

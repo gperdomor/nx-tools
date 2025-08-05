@@ -1,3 +1,76 @@
+## 7.0.0-alpha.1 (2025-08-05)
+
+### 🚀 Features
+
+- **ci-context:** migrate to std-env package ([2354f5f](https://github.com/gperdomor/nx-tools/commit/2354f5f))
+- **ci-context:** migrate to ESM package ([82eb04f](https://github.com/gperdomor/nx-tools/commit/82eb04f))
+- **container-metadata:** migrate to ESM package ([6952824](https://github.com/gperdomor/nx-tools/commit/6952824))
+- ⚠️ **core:** migrate to std-env package ([a91e5b0](https://github.com/gperdomor/nx-tools/commit/a91e5b0))
+- **core:** move core package to ESM ([#1282](https://github.com/gperdomor/nx-tools/pull/1282))
+- **core:** migrate from @action/exec to tinyexec ([#1284](https://github.com/gperdomor/nx-tools/pull/1284))
+- **nx-container:** support for sbom attestations ([0782daf](https://github.com/gperdomor/nx-tools/commit/0782daf))
+- ⚠️ **nx-container:** remove kaniko suport ([e6bceca](https://github.com/gperdomor/nx-tools/commit/e6bceca))
+- **nx-set-shas:** from clipanion to oclif ([#1287](https://github.com/gperdomor/nx-tools/pull/1287))
+
+### 🩹 Fixes
+
+- **deps:** bump fumadocs monorepo ([#1269](https://github.com/gperdomor/nx-tools/pull/1269))
+- **deps:** bump nextjs monorepo from 15.3.3 to v15.3.4 ([#1268](https://github.com/gperdomor/nx-tools/pull/1268))
+- **deps:** bump nx monorepo from 21.2.1 to v21.2.2 ([d6be025](https://github.com/gperdomor/nx-tools/commit/d6be025))
+- **deps:** bump fumadocs monorepo ([#1271](https://github.com/gperdomor/nx-tools/pull/1271))
+- **deps:** bump fumadocs monorepo from 15.6.0 to v15.6.1 ([#1277](https://github.com/gperdomor/nx-tools/pull/1277))
+- **deps:** bump nx monorepo from 21.2.2 to v21.3.5 ([7e9d454](https://github.com/gperdomor/nx-tools/commit/7e9d454))
+- **deps:** bump nextjs monorepo from 15.3.4 to v15.4.5 ([#1293](https://github.com/gperdomor/nx-tools/pull/1293))
+- **deps:** bump react monorepo ([#1297](https://github.com/gperdomor/nx-tools/pull/1297))
+- **deps:** bump nx monorepo from 21.3.5 to v21.3.11 ([8f14852](https://github.com/gperdomor/nx-tools/commit/8f14852))
+- **deps:** bump properties-file from 3.5.12 to v3.5.13 ([#1301](https://github.com/gperdomor/nx-tools/pull/1301))
+- **deps:** bump @oclif/plugin-help from 6.2.31 to v6.2.32 ([#1303](https://github.com/gperdomor/nx-tools/pull/1303))
+
+### 🏡 Chore
+
+- added issues and PR templates ([d01e818](https://github.com/gperdomor/nx-tools/commit/d01e818))
+- update renovate config ([f2e4d57](https://github.com/gperdomor/nx-tools/commit/f2e4d57))
+- bump nx and tslib version requirements ([#1280](https://github.com/gperdomor/nx-tools/pull/1280))
+- ⚠️ bump required nx version ranges ([7d0dbea](https://github.com/gperdomor/nx-tools/commit/7d0dbea))
+- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/nx-tools/commit/dc121be))
+- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/nx-tools/commit/c8412d2))
+- some updates and minimal config changes ([#1290](https://github.com/gperdomor/nx-tools/pull/1290))
+- **deps:** bump nx monorepo from 21.1.2 to v21.2.1 ([a1b6ff6](https://github.com/gperdomor/nx-tools/commit/a1b6ff6))
+- **deps:** pin dependencies ([#1230](https://github.com/gperdomor/nx-tools/pull/1230))
+- **deps:** bump lint-staged from 16.0.0 to v16.1.2 ([#1258](https://github.com/gperdomor/nx-tools/pull/1258))
+- **deps:** bump verdaccio from 6.1.2 to v6.1.4 ([#1263](https://github.com/gperdomor/nx-tools/pull/1263))
+- **deps:** bump tailwindcss monorepo from 4.1.8 to v4.1.11 ([#1262](https://github.com/gperdomor/nx-tools/pull/1262))
+- **deps:** bump postcss from 8.5.4 to v8.5.6 ([#1257](https://github.com/gperdomor/nx-tools/pull/1257))
+- **deps:** bump vitest monorepo from 3.2.3 to v3.2.4 ([#1272](https://github.com/gperdomor/nx-tools/pull/1272))
+- **deps:** bump verdaccio from 6.1.4 to v6.1.5 ([#1270](https://github.com/gperdomor/nx-tools/pull/1270))
+- **deps:** bump verdaccio from 6.1.5 to v6.1.6 ([#1292](https://github.com/gperdomor/nx-tools/pull/1292))
+- **deps:** bump swc monorepo ([#1012](https://github.com/gperdomor/nx-tools/pull/1012))
+- **deps:** bump eslint monorepo from 9.26.0 to v9.32.0 ([#1243](https://github.com/gperdomor/nx-tools/pull/1243))
+- **deps:** bump @eslint/compat from 1.2.9 to v1.3.1 ([#1273](https://github.com/gperdomor/nx-tools/pull/1273))
+- **deps:** bump eslint-plugin-import from 2.31.0 to v2.32.0 ([#1278](https://github.com/gperdomor/nx-tools/pull/1278))
+- **deps:** bump memfs from 4.17.2 to v4.23.0 ([#1295](https://github.com/gperdomor/nx-tools/pull/1295))
+- **deps:** bump eslint-plugin-jsx-a11y from 6.10.1 to v6.10.2 ([#1256](https://github.com/gperdomor/nx-tools/pull/1256))
+- **deps:** bump eslint-config-prettier from 10.1.5 to v10.1.8 ([#1291](https://github.com/gperdomor/nx-tools/pull/1291))
+- **deps:** bump memfs from 4.23.0 to v4.36.0 ([#1299](https://github.com/gperdomor/nx-tools/pull/1299))
+- **deps:** bump typescript-eslint from 8.32.1 to v8.38.0 ([#1296](https://github.com/gperdomor/nx-tools/pull/1296))
+- **deps:** bump eslint-plugin-react from 7.35.0 to v7.37.5 ([#1298](https://github.com/gperdomor/nx-tools/pull/1298))
+- **deps:** bump @types/node from 18.19.100 to v22 ([#1300](https://github.com/gperdomor/nx-tools/pull/1300))
+- **deps:** bump lint-staged from 16.1.2 to v16.1.4 ([#1294](https://github.com/gperdomor/nx-tools/pull/1294))
+- **deps:** bump oclif from 4.22.1 to v4.22.5 ([#1302](https://github.com/gperdomor/nx-tools/pull/1302))
+
+### ⚠️ Breaking Changes
+
+- **nx-container:** kaniko engine is no longer supported
+- update supported Node.js versions to 20.19.x and later
+- update supported tslib versions to 2.6.x and later
+- removed support of Nx 16.x and 17.x
+- **core:** isDebug is no longer a function, is a variable
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- Karl-E. Kiel @kekielst
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features

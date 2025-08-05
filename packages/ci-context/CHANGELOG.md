@@ -1,3 +1,25 @@
+## 7.0.0-alpha.1 (2025-08-05)
+
+### 🚀 Features
+
+- **ci-context:** migrate to ESM package ([82eb04f](https://github.com/gperdomor/nx-tools/commit/82eb04f))
+- **core:** migrate from @action/exec to tinyexec ([#1284](https://github.com/gperdomor/nx-tools/pull/1284))
+- **ci-context:** migrate to std-env package ([2354f5f](https://github.com/gperdomor/nx-tools/commit/2354f5f))
+
+### 🏡 Chore
+
+- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/nx-tools/commit/c8412d2))
+- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/nx-tools/commit/dc121be))
+
+### ⚠️ Breaking Changes
+
+- update supported Node.js versions to 20.19.x and later
+- update supported tslib versions to 2.6.x and later
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features

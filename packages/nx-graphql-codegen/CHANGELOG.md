@@ -1,3 +1,27 @@
+## 7.0.0-alpha.1 (2025-08-05)
+
+### 🚀 Features
+
+- **core:** migrate from @action/exec to tinyexec ([#1284](https://github.com/gperdomor/nx-tools/pull/1284))
+- **core:** move core package to ESM ([#1282](https://github.com/gperdomor/nx-tools/pull/1282))
+
+### 🏡 Chore
+
+- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/nx-tools/commit/c8412d2))
+- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/nx-tools/commit/dc121be))
+- ⚠️ bump required nx version ranges ([7d0dbea](https://github.com/gperdomor/nx-tools/commit/7d0dbea))
+- bump nx and tslib version requirements ([#1280](https://github.com/gperdomor/nx-tools/pull/1280))
+
+### ⚠️ Breaking Changes
+
+- update supported Node.js versions to 20.19.x and later
+- update supported tslib versions to 2.6.x and later
+- removed support of Nx 16.x and 17.x
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features
