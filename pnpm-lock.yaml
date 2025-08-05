@@ -51,8 +51,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
       fumadocs-mdx:
-        specifier: 11.6.10
-        version: 11.6.10(acorn@8.15.0)(fumadocs-core@15.6.1(@types/react@19.1.9)(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(vite@6.3.5(@types/node@22.17.0)(jiti@2.4.2)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.19.4)(yaml@2.8.0))
+        specifier: 11.7.3
+        version: 11.7.3(acorn@8.15.0)(fumadocs-core@15.6.1(@types/react@19.1.9)(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react@19.1.1)(vite@6.3.5(@types/node@22.17.0)(jiti@2.4.2)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.19.4)(yaml@2.8.0))
       fumadocs-typescript:
         specifier: 4.0.6
         version: 4.0.6(@types/react@19.1.9)(typescript@5.8.3)
@@ -6963,18 +6963,21 @@ packages:
   fumadocs-docgen@2.1.0:
     resolution: {integrity: sha512-OX1JKA3dqIuUxwpt66i6GyT2ZiYT937dvTR3vuHtUi9zx9Nft03h9Z2aLuVcdTaH5WmLdGvZUTYHPyYa9xeHrw==}
 
-  fumadocs-mdx@11.6.10:
-    resolution: {integrity: sha512-W13mGPKDviKHq1FdxJqbBmA8vQ0niEISUUREJU8u3q1g5lQgnZ9whZjTnvijnqiGNbBsjb8CmjU20OlmwG6nhA==}
+  fumadocs-mdx@11.7.3:
+    resolution: {integrity: sha512-EMuISWaUeImpd2KI9LdWfc1rMWv9qfIoJSAXsI3TDXph8v4FyQ7Nz+NRpeoNgv59gzwKbkMRcnZnrKXI/ybnoA==}
     hasBin: true
     peerDependencies:
-      '@fumadocs/mdx-remote': ^1.2.0
+      '@fumadocs/mdx-remote': ^1.4.0
       fumadocs-core: ^14.0.0 || ^15.0.0
       next: ^15.3.0
-      vite: 6.x.x
+      react: '*'
+      vite: 6.x.x || 7.x.x
     peerDependenciesMeta:
       '@fumadocs/mdx-remote':
         optional: true
       next:
+        optional: true
+      react:
         optional: true
       vite:
         optional: true
@@ -11306,6 +11309,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.0.14:
+    resolution: {integrity: sha512-nGFJTnJN6cM2v9kXL+SOBq3AtjQby3Mv5ySGFof5UGRHrRioSJ5iG680cYNjE/yWk671nROcpPj4hAS8nyLhSw==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -19456,7 +19462,7 @@ snapshots:
       unist-util-visit: 5.0.0
       zod: 3.25.76
 
-  fumadocs-mdx@11.6.10(acorn@8.15.0)(fumadocs-core@15.6.1(@types/react@19.1.9)(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(vite@6.3.5(@types/node@22.17.0)(jiti@2.4.2)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.19.4)(yaml@2.8.0)):
+  fumadocs-mdx@11.7.3(acorn@8.15.0)(fumadocs-core@15.6.1(@types/react@19.1.9)(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(next@15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2))(react@19.1.1)(vite@6.3.5(@types/node@22.17.0)(jiti@2.4.2)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.19.4)(yaml@2.8.0)):
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.15.0)
       '@standard-schema/spec': 1.0.0
@@ -19470,9 +19476,10 @@ snapshots:
       tinyexec: 1.0.1
       tinyglobby: 0.2.14
       unist-util-visit: 5.0.0
-      zod: 3.25.76
+      zod: 4.0.14
     optionalDependencies:
       next: 15.4.5(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(sass@1.89.2)
+      react: 19.1.1
       vite: 6.3.5(@types/node@22.17.0)(jiti@2.4.2)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.19.4)(yaml@2.8.0)
     transitivePeerDependencies:
       - acorn
@@ -24779,5 +24786,7 @@ snapshots:
   yoctocolors-cjs@2.1.2: {}
 
   zod@3.25.76: {}
+
+  zod@4.0.14: {}
 
   zwitch@2.0.4: {}
