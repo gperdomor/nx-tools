@@ -20,7 +20,7 @@
     "csv-parse": "^5.5.5",
     "handlebars": "^4.7.8",
     "semver": "^7.6.0",
-    "tmp": "^0.2.3"
+    "tmp": "^0.2.4"
   },
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <22.0.0",
