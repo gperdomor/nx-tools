@@ -196,8 +196,8 @@ importers:
         specifier: 3.4.2
         version: 3.4.2
       dotenv:
-        specifier: 16.5.0
-        version: 16.5.0
+        specifier: 16.6.1
+        version: 16.6.1
       eslint:
         specifier: 9.32.0
         version: 9.32.0(jiti@2.4.2)
@@ -6291,6 +6291,10 @@ packages:
 
   dotenv@16.5.0:
     resolution: {integrity: sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==}
+    engines: {node: '>=12'}
+
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
   dset@3.1.4:
@@ -13497,7 +13501,7 @@ snapshots:
       '@whatwg-node/fetch': 0.10.10
       chalk: 4.1.2
       debug: 4.4.1(supports-color@8.1.1)
-      dotenv: 16.5.0
+      dotenv: 16.6.1
       graphql: 16.11.0
       graphql-request: 6.1.0(encoding@0.1.13)(graphql@16.11.0)
       http-proxy-agent: 7.0.2
@@ -18522,11 +18526,13 @@ snapshots:
 
   dotenv-expand@11.0.7:
     dependencies:
-      dotenv: 16.5.0
+      dotenv: 16.6.1
 
   dotenv@16.4.7: {}
 
   dotenv@16.5.0: {}
+
+  dotenv@16.6.1: {}
 
   dset@3.1.4: {}
 
