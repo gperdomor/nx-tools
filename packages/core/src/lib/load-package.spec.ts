@@ -1,4 +1,4 @@
-import { loadPackage } from './load-package';
+import { loadPackage } from './load-package.js';
 
 describe('loadPackage', () => {
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe('loadPackage', () => {
     });
 
     it('should call process.exit if package not exists', async () => {
-      const mockExit = vi.spyOn(process, 'exit').mockImplementation(vi.fn());
+      const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
       await loadPackage('not-existent-package', 'ctx');
       expect(mockExit).toHaveBeenCalledWith(1);
     });
