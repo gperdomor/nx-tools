@@ -12,20 +12,18 @@ permissions:
 
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-  HUSKY: 0
 
 jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
           filter: tree:0
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
           run_install: false
 
@@ -35,8 +33,8 @@ jobs:
       # Uncomment this line to enable task distribution
       - run: pnpm dlx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
+      # Cache node_modules
+      - uses: actions/setup-node@v5
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
@@ -49,7 +47,7 @@ jobs:
       - run: pnpm exec nx-cloud record -- nx format:check
 
       # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      - run: pnpm exec nx affected -t lint test build
+      - run: pnpm exec nx affected -t lint test build typecheck
 
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: pnpm exec nx fix-ci

@@ -7,13 +7,47 @@ workflow:
   auto_cancel:
     on_new_commit: conservative
 
-image: node:22
+default:
+  image: node:24
 
 variables:
   CI: 'true'
   GIT_DEPTH: 0
   GIT_FETCH_EXTRA_FLAGS: --filter=tree:0
-  HUSKY: 0
+
+code_quality:
+  artifacts:
+    paths: [gl-code-quality-report.json]
+
+lint:commit-msg:
+  before_script:
+    - corepack enable
+    - corepack install
+    - pnpm config set store-dir .pnpm-store
+    - pnpm install --frozen-lockfile
+  script:
+    - pnpm exec commitlint --from ${CI_MERGE_REQUEST_DIFF_BASE_SHA} --to ${CI_COMMIT_SHA}
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+      when: always
+    - when: never
+
+lint:branch:
+  script:
+    - |
+      export BRANCH_REGEX_RULE="^(master|main|develop|release){1}$|^(feature|fix|hotfix|release|renovate)\/.+$"
+      if [[ $CI_COMMIT_REF_NAME =~ $BRANCH_REGEX_RULE ]]; then
+        echo "Branch name validation passed!"
+      else
+        echo "Error Msg: Branch name validate failed please rename your current branch"
+        echo "Branch Name: \"$CI_COMMIT_REF_NAME\""
+        echo "Pattern: \"/$BRANCH_REGEX_RULE/g\""
+        exit 1
+      fi
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - when: always
 
 # Main job
 CI:
@@ -42,10 +76,9 @@ CI:
     - NX_BASE=${CI_MERGE_REQUEST_DIFF_BASE_SHA:-$CI_COMMIT_BEFORE_SHA}
 
     # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-    # - pnpm exec nx-cloud record -- echo Hello World
+    - pnpm exec nx-cloud record -- nx format:check
     # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-    - pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD -t lint test build
+    - pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD -t lint test build typecheck
     # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
-
   after_script:
     - pnpm exec nx fix-ci
