@@ -1,2 +1,0 @@
-changedFiles="$(git diff-tree -r --name-only --no-commit-id $1 $2)"
-node ./tools/scripts/notify-lockfile-changes.mjs $changedFiles
