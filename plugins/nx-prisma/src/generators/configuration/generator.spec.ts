@@ -227,7 +227,7 @@ describe('configuration generator', () => {
     } catch (e) {
       expect((e as Error).message).toEqual(
         stripIndents`The "apps/mypkg/prisma/schema.prisma" file already exists in the project "mypkg". Are you sure this is the right project to set up Prisma?
-        If you are sure, you can remove the existing file and re-run the generator.`
+        If you are sure, you can remove the existing file and re-run the generator.`,
       );
     }
   });

@@ -60,7 +60,7 @@ async function findExistingCommit(
   project: string,
   headers: Record<string, string>,
   branchName: string,
-  shas: string[]
+  shas: string[],
 ): Promise<string | undefined> {
   for (const commitSha of shas) {
     if (await commitExists(project, headers, branchName, commitSha)) {
@@ -77,7 +77,7 @@ async function commitExists(
   project: string,
   headers: Record<string, string>,
   branchName: string,
-  commitSha: string
+  commitSha: string,
 ): Promise<boolean> {
   try {
     spawnSync('git', ['cat-file', '-e', commitSha], {

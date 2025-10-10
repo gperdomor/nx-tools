@@ -22,7 +22,7 @@ describe('Resolve Executor', () => {
     const options: ResolveExecutorSchema = {};
     expect.assertions(1);
     await expect(executor(options, context as ExecutorContext)).rejects.toThrowError(
-      'You must specify either --rolled-back or --applied.'
+      'You must specify either --rolled-back or --applied.',
     );
   });
 
@@ -33,7 +33,7 @@ describe('Resolve Executor', () => {
     };
     expect.assertions(1);
     await expect(executor(options, context as ExecutorContext)).rejects.toThrowError(
-      'You must specify either --rolled-back or --applied.'
+      'You must specify either --rolled-back or --applied.',
     );
   });
 
@@ -49,7 +49,7 @@ describe('Resolve Executor', () => {
       expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
         `--${option}=${value}`,
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });
@@ -64,7 +64,7 @@ describe('Resolve Executor', () => {
       expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
         '--schema=custom.schema',
         '--applied=add_users_table',
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });
@@ -79,7 +79,7 @@ describe('Resolve Executor', () => {
       expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
         '--schema=custom.schema',
         '--rolled-back=add_users_table',
-      ])
+      ]),
     );
     expect(output.success).toBeTruthy();
   });

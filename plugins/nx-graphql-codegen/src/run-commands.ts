@@ -15,7 +15,7 @@ export interface GraphqlCodeGenCommands<T extends GraphqlCodeGenBuilderOptions> 
 export const runCommand = async <T extends GraphqlCodeGenBuilderOptions>(
   options: T,
   ctx: ExecutorContext,
-  { description, command, getArgs }: GraphqlCodeGenCommands<T>
+  { description, command, getArgs }: GraphqlCodeGenCommands<T>,
 ): Promise<{ success: true }> => {
   const cmd = `${getPackageManagerCommand().exec} ${command}`;
   const args = getArgs(options, ctx);

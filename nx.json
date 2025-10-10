@@ -81,7 +81,9 @@
     },
     "conventionalCommits": {
       "types": {
-        "docs": true,
+        "docs": {
+          "semverBump": "none"
+        },
         "chore": true
       }
     },

@@ -122,7 +122,7 @@ vi.mock('./context', async (importOriginal) => {
       return tmpDir;
     }),
     tmpNameSync: vi.fn(() =>
-      path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep)
+      path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep),
     ),
   };
 });
@@ -189,7 +189,7 @@ describe('getInputList', () => {
 "MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc"
-FOO=bar`
+FOO=bar`,
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     expect(res).toEqual([
@@ -212,7 +212,7 @@ FOO=bar
 "EMPTYLINE=aaaa
 
 bbbb
-ccc"`
+ccc"`,
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     expect(res).toEqual([
@@ -235,7 +235,7 @@ ccc`,
 MYSECRET=aaaaaaaa
 bbbbbbb
 ccccccccc
-FOO=bar`
+FOO=bar`,
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     expect(res).toEqual([
@@ -251,7 +251,7 @@ FOO=bar`
     setInput(
       'secrets',
       `"GPG_KEY=${pgp}"
-FOO=bar`
+FOO=bar`,
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     expect(res).toEqual([`GPG_KEY=${pgp}`, 'FOO=bar']);
@@ -264,7 +264,7 @@ FOO=bar`
 "MYSECRET=aaaaaaaa
 bbbb""bbb
 ccccccccc"
-FOO=bar`
+FOO=bar`,
     );
     const res = await context.getInputList('secrets', '', undefined, true);
     expect(res).toEqual([

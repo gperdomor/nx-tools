@@ -131,7 +131,7 @@ export class Meta {
           return m.tz(tz).format(format);
         },
       }),
-      tag
+      tag,
     );
 
     return Meta.setVersion(version, vraw, this.flavor.latest == 'auto' ? false : this.flavor.latest == 'true');
@@ -214,7 +214,7 @@ export class Meta {
             return pep440.patch(vraw);
           },
         }),
-        tag
+        tag,
       );
       latest = true;
     }
@@ -503,8 +503,8 @@ export class Meta {
           .map((label) => label.split('='))
 
           .filter(([_key, ...values]) => values.length > 0)
-          .map(([key, ...values]) => [key, values.join('=')] as [string, string])
-      )
+          .map(([key, ...values]) => [key, values.join('=')] as [string, string]),
+      ),
     )
       .sort((a, b) => a[0].localeCompare(b[0]))
       .map(([key, value]) => `${key}=${value}`);
@@ -539,7 +539,7 @@ export class Meta {
             DOCKER_META_VERSION: this.version.main,
           },
         },
-        kind
+        kind,
       );
     } else if (kind == 'labels') {
       return this.generateBakeFile(
@@ -553,7 +553,7 @@ export class Meta {
             return res;
           }, {}),
         },
-        kind
+        kind,
       );
     } else if (kind.startsWith('annotations:')) {
       const name = kind.split(':')[0];
@@ -565,7 +565,7 @@ export class Meta {
         {
           annotations: annotations,
         },
-        name
+        name,
       );
     }
     throw new Error(`Unknown bake file type: ${kind}`);

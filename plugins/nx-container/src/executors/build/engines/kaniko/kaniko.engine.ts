@@ -20,7 +20,7 @@ export class Kaniko extends EngineAdapter {
   async initialize(inputs: Inputs, _ctx?: ExecutorContext): Promise<void> {
     if (!(await kaniko.isAvailable())) {
       throw new Error(
-        `Kaniko is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with kaniko.`
+        `Kaniko is required. See https://github.com/gperdomor/nx-tools to set up nx-container executor with kaniko.`,
       );
     }
 
@@ -68,7 +68,7 @@ export class Kaniko extends EngineAdapter {
   }
 
   private async getBuildArgs(
-    inputs: Inputs
+    inputs: Inputs,
     /*defaultContext: string,
     context: string,
     buildxVersion: string*/

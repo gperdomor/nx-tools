@@ -18,7 +18,7 @@ vi.mock('../../context', async (importOriginal) => {
       return tmpDir;
     }),
     tmpNameSync: vi.fn(() =>
-      path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep)
+      path.join('/tmp/.docker-build-push-jest', '.tmpname-jest').split(path.sep).join(path.posix.sep),
     ),
   };
 });

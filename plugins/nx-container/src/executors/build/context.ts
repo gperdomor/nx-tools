@@ -63,7 +63,7 @@ export function tmpNameSync(options?: tmp.TmpNameOptions): string {
 export async function getInputs(
   defaultContext: string,
   options: BuildExecutorSchema,
-  ctx?: ExecutorContext
+  ctx?: ExecutorContext,
 ): Promise<Inputs> {
   const prefix = names(ctx?.projectName || '').constantName;
 
@@ -105,7 +105,7 @@ export async function getInputList(
   name: string,
   prefix: string,
   fallback?: string[],
-  ignoreComma?: boolean
+  ignoreComma?: boolean,
 ): Promise<string[]> {
   const res: Array<string> = [];
 

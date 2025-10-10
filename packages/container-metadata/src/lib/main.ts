@@ -91,7 +91,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
         const v = `${level}:${label}`;
         logger.info(v);
         return v;
-      })
+      }),
     );
   }
   setOutput(`annotations`, annotations.join(inputs['sep-annotations']));

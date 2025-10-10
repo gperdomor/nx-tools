@@ -13,11 +13,10 @@ to [the GitHub Repository](https://github.com/gperdomor/nx-tools). Even better, 
 
 Source code and documentation are included in the top-level folders listed below.
 
-<!-- - `apps/website` - Source code for website and documentation. -->
-
+- `apps/website` - Source code for website and documentation.
 - `packages/*` - Source code for shared or helpers used by plugins
 - `plugins/*` - Source code for nnx plugins packages
-- `scripts` - Miscellaneous scripts for project tasks such as building documentation, testing, and code formatting.
+- `tools/scripts` - Miscellaneous scripts for project tasks such as building documentation, testing, and code formatting.
 
 ## Development Workstation Setup
 

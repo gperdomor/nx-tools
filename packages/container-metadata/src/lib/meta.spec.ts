@@ -70,7 +70,7 @@ const tagsLabelsTest = async (
   exVersion: Version,
   exTags: Array<string>,
   exLabels: Array<string>,
-  exAnnotations: Array<string> | undefined
+  exAnnotations: Array<string> | undefined,
 ) => {
   stubEnvs(envFile);
   const repo = await RepoProxyFactory.create(process.env.GITHUB_TOKEN || '');

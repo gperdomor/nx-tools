@@ -20,8 +20,8 @@ describe('init generator', () => {
     expect(nxJson?.plugins).toBeDefined();
     expect(
       nxJson?.plugins?.some((p: PluginConfiguration) =>
-        typeof p === 'string' ? p === '@nx-tools/nx-container' : p.plugin === '@nx-tools/nx-container'
-      )
+        typeof p === 'string' ? p === '@nx-tools/nx-container' : p.plugin === '@nx-tools/nx-container',
+      ),
     ).toBe(true);
   });
 

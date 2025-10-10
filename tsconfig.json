@@ -4,6 +4,9 @@
   "files": [],
   "references": [
     {
+      "path": "./packages/core"
+    },
+    {
       "path": "./plugins/nx-container"
     },
     {
@@ -11,9 +14,6 @@
     },
     {
       "path": "./plugins/nx-graphql-codegen"
-    },
-    {
-      "path": "./packages/core"
     },
     {
       "path": "./packages/ci-context"

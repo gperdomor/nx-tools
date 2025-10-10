@@ -54,7 +54,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         './apps/app-with-project/index.ts': '',
         './apps/app-with-project/project.json': JSON.stringify({ name: 'app-with-project' }),
       },
-      TEMP_WS_ROOT
+      TEMP_WS_ROOT,
     );
 
     const nodes = await createNodesFunction(
@@ -63,7 +63,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         buildTargetName: 'build',
         defaultEngine: 'docker',
       },
-      context
+      context,
     );
 
     expect(nodes).toMatchInlineSnapshot(`
@@ -122,7 +122,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         './apps/app-with-package/index.ts': '',
         './apps/app-with-package/package.json': JSON.stringify({ name: 'app-with-package' }),
       },
-      TEMP_WS_ROOT
+      TEMP_WS_ROOT,
     );
 
     const nodes = await createNodesFunction(
@@ -131,7 +131,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         buildTargetName: 'build',
         defaultEngine: 'docker',
       },
-      context
+      context,
     );
 
     expect(nodes).toMatchInlineSnapshot(`
@@ -189,7 +189,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         './apps/no-project/Dockerfile': 'FROM node:lts',
         './apps/no-project/index.ts': '',
       },
-      TEMP_WS_ROOT
+      TEMP_WS_ROOT,
     );
 
     const nodes = await createNodesFunction(
@@ -198,7 +198,7 @@ describe(`Plugin: ${PLUGIN_NAME}`, () => {
         buildTargetName: 'build',
         defaultEngine: 'docker',
       },
-      context
+      context,
     );
 
     expect(nodes).toMatchInlineSnapshot(`

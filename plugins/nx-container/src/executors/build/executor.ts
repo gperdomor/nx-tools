@@ -20,7 +20,7 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
         ...options,
         file: options.file || join(getProjectRoot(ctx), 'Dockerfile'),
       },
-      ctx
+      ctx,
     );
 
     const prefix = names(ctx?.projectName || '').constantName;
@@ -45,7 +45,7 @@ const runExecutor: PromiseExecutor<BuildExecutorSchema> = async (options, ctx) =
         buildCmd.args.map((arg) => interpolate(arg)),
         {
           ignoreReturnCode: true,
-        }
+        },
       ).then((res) => {
         if (res.stderr.length > 0 && res.exitCode != 0) {
           throw new Error(`buildx failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`);
