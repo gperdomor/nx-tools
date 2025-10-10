@@ -1,2 +1,0 @@
-pnpm run check-lock-files
-pnpm run check-format

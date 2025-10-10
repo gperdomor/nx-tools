@@ -7,8 +7,7 @@
     "check-format": "nx format:check --all",
     "check-lock-files": "node ./tools/scripts/check-lock-files.mjs",
     "commit": "cz",
-    "preinstall": "node ./tools/scripts/preinstall.mjs",
-    "prepare": "husky || true"
+    "preinstall": "node ./tools/scripts/preinstall.mjs"
   },
   "private": true,
   "dependencies": {
@@ -82,11 +81,10 @@
     "eslint-plugin-jsx-a11y": "6.10.1",
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "5.0.0",
-    "husky": "9.1.7",
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "jsonc-eslint-parser": "^2.1.0",
-    "lint-staged": "16.0.0",
+    "lefthook": "1.13.1",
     "memfs": "4.17.2",
     "nx": "21.1.2",
     "postcss": "8.5.4",
@@ -114,5 +112,5 @@
       }
     }
   },
-  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+  "packageManager": "pnpm@10.18.2+sha512.9fb969fa749b3ade6035e0f109f0b8a60b5d08a1a87fdf72e337da90dcc93336e2280ca4e44f2358a649b83c17959e9993e777c2080879f3801e6f0d999ad3dd"
 }

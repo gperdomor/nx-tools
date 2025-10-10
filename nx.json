@@ -10,7 +10,7 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml", "{workspaceRoot}/.gitlab-ci.yml"]
   },
   "nxCloudId": "665f26ad97b7ef2700a63c6a",
   "plugins": [
@@ -60,6 +60,16 @@
       }
     }
   ],
+  "targetDefaults": {
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  },
   "release": {
     "projects": ["packages/*", "plugins/*"],
     "releaseTagPattern": "{version}",
@@ -80,16 +90,6 @@
       "workspaceChangelog": {
         "createRelease": "github"
       }
-    }
-  },
-  "targetDefaults": {
-    "test": {
-      "dependsOn": ["^build"]
-    },
-    "@nx/js:tsc": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
     }
   },
   "generators": {

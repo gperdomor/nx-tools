@@ -1,2 +1,0 @@
-pnpm exec lint-staged
-pnpm run check-lock-files

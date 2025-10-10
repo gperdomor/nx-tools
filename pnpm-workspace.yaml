@@ -1,7 +1,12 @@
 packages:
-  - 'packages/*'
-  - 'plugins/*'
-  - 'apps/*'
+  - packages/*
+  - plugins/*
+  - apps/*
+
+autoInstallPeers: true
+strictPeerDependencies: false
+
 onlyBuiltDependencies:
   - '@swc/core'
-  - 'nx'
+  - lefthook
+  - nx
