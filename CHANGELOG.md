@@ -1,3 +1,13 @@
+## 6.8.3 (2025-10-10)
+
+### 🩹 Fixes
+
+- **nx-container:** fix provenance ([#1314](https://github.com/gperdomor/nx-tools/issues/1314))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.2 (2025-08-02)
 
 ### 🚀 Features

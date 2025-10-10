@@ -1,3 +1,7 @@
+## 6.8.3 (2025-10-10)
+
+This was a version bump only for nx-graphql-codegen to align it with other projects, there were no code changes.
+
 ## 6.8.2 (2025-08-02)
 
 This was a version bump only for nx-graphql-codegen to align it with other projects, there were no code changes.
