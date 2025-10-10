@@ -7,13 +7,13 @@
       "path": "./packages/core"
     },
     {
-      "path": "./plugins/nx-container"
+      "path": "./packages/nx-container"
     },
     {
-      "path": "./plugins/nx-prisma"
+      "path": "./packages/nx-prisma"
     },
     {
-      "path": "./plugins/nx-graphql-codegen"
+      "path": "./packages/nx-graphql-codegen"
     },
     {
       "path": "./packages/ci-context"

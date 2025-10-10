@@ -1,6 +1,5 @@
 packages:
   - packages/*
-  - plugins/*
   - apps/*
 
 autoInstallPeers: true

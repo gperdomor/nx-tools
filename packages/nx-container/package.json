@@ -1,36 +1,36 @@
 {
-  "name": "@nx-tools/nx-prisma",
+  "name": "@nx-tools/nx-container",
   "version": "6.8.4",
-  "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
-  "contributors": [
-    "wSedlacek"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/gperdomor/nx-tools",
-    "directory": "plugins/nx-prisma"
+    "directory": "packages/nx-container"
   },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
+  "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "executors": "./executors.json",
   "generators": "./generators.json",
+  "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/core": "workspace:*"
+    "@nx-tools/container-metadata": "workspace:*",
+    "@nx-tools/core": "workspace:*",
+    "csv-parse": "^5.5.5",
+    "handlebars": "^4.7.8",
+    "semver": "^7.6.0",
+    "tmp": "^0.2.3"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-    "tslib": "^2.5.0",
-    "prisma": "^5.0.0 || ^6.0.0",
-    "ts-node": "^10.0.0",
-    "tsx": "^4.0.0"
+    "@nx/js": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
+    "nx": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
+    "dotenv": ">=16.0.0",
+    "tslib": "^2.5.0"
   },
-  "peerDependenciesMeta": {
-    "tsx": {
-      "optional": true
-    }
+  "devDependencies": {
+    "@nx-tools/ci-context": "workspace:*"
   },
   "files": [
     "dist",

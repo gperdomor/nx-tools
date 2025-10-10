@@ -14,8 +14,7 @@ to [the GitHub Repository](https://github.com/gperdomor/nx-tools). Even better, 
 Source code and documentation are included in the top-level folders listed below.
 
 - `apps/website` - Source code for website and documentation.
-- `packages/*` - Source code for shared or helpers used by plugins
-- `plugins/*` - Source code for nnx plugins packages
+- `packages/*` - Source code for shared libs, helpers and plugins
 - `tools/scripts` - Miscellaneous scripts for project tasks such as building documentation, testing, and code formatting.
 
 ## Development Workstation Setup
@@ -116,7 +115,7 @@ You can file new issues by filling out our [issue form](https://github.com/gperd
 Please follow the following guidelines:
 
 - Make sure unit tests pass (`nx affected --target=test`)
-  - Target a specific project with: `nx run proj:test` (i.e. `nx run nx-prisma:test` to target `plugins/nx-prisma`)
+  - Target a specific project with: `nx run proj:test` (i.e. `nx run nx-prisma:test` to target `nx-prisma`)
   - Target a specific unit test file (i.e. `packages/core/src/lib/interpolate.spec.ts`)
     with `npx vitest packages/core/src/lib/interpolate`
   - For more options on running tests - check `npx vitest --help` or visit [vitest.dev](https://vitest.dev/)

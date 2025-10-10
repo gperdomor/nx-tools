@@ -1,33 +1,27 @@
 {
-  "name": "@nx-tools/nx-container",
+  "name": "@nx-tools/nx-graphql-codegen",
   "version": "6.8.4",
-  "author": "gperdomor <gperdomor@gmail.com>",
+  "type": "commonjs",
+  "author": "Rene Bonilla <rbonillajr@hotmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/gperdomor/nx-tools",
-    "directory": "plugins/nx-container"
+    "directory": "packages/nx-graphql-codegen"
   },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nx-tools/container-metadata": "workspace:*",
-    "@nx-tools/core": "workspace:*",
-    "csv-parse": "^5.5.5",
-    "handlebars": "^4.7.8",
-    "semver": "^7.6.0",
-    "tmp": "^0.2.3"
+    "@nx-tools/core": "workspace:*"
   },
   "peerDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
     "@nx/devkit": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-    "@nx/js": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-    "nx": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
-    "dotenv": ">=16.0.0",
-    "tslib": "^2.5.0"
+    "tslib": "^2.5.0",
+    "ts-node": "^10.0.0"
   },
   "files": [
     "dist",
