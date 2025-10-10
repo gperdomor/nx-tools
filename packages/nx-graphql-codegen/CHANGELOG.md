@@ -1,3 +1,17 @@
+## 6.9.0 (2025-10-10)
+
+### 🚀 Features
+
+- add support for Nx 22 ([a17ee0e](https://github.com/gperdomor/nx-tools/commit/a17ee0e))
+
+### 🏡 Chore
+
+- move plugins to packages directory ([59ecd12](https://github.com/gperdomor/nx-tools/commit/59ecd12))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.4 (2025-10-10)
 
 This was a version bump only for nx-graphql-codegen to align it with other projects, there were no code changes.

@@ -1,3 +1,23 @@
+## 6.9.0 (2025-10-10)
+
+### 🚀 Features
+
+- add support for Nx 22 ([a17ee0e](https://github.com/gperdomor/nx-tools/commit/a17ee0e))
+
+### 🩹 Fixes
+
+- **deps:** bump nx monorepo from 21.1.2 to v21.6.4 ([174af44](https://github.com/gperdomor/nx-tools/commit/174af44))
+
+### 🏡 Chore
+
+- move from husky to lefthook ([09efc13](https://github.com/gperdomor/nx-tools/commit/09efc13))
+- dependency and config sync with main branch ([c2b07ec](https://github.com/gperdomor/nx-tools/commit/c2b07ec))
+- move plugins to packages directory ([59ecd12](https://github.com/gperdomor/nx-tools/commit/59ecd12))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.4 (2025-10-10)
 
 This was a version bump only, there were no code changes.
