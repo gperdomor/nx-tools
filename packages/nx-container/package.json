@@ -29,6 +29,9 @@
     "dotenv": ">=16.0.0",
     "tslib": "^2.6.0"
   },
+  "devDependencies": {
+    "@nx-tools/ci-context": "workspace:*"
+  },
   "engines": {
     "node": ">=20.19.0 <21 || >=22.12.0"
   },
