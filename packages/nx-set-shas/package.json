@@ -11,6 +11,9 @@
   "bin": {
     "nx-set-shas": "./dist/index.js"
   },
+  "engines": {
+    "node": ">=20.19.0 <21 || >=22.12.0 <23 || >=24.0.0"
+  },
   "exports": {
     "./package.json": "./package.json",
     ".": {

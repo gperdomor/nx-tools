@@ -32,6 +32,9 @@
   "devDependencies": {
     "@nx-tools/ci-context": "workspace:*"
   },
+  "engines": {
+    "node": ">=20.19.0 <21 || >=22.12.0 <23 || >=24.0.0"
+  },
   "files": [
     "dist",
     "!**/*.tsbuildinfo",
