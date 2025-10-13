@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/container-metadata",
-  "version": "6.9.0",
+  "version": "6.9.1-alpha.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {

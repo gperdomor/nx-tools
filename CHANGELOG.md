@@ -1,3 +1,13 @@
+## 6.9.1-alpha.0 (2025-10-13)
+
+### 🚀 Features
+
+- publish using trusted publisher ([ae54942](https://github.com/gperdomor/nx-tools/commit/ae54942))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.9.0 (2025-10-10)
 
 ### 🚀 Features
