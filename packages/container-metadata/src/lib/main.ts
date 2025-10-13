@@ -35,7 +35,7 @@ export async function getMetadata(options: Partial<Inputs>, ctx?: ExecutorContex
   logger.info(`runId: ${context.runId}`);
   logger.endGroup(group);
 
-  if (isDebug()) {
+  if (isDebug) {
     const group = 'Context payload';
     logger.startGroup(group);
     logger.info(JSON.stringify(context.payload, null, 2));

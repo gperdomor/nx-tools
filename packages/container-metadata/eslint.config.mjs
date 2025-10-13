@@ -12,7 +12,7 @@ export default [
             '{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}',
             '{projectRoot}/vite.config.{js,cjs,mjs,ts,cts,mts}',
           ],
-          ignoredDependencies: ['ci-info', 'dotenv'],
+          ignoredDependencies: ['dotenv', 'std-env'],
         },
       ],
     },

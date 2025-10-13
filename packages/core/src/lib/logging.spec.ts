@@ -1,108 +1,182 @@
+import { logger as nxLogger } from '@nx/devkit';
 import * as os from 'node:os';
-import { logger } from './logging';
+import * as stdEnv from 'std-env';
+import c from 'tinyrainbow';
+import { afterEach, describe, expect, it, MockInstance, vi } from 'vitest';
+import { escapeData, logger } from './logging';
 
-const ci = require('ci-info');
-const chalk = require('chalk');
+// Mock dependencies
+vi.mock('std-env');
 
-describe('Logging', () => {
+vi.mock('@nx/devkit', () => ({
+  logger: {
+    warn: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    log: vi.fn(),
+    debug: vi.fn(),
+    fatal: vi.fn(),
+    verbose: vi.fn(),
+  },
+}));
+
+describe('logging', () => {
+  let mockConsoleLog: MockInstance;
+
   beforeEach(() => {
-    vi.spyOn(console, 'debug').mockImplementation(() => true);
-    vi.spyOn(console, 'error').mockImplementation(() => true);
-    vi.spyOn(console, 'info').mockImplementation(() => true);
-    vi.spyOn(console, 'log').mockImplementation(() => true);
-    vi.spyOn(console, 'warn').mockImplementation(() => true);
+    vi.clearAllMocks();
+    mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => undefined);
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it('debug should call console debug method', () => {
-    logger.debug('this is a debug message');
-    expect(console.debug).toHaveBeenCalledWith('this is a debug message');
-  });
+  describe('escapeData', () => {
+    it('should escape percent signs', () => {
+      const result = escapeData('test%data');
+      expect(result).toBe('test%25data');
+    });
 
-  it('error should call console error method', () => {
-    logger.error('this is a error message');
-    expect(console.error).toHaveBeenNthCalledWith(1, chalk.bold(chalk.red('this is a error message')));
+    it('should escape carriage returns', () => {
+      const result = escapeData('test\rdata');
+      expect(result).toBe('test%0Ddata');
+    });
 
-    const error = new Error('this is a error message');
-    logger.error(error);
-    expect(console.error).toHaveBeenNthCalledWith(2, chalk.bold(chalk.red(error.stack)));
-  });
-
-  it('fatal should call console error method', () => {
-    logger.fatal('this is a fatal message');
-    expect(console.error).toHaveBeenNthCalledWith(1, 'this is a fatal message');
-  });
-
-  it('info should call console info method', () => {
-    logger.info('this is a info message');
-    expect(console.info).toHaveBeenCalledWith('this is a info message');
-  });
-
-  it('log should call console log method', () => {
-    logger.log('this is a log message');
-    expect(console.log).toHaveBeenCalledWith('this is a log message');
-  });
-
-  it('warn should call console warn method', () => {
-    logger.warn('this is a warning message');
-    expect(console.warn).toHaveBeenCalledWith(chalk.bold(chalk.yellow('this is a warning message')));
+    it('should escape newlines', () => {
+      const result = escapeData('test\ndata');
+      expect(result).toBe('test%0Adata');
+    });
   });
 
   describe('startGroup', () => {
-    it('should use github action syntaxt in Github Actions', () => {
-      vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(true);
+    it('should handle GitHub Actions provider', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
 
-      logger.startGroup('this is a group message');
-      expect(console.info).toHaveBeenCalledWith(`::group::this is a group message${os.EOL}`);
+      logger.startGroup('GitHub Group');
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(`::group::GitHub Group${os.EOL}`);
     });
 
-    it('should use fallback systaxt', () => {
-      vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(false);
+    it('should handle GitLab provider', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('gitlab');
 
-      logger.startGroup('this is a group message');
-      expect(console.info).toHaveBeenCalledWith(
-        `\n${chalk.cyan('>')} ${chalk.inverse(chalk.bold(chalk.cyan(` this is a group message `)))}\n`,
+      const mockDateNow = vi.spyOn(Date, 'now').mockReturnValue(1234567890123);
+
+      logger.startGroup('GitLab Group');
+
+      const expectedTimestamp = Math.floor(1234567890123 / 1000);
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        `\x1b[0Ksection_start:${expectedTimestamp}:GitLab Group[collapsed=true]\r\x1b[0KGitLab Group`,
+      );
+
+      mockDateNow.mockRestore();
+    });
+
+    it('should handle unknown provider with default formatting', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('unknown' as stdEnv.ProviderName);
+
+      logger.startGroup('Test Group');
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(
+        `${os.EOL}${c.cyan('>')} ${c.inverse(c.bold(c.cyan(` Test Group `)))}${os.EOL}`,
       );
     });
   });
 
   describe('endGroup', () => {
-    it('should use github action syntaxt in Github Actions', () => {
-      vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(true);
-      logger.endGroup('this is a group message');
-      expect(console.info).toHaveBeenCalledWith(`::endgroup::${os.EOL}`);
+    it('should handle GitHub Actions provider', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
+
+      logger.endGroup('GitHub Group');
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(`::endgroup::${os.EOL}`);
     });
 
-    it('should use fallback systaxt', () => {
-      vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(false);
+    it('should handle GitLab provider', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('gitlab');
 
-      logger.endGroup('this is a group message');
-      expect(console.info).not.toHaveBeenCalled();
+      const mockDateNow = vi.spyOn(Date, 'now').mockReturnValue(1234567890123);
+
+      logger.endGroup('GitLab Group');
+
+      const expectedTimestamp = Math.floor(1234567890123 / 1000);
+      expect(mockConsoleLog).toHaveBeenCalledWith(`\x1b[0Ksection_end:${expectedTimestamp}:GitLab Group\r\x1b[0K`);
+
+      mockDateNow.mockRestore();
+    });
+
+    it('should handle unknown provider with default formatting', () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('unknown' as stdEnv.ProviderName);
+
+      logger.endGroup('Test Group');
+
+      expect(mockConsoleLog).toHaveBeenCalledWith(os.EOL);
     });
   });
 
-  describe('group wraps an async call in a group', () => {
-    it('Github Actions', async () => {
-      vi.spyOn(ci, 'GITHUB_ACTIONS', 'get').mockReturnValue(true);
+  describe('group', () => {
+    it('should wrap function execution in a group', async () => {
+      const mockFn = vi.fn().mockResolvedValue('test result');
 
-      const result = await logger.group('mygroup', async () => {
-        console.info('in my group\n');
-        return true;
-      });
+      const result = await logger.group('Test Group', mockFn);
 
-      expect(result).toBe(true);
-      assertWriteCalls([`::group::mygroup${os.EOL}`, 'in my group\n', `::endgroup::${os.EOL}`]);
+      expect(result).toBe('test result');
+      expect(mockFn).toHaveBeenCalledTimes(1);
     });
+
+    it('should call startGroup and endGroup around function execution', async () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
+      const mockFn = vi.fn().mockResolvedValue('test result');
+
+      await logger.group('Test Group', mockFn);
+
+      // Check that console methods were called (indicating startGroup and endGroup were called)
+      assertWriteCalls(mockConsoleLog, [`::group::Test Group${os.EOL}`, `::endgroup::${os.EOL}`]); // startGroup and endGroup
+    });
+
+    it('should call endGroup even if function throws', async () => {
+      vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
+      const mockFn = vi.fn().mockRejectedValue(new Error('Test error'));
+
+      await expect(logger.group('Test Group', mockFn)).rejects.toThrow('Test error');
+
+      // Check that console methods were called (indicating startGroup and endGroup were called)
+      assertWriteCalls(mockConsoleLog, [`::group::Test Group${os.EOL}`, `::endgroup::${os.EOL}`]); // startGroup and endGroup
+    });
+
+    it('should preserve function return type', async () => {
+      const mockFn = vi.fn().mockResolvedValue({ data: 'test', count: 42 });
+
+      const result = await logger.group('Test Group', mockFn);
+
+      expect(result).toEqual({ data: 'test', count: 42 });
+    });
+  });
+
+  it('should delegate to nx logger methods', () => {
+    logger.warn('test warning');
+    logger.error('test error');
+    logger.info('test info');
+    logger.log('test log');
+    logger.debug('test debug');
+    logger.fatal('test fatal');
+    logger.verbose('test verbose');
+
+    expect(nxLogger.warn).toHaveBeenCalledWith('test warning');
+    expect(nxLogger.error).toHaveBeenCalledWith('test error');
+    expect(nxLogger.info).toHaveBeenCalledWith('test info');
+    expect(nxLogger.log).toHaveBeenCalledWith('test log');
+    expect(nxLogger.debug).toHaveBeenCalledWith('test debug');
+    expect(nxLogger.fatal).toHaveBeenCalledWith('test fatal');
+    expect(nxLogger.verbose).toHaveBeenCalledWith('test verbose');
   });
 });
 
-function assertWriteCalls(calls: string[]): void {
-  expect(console.info).toHaveBeenCalledTimes(calls.length);
+function assertWriteCalls(mock: MockInstance, calls: string[]): void {
+  expect(mock).toHaveBeenCalledTimes(calls.length);
 
   for (let i = 0; i < calls.length; i++) {
-    expect(console.info).toHaveBeenNthCalledWith(i + 1, calls[i]);
+    expect(mock).toHaveBeenNthCalledWith(i + 1, calls[i]);
   }
 }
