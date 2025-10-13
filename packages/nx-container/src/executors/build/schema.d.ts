@@ -10,7 +10,7 @@ export interface BuildExecutorSchema {
    * The container engine to be used when building images
    * @default docker
    */
-  engine?: 'docker' | 'podman' | 'kaniko';
+  engine?: 'docker' | 'podman';
   /**
    * Enables quiet mode, suppressing most of the output except for errors
    * @default false

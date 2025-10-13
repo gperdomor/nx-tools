@@ -31,11 +31,11 @@
 
 ## Plugins
 
-| Plugin                                                                  | Description                                                                                                    |
-| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| [`@nx-tools/nx-container`](packages/nx-container/README.md)             | First class support for Container builds in your Nx workspace. Docker, Podman and Kaniko engines are supported |
-| [`@nx-tools/nx-prisma`](packages/nx-prisma/README.md)                   | First class support for [Prisma](https://prisma.io/) in your Nx workspace.                                     |
-| [`@nx-tools/nx-graphql-codegen`](packages/nx-graphql-codegen/README.md) | First class support for [graphql code generator](https://the-guild.dev/graphql/codegen) in your Nx workspace.  |
+| Plugin                                                                  | Description                                                                                                   |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [`@nx-tools/nx-container`](packages/nx-container/README.md)             | First class support for Container builds in your Nx workspace. Docker and Podman engines are supported        |
+| [`@nx-tools/nx-prisma`](packages/nx-prisma/README.md)                   | First class support for [Prisma](https://prisma.io/) in your Nx workspace.                                    |
+| [`@nx-tools/nx-graphql-codegen`](packages/nx-graphql-codegen/README.md) | First class support for [graphql code generator](https://the-guild.dev/graphql/codegen) in your Nx workspace. |
 
 ## Packages
 
