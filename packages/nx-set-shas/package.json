@@ -1,7 +1,6 @@
 {
   "name": "@nx-tools/nx-set-shas",
   "version": "6.9.1",
-  "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "repository": {
@@ -12,18 +11,6 @@
   "bin": {
     "nx-set-shas": "./dist/index.js"
   },
-  "dependencies": {
-    "@nx-tools/core": "workspace:*",
-    "clipanion": "^4.0.0-rc.3",
-    "semver": "^7.6.2"
-  },
-  "peerDependencies": {
-    "tslib": "^2.5.0"
-  },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -32,5 +19,17 @@
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "@nx-tools/core": "workspace:*",
+    "clipanion": "^4.0.0-rc.3",
+    "semver": "^7.6.2"
+  },
+  "peerDependencies": {
+    "tslib": "^2.5.0"
   }
 }

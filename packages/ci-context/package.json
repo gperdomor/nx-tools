@@ -1,7 +1,6 @@
 {
   "name": "@nx-tools/ci-context",
   "version": "6.9.1",
-  "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,20 +11,6 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "dependencies": {
-    "@nx-tools/core": "workspace:*",
-    "ci-info": "^4.0.0",
-    "@octokit/openapi-types": "^22.0.0",
-    "@actions/github": "^6.0.0",
-    "properties-file": "^3.5.4"
-  },
-  "peerDependencies": {
-    "tslib": "^2.5.0"
-  },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -46,5 +31,19 @@
       "import": "./dist/lib/utils/github.js",
       "default": "./dist/lib/utils/github.js"
     }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "@actions/github": "^6.0.0",
+    "@nx-tools/core": "workspace:*",
+    "@octokit/openapi-types": "^22.0.0",
+    "ci-info": "^4.0.0",
+    "properties-file": "^3.5.4"
+  },
+  "peerDependencies": {
+    "tslib": "^2.6.0"
   }
 }

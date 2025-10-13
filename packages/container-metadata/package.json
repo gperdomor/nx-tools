@@ -1,7 +1,6 @@
 {
   "name": "@nx-tools/container-metadata",
   "version": "6.9.1",
-  "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,6 +11,19 @@
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "@nx-tools/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ],
   "dependencies": {
     "@nx-tools/ci-context": "workspace:*",
     "@nx-tools/core": "workspace:*",
@@ -22,20 +34,7 @@
     "semver": "^7.6.0"
   },
   "peerDependencies": {
-    "@nx/devkit": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0",
-    "tslib": "^2.5.0"
-  },
-  "files": [
-    "dist",
-    "!**/*.tsbuildinfo"
-  ],
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "@nx-tools/source": "./src/index.ts",
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
+    "@nx/devkit": ">=18.0.0 <22.0.0",
+    "tslib": "^2.6.0"
   }
 }
