@@ -1,6 +1,6 @@
 import { logger } from '@nx-tools/core';
-import { mockConsole } from '../test-utils.spec.js';
-import { Image, Transform } from './image.js';
+import { mockConsole } from '../test-utils.spec';
+import { Image, Transform } from './image';
 
 describe('transform', () => {
   beforeAll(() => {
