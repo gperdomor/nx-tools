@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces.js';
-import * as semaphore from './semaphore.js';
-import { Semaphore } from './semaphore.js';
+import { RunnerContext } from '../interfaces';
+import * as semaphore from './semaphore';
+import { Semaphore } from './semaphore';
 
 describe('Semaphore Context', () => {
   let context: RunnerContext;

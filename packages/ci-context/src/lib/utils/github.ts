@@ -1,7 +1,7 @@
 import * as github from '@actions/github';
-import { Context } from '@actions/github/lib/context.js';
+import { Context } from '@actions/github/lib/context';
 import { logger } from '@nx-tools/core';
-import { Payload, RepoMetadata, RunnerContext } from '../interfaces.js';
+import { Payload, RepoMetadata, RunnerContext } from '../interfaces';
 
 export class Github {
   public static async context(): Promise<RunnerContext> {

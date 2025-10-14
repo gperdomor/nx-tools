@@ -2,8 +2,8 @@
 import { readFile } from 'fs/promises';
 import { getProperties } from 'properties-file';
 import * as url from 'url';
-import { RepoMetadata, RunnerContext } from '../interfaces.js';
-import { Git } from './git.js';
+import { RepoMetadata, RunnerContext } from '../interfaces';
+import { Git } from './git';
 
 export type BuildProperties = Awaited<ReturnType<typeof Teamcity.getProperties>>['buildProperties'];
 export type ConfigProperties = Awaited<ReturnType<typeof Teamcity.getProperties>>['configProperties'];
