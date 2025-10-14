@@ -299,7 +299,7 @@ importers:
         version: 22.2.0
       properties-file:
         specifier: ^3.5.4
-        version: 3.5.12
+        version: 3.6.1
       std-env:
         specifier: 3.9.0
         version: 3.9.0
@@ -10156,9 +10156,6 @@ packages:
 
   prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
-
-  properties-file@3.5.12:
-    resolution: {integrity: sha512-7dvf+jph2BoEWv0NskL0RIuBocAzf7R62qvG1K8q5ea8BddjepuwFiLLH1bgQGzSYYNvJHDXonnssd9dZ07RGA==}
 
   properties-file@3.6.1:
     resolution: {integrity: sha512-9NUyJcxSqdWcJGRpPq6rT7exQbSQMPs0sK6KTvCJsLrTQRwq+hmt/wIB32ugNZmvEuSPyFO+y4nLK3vX34i5Wg==}
@@ -24279,8 +24276,6 @@ snapshots:
       loose-envify: 1.4.0
       object-assign: 4.1.1
       react-is: 16.13.1
-
-  properties-file@3.5.12: {}
 
   properties-file@3.6.1: {}
 
