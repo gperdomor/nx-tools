@@ -1,9 +1,11 @@
-name: publish
+name: Publish Package
 
 on:
   push:
     tags:
+      - 'v*'
       - '*.*.*'
+      - '*.*.*-*'
 
 jobs:
   publish:
@@ -12,8 +14,8 @@ jobs:
     name: Publish to npm
     runs-on: ubuntu-latest
     permissions:
+      id-token: write # Required for OIDC
       contents: read
-      id-token: write # needed for provenance data generation
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -45,8 +47,21 @@ jobs:
         run: pnpm exec nx run-many --target=build
         shell: bash
 
+      - name: Determine npm tag
+        id: npm-tag
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          if [[ "$TAG_NAME" =~ -(alpha|beta|rc|next|canary) ]]; then
+            echo "tag=next" >> $GITHUB_OUTPUT
+            echo "Pre-release detected. Using 'next' tag."
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+            echo "Stable release detected. Using 'latest' tag."
+          fi
+        shell: bash
+
       - name: Publish packages
-        run: pnpm exec nx release publish --access=public
+        run: pnpm exec nx release publish --access=public --tag=${{ steps.npm-tag.outputs.tag }}
         shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

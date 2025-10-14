@@ -75,6 +75,74 @@ This was a version bump only, there were no code changes.
 - Gustavo Perdomo
 - Karl-E. Kiel @kekielst
 
+## 6.9.1 (2025-10-13)
+
+This was a version bump only, there were no code changes.
+
+## 6.9.1-alpha.0 (2025-10-13)
+
+### 🚀 Features
+
+- publish using trusted publisher ([ae54942](https://github.com/gperdomor/nx-tools/commit/ae54942))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
+## 6.9.0 (2025-10-10)
+
+### 🚀 Features
+
+- add support for Nx 22 ([a17ee0e](https://github.com/gperdomor/nx-tools/commit/a17ee0e))
+
+### 🩹 Fixes
+
+- **deps:** bump nx monorepo from 21.1.2 to v21.6.4 ([174af44](https://github.com/gperdomor/nx-tools/commit/174af44))
+
+### 🏡 Chore
+
+- move from husky to lefthook ([09efc13](https://github.com/gperdomor/nx-tools/commit/09efc13))
+- dependency and config sync with main branch ([c2b07ec](https://github.com/gperdomor/nx-tools/commit/c2b07ec))
+- move plugins to packages directory ([59ecd12](https://github.com/gperdomor/nx-tools/commit/59ecd12))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
+## 6.8.4 (2025-10-10)
+
+This was a version bump only, there were no code changes.
+
+## 6.8.3 (2025-10-10)
+
+### 🩹 Fixes
+
+- **nx-container:** fix provenance ([#1314](https://github.com/gperdomor/nx-tools/issues/1314))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
+## 6.8.2 (2025-08-02)
+
+### 🚀 Features
+
+- **nx-container:** support for sbom attestations ([d3ff31d](https://github.com/gperdomor/nx-tools/commit/d3ff31d))
+
+### ❤️ Thank You
+
+- Karl-E. Kiel @kekielst
+
+## 6.8.1 (2025-07-30)
+
+### 🩹 Fixes
+
+- **nx-set-shas:** fix bin package field ([a43309e](https://github.com/gperdomor/nx-tools/commit/a43309e))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 6.8.0 (2025-06-17)
 
 ### 🚀 Features
