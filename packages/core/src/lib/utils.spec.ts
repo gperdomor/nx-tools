@@ -1,4 +1,4 @@
-import { toBoolean } from './utils.js';
+import { toBoolean } from './utils';
 
 describe('utils', () => {
   describe('toBoolean', () => {
