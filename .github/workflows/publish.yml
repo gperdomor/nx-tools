@@ -64,5 +64,4 @@ jobs:
         run: pnpm exec nx release publish --access=public --tag=${{ steps.npm-tag.outputs.tag }}
         shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
