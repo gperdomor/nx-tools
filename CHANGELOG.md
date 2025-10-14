@@ -1,3 +1,63 @@
+## 7.0.0-alpha.3 (2025-10-14)
+
+### 🚀 Features
+
+- replace husky with lefthook ([#1325](https://github.com/gperdomor/nx-tools/pull/1325))
+- added initial support for Nx 22 ([942cc11](https://github.com/gperdomor/nx-tools/commit/942cc11))
+- **ci-context:** revert to commonjs ([d5e5ded](https://github.com/gperdomor/nx-tools/commit/d5e5ded))
+- **container-metadata:** revert to commonjs ([f143dc0](https://github.com/gperdomor/nx-tools/commit/f143dc0))
+- **container-metadata:** fix tests ([a922e47](https://github.com/gperdomor/nx-tools/commit/a922e47))
+- **core:** revert to commonjs ([f80dbe5](https://github.com/gperdomor/nx-tools/commit/f80dbe5))
+
+### 🩹 Fixes
+
+- fix tests ([708bd38](https://github.com/gperdomor/nx-tools/commit/708bd38))
+- **deps:** bump nx monorepo from 21.3.11 to v21.5.2 ([#1315](https://github.com/gperdomor/nx-tools/pull/1315))
+- **deps:** bump @oclif/core from 4.5.2 to v4.5.3 ([#1330](https://github.com/gperdomor/nx-tools/pull/1330))
+- **deps:** bump nx monorepo from 21.5.2 to v21.6.4 ([a044aeb](https://github.com/gperdomor/nx-tools/commit/a044aeb))
+- **deps:** bump lucide-react from 0.513.0 to v0.545.0 ([c95d249](https://github.com/gperdomor/nx-tools/commit/c95d249))
+- **deps:** bump tinyrainbow from 2.0.0 to v3 ([#1338](https://github.com/gperdomor/nx-tools/pull/1338))
+- **deps:** bump @oclif/plugin-help from 6.2.32 to v6.2.33 ([fe8870a](https://github.com/gperdomor/nx-tools/commit/fe8870a))
+- **deps:** bump properties-file from 3.5.13 to v3.6.1 ([ecdbeef](https://github.com/gperdomor/nx-tools/commit/ecdbeef))
+- **deps:** bump @oclif/core from 4.5.3 to v4.5.4 ([82dcab4](https://github.com/gperdomor/nx-tools/commit/82dcab4))
+- **deps:** bump prisma monorepo from 6.1.0 to v6.17.0 ([55b2718](https://github.com/gperdomor/nx-tools/commit/55b2718))
+- **deps:** bump semver from 7.7.2 to v7.7.3 ([753bea8](https://github.com/gperdomor/nx-tools/commit/753bea8))
+- **nx-container:** fix provenance ([#1314](https://github.com/gperdomor/nx-tools/issues/1314))
+
+### 🏡 Chore
+
+- fix customConditions ([5082c66](https://github.com/gperdomor/nx-tools/commit/5082c66))
+- some dependency updates ([a4aea1d](https://github.com/gperdomor/nx-tools/commit/a4aea1d))
+- added node 24 support ([7a348f9](https://github.com/gperdomor/nx-tools/commit/7a348f9))
+- fix lock file ([fbac880](https://github.com/gperdomor/nx-tools/commit/fbac880))
+- pin some deps ([be36376](https://github.com/gperdomor/nx-tools/commit/be36376))
+- pin some deps ([aca6e31](https://github.com/gperdomor/nx-tools/commit/aca6e31))
+- **deps:** bump actions/setup-node action from v4 to v5 ([#1317](https://github.com/gperdomor/nx-tools/pull/1317))
+- **deps:** bump actions/checkout action from v4 to v5 ([#1316](https://github.com/gperdomor/nx-tools/pull/1316))
+- **deps:** bump dotenv from 16.5.0 to v17 ([#1318](https://github.com/gperdomor/nx-tools/pull/1318))
+- **deps:** bump typescript from 5.8.3 to v5.9.2 ([#1321](https://github.com/gperdomor/nx-tools/pull/1321))
+- **deps:** bump typescript-eslint from 8.38.0 to v8.43.0 ([#1324](https://github.com/gperdomor/nx-tools/pull/1324))
+- **deps:** bump nextjs monorepo from 15.4.5 to v15.5.3 ([#1323](https://github.com/gperdomor/nx-tools/pull/1323))
+- **deps:** bump tailwindcss monorepo from 4.1.11 to v4.1.13 ([#1329](https://github.com/gperdomor/nx-tools/pull/1329))
+- **deps:** bump eslint monorepo from 9.32.0 to v9.35.0 ([#1320](https://github.com/gperdomor/nx-tools/pull/1320))
+- **deps:** bump mcr.microsoft.com/devcontainers/typescript-node docker tag to v24 ([80b77bf](https://github.com/gperdomor/nx-tools/commit/80b77bf))
+- **deps:** bump lefthook from 1.13.1 to v1.13.6 ([#1340](https://github.com/gperdomor/nx-tools/pull/1340))
+- **deps:** bump dotenv from 17.2.2 to v17.2.3 ([#1339](https://github.com/gperdomor/nx-tools/pull/1339))
+- **deps:** bump tailwindcss monorepo from 4.1.13 to v4.1.14 ([#1341](https://github.com/gperdomor/nx-tools/pull/1341))
+- **deps:** bump verdaccio from 6.1.6 to v6.2.0 ([#1342](https://github.com/gperdomor/nx-tools/pull/1342))
+- **deps:** bump eslint monorepo from 9.35.0 to v9.37.0 ([352e5ff](https://github.com/gperdomor/nx-tools/commit/352e5ff))
+- **deps:** bump commitlint monorepo from 19.8.1 to v20 ([0875ca4](https://github.com/gperdomor/nx-tools/commit/0875ca4))
+- **deps:** bump tsx from 4.19.4 to v4.20.6 ([df3e614](https://github.com/gperdomor/nx-tools/commit/df3e614))
+- **deps:** bump nextjs monorepo from 15.5.3 to v15.5.4 ([c493019](https://github.com/gperdomor/nx-tools/commit/c493019))
+- **deps:** bump oclif from 4.22.5 to v4.22.29 ([701c8eb](https://github.com/gperdomor/nx-tools/commit/701c8eb))
+- **deps:** bump jiti from 2.4.2 to v2.6.1 ([07453c3](https://github.com/gperdomor/nx-tools/commit/07453c3))
+- **deps:** bump tmp from 0.2.3 to 0.2.4 ([010fbc0](https://github.com/gperdomor/nx-tools/commit/010fbc0))
+- **deps:** bump memfs from 4.36.0 to v4.49.0 ([b3464a8](https://github.com/gperdomor/nx-tools/commit/b3464a8))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.2 (2025-08-05)
 
 This was a version bump only, there were no code changes.

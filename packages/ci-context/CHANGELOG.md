@@ -1,3 +1,19 @@
+## 7.0.0-alpha.3 (2025-10-14)
+
+### 🚀 Features
+
+- **ci-context:** revert to commonjs ([d5e5ded](https://github.com/gperdomor/nx-tools/commit/d5e5ded))
+
+### 🏡 Chore
+
+- pin some deps ([be36376](https://github.com/gperdomor/nx-tools/commit/be36376))
+- added node 24 support ([7a348f9](https://github.com/gperdomor/nx-tools/commit/7a348f9))
+- fix customConditions ([5082c66](https://github.com/gperdomor/nx-tools/commit/5082c66))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.2 (2025-08-05)
 
 This was a version bump only for ci-context to align it with other projects, there were no code changes.

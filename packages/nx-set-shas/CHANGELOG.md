@@ -1,3 +1,21 @@
+## 7.0.0-alpha.3 (2025-10-14)
+
+### 🩹 Fixes
+
+- **deps:** bump semver from 7.7.2 to v7.7.3 ([753bea8](https://github.com/gperdomor/nx-tools/commit/753bea8))
+- **deps:** bump @oclif/core from 4.5.3 to v4.5.4 ([82dcab4](https://github.com/gperdomor/nx-tools/commit/82dcab4))
+- **deps:** bump @oclif/plugin-help from 6.2.32 to v6.2.33 ([fe8870a](https://github.com/gperdomor/nx-tools/commit/fe8870a))
+- **deps:** bump @oclif/core from 4.5.2 to v4.5.3 ([#1330](https://github.com/gperdomor/nx-tools/pull/1330))
+
+### 🏡 Chore
+
+- added node 24 support ([7a348f9](https://github.com/gperdomor/nx-tools/commit/7a348f9))
+- fix customConditions ([5082c66](https://github.com/gperdomor/nx-tools/commit/5082c66))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.2 (2025-08-05)
 
 This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.

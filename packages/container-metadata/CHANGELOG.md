@@ -1,3 +1,25 @@
+## 7.0.0-alpha.3 (2025-10-14)
+
+### 🚀 Features
+
+- **container-metadata:** fix tests ([a922e47](https://github.com/gperdomor/nx-tools/commit/a922e47))
+- **container-metadata:** revert to commonjs ([f143dc0](https://github.com/gperdomor/nx-tools/commit/f143dc0))
+- added initial support for Nx 22 ([942cc11](https://github.com/gperdomor/nx-tools/commit/942cc11))
+
+### 🩹 Fixes
+
+- fix tests ([708bd38](https://github.com/gperdomor/nx-tools/commit/708bd38))
+
+### 🏡 Chore
+
+- pin some deps ([aca6e31](https://github.com/gperdomor/nx-tools/commit/aca6e31))
+- added node 24 support ([7a348f9](https://github.com/gperdomor/nx-tools/commit/7a348f9))
+- fix customConditions ([5082c66](https://github.com/gperdomor/nx-tools/commit/5082c66))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.2 (2025-08-05)
 
 This was a version bump only for container-metadata to align it with other projects, there were no code changes.
