@@ -1,5 +1,5 @@
 import { parse } from 'csv-parse/sync';
-import { getInput } from './get-input.js';
+import { getInput } from './get-input';
 
 export interface ListOpts {
   ignoreComma?: boolean;

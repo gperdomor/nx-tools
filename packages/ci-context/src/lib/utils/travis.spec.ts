@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces.js';
-import * as travis from './travis.js';
-import { Travis } from './travis.js';
+import { RunnerContext } from '../interfaces';
+import * as travis from './travis';
+import { Travis } from './travis';
 
 describe('Travis Context', () => {
   let context: RunnerContext;

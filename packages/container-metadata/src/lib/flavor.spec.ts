@@ -1,6 +1,6 @@
 import { logger } from '@nx-tools/core';
-import { mockConsole } from '../test-utils.spec.js';
-import { Flavor, Transform } from './flavor.js';
+import { mockConsole } from '../test-utils.spec';
+import { Flavor, Transform } from './flavor';
 
 describe('transform', () => {
   beforeAll(() => {

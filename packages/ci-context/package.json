@@ -9,9 +9,7 @@
   },
   "bugs": "https://github.com/gperdomor/nx-tools/issues",
   "license": "MIT",
-  "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
@@ -42,9 +40,9 @@
     "!**/*.tsbuildinfo"
   ],
   "dependencies": {
+    "@actions/github": "^6.0.0",
     "@nx-tools/core": "workspace:*",
     "@octokit/openapi-types": "^22.0.0",
-    "@actions/github": "^6.0.0",
     "properties-file": "^3.5.4",
     "std-env": "3.9.0"
   },

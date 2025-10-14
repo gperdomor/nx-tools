@@ -1,4 +1,4 @@
-import { asyncForEach } from './async-for-each.js';
+import { asyncForEach } from './async-for-each';
 
 describe('asyncForEach', () => {
   it('executes async tasks sequentially', async () => {

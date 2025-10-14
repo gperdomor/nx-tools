@@ -1,5 +1,5 @@
 import { ExecutorContext } from '@nx/devkit';
-import { getProjectRoot } from './workspace.js';
+import { getProjectRoot } from './workspace';
 
 type CTX = Omit<ExecutorContext, 'nxJsonConfiguration' | 'projectGraph'>;
 

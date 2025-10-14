@@ -1,6 +1,6 @@
 import * as core from '@nx-tools/core';
-import * as local from './git.js';
-import { Git } from './git.js';
+import * as local from './git';
+import { Git } from './git';
 
 describe('Git Context', () => {
   beforeEach(() => {

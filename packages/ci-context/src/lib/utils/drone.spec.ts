@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces.js';
-import * as drone from './drone.js';
-import { Drone } from './drone.js';
+import { RunnerContext } from '../interfaces';
+import * as drone from './drone';
+import { Drone } from './drone';
 
 describe('Drone Context', () => {
   let context: RunnerContext;

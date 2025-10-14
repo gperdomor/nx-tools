@@ -7,10 +7,12 @@ import moment from 'moment-timezone';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as semver from 'semver';
-import { Inputs } from './context.js';
-import * as fcl from './flavor.js';
-import * as icl from './image.js';
-import * as tcl from './tag.js';
+import { Inputs } from './context';
+import * as fcl from './flavor';
+import * as icl from './image';
+import * as tcl from './tag';
+
+const defaultShortShaLength = 7;
 
 export interface Version {
   main: string | undefined;
@@ -308,7 +310,7 @@ export class Meta {
 
     let val = this.context.sha;
     if (tag.attrs['format'] === tcl.ShaFormat.Short) {
-      val = this.context.sha.substring(0, parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || '7', 10));
+      val = Meta.shortSha(this.context.sha);
     }
 
     const vraw = this.setValue(val, tag);
@@ -375,7 +377,7 @@ export class Meta {
         return context.ref.replace(/^refs\/tags\//g, '');
       },
       sha: function () {
-        return context.sha.substring(0, parseInt(process.env['NX_CONTAINER_SHORT_SHA_LENGTH'] || '7', 10));
+        return Meta.shortSha(context.sha);
       },
       base_ref: function () {
         if (/^refs\/tags\//.test(context.ref) && context.payload?.base_ref != undefined) {
@@ -501,7 +503,6 @@ export class Meta {
       new Map<string, string>(
         res
           .map((label) => label.split('='))
-
           .filter(([_key, ...values]) => values.length > 0)
           .map(([key, ...values]) => [key, values.join('=')] as [string, string]),
       ),
@@ -601,5 +602,21 @@ export class Meta {
 
   private static sanitizeTag(tag: string): string {
     return tag.replace(/[^a-zA-Z0-9._-]+/g, '-');
+  }
+
+  private static shortSha(sha: string): string {
+    let shortShaLength = defaultShortShaLength;
+    if (process.env.NX_CONTAINER_SHORT_SHA_LENGTH) {
+      if (isNaN(Number(process.env.NX_CONTAINER_SHORT_SHA_LENGTH))) {
+        throw new Error(
+          `NX_CONTAINER_SHORT_SHA_LENGTH is not a valid number: ${process.env.NX_CONTAINER_SHORT_SHA_LENGTH}`,
+        );
+      }
+      shortShaLength = Number(process.env.NX_CONTAINER_SHORT_SHA_LENGTH);
+    }
+    if (shortShaLength >= sha.length) {
+      return sha;
+    }
+    return sha.substring(0, shortShaLength);
   }
 }

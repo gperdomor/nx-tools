@@ -1,24 +1,23 @@
-import { RepoMetadata, RepoProxyFactory } from '@nx-tools/ci-context';
+import { ContextProxyFactory, RepoMetadata, RepoProxyFactory, RunnerContext } from '@nx-tools/ci-context';
+import { Github } from '@nx-tools/ci-context/src/lib/utils/github';
 import { logger } from '@nx-tools/core';
 import { workspaceRoot } from '@nx/devkit';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import * as stdEnv from 'std-env';
-import repoFixture from '../../__tests__/fixtures/repo.json' with { type: 'json' };
-import { mockConsole, stubEnvsFromFile } from '../test-utils.spec.js';
-import { Inputs, getContext, getInputs } from './context.js';
-import { Meta, Version } from './meta.js';
-
-// Mock dependencies
-vi.mock('std-env');
+import repoFixture from '../../__tests__/fixtures/repo.json';
+import { mockConsole, stubEnvsFromFile } from '../test-utils.spec';
+import { Inputs, getContext, getInputs } from './context';
+import { Meta, Version } from './meta';
 
 beforeAll(() => {
   mockConsole();
 
-  vi.spyOn(stdEnv, 'provider', 'get').mockReturnValue('github_actions');
-
   vi.spyOn(RepoProxyFactory, 'create').mockImplementation((): Promise<RepoMetadata> => {
     return <Promise<RepoMetadata>>(repoFixture as unknown);
+  });
+
+  vi.spyOn(ContextProxyFactory, 'create').mockImplementation((): Promise<RunnerContext> => {
+    return Github.context();
   });
 
   vi.spyOn(global.Date.prototype, 'toISOString').mockImplementation(() => {

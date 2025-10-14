@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { interpolate } from './interpolate.js';
+import { interpolate } from './interpolate';
 
 describe('String interpolation', () => {
   beforeAll(() => {

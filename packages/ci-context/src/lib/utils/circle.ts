@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { RepoMetadata, RunnerContext } from '../interfaces.js';
+import { RepoMetadata, RunnerContext } from '../interfaces';
 
 export class Circle {
   public static async context(): Promise<RunnerContext> {
