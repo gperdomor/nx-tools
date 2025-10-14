@@ -40,10 +40,10 @@
     "!**/*.tsbuildinfo"
   ],
   "dependencies": {
-    "@actions/github": "^6.0.0",
+    "@actions/github": "^6.0.1",
     "@nx-tools/core": "workspace:*",
     "@octokit/openapi-types": "^22.0.0",
-    "properties-file": "^3.5.4",
+    "properties-file": "^3.6.1",
     "std-env": "3.9.0"
   },
   "peerDependencies": {
