@@ -229,8 +229,8 @@ importers:
         specifier: 2.4.0
         version: 2.4.0
       lefthook:
-        specifier: 1.13.1
-        version: 1.13.1
+        specifier: 1.13.6
+        version: 1.13.6
       memfs:
         specifier: 4.36.0
         version: 4.36.0
@@ -1999,6 +1999,7 @@ packages:
   '@graphql-tools/prisma-loader@8.0.17':
     resolution: {integrity: sha512-fnuTLeQhqRbA156pAyzJYN0KxCjKYRU5bz1q/SKOwElSnAU4k7/G1kyVsWLh7fneY78LoMNH5n+KlFV8iQlnyg==}
     engines: {node: '>=16.0.0'}
+    deprecated: 'This package was intended to be used with an older versions of Prisma.\nThe newer versions of Prisma has a different approach to GraphQL integration.\nTherefore, this package is no longer needed and has been deprecated and removed.\nLearn more: https://www.prisma.io/graphql'
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
 
@@ -8429,58 +8430,58 @@ packages:
   launch-editor@2.11.0:
     resolution: {integrity: sha512-R/PIF14L6e2eHkhvQPu7jDRCr0msfCYCxbYiLgkkAGi0dVPWuM+RrsPu0a5dpuNe0KWGL3jpAkOlv53xGfPheQ==}
 
-  lefthook-darwin-arm64@1.13.1:
-    resolution: {integrity: sha512-bMD34zeaKTtA5DAAIs910bUN5agCsZbzIwPnqA5Zvbm9igvbCkRerc5bAOCYcMUzleXA54g5hdDnDNwSwAo+JQ==}
+  lefthook-darwin-arm64@1.13.6:
+    resolution: {integrity: sha512-m6Lb77VGc84/Qo21Lhq576pEvcgFCnvloEiP02HbAHcIXD0RTLy9u2yAInrixqZeaz13HYtdDaI7OBYAAdVt8A==}
     cpu: [arm64]
     os: [darwin]
 
-  lefthook-darwin-x64@1.13.1:
-    resolution: {integrity: sha512-eOv25Scxxu/dgWg/o0QkIMcYHmBrL6ffozeHRDHUC2N0n0eAvp9FpexoJ+Mm7+VQVPCnQumjIvyUNLRqlEAcyg==}
+  lefthook-darwin-x64@1.13.6:
+    resolution: {integrity: sha512-CoRpdzanu9RK3oXR1vbEJA5LN7iB+c7hP+sONeQJzoOXuq4PNKVtEaN84Gl1BrVtCNLHWFAvCQaZPPiiXSy8qg==}
     cpu: [x64]
     os: [darwin]
 
-  lefthook-freebsd-arm64@1.13.1:
-    resolution: {integrity: sha512-Hzw2E+zX1/GseCrJS1b1i9oj6JhM2+MFOysCUmMYl8x0yDphxepJXr3wH8bNXENtuVN0Om1IWdZC+6p6+ZY8zw==}
+  lefthook-freebsd-arm64@1.13.6:
+    resolution: {integrity: sha512-X4A7yfvAJ68CoHTqP+XvQzdKbyd935sYy0bQT6Ajz7FL1g7hFiro8dqHSdPdkwei9hs8hXeV7feyTXbYmfjKQQ==}
     cpu: [arm64]
     os: [freebsd]
 
-  lefthook-freebsd-x64@1.13.1:
-    resolution: {integrity: sha512-H1T4A6auTBEQY0uWh5E7LDTPa5I9ALfubNHVsiE3XzwRjwu3PazCY9zPCTbdI8ww9JOV6T9A7Mow2GewoHWBUQ==}
+  lefthook-freebsd-x64@1.13.6:
+    resolution: {integrity: sha512-ai2m+Sj2kGdY46USfBrCqLKe9GYhzeq01nuyDYCrdGISePeZ6udOlD1k3lQKJGQCHb0bRz4St0r5nKDSh1x/2A==}
     cpu: [x64]
     os: [freebsd]
 
-  lefthook-linux-arm64@1.13.1:
-    resolution: {integrity: sha512-3vNxmRma1ykaG+rpxjKytvxSj6Kl9f/W19Qjdi+BFVu2LueMY5AGPs1oXpDjled7Y7c3WL4XLtQ+xPFHl8z9Sw==}
+  lefthook-linux-arm64@1.13.6:
+    resolution: {integrity: sha512-cbo4Wtdq81GTABvikLORJsAWPKAJXE8Q5RXsICFUVznh5PHigS9dFW/4NXywo0+jfFPCT6SYds2zz4tCx6DA0Q==}
     cpu: [arm64]
     os: [linux]
 
-  lefthook-linux-x64@1.13.1:
-    resolution: {integrity: sha512-vitul4TY/4RCiH90XDcWZT/XItfHeCuzlt/Ex3dF2ZToEgXzQti8qWG1i9QhSaunu0X/7KIWLlHV9q5uymNBsQ==}
+  lefthook-linux-x64@1.13.6:
+    resolution: {integrity: sha512-uJl9vjCIIBTBvMZkemxCE+3zrZHlRO7Oc+nZJ+o9Oea3fu+W82jwX7a7clw8jqNfaeBS+8+ZEQgiMHWCloTsGw==}
     cpu: [x64]
     os: [linux]
 
-  lefthook-openbsd-arm64@1.13.1:
-    resolution: {integrity: sha512-3TDbaxWiqDuA6a+IuAOh64CiTsyVsnTgQDF8u+STH81RYs70a1g2XHKRGxPMhJMLigy7TEk5z3FUkiKw4pofWQ==}
+  lefthook-openbsd-arm64@1.13.6:
+    resolution: {integrity: sha512-7r153dxrNRQ9ytRs2PmGKKkYdvZYFPre7My7XToSTiRu5jNCq++++eAKVkoyWPduk97dGIA+YWiEr5Noe0TK2A==}
     cpu: [arm64]
     os: [openbsd]
 
-  lefthook-openbsd-x64@1.13.1:
-    resolution: {integrity: sha512-0mP/wtzdPliwRHQNPSCYbIc+6KCWLNWp/HHRCpurwrWJ6z4mab3ctemghhTkHj+0ZDSO0kM66Awygq86JnOwIA==}
+  lefthook-openbsd-x64@1.13.6:
+    resolution: {integrity: sha512-Z+UhLlcg1xrXOidK3aLLpgH7KrwNyWYE3yb7ITYnzJSEV8qXnePtVu8lvMBHs/myzemjBzeIr/U/+ipjclR06g==}
     cpu: [x64]
     os: [openbsd]
 
-  lefthook-windows-arm64@1.13.1:
-    resolution: {integrity: sha512-6wrUZOC1SGsp9riO3dILPzoMkjOSpYIyojbU+jUdlMwCfSMGR5jrFlzRTEyrEoawFhGk3+KnFPYbOdlp8LWPkw==}
+  lefthook-windows-arm64@1.13.6:
+    resolution: {integrity: sha512-Uxef6qoDxCmUNQwk8eBvddYJKSBFglfwAY9Y9+NnnmiHpWTjjYiObE9gT2mvGVpEgZRJVAatBXc+Ha5oDD/OgQ==}
     cpu: [arm64]
     os: [win32]
 
-  lefthook-windows-x64@1.13.1:
-    resolution: {integrity: sha512-K/abjvUqtazOjXtrqKz+O+J+D/lZqvrjuWO9gLCbDKbzV13IwqvE+eIJ7TXCAwqp3/MN2r2pwpL83t17fxshBA==}
+  lefthook-windows-x64@1.13.6:
+    resolution: {integrity: sha512-mOZoM3FQh3o08M8PQ/b3IYuL5oo36D9ehczIw1dAgp1Ly+Tr4fJ96A+4SEJrQuYeRD4mex9bR7Ps56I73sBSZA==}
     cpu: [x64]
     os: [win32]
 
-  lefthook@1.13.1:
-    resolution: {integrity: sha512-zPtBnDI86o2Xoe61tr+0r8ebLVek/aEKF77gA+V5C7zi4Of1CY6FFHx0Gzazzj9JfTCq9SWtUv1halWSWMPAQQ==}
+  lefthook@1.13.6:
+    resolution: {integrity: sha512-ojj4/4IJ29Xn4drd5emqVgilegAPN3Kf0FQM2p/9+lwSTpU+SZ1v4Ig++NF+9MOa99UKY8bElmVrLhnUUNFh5g==}
     hasBin: true
 
   less-loader@11.1.4:
@@ -22175,48 +22176,48 @@ snapshots:
       picocolors: 1.1.1
       shell-quote: 1.8.3
 
-  lefthook-darwin-arm64@1.13.1:
+  lefthook-darwin-arm64@1.13.6:
     optional: true
 
-  lefthook-darwin-x64@1.13.1:
+  lefthook-darwin-x64@1.13.6:
     optional: true
 
-  lefthook-freebsd-arm64@1.13.1:
+  lefthook-freebsd-arm64@1.13.6:
     optional: true
 
-  lefthook-freebsd-x64@1.13.1:
+  lefthook-freebsd-x64@1.13.6:
     optional: true
 
-  lefthook-linux-arm64@1.13.1:
+  lefthook-linux-arm64@1.13.6:
     optional: true
 
-  lefthook-linux-x64@1.13.1:
+  lefthook-linux-x64@1.13.6:
     optional: true
 
-  lefthook-openbsd-arm64@1.13.1:
+  lefthook-openbsd-arm64@1.13.6:
     optional: true
 
-  lefthook-openbsd-x64@1.13.1:
+  lefthook-openbsd-x64@1.13.6:
     optional: true
 
-  lefthook-windows-arm64@1.13.1:
+  lefthook-windows-arm64@1.13.6:
     optional: true
 
-  lefthook-windows-x64@1.13.1:
+  lefthook-windows-x64@1.13.6:
     optional: true
 
-  lefthook@1.13.1:
+  lefthook@1.13.6:
     optionalDependencies:
-      lefthook-darwin-arm64: 1.13.1
-      lefthook-darwin-x64: 1.13.1
-      lefthook-freebsd-arm64: 1.13.1
-      lefthook-freebsd-x64: 1.13.1
-      lefthook-linux-arm64: 1.13.1
-      lefthook-linux-x64: 1.13.1
-      lefthook-openbsd-arm64: 1.13.1
-      lefthook-openbsd-x64: 1.13.1
-      lefthook-windows-arm64: 1.13.1
-      lefthook-windows-x64: 1.13.1
+      lefthook-darwin-arm64: 1.13.6
+      lefthook-darwin-x64: 1.13.6
+      lefthook-freebsd-arm64: 1.13.6
+      lefthook-freebsd-x64: 1.13.6
+      lefthook-linux-arm64: 1.13.6
+      lefthook-linux-x64: 1.13.6
+      lefthook-openbsd-arm64: 1.13.6
+      lefthook-openbsd-x64: 1.13.6
+      lefthook-windows-arm64: 1.13.6
+      lefthook-windows-x64: 1.13.6
 
   less-loader@11.1.4(less@4.4.0)(webpack@5.101.3(@swc/core@1.13.3(@swc/helpers@0.5.17))):
     dependencies:
