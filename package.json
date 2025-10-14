@@ -75,7 +75,7 @@
     "@vitest/ui": "3.2.4",
     "commitizen": "4.3.1",
     "consola": "3.4.2",
-    "dotenv": "17.2.2",
+    "dotenv": "17.2.3",
     "eslint": "9.35.0",
     "eslint-config-next": "15.5.3",
     "eslint-config-prettier": "10.1.8",
