@@ -34,7 +34,7 @@
     "csv-parse": "^5.5.5",
     "std-env": "3.9.0",
     "tinyexec": "1.0.1",
-    "tinyrainbow": "2.0.0"
+    "tinyrainbow": "3.0.3"
   },
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <22.0.0",
