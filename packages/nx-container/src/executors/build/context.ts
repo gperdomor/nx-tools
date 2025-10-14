@@ -87,7 +87,7 @@ export async function getInputs(
     noCacheFilters: await getInputList('no-cache-filters', prefix, options['no-cache-filters']),
     outputs: await getInputList('outputs', prefix, options.outputs, true),
     platforms: await getInputList('platforms', prefix, options.platforms),
-    provenance: core.getInput('provenance'),
+    provenance: core.getInput('provenance', { prefix, fallback: options.provenance }),
     pull: core.getBooleanInput('pull', { fallback: `${options.pull || false}` }),
     push: core.getBooleanInput('push', { fallback: `${options.push || false}` }),
     sbom: core.getBooleanInput('sbom', { fallback: `${options.sbom || false}` }),
