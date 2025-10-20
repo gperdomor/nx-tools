@@ -40,7 +40,7 @@
     "std-env": "3.9.0",
     "tinyexec": "1.0.1",
     "tinyrainbow": "3.0.3",
-    "tmp": "0.2.4"
+    "tmp": "0.2.5"
   },
   "devDependencies": {
     "@commitlint/cli": "20.1.0",
@@ -98,7 +98,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.0",
     "verdaccio": "6.2.0",
-    "vite": "7.1.9",
+    "vite": "7.1.11",
     "vitest": "3.2.4"
   },
   "nx": {
