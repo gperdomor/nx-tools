@@ -10,6 +10,7 @@ on:
 
 jobs:
   fetch-tags:
+    if: github.repository == 'gperdomor/nx-tools'
     runs-on: ubuntu-latest
     outputs:
       node-tags: ${{ steps.node-tags.outputs.tags }}
@@ -34,6 +35,7 @@ jobs:
           sort: true
 
   calculate-tag-difference:
+    if: github.repository == 'gperdomor/nx-tools'
     runs-on: ubuntu-latest
     needs: [fetch-tags]
     outputs:
@@ -50,7 +52,7 @@ jobs:
           target-tags: ${{ needs.fetch-tags.outputs.nx-docker-tags }}
 
   build-docker:
-    if: ${{ needs.calculate-tag-difference.outputs.missing-count > 0}}
+    if: ${{ github.repository == 'gperdomor/nx-tools' && needs.calculate-tag-difference.outputs.missing-count > 0}}
     runs-on: ubuntu-latest
     needs: calculate-tag-difference
     strategy:
@@ -131,9 +133,6 @@ jobs:
           cache-to: type=gha,mode=max
           provenance: true
           sbom: true
-
-      - name: Display image digest
-        run: echo "Image digest: ${{ steps.docker_build.outputs.digest }}"
 
       - name: Display all tags
         run: |
