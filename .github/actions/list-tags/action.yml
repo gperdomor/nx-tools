@@ -1,0 +1,114 @@
+name: 'List Container Image Tags'
+description: 'List available tags for a container image using Skopeo'
+author: gperdomor
+
+branding:
+  color: blue
+  icon: list
+
+inputs:
+  image:
+    description: 'Container image repository to list tags from (e.g., library/nginx, myregistry/myimage)'
+    required: true
+  registry:
+    description: 'Registry URL (defaults to docker.io for Docker Hub)'
+    required: false
+    default: 'docker.io'
+  filter:
+    description: 'Optional regex filter to apply to tags'
+    required: false
+    default: ''
+  sort:
+    description: 'Sort tags using semantic versioning'
+    required: false
+    default: 'false'
+
+outputs:
+  tags:
+    description: 'JSON array of available tags'
+    value: ${{ steps.list-tags.outputs.tags }}
+  tags-csv:
+    description: 'Comma-separated list of tags'
+    value: ${{ steps.list-tags.outputs.tags-csv }}
+  count:
+    description: 'Number of tags found'
+    value: ${{ steps.list-tags.outputs.count }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: List tags from image
+      id: list-tags
+      shell: bash
+      run: |
+        set -e
+
+        IMAGE="${{ inputs.image }}"
+        FILTER="${{ inputs.filter }}"
+        SORT="${{ inputs.sort }}"
+
+        # Ensure image has a protocol prefix
+        if [[ ! "$IMAGE" =~ ://.* ]]; then
+          IMAGE="docker://$IMAGE"
+        fi
+
+        echo "::info::Fetching tags for: $IMAGE"
+
+        # Fetch tags using skopeo
+        TAGS_JSON=$(skopeo list-tags "$IMAGE" 2>/dev/null || echo '{"Tags":[]}')
+        TAGS_ARRAY=$(echo "$TAGS_JSON" | jq -r '.Tags[]?' 2>/dev/null | sort | uniq)
+
+        # Check if we got any tags
+        if [ -z "$TAGS_ARRAY" ]; then
+          echo "::warning::No tags found for image: $IMAGE"
+          TAGS_ARRAY=""
+        fi
+
+        # Apply filter if provided
+        if [ -n "$FILTER" ]; then
+          ORIGINAL_COUNT=$(echo "$TAGS_ARRAY" | grep -c . || echo "0")
+          TAGS_ARRAY=$(echo "$TAGS_ARRAY" | grep -E "$FILTER" || echo "")
+          FILTERED_COUNT=$(echo "$TAGS_ARRAY" | grep -c . || echo "0")
+          echo "::info::Filtered to $FILTERED_COUNT tags from $ORIGINAL_COUNT (pattern: $FILTER)"
+        fi
+
+        # Sort tags using semantic versioning if requested
+        if [ "$SORT" = "true" ]; then
+          # Separate semver and non-semver tags
+          SEMVER_TAGS=$(echo "$TAGS_ARRAY" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+' || echo "")
+          NON_SEMVER_TAGS=$(echo "$TAGS_ARRAY" | grep -vE '^[0-9]+\.[0-9]+\.[0-9]+' || echo "")
+
+          # Sort semver tags using version sort
+          if [ -n "$SEMVER_TAGS" ]; then
+            SEMVER_TAGS=$(echo "$SEMVER_TAGS" | sort -V)
+          fi
+
+          # Combine sorted semver tags with non-semver tags at the end
+          TAGS_ARRAY=$(printf "%s\n%s" "$SEMVER_TAGS" "$NON_SEMVER_TAGS" | grep -v '^$')
+          echo "::info::Tags sorted using semantic versioning"
+        fi
+
+        # Convert to JSON array
+        TAGS_JSON_ARRAY=$(echo "$TAGS_ARRAY" | jq -R . | jq -s .)
+
+        # Count tags
+        COUNT=$(echo "$TAGS_ARRAY" | grep -c . || echo "0")
+
+        # Convert to CSV
+        TAGS_CSV=$(echo "$TAGS_ARRAY" | paste -sd ',' - || echo "")
+
+        # Output results
+        {
+          echo "tags<<EOF"
+          echo "$TAGS_JSON_ARRAY"
+          echo "EOF"
+          echo "tags-csv=$TAGS_CSV"
+          echo "count=$COUNT"
+        } >> "$GITHUB_OUTPUT"
+
+        echo "::info::Found $COUNT tags"
+
+        # Show tags if count is small enough (<=10)
+        if [ "$COUNT" -le 10 ] && [ "$COUNT" -gt 0 ]; then
+          echo "::info::Tags: $(echo "$TAGS_ARRAY" | paste -sd ',' - | sed 's/,/, /g')"
+        fi
