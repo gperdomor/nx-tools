@@ -1,0 +1,140 @@
+name: 'Docker Builder'
+
+on:
+  schedule:
+    - cron: '0 0 * * 5'
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  fetch-tags:
+    if: github.repository == 'gperdomor/nx-tools'
+    runs-on: ubuntu-latest
+    outputs:
+      node-tags: ${{ steps.node-tags.outputs.tags }}
+      node-tags-csv: ${{ steps.node-tags.outputs.tags-csv }}
+      nx-docker-tags: ${{ steps.nx-docker-tags.outputs.tags }}
+      nx-docker-tags-csv: ${{ steps.nx-docker-tags.outputs.tags-csv }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/list-tags
+        id: node-tags
+        with:
+          image: 'node'
+          filter: '^(20|22|24)\.[0-9]+\.[0-9]+\-alpine$'
+          sort: true
+
+      - uses: ./.github/actions/list-tags
+        id: nx-docker-tags
+        with:
+          image: 'gperdomor/nx-docker'
+          filter: '^(20|22|24)\.[0-9]+\.[0-9]+\-alpine$'
+          sort: true
+
+  calculate-tag-difference:
+    if: github.repository == 'gperdomor/nx-tools'
+    runs-on: ubuntu-latest
+    needs: [fetch-tags]
+    outputs:
+      missing-tags: ${{ steps.difference.outputs.missing-tags }}
+      missing-tags-csv: ${{ steps.difference.outputs.missing-tags-csv }}
+      missing-count: ${{ steps.difference.outputs.missing-count }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ./.github/actions/calculate-tag-difference
+        id: difference
+        with:
+          source-tags: ${{ needs.fetch-tags.outputs.node-tags }}
+          target-tags: ${{ needs.fetch-tags.outputs.nx-docker-tags }}
+
+  build-docker:
+    if: ${{ github.repository == 'gperdomor/nx-tools' && needs.calculate-tag-difference.outputs.missing-count > 0}}
+    runs-on: ubuntu-latest
+    needs: calculate-tag-difference
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        NODE_VERSION: '${{ fromJson(needs.calculate-tag-difference.outputs.missing-tags) }}'
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Display build information
+        run: |
+          echo "Building Node.js version: ${{ matrix.NODE_VERSION }}"
+          echo "Push enabled: ${{ github.ref == 'refs/heads/main' }}"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+            network=host
+
+      - name: Extract metadata
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            gperdomor/nx-docker
+            ghcr.io/${{ github.repository_owner }}/nx-docker
+          flavor: |
+            latest=false
+          tags: |
+            type=semver,pattern={{version}},value=${{ matrix.NODE_VERSION }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ matrix.NODE_VERSION }}
+            type=semver,pattern={{major}},value=${{ matrix.NODE_VERSION }}
+            type=sha,prefix=${{ matrix.NODE_VERSION }}-
+          labels: |
+            org.opencontainers.image.authors=Gustavo Perdomo <gperdomor@gmail.com>
+            org.opencontainers.image.description=Docker builder with Node.js ${{ matrix.NODE_VERSION }} for @nx-tools/nx-container
+            org.opencontainers.image.vendor=Gustavo Perdomo
+            org.opencontainers.image.version=${{ matrix.NODE_VERSION }}
+
+      - name: Login to GitHub Container Registry
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Login to DockerHub
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v6
+        with:
+          context: ./images/docker
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.ref == 'refs/heads/main' }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          build-args: |
+            NODE_VERSION=${{ matrix.NODE_VERSION }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+      - name: Display all tags
+        run: |
+          echo "Generated tags:"
+          echo "${{ steps.metadata.outputs.tags }}"

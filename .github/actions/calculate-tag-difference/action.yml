@@ -1,0 +1,75 @@
+name: 'Calculate Tag Difference'
+description: 'Compare two sets of tags and identify missing tags'
+
+inputs:
+  source-tags:
+    description: 'JSON array of source tags'
+    required: true
+  target-tags:
+    description: 'JSON array of target tags'
+    required: true
+
+outputs:
+  missing-tags:
+    description: 'JSON array of tags in source but not in target'
+    value: ${{ steps.calculate.outputs.missing-tags }}
+  missing-tags-csv:
+    description: 'Comma-separated list of missing tags'
+    value: ${{ steps.calculate.outputs.missing-tags-csv }}
+  missing-count:
+    description: 'Number of missing tags'
+    value: ${{ steps.calculate.outputs.missing-count }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Calculate tag difference
+      id: calculate
+      shell: bash
+      run: |
+        set -e
+
+        # Parse JSON arrays
+        SOURCE_TAGS='${{ inputs.source-tags }}'
+        TARGET_TAGS='${{ inputs.target-tags }}'
+
+        echo "::info::Source tags: $SOURCE_TAGS"
+        echo "::info::Target tags: $TARGET_TAGS"
+
+        # Extract tags that exist in source but not in target
+        MISSING_TAGS=$(comm -23 <(echo "$SOURCE_TAGS" | jq -r '.[]' 2>/dev/null | sort) <(echo "$TARGET_TAGS" | jq -r '.[]' 2>/dev/null | sort)) || true
+
+        # Count missing tags
+        MISSING_COUNT=$(echo "$MISSING_TAGS" | grep -c . || echo "0")
+        if [ -z "$MISSING_TAGS" ]; then
+          MISSING_COUNT=0
+        fi
+
+        # Convert to JSON array
+        if [ -z "$MISSING_TAGS" ]; then
+          MISSING_TAGS_JSON="[]"
+        else
+          MISSING_TAGS_JSON=$(echo "$MISSING_TAGS" | jq -R . | jq -s .)
+        fi
+
+        # Convert to CSV
+        if [ -z "$MISSING_TAGS" ]; then
+          MISSING_TAGS_CSV=""
+        else
+          MISSING_TAGS_CSV=$(echo "$MISSING_TAGS" | paste -sd ',' -)
+        fi
+
+        # Output results
+        {
+          echo "missing-tags<<EOF"
+          echo "$MISSING_TAGS_JSON"
+          echo "EOF"
+          echo "missing-tags-csv=$MISSING_TAGS_CSV"
+          echo "missing-count=$MISSING_COUNT"
+        } >> "$GITHUB_OUTPUT"
+
+        echo "::info::Found $MISSING_COUNT missing tags"
+
+        if [ "$MISSING_COUNT" -gt 0 ]; then
+          echo "::info::Missing tags: $MISSING_TAGS_CSV"
+        fi
