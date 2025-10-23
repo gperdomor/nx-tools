@@ -1,3 +1,28 @@
+# 7.0.0 (2025-10-23)
+
+### 🚀 Features
+
+- introduce image builder workflows ([94cd055](https://github.com/gperdomor/nx-tools/commit/94cd055))
+- introduce image builder workflows ([d0c2905](https://github.com/gperdomor/nx-tools/commit/d0c2905))
+- prevent build images on forks ([5338b83](https://github.com/gperdomor/nx-tools/commit/5338b83))
+- **nx-container:** bump tmp from 0.2.4 to v0.2.5 ([3568e7a](https://github.com/gperdomor/nx-tools/commit/3568e7a))
+
+### 🩹 Fixes
+
+- **deps:** bump tmp from 0.2.4 to v0.2.5 ([749846e](https://github.com/gperdomor/nx-tools/commit/749846e))
+
+### 🏡 Chore
+
+- **deps:** bump @types/node from 22.17.0 to v22.18.8 ([5a90715](https://github.com/gperdomor/nx-tools/commit/5a90715))
+- **deps:** bump jsonc-eslint-parser from 2.4.0 to v2.4.1 ([c748680](https://github.com/gperdomor/nx-tools/commit/c748680))
+- **deps:** bump @eslint/compat from 1.3.1 to v1.4.0 ([5984b37](https://github.com/gperdomor/nx-tools/commit/5984b37))
+- **deps:** bump vite from 7.1.9 to v7.1.11 [security] ([925e4f4](https://github.com/gperdomor/nx-tools/commit/925e4f4))
+- **deps:** bump lefthook from 1.13.6 to v2 ([6e1bc1d](https://github.com/gperdomor/nx-tools/commit/6e1bc1d))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.3 (2025-10-14)
 
 ### 🚀 Features

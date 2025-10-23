@@ -7,15 +7,16 @@ on:
       - '*.*.*'
       - '*.*.*-*'
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   publish:
     # prevents this action from running on forks
     if: github.repository == 'gperdomor/nx-tools'
     name: Publish to npm
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for OIDC
-      contents: read
     timeout-minutes: 10
     steps:
       - name: Checkout
@@ -64,4 +65,5 @@ jobs:
         run: pnpm exec nx release publish --access=public --tag=${{ steps.npm-tag.outputs.tag }}
         shell: bash
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

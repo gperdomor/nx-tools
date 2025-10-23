@@ -1,3 +1,13 @@
+# 7.0.0 (2025-10-23)
+
+### 🚀 Features
+
+- **nx-container:** bump tmp from 0.2.4 to v0.2.5 ([3568e7a](https://github.com/gperdomor/nx-tools/commit/3568e7a))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.0-alpha.3 (2025-10-14)
 
 ### 🚀 Features
