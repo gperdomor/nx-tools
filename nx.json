@@ -72,7 +72,6 @@
   },
   "release": {
     "projects": ["packages/*"],
-    "releaseTagPattern": "{version}",
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build",
       "versionActionsOptions": {
@@ -92,6 +91,9 @@
       "workspaceChangelog": {
         "createRelease": "github"
       }
+    },
+    "releaseTag": {
+      "pattern": "{version}"
     }
   },
   "generators": {
