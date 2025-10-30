@@ -36,6 +36,15 @@ export class ContextProxyFactory {
       case 'gitlab':
         return Gitlab.context();
 
+      case 'hudson':
+        if (process.env.JENKINS || process.env.JENKINS_URL) {
+          logger.info(`Unsupported CI Provider "${provider}"... Using Jenkins as fallback`);
+          return Jenkins.context();
+        } else {
+          logger.info(`Unsupported CI Provider "${provider}"... Using Git context as fallback`);
+          return Git.context();
+        }
+
       case 'jenkins':
         return Jenkins.context();
 
