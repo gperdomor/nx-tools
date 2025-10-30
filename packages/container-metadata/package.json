@@ -37,7 +37,7 @@
     "semver": "^7.7.3"
   },
   "peerDependencies": {
-    "@nx/devkit": ">=18.0.0 <=22.0.0",
+    "@nx/devkit": ">=18.0.0 <23.0.0",
     "tslib": "^2.6.0"
   }
 }
