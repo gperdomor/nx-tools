@@ -1,3 +1,20 @@
+## 7.0.1 (2025-10-31)
+
+### 🩹 Fixes
+
+- **ci-context:** fix jenkins context resolution ([#1363](https://github.com/gperdomor/nx-tools/issues/1363))
+
+### 🏡 Chore
+
+- fix dependency range to actually support Nx version 22 ([738f6a1](https://github.com/gperdomor/nx-tools/commit/738f6a1))
+- **deps:** bump swc monorepo ([1be3994](https://github.com/gperdomor/nx-tools/commit/1be3994))
+- **deps:** bump @types/node from 22.18.8 to v22.18.12 ([364bd87](https://github.com/gperdomor/nx-tools/commit/364bd87))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+- René @jahusa02
+
 # 7.0.0 (2025-10-23)
 
 ### 🚀 Features

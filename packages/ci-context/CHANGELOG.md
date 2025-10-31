@@ -1,3 +1,13 @@
+## 7.0.1 (2025-10-31)
+
+### 🩹 Fixes
+
+- **ci-context:** fix jenkins context resolution ([#1363](https://github.com/gperdomor/nx-tools/issues/1363))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 # 7.0.0 (2025-10-23)
 
 This was a version bump only for ci-context to align it with other projects, there were no code changes.

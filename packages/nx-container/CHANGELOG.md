@@ -1,3 +1,13 @@
+## 7.0.1 (2025-10-31)
+
+### 🏡 Chore
+
+- fix dependency range to actually support Nx version 22 ([738f6a1](https://github.com/gperdomor/nx-tools/commit/738f6a1))
+
+### ❤️ Thank You
+
+- René @jahusa02
+
 # 7.0.0 (2025-10-23)
 
 ### 🚀 Features
