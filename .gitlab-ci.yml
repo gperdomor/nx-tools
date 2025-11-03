@@ -1,6 +1,6 @@
 ---
 include:
-  - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+  - template: Workflows/MergeRequest-Pipelines.gitlab-ci.yml
   - template: Jobs/Code-Quality.gitlab-ci.yml
 
 workflow:
@@ -21,6 +21,7 @@ code_quality:
 
 lint:commit-msg:
   before_script:
+    - npm install --global corepack@latest
     - corepack enable
     - corepack install
     - pnpm config set store-dir .pnpm-store
@@ -61,6 +62,7 @@ CI:
     paths:
       - .pnpm-store
   before_script:
+    - npm install --global corepack@latest
     - corepack enable
     - corepack install
     - pnpm config set store-dir .pnpm-store
@@ -80,5 +82,5 @@ CI:
     # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
     - pnpm exec nx affected --base=$NX_BASE --head=$NX_HEAD -t lint test build typecheck
     # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
-  after_script:
-    - pnpm exec nx fix-ci
+  # after_script:
+  #   - pnpm exec nx fix-ci
