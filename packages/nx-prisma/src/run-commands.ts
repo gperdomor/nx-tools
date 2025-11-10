@@ -12,16 +12,25 @@ export interface PrismaCommands<T extends PrismaBuilderOptions> {
   getArgs: (options: T, ctx: ExecutorContext) => string[];
 }
 
+const splitCommand = (value: string): string[] => value.trim().split(/\s+/).filter(Boolean);
+
 export const runCommand = async <T extends PrismaBuilderOptions>(
   options: T,
   ctx: ExecutorContext,
   { description, command, getArgs }: PrismaCommands<T>,
 ): Promise<{ success: true }> => {
-  const cmd = `${getPackageManagerCommand().exec} ${command}`;
-  const args = getArgs(options, ctx);
+  const packageManagerExec = splitCommand(getPackageManagerCommand().exec);
+  const prismaCommand = splitCommand(command);
+  const [bin, ...initialArgs] = packageManagerExec;
+
+  if (!bin) {
+    throw new Error('Unable to resolve the package manager command for Prisma.');
+  }
+
+  const args = [...initialArgs, ...prismaCommand, ...getArgs(options, ctx)];
 
   await logger.group(description, async () => {
-    const res = await exec(cmd, args, { throwOnError: false });
+    const res = await exec(bin, args, { throwOnError: false });
 
     if (res.stderr.length > 0 && res.exitCode != 0) {
       throw new Error(`${res.stderr.trim() ?? 'unknown error'}`);
