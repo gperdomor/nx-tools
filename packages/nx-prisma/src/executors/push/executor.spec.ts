@@ -23,7 +23,12 @@ describe('Push Executor', () => {
     const options: PushExecutorSchema = {};
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma db push', ['--schema=workspace-root/apps/foo/prisma/schema.prisma']),
+      expectCommandToHaveBeenCalled('npx', [
+        'prisma',
+        'db',
+        'push',
+        '--schema=workspace-root/apps/foo/prisma/schema.prisma',
+      ]),
     );
     expect(output.success).toBeTruthy();
   });
@@ -35,7 +40,7 @@ describe('Push Executor', () => {
         [option]: value,
       };
       const output = await executor(options, context as ExecutorContext);
-      expect(expectCommandToHaveBeenCalled('npx prisma db push', [`--${option}=${value}`]));
+      expect(expectCommandToHaveBeenCalled('npx', ['prisma', 'db', 'push', `--${option}=${value}`]));
       expect(output.success).toBeTruthy();
     },
   );
@@ -48,7 +53,10 @@ describe('Push Executor', () => {
       };
       const output = await executor(options, context as ExecutorContext);
       expect(
-        expectCommandToHaveBeenCalled('npx prisma db push', [
+        expectCommandToHaveBeenCalled('npx', [
+          'prisma',
+          'db',
+          'push',
           '--schema=workspace-root/apps/foo/prisma/schema.prisma',
           `--${flag}`,
         ]),
@@ -66,7 +74,10 @@ describe('Push Executor', () => {
     };
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma db push', [
+      expectCommandToHaveBeenCalled('npx', [
+        'prisma',
+        'db',
+        'push',
         '--schema=my-schema.schema',
         '--accept-data-loss',
         '--force-reset',

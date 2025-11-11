@@ -12,7 +12,7 @@ export interface PrismaCommands<T extends PrismaBuilderOptions> {
   getArgs: (options: T, ctx: ExecutorContext) => string[];
 }
 
-const splitCommand = (value: string): string[] => value.trim().split(/\s+/).filter(Boolean);
+export const splitCommand = (value: string): string[] => value.trim().split(/\s+/).filter(Boolean);
 
 export const runCommand = async <T extends PrismaBuilderOptions>(
   options: T,

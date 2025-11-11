@@ -47,7 +47,10 @@ describe('Resolve Executor', () => {
     };
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+      expectCommandToHaveBeenCalled('npx', [
+        'prisma',
+        'migrate',
+        'resolve',
         '--schema=workspace-root/apps/foo/prisma/schema.prisma',
         `--${option}=${value}`,
       ]),
@@ -62,7 +65,10 @@ describe('Resolve Executor', () => {
     };
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+      expectCommandToHaveBeenCalled('npx', [
+        'prisma',
+        'migrate',
+        'resolve',
         '--schema=custom.schema',
         '--applied=add_users_table',
       ]),
@@ -77,7 +83,10 @@ describe('Resolve Executor', () => {
     };
     const output = await executor(options, context as ExecutorContext);
     expect(
-      expectCommandToHaveBeenCalled('npx prisma migrate resolve', [
+      expectCommandToHaveBeenCalled('npx', [
+        'prisma',
+        'migrate',
+        'resolve',
         '--schema=custom.schema',
         '--rolled-back=add_users_table',
       ]),
