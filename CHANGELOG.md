@@ -1,3 +1,20 @@
+## 7.0.2-beta.0 (2025-11-11)
+
+### 🩹 Fixes
+
+- **nx-graphql-codegen:** updated execution with pnpm ([43e3ea71](https://github.com/gperdomor/nx-tools/commit/43e3ea71))
+- **nx-prisma:** execute prisma via package manager ([db3e90a3](https://github.com/gperdomor/nx-tools/commit/db3e90a3))
+- **nx-prisma:** updated tests cases ([7ebe972d](https://github.com/gperdomor/nx-tools/commit/7ebe972d))
+
+### 🏡 Chore
+
+- update renovate config file ([5f145ac3](https://github.com/gperdomor/nx-tools/commit/5f145ac3))
+
+### ❤️ Thank You
+
+- Gabe Bryk
+- Gustavo Perdomo
+
 ## 7.0.1 (2025-10-31)
 
 ### 🩹 Fixes

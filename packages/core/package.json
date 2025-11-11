@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/core",
-  "version": "7.0.1",
+  "version": "7.0.2-beta.0",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",

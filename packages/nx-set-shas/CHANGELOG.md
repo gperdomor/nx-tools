@@ -1,3 +1,7 @@
+## 7.0.2-beta.0 (2025-11-11)
+
+This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.
+
 ## 7.0.1 (2025-10-31)
 
 This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.

@@ -1,3 +1,13 @@
+## 7.0.2-beta.0 (2025-11-11)
+
+### 🩹 Fixes
+
+- **nx-graphql-codegen:** updated execution with pnpm ([43e3ea71](https://github.com/gperdomor/nx-tools/commit/43e3ea71))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.1 (2025-10-31)
 
 ### 🏡 Chore

@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "7.0.1",
+  "version": "7.0.2-beta.0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [

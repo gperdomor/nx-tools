@@ -1,3 +1,15 @@
+## 7.0.2-beta.0 (2025-11-11)
+
+### 🩹 Fixes
+
+- **nx-prisma:** updated tests cases ([7ebe972d](https://github.com/gperdomor/nx-tools/commit/7ebe972d))
+- **nx-prisma:** execute prisma via package manager ([db3e90a3](https://github.com/gperdomor/nx-tools/commit/db3e90a3))
+
+### ❤️ Thank You
+
+- Gabe Bryk
+- Gustavo Perdomo
+
 ## 7.0.1 (2025-10-31)
 
 ### 🏡 Chore
