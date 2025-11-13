@@ -21,8 +21,8 @@ importers:
         specifier: 4.5.4
         version: 4.5.4
       '@oclif/plugin-help':
-        specifier: 6.2.33
-        version: 6.2.33
+        specifier: 6.2.35
+        version: 6.2.35
       '@octokit/openapi-types':
         specifier: 22.2.0
         version: 22.2.0
@@ -446,8 +446,8 @@ importers:
         specifier: 4.5.4
         version: 4.5.4
       '@oclif/plugin-help':
-        specifier: 6.2.33
-        version: 6.2.33
+        specifier: 6.2.35
+        version: 6.2.35
       semver:
         specifier: 7.7.3
         version: 7.7.3
@@ -3045,10 +3045,6 @@ packages:
 
   '@oclif/core@4.8.0':
     resolution: {integrity: sha512-jteNUQKgJHLHFbbz806aGZqf+RJJ7t4gwF4MYa8fCwCxQ8/klJNWc0MvaJiBebk7Mc+J39mdlsB4XraaCKznFw==}
-    engines: {node: '>=18.0.0'}
-
-  '@oclif/plugin-help@6.2.33':
-    resolution: {integrity: sha512-9L07S61R0tuXrURdLcVtjF79Nbyv3qGplJ88DVskJBxShbROZl3hBG7W/CNltAK3cnMPlXV8K3kKh+C0N0p4xw==}
     engines: {node: '>=18.0.0'}
 
   '@oclif/plugin-help@6.2.35':
@@ -15976,10 +15972,6 @@ snapshots:
       widest-line: 3.1.0
       wordwrap: 1.0.0
       wrap-ansi: 7.0.0
-
-  '@oclif/plugin-help@6.2.33':
-    dependencies:
-      '@oclif/core': 4.5.4
 
   '@oclif/plugin-help@6.2.35':
     dependencies:
