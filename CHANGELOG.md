@@ -1,3 +1,17 @@
+## 7.0.2 (2025-11-17)
+
+### 🩹 Fixes
+
+- **deps:** bump @oclif/plugin-help from 6.2.33 to v6.2.35 ([da6f0237](https://github.com/gperdomor/nx-tools/commit/da6f0237))
+
+### 🏡 Chore
+
+- **deps:** bump oclif from 4.22.29 to v4.22.41 ([0f4662ff](https://github.com/gperdomor/nx-tools/commit/0f4662ff))
+- **deps:** bump lefthook from 2.0.0 to v2.0.2 ([43498108](https://github.com/gperdomor/nx-tools/commit/43498108))
+- **deps:** bump verdaccio from 6.2.0 to v6.2.1 ([3feb4806](https://github.com/gperdomor/nx-tools/commit/3feb4806))
+- **deps:** bump node from 22 to v24 ([c8309ddc](https://github.com/gperdomor/nx-tools/commit/c8309ddc))
+- **deps:** bump swc monorepo ([c85e3821](https://github.com/gperdomor/nx-tools/commit/c85e3821))
+
 ## 7.0.2-beta.0 (2025-11-11)
 
 ### 🩹 Fixes
