@@ -34,9 +34,9 @@ jobs:
       - run: pnpm dlx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
 
       # Cache node_modules
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@367970386b6680e836c920edcc9db747ca65d00a
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'mise.toml'
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
@@ -45,10 +45,7 @@ jobs:
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       - run: pnpm exec nx-cloud record -- nx format:check
-
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
       - run: pnpm exec nx affected -t lint test build typecheck
-
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: pnpm exec nx fix-ci
         if: always()

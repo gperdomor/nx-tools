@@ -43,6 +43,9 @@ Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 
+# Fix for issue when working on the repo in a dev container
+.pnpm-store
+
 test-output
 
 vite.config.*.timestamp*
