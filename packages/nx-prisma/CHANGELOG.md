@@ -1,3 +1,13 @@
+## 7.1.0 (2025-11-20)
+
+### 🚀 Features
+
+- **nx-prisma:** added initial support for prisma 7 ([76d0dd3b](https://github.com/gperdomor/nx-tools/commit/76d0dd3b))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.0.2 (2025-11-17)
 
 This was a version bump only for nx-prisma to align it with other projects, there were no code changes.
