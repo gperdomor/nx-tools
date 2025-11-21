@@ -235,8 +235,8 @@ importers:
         specifier: 22.1.0
         version: 22.1.0(@swc-node/register@1.11.1(@swc/core@1.15.1(@swc/helpers@0.5.17))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.1(@swc/helpers@0.5.17))
       oclif:
-        specifier: 4.22.41
-        version: 4.22.41(@types/node@24.10.1)
+        specifier: 4.22.44
+        version: 4.22.44(@types/node@24.10.1)
       postcss:
         specifier: 8.5.6
         version: 8.5.6
@@ -9380,8 +9380,8 @@ packages:
   obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
 
-  oclif@4.22.41:
-    resolution: {integrity: sha512-YGX9c5ADPHQTWgSIfOZ5c4AIkuHf5vPbhQ7sP4NTAkikD0trTeLQGOhodzX29ORQkYA7gNpdRhHNMysggiI1zw==}
+  oclif@4.22.44:
+    resolution: {integrity: sha512-/0xXjF/dt8qN8SuibVTVU/81gOy4nNprSXSFHVWvKm1Ms8EKsCA6C+4XRcRCCMaaE4t2GKjjRpEwqCQKFUtI/Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -23286,7 +23286,7 @@ snapshots:
 
   obuf@1.1.2: {}
 
-  oclif@4.22.41(@types/node@24.10.1):
+  oclif@4.22.44(@types/node@24.10.1):
     dependencies:
       '@aws-sdk/client-cloudfront': 3.928.0
       '@aws-sdk/client-s3': 3.928.0
