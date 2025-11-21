@@ -17,7 +17,7 @@
     "@oclif/core": "4.5.4",
     "@oclif/plugin-help": "6.2.36",
     "@octokit/openapi-types": "22.2.0",
-    "@renovatebot/pep440": "4.1.0",
+    "@renovatebot/pep440": "4.2.1",
     "@types/tmp": "0.2.6",
     "@vercel/analytics": "1.5.0",
     "@vercel/speed-insights": "1.2.0",
