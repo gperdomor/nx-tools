@@ -75,8 +75,8 @@ importers:
         specifier: 7.0.0
         version: 7.0.0(@types/react@19.1.9)(magicast@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typescript@5.9.3)
       properties-file:
-        specifier: 3.6.1
-        version: 3.6.1
+        specifier: 3.6.3
+        version: 3.6.3
       react:
         specifier: 19.1.1
         version: 19.1.1
@@ -10144,6 +10144,9 @@ packages:
 
   properties-file@3.6.1:
     resolution: {integrity: sha512-9NUyJcxSqdWcJGRpPq6rT7exQbSQMPs0sK6KTvCJsLrTQRwq+hmt/wIB32ugNZmvEuSPyFO+y4nLK3vX34i5Wg==}
+
+  properties-file@3.6.3:
+    resolution: {integrity: sha512-T0BLq5U7vMtfoHMAyirR386h/PkS9rva/EQIvy3yFmkYIjc485tgxN7eHgbtJx48O28A94MUYuRGF/iyC/L54A==}
 
   property-information@7.1.0:
     resolution: {integrity: sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ==}
@@ -24096,6 +24099,8 @@ snapshots:
       signal-exit: 3.0.7
 
   properties-file@3.6.1: {}
+
+  properties-file@3.6.3: {}
 
   property-information@7.1.0: {}
 
