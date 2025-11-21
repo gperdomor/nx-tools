@@ -62,7 +62,7 @@
     "@prisma/client": "7.0.0",
     "@swc-node/register": "1.11.1",
     "@swc/cli": "0.7.9",
-    "@swc/core": "1.15.1",
+    "@swc/core": "1.15.2",
     "@swc/helpers": "0.5.17",
     "@tailwindcss/postcss": "4.1.14",
     "@types/mdx": "2.0.13",
