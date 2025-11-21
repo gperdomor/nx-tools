@@ -37,7 +37,7 @@
     "react": "19.1.1",
     "react-dom": "19.1.1",
     "semver": "7.7.3",
-    "std-env": "3.9.0",
+    "std-env": "3.10.0",
     "tinyexec": "1.0.1",
     "tinyrainbow": "3.0.3",
     "tmp": "0.2.5"
