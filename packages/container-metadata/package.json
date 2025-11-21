@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/container-metadata",
-  "version": "7.1.0",
+  "version": "7.1.1-0",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -35,6 +35,9 @@
     "handlebars": "^4.7.8",
     "moment-timezone": "^0.5.48",
     "semver": "^7.7.3"
+  },
+  "devDependencies": {
+    "@nx/devkit": "22.1.0"
   },
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <23.0.0",

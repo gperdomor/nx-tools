@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-prisma",
-  "version": "7.1.0",
+  "version": "7.1.1-0",
   "type": "commonjs",
   "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
@@ -26,6 +26,9 @@
     "prisma": "^5.0.0 || ^6.0.0 || ^7.0.0",
     "ts-node": "^10.0.0",
     "tsx": "^4.0.0"
+  },
+  "devDependencies": {
+    "@nx/devkit": "22.1.0"
   },
   "peerDependenciesMeta": {
     "tsx": {

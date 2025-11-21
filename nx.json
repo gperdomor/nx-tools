@@ -72,7 +72,9 @@
   },
   "release": {
     "projects": ["packages/*"],
-    "releaseTagPattern": "{version}",
+    "releaseTag": {
+      "pattern": "{version}"
+    },
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build",
       "versionActionsOptions": {

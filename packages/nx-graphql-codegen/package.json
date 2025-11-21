@@ -1,6 +1,6 @@
 {
   "name": "@nx-tools/nx-graphql-codegen",
-  "version": "7.1.0",
+  "version": "7.1.1-0",
   "type": "commonjs",
   "author": "Rene Bonilla <rbonillajr@hotmail.com>",
   "repository": {
@@ -22,6 +22,9 @@
     "@nx/devkit": ">=18.0.0 <23.0.0",
     "tslib": "^2.6.0",
     "ts-node": "^10.0.0"
+  },
+  "devDependencies": {
+    "@nx/devkit": "22.1.0"
   },
   "engines": {
     "node": ">=20.19.0 <21 || >=22.12.0 <23 || >=24.0.0"

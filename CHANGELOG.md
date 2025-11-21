@@ -1,3 +1,18 @@
+## 7.1.1-0 (2025-11-21)
+
+### 🚀 Features
+
+- update config for ai agents ([97be03eb](https://github.com/gperdomor/nx-tools/commit/97be03eb))
+
+### 🏡 Chore
+
+- **deps:** bump lefthook from 2.0.2 to v2.0.3 ([f3fde670](https://github.com/gperdomor/nx-tools/commit/f3fde670))
+- **repo:** refactor dev container setup to work with mise ([1f860f0a](https://github.com/gperdomor/nx-tools/commit/1f860f0a))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.1.0 (2025-11-20)
 
 ### 🚀 Features

@@ -1,3 +1,7 @@
+## 7.1.1-0 (2025-11-21)
+
+This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.
+
 ## 7.1.0 (2025-11-20)
 
 This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.
