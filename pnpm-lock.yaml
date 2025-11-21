@@ -87,8 +87,8 @@ importers:
         specifier: 7.7.3
         version: 7.7.3
       std-env:
-        specifier: 3.9.0
-        version: 3.9.0
+        specifier: 3.10.0
+        version: 3.10.0
       tinyexec:
         specifier: 1.0.1
         version: 1.0.1
@@ -298,8 +298,8 @@ importers:
         specifier: ^3.6.1
         version: 3.6.1
       std-env:
-        specifier: 3.9.0
-        version: 3.9.0
+        specifier: 3.10.0
+        version: 3.10.0
       tslib:
         specifier: ^2.6.0
         version: 2.8.1
@@ -344,8 +344,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       std-env:
-        specifier: 3.9.0
-        version: 3.9.0
+        specifier: 3.10.0
+        version: 3.10.0
       tinyexec:
         specifier: 1.0.1
         version: 1.0.1
@@ -10970,6 +10970,9 @@ packages:
     resolution: {integrity: sha512-RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==}
     engines: {node: '>= 0.8'}
 
+  std-env@3.10.0:
+    resolution: {integrity: sha512-5GS12FdOZNliM5mAOxFRg7Ir0pWz8MdpYm6AY6VPkGpbA7ZzmbzNcBJQ0GPvvyWgcY7QAhCgf9Uy89I03faLkg==}
+
   std-env@3.9.0:
     resolution: {integrity: sha512-UGvjygr6F6tpH7o2qyqR6QYpwraIjKSdtzyBdyytFOHmPZY917kwdwLG0RbOjWOnKmnm3PeHjaoLLMie7kPLQw==}
 
@@ -17980,7 +17983,7 @@ snapshots:
       istanbul-reports: 3.1.7
       magic-string: 0.30.17
       magicast: 0.3.5
-      std-env: 3.9.0
+      std-env: 3.10.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@24.10.1)(@vitest/ui@3.2.4)(jiti@2.6.1)(jsdom@22.1.0)(less@4.4.0)(lightningcss@1.30.1)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.0)
@@ -25076,6 +25079,8 @@ snapshots:
 
   statuses@2.0.1: {}
 
+  std-env@3.10.0: {}
+
   std-env@3.9.0: {}
 
   steno@0.4.4:
@@ -25977,7 +25982,7 @@ snapshots:
       magic-string: 0.30.17
       pathe: 2.0.3
       picomatch: 4.0.2
-      std-env: 3.9.0
+      std-env: 3.10.0
       tinybench: 2.9.0
       tinyexec: 0.3.2
       tinyglobby: 0.2.14
