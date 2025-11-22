@@ -1,3 +1,17 @@
+## 7.2.0 (2025-11-22)
+
+### 🩹 Fixes
+
+- **deps:** bump @oclif/plugin-help from 6.2.35 to v6.2.36 ([19c84512](https://github.com/gperdomor/nx-tools/commit/19c84512))
+
+### 🏡 Chore
+
+- **release:** publish 7.1.1-0 ([a6bc84a5](https://github.com/gperdomor/nx-tools/commit/a6bc84a5))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.1.1-0 (2025-11-21)
 
 This was a version bump only for nx-set-shas to align it with other projects, there were no code changes.

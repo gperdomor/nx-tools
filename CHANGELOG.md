@@ -1,3 +1,35 @@
+## 7.2.0 (2025-11-22)
+
+### 🚀 Features
+
+- update config for ai agents ([97be03eb](https://github.com/gperdomor/nx-tools/commit/97be03eb))
+
+### 🩹 Fixes
+
+- **deps:** bump @oclif/plugin-help from 6.2.35 to v6.2.36 ([19c84512](https://github.com/gperdomor/nx-tools/commit/19c84512))
+- **deps:** bump properties-file from 3.6.1 to v3.6.3 ([9a8ea568](https://github.com/gperdomor/nx-tools/commit/9a8ea568))
+- **deps:** bump std-env from 3.9.0 to v3.10.0 ([43ff89f5](https://github.com/gperdomor/nx-tools/commit/43ff89f5))
+
+### 🏡 Chore
+
+- **deps:** bump lefthook from 2.0.2 to v2.0.3 ([f3fde670](https://github.com/gperdomor/nx-tools/commit/f3fde670))
+- **deps:** bump lefthook from 2.0.3 to v2.0.4 ([5f96fc97](https://github.com/gperdomor/nx-tools/commit/5f96fc97))
+- **deps:** bump @types/node from 24.10.0 to v24.10.1 ([90b16443](https://github.com/gperdomor/nx-tools/commit/90b16443))
+- **deps:** bump oclif from 4.22.41 to v4.22.44 ([22fa84ed](https://github.com/gperdomor/nx-tools/commit/22fa84ed))
+- **deps:** bump quay.io/containers/podman docker tag to v5.7.0 ([ea1ddc9a](https://github.com/gperdomor/nx-tools/commit/ea1ddc9a))
+- **deps:** bump typescript-eslint from 8.46.0 to v8.46.4 ([5ca1a6f5](https://github.com/gperdomor/nx-tools/commit/5ca1a6f5))
+- **deps:** bump memfs from 4.49.0 to v4.51.0 ([b4525b23](https://github.com/gperdomor/nx-tools/commit/b4525b23))
+- **deps:** bump pnpm from 10.18.2+sha512.9fb969fa749b3ade6035e0f109f0b8a60b5d08a1a87fdf72e337da90dcc93336e2280ca4e44f2358a649b83c17959e9993e777c2080879f3801e6f0d999ad3dd to v10.22.0 ([7a0177e2](https://github.com/gperdomor/nx-tools/commit/7a0177e2))
+- **deps:** bump vite from 7.1.11 to v7.2.2 ([e11eb198](https://github.com/gperdomor/nx-tools/commit/e11eb198))
+- **deps:** bump eslint monorepo from 9.37.0 to v9.39.1 ([a799a63f](https://github.com/gperdomor/nx-tools/commit/a799a63f))
+- **deps:** bump @eslint/compat from 1.4.0 to v1.4.1 ([b99131eb](https://github.com/gperdomor/nx-tools/commit/b99131eb))
+- **release:** publish 7.1.1-0 ([a6bc84a5](https://github.com/gperdomor/nx-tools/commit/a6bc84a5))
+- **repo:** refactor dev container setup to work with mise ([1f860f0a](https://github.com/gperdomor/nx-tools/commit/1f860f0a))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.1.1-0 (2025-11-21)
 
 ### 🚀 Features
