@@ -31,7 +31,7 @@
     "lucide-react": "0.545.0",
     "moment": "2.30.1",
     "moment-timezone": "0.5.48",
-    "next": "15.4.7",
+    "next": "15.4.8",
     "prisma": "7.0.0",
     "properties-file": "3.6.3",
     "react": "19.1.1",
