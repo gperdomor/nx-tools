@@ -30,11 +30,10 @@ jobs:
       # This enables task distribution via Nx Cloud
       # Run this command as early as possible, before dependencies are installed
       # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      # Uncomment this line to enable task distribution
-      - run: pnpm dlx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="build"
+      - run: pnpm dlx nx start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="lint,test,build,typecheck,e2e-ci"
 
       # Cache node_modules
-      - uses: actions/setup-node@367970386b6680e836c920edcc9db747ca65d00a
+      - uses: actions/setup-node@eabb01bbcbd7992e142278d67792a0747bb7d4bf
         with:
           node-version-file: 'mise.toml'
           cache: 'pnpm'
@@ -44,8 +43,8 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      - run: pnpm exec nx-cloud record -- nx format:check
-      - run: pnpm exec nx affected -t lint test build typecheck
+      - run: pnpm exec nx-cloud record -- pnpm exec nx format:check
+      - run: pnpm exec nx affected -t lint test build typecheck e2e-ci
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
       - run: pnpm exec nx fix-ci
         if: always()
