@@ -36,7 +36,7 @@
     "properties-file": "3.6.4",
     "react": "19.1.1",
     "react-dom": "19.1.1",
-    "semver": "7.7.3",
+    "semver": "7.7.4",
     "std-env": "3.10.0",
     "tinyexec": "1.0.2",
     "tinyrainbow": "3.0.3",

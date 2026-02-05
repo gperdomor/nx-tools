@@ -44,7 +44,7 @@
     "@nx-tools/core": "workspace:*",
     "@oclif/core": "4.8.0",
     "@oclif/plugin-help": "6.2.37",
-    "semver": "7.7.3"
+    "semver": "7.7.4"
   },
   "peerDependencies": {
     "tslib": "^2.6.0"
