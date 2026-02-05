@@ -44,7 +44,7 @@ Thumbs.db
 .github/instructions/nx.instructions.md
 
 # Fix for issue when working on the repo in a dev container
-.pnpm-store
+/.pnpm-store
 
 test-output
 

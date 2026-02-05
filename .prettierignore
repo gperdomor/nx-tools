@@ -3,7 +3,7 @@
 /coverage
 /.nx/cache
 /.nx/workspace-data
-.pnpm-store
+/.pnpm-store
 pnpm-lock.yaml
 
 /tmp
