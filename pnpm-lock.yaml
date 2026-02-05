@@ -27,8 +27,8 @@ importers:
         specifier: 22.2.0
         version: 22.2.0
       '@renovatebot/pep440':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.2.1
+        version: 4.2.1
       '@types/tmp':
         specifier: 0.2.6
         version: 0.2.6
@@ -313,8 +313,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@renovatebot/pep440':
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.2.1
+        version: 4.2.1
       csv-parse:
         specifier: ^5.6.0
         version: 5.6.0
@@ -3738,9 +3738,9 @@ packages:
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
 
-  '@renovatebot/pep440@4.1.0':
-    resolution: {integrity: sha512-mo2RxnOSp78Njt1HmgMwjl6FapP4OyIS8HypJlymCvN7AIV2Xf5PmZfl/E3O1WWZ6IjKrfsEAaPWFMi8tnkq3g==}
-    engines: {node: ^20.9.0 || ^22.11.0, pnpm: ^9.0.0}
+  '@renovatebot/pep440@4.2.1':
+    resolution: {integrity: sha512-2FK1hF93Fuf1laSdfiEmJvSJPVIDHEUTz68D3Fi9s0IZrrpaEcj6pTFBTbYvsgC5du4ogrtf5re7yMMvrKNgkw==}
+    engines: {node: ^20.9.0 || ^22.11.0 || ^24, pnpm: ^10.0.0}
 
   '@repeaterjs/repeater@3.0.6':
     resolution: {integrity: sha512-Javneu5lsuhwNCryN+pXH93VPQ8g0dBX7wItHFgYiwQmzE1sVdg5tWHiOgHywzL2W21XQopa7IwIEnNbmeUJYA==}
@@ -16523,7 +16523,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.1': {}
 
-  '@renovatebot/pep440@4.1.0': {}
+  '@renovatebot/pep440@4.2.1': {}
 
   '@repeaterjs/repeater@3.0.6': {}
 
