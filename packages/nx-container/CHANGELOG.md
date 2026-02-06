@@ -1,3 +1,14 @@
+## 7.2.1 (2026-02-06)
+
+### 🏡 Chore
+
+- **repo:** reoganize dependencies ([0b9f5029](https://github.com/gperdomor/nx-tools/commit/0b9f5029))
+- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/nx-tools/commit/09ee9200))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.2.0 (2025-11-22)
 
 ### 🏡 Chore

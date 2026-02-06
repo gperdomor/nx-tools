@@ -1,3 +1,13 @@
+## 7.2.1 (2026-02-06)
+
+### 🏡 Chore
+
+- **repo:** reoganize dependencies ([0b9f5029](https://github.com/gperdomor/nx-tools/commit/0b9f5029))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.2.0 (2025-11-22)
 
 ### 🩹 Fixes

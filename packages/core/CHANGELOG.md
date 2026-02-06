@@ -1,3 +1,9 @@
+## 7.2.1 (2026-02-06)
+
+### 🩹 Fixes
+
+- **deps:** bump tinyexec from 1.0.1 to v1.0.2 ([65a64f64](https://github.com/gperdomor/nx-tools/commit/65a64f64))
+
 ## 7.2.0 (2025-11-22)
 
 ### 🩹 Fixes

@@ -1,3 +1,40 @@
+## 7.2.1 (2026-02-06)
+
+### 🩹 Fixes
+
+- **deps:** bump tinyexec from 1.0.1 to v1.0.2 ([65a64f64](https://github.com/gperdomor/nx-tools/commit/65a64f64))
+- **deps:** bump @oclif/plugin-help from 6.2.36 to v6.2.37 ([e41b5fcb](https://github.com/gperdomor/nx-tools/commit/e41b5fcb))
+- **deps:** bump properties-file from 3.6.3 to v3.6.4 ([e68007ee](https://github.com/gperdomor/nx-tools/commit/e68007ee))
+- **deps:** bump @renovatebot/pep440 from 4.1.0 to v4.2.1 ([278baf70](https://github.com/gperdomor/nx-tools/commit/278baf70))
+- **deps:** bump lucide-react from 0.545.0 to v0.563.0 ([93052a28](https://github.com/gperdomor/nx-tools/commit/93052a28))
+- **deps:** bump @vercel/speed-insights from 1.2.0 to v1.3.1 ([a2a138b9](https://github.com/gperdomor/nx-tools/commit/a2a138b9))
+- **deps:** bump @vercel/analytics from 1.5.0 to v1.6.1 ([6103158f](https://github.com/gperdomor/nx-tools/commit/6103158f))
+- **deps:** bump @oclif/core from 4.5.4 to v4.8.0 ([543df099](https://github.com/gperdomor/nx-tools/commit/543df099))
+- **deps:** bump semver from 7.7.3 to v7.7.4 ([71b02816](https://github.com/gperdomor/nx-tools/commit/71b02816))
+- **deps:** bump prisma monorepo from 7.0.0 to v7.3.0 ([5adfdaed](https://github.com/gperdomor/nx-tools/commit/5adfdaed))
+
+### 🏡 Chore
+
+- **deps:** bump commitlint monorepo from 20.1.0 to v20.3.1 ([cb7a3caf](https://github.com/gperdomor/nx-tools/commit/cb7a3caf))
+- **deps:** bump nextjs monorepo from 15.5.4 to v15.5.11 ([4c795794](https://github.com/gperdomor/nx-tools/commit/4c795794))
+- **deps:** bump quay.io/containers/podman docker tag to v5.7.1 ([bc47c573](https://github.com/gperdomor/nx-tools/commit/bc47c573))
+- **deps:** bump tailwindcss monorepo from 4.1.14 to v4.1.18 ([e2c8d4a8](https://github.com/gperdomor/nx-tools/commit/e2c8d4a8))
+- **deps:** bump oclif from 4.22.44 to v4.22.70 ([4d6ab88e](https://github.com/gperdomor/nx-tools/commit/4d6ab88e))
+- **deps:** bump pnpm from 10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c to v10.28.2 ([fbbb3148](https://github.com/gperdomor/nx-tools/commit/fbbb3148))
+- **deps:** bump tsx from 4.20.6 to v4.21.0 ([110f84e4](https://github.com/gperdomor/nx-tools/commit/110f84e4))
+- **deps:** bump vite from 7.2.2 to v7.3.1 ([dbd015d1](https://github.com/gperdomor/nx-tools/commit/dbd015d1))
+- **deps:** bump lefthook from 2.0.4 to v2.0.16 ([e75d576d](https://github.com/gperdomor/nx-tools/commit/e75d576d))
+- **deps:** bump verdaccio from 6.2.1 to v6.2.4 ([64bea939](https://github.com/gperdomor/nx-tools/commit/64bea939))
+- **deps:** bump nextjs monorepo from 15.5.11 to v15.5.12 ([830afe7a](https://github.com/gperdomor/nx-tools/commit/830afe7a))
+- **deps:** bump commitlint monorepo ([f95ecfb9](https://github.com/gperdomor/nx-tools/commit/f95ecfb9))
+- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/nx-tools/commit/09ee9200))
+- **deps:** bump swc monorepo ([838bcce7](https://github.com/gperdomor/nx-tools/commit/838bcce7))
+- **repo:** reoganize dependencies ([0b9f5029](https://github.com/gperdomor/nx-tools/commit/0b9f5029))
+
+### ❤️ Thank You
+
+- Gustavo Perdomo
+
 ## 7.2.0 (2025-11-22)
 
 ### 🚀 Features

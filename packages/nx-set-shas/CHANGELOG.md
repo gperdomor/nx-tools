@@ -1,3 +1,15 @@
+## 7.2.1 (2026-02-06)
+
+### 🩹 Fixes
+
+- **deps:** bump semver from 7.7.3 to v7.7.4 ([71b02816](https://github.com/gperdomor/nx-tools/commit/71b02816))
+- **deps:** bump @oclif/core from 4.5.4 to v4.8.0 ([543df099](https://github.com/gperdomor/nx-tools/commit/543df099))
+- **deps:** bump @oclif/plugin-help from 6.2.36 to v6.2.37 ([e41b5fcb](https://github.com/gperdomor/nx-tools/commit/e41b5fcb))
+
+### 🏡 Chore
+
+- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/nx-tools/commit/09ee9200))
+
 ## 7.2.0 (2025-11-22)
 
 ### 🩹 Fixes

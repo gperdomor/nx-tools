@@ -1,3 +1,13 @@
+## 7.2.1 (2026-02-06)
+
+### 🩹 Fixes
+
+- **deps:** bump @renovatebot/pep440 from 4.1.0 to v4.2.1 ([278baf70](https://github.com/gperdomor/nx-tools/commit/278baf70))
+
+### 🏡 Chore
+
+- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/nx-tools/commit/09ee9200))
+
 ## 7.2.0 (2025-11-22)
 
 ### 🏡 Chore
