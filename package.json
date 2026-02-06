@@ -22,7 +22,7 @@
     "lucide-react": "0.563.0",
     "moment": "2.30.1",
     "next": "15.4.7",
-    "prisma": "7.0.0",
+    "prisma": "7.3.0",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
@@ -43,7 +43,7 @@
     "@nx/plugin": "22.1.0",
     "@nx/vite": "22.1.0",
     "@nx/web": "22.1.0",
-    "@prisma/client": "7.0.0",
+    "@prisma/client": "7.3.0",
     "@swc-node/register": "1.11.1",
     "@swc/cli": "0.7.9",
     "@swc/core": "1.15.1",
