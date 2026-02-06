@@ -43,7 +43,7 @@
     "@actions/github": "^6.0.1",
     "@nx-tools/core": "workspace:*",
     "@octokit/openapi-types": "^22.0.0",
-    "properties-file": "^3.6.1",
+    "properties-file": "^3.6.4",
     "std-env": "3.10.0"
   },
   "peerDependencies": {

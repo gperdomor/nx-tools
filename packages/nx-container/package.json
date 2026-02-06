@@ -25,14 +25,15 @@
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <23.0.0",
     "@nx/js": ">=18.0.0 <23.0.0",
-    "nx": ">=18.0.0 <23.0.0",
     "dotenv": ">=16.0.0",
+    "nx": ">=18.0.0 <23.0.0",
     "tslib": "^2.6.0"
   },
   "devDependencies": {
     "@nx-tools/ci-context": "workspace:*",
     "@nx/devkit": "22.1.0",
     "@nx/js": "22.1.0",
+    "@types/tmp": "0.2.6",
     "nx": "22.1.0"
   },
   "engines": {
