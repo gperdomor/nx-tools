@@ -39,6 +39,6 @@
     "tslib": "^2.6.0"
   },
   "devDependencies": {
-    "@nx/devkit": "22.1.0"
+    "@nx/devkit": "22.4.3"
   }
 }

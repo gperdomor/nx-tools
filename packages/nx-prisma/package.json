@@ -28,7 +28,7 @@
     "tsx": "^4.0.0"
   },
   "devDependencies": {
-    "@nx/devkit": "22.1.0"
+    "@nx/devkit": "22.4.3"
   },
   "peerDependenciesMeta": {
     "tsx": {
