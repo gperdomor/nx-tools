@@ -20,4 +20,7 @@ export default [
       parser: await import('jsonc-eslint-parser'),
     },
   },
+  {
+    ignores: ['**/out-tsc'],
+  },
 ];

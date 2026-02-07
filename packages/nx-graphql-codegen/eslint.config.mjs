@@ -8,14 +8,20 @@ export default [
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredFiles: ['{projectRoot}/eslint.config.{js,cjs,mjs}', '{projectRoot}/vite.config.{js,ts,mjs,mts}'],
-          ignoredDependencies: ['@graphql-codegen/cli', 'ts-node'],
+          ignoredFiles: [
+            '{projectRoot}/eslint.config.{js,cjs,mjs,ts,cts,mts}',
+            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
+          ],
+          ignoredDependencies: ['@graphql-codegen/cli', 'ts-node', 'vitest'],
         },
       ],
     },
     languageOptions: {
       parser: await import('jsonc-eslint-parser'),
     },
+  },
+  {
+    ignores: ['**/out-tsc'],
   },
   {
     files: ['**/package.json', '**/executors.json', '**/generators.json'],

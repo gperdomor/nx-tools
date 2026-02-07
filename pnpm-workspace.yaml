@@ -2,9 +2,6 @@ packages:
   - packages/*
   - apps/*
 
-autoInstallPeers: true
-strictPeerDependencies: false
-
 onlyBuiltDependencies:
   - '@swc/core'
   - lefthook

@@ -46,16 +46,12 @@ Thumbs.db
 # Fix for issue when working on the repo in a dev container
 /.pnpm-store
 
-test-output
-
-vite.config.*.timestamp*
 vitest.config.*.timestamp*
+vite.config.*.timestamp*
 
 # Next.js
 .next
 out
 
 # Fumadocs
-.contentlayer
-.content-collections
 .source
