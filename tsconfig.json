@@ -7,6 +7,9 @@
       "path": "./packages/core"
     },
     {
+      "path": "./packages/nx-set-shas"
+    },
+    {
       "path": "./packages/nx-container"
     },
     {
@@ -20,9 +23,6 @@
     },
     {
       "path": "./packages/container-metadata"
-    },
-    {
-      "path": "./packages/nx-set-shas"
     },
     {
       "path": "./apps/website"

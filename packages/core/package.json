@@ -1,6 +1,7 @@
 {
   "name": "@nx-tools/core",
   "version": "7.2.1",
+  "type": "module",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -39,6 +40,6 @@
     "tslib": "^2.6.0"
   },
   "devDependencies": {
-    "@nx/devkit": "22.1.0"
+    "@nx/devkit": "22.4.5"
   }
 }
