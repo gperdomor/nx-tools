@@ -1,6 +1,7 @@
 {
   "name": "@nx-tools/core",
   "version": "7.2.1",
+  "type": "module",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
