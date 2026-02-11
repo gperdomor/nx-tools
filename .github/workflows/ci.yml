@@ -46,5 +46,5 @@ jobs:
       - run: pnpm exec nx-cloud record -- pnpm exec nx format:check
       - run: pnpm exec nx affected -t lint test build typecheck e2e-ci
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/ci/features/self-healing-ci
-      - run: pnpm exec nx fix-ci
+      - run: pnpm dlx nx fix-ci
         if: always()

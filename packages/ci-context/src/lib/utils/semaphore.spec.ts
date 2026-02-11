@@ -77,7 +77,7 @@ describe('Semaphore Context', () => {
         description: '',
         html_url: 'https://semaphore.com/gperdomor/oss',
         license: null,
-        name: 'nx-tools',
+        name: 'oss',
       });
     });
   });
