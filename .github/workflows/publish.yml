@@ -14,7 +14,7 @@ permissions:
 jobs:
   publish:
     # prevents this action from running on forks
-    if: github.repository == 'gperdomor/nx-tools'
+    if: github.repository == 'gperdomor/oss'
     name: Publish to npm
     runs-on: ubuntu-latest
     timeout-minutes: 10
