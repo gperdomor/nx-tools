@@ -8,10 +8,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gperdomor/nx-tools",
+    "url": "https://github.com/gperdomor/oss",
     "directory": "packages/nx-prisma"
   },
-  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "bugs": "https://github.com/gperdomor/oss/issues",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

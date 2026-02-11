@@ -2,23 +2,23 @@
 
 ### 🩹 Fixes
 
-- **deps:** bump semver from 7.7.3 to v7.7.4 ([71b02816](https://github.com/gperdomor/nx-tools/commit/71b02816))
-- **deps:** bump @oclif/core from 4.5.4 to v4.8.0 ([543df099](https://github.com/gperdomor/nx-tools/commit/543df099))
-- **deps:** bump @oclif/plugin-help from 6.2.36 to v6.2.37 ([e41b5fcb](https://github.com/gperdomor/nx-tools/commit/e41b5fcb))
+- **deps:** bump semver from 7.7.3 to v7.7.4 ([71b02816](https://github.com/gperdomor/oss/commit/71b02816))
+- **deps:** bump @oclif/core from 4.5.4 to v4.8.0 ([543df099](https://github.com/gperdomor/oss/commit/543df099))
+- **deps:** bump @oclif/plugin-help from 6.2.36 to v6.2.37 ([e41b5fcb](https://github.com/gperdomor/oss/commit/e41b5fcb))
 
 ### 🏡 Chore
 
-- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/nx-tools/commit/09ee9200))
+- **deps:** bump memfs from 4.51.0 to v4.56.10 ([09ee9200](https://github.com/gperdomor/oss/commit/09ee9200))
 
 ## 7.2.0 (2025-11-22)
 
 ### 🩹 Fixes
 
-- **deps:** bump @oclif/plugin-help from 6.2.35 to v6.2.36 ([19c84512](https://github.com/gperdomor/nx-tools/commit/19c84512))
+- **deps:** bump @oclif/plugin-help from 6.2.35 to v6.2.36 ([19c84512](https://github.com/gperdomor/oss/commit/19c84512))
 
 ### 🏡 Chore
 
-- **release:** publish 7.1.1-0 ([a6bc84a5](https://github.com/gperdomor/nx-tools/commit/a6bc84a5))
+- **release:** publish 7.1.1-0 ([a6bc84a5](https://github.com/gperdomor/oss/commit/a6bc84a5))
 
 ### ❤️ Thank You
 
@@ -36,7 +36,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🩹 Fixes
 
-- **deps:** bump @oclif/plugin-help from 6.2.33 to v6.2.35 ([da6f0237](https://github.com/gperdomor/nx-tools/commit/da6f0237))
+- **deps:** bump @oclif/plugin-help from 6.2.33 to v6.2.35 ([da6f0237](https://github.com/gperdomor/oss/commit/da6f0237))
 
 ## 7.0.2-beta.0 (2025-11-11)
 
@@ -54,15 +54,15 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🩹 Fixes
 
-- **deps:** bump semver from 7.7.2 to v7.7.3 ([753bea8](https://github.com/gperdomor/nx-tools/commit/753bea8))
-- **deps:** bump @oclif/core from 4.5.3 to v4.5.4 ([82dcab4](https://github.com/gperdomor/nx-tools/commit/82dcab4))
-- **deps:** bump @oclif/plugin-help from 6.2.32 to v6.2.33 ([fe8870a](https://github.com/gperdomor/nx-tools/commit/fe8870a))
-- **deps:** bump @oclif/core from 4.5.2 to v4.5.3 ([#1330](https://github.com/gperdomor/nx-tools/pull/1330))
+- **deps:** bump semver from 7.7.2 to v7.7.3 ([753bea8](https://github.com/gperdomor/oss/commit/753bea8))
+- **deps:** bump @oclif/core from 4.5.3 to v4.5.4 ([82dcab4](https://github.com/gperdomor/oss/commit/82dcab4))
+- **deps:** bump @oclif/plugin-help from 6.2.32 to v6.2.33 ([fe8870a](https://github.com/gperdomor/oss/commit/fe8870a))
+- **deps:** bump @oclif/core from 4.5.2 to v4.5.3 ([#1330](https://github.com/gperdomor/oss/pull/1330))
 
 ### 🏡 Chore
 
-- added node 24 support ([7a348f9](https://github.com/gperdomor/nx-tools/commit/7a348f9))
-- fix customConditions ([5082c66](https://github.com/gperdomor/nx-tools/commit/5082c66))
+- added node 24 support ([7a348f9](https://github.com/gperdomor/oss/commit/7a348f9))
+- fix customConditions ([5082c66](https://github.com/gperdomor/oss/commit/5082c66))
 
 ### ❤️ Thank You
 
@@ -76,16 +76,16 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- **nx-set-shas:** from clipanion to oclif ([#1287](https://github.com/gperdomor/nx-tools/pull/1287))
+- **nx-set-shas:** from clipanion to oclif ([#1287](https://github.com/gperdomor/oss/pull/1287))
 
 ### 🩹 Fixes
 
-- **deps:** bump @oclif/plugin-help from 6.2.31 to v6.2.32 ([#1303](https://github.com/gperdomor/nx-tools/pull/1303))
+- **deps:** bump @oclif/plugin-help from 6.2.31 to v6.2.32 ([#1303](https://github.com/gperdomor/oss/pull/1303))
 
 ### 🏡 Chore
 
-- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/nx-tools/commit/c8412d2))
-- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/nx-tools/commit/dc121be))
+- ⚠️ bump min Node.js version to 20.19 ([c8412d2](https://github.com/gperdomor/oss/commit/c8412d2))
+- ⚠️ bump required tslib version ranges ([dc121be](https://github.com/gperdomor/oss/commit/dc121be))
 
 ### ⚠️ Breaking Changes
 
@@ -100,12 +100,12 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- **nx-set-shas:** updated config files to align with new library generators ([#1234](https://github.com/gperdomor/nx-tools/pull/1234))
+- **nx-set-shas:** updated config files to align with new library generators ([#1234](https://github.com/gperdomor/oss/pull/1234))
 
 ### 🏡 Chore
 
-- move to pnpm as package manager ([#1242](https://github.com/gperdomor/nx-tools/pull/1242))
-- update eslint configuration to ESM files ([#1228](https://github.com/gperdomor/nx-tools/pull/1228))
+- move to pnpm as package manager ([#1242](https://github.com/gperdomor/oss/pull/1242))
+- update eslint configuration to ESM files ([#1228](https://github.com/gperdomor/oss/pull/1228))
 
 ### ❤️ Thank You
 
@@ -119,7 +119,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- added provenance support ([732184f](https://github.com/gperdomor/nx-tools/commit/732184f))
+- added provenance support ([732184f](https://github.com/gperdomor/oss/commit/732184f))
 
 ### ❤️ Thank You
 
@@ -129,7 +129,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🏡 Chore
 
-- update readme files ([9b6b74c](https://github.com/gperdomor/nx-tools/commit/9b6b74c))
+- update readme files ([9b6b74c](https://github.com/gperdomor/oss/commit/9b6b74c))
 
 ### 🧱 Updated Dependencies
 
@@ -143,11 +143,11 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- move workspace to use typescript solution ([#1168](https://github.com/gperdomor/nx-tools/pull/1168))
+- move workspace to use typescript solution ([#1168](https://github.com/gperdomor/oss/pull/1168))
 
 ### 🩹 Fixes
 
-- fix ci ([#1201](https://github.com/gperdomor/nx-tools/pull/1201))
+- fix ci ([#1201](https://github.com/gperdomor/oss/pull/1201))
 
 ### 🧱 Updated Dependencies
 
@@ -167,7 +167,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- **nx-set-shas:** remove chalk dependency ([1514bae](https://github.com/gperdomor/nx-tools/commit/1514bae))
+- **nx-set-shas:** remove chalk dependency ([1514bae](https://github.com/gperdomor/oss/commit/1514bae))
 
 ### 🧱 Updated Dependencies
 
@@ -181,7 +181,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- **nx-set-shas:** fix chalk import ([d4d5e35](https://github.com/gperdomor/nx-tools/commit/d4d5e35))
+- **nx-set-shas:** fix chalk import ([d4d5e35](https://github.com/gperdomor/oss/commit/d4d5e35))
 
 ### ❤️ Thank You
 
@@ -191,7 +191,7 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- **nx-set-shas:** compiled using swc ([e0783e5](https://github.com/gperdomor/nx-tools/commit/e0783e5))
+- **nx-set-shas:** compiled using swc ([e0783e5](https://github.com/gperdomor/oss/commit/e0783e5))
 
 ### ❤️ Thank You
 
@@ -209,21 +209,21 @@ This was a version bump only for nx-set-shas to align it with other projects, th
 
 ### 🚀 Features
 
-- ⚠️ **nx-set-shas:** rewrited using clipanion package ([ea92e42](https://github.com/gperdomor/nx-tools/commit/ea92e42))
+- ⚠️ **nx-set-shas:** rewrited using clipanion package ([ea92e42](https://github.com/gperdomor/oss/commit/ea92e42))
 
 ### 🩹 Fixes
 
-- **deps:** bump undici from 5.22.1 to v5.23.0 ([2dcfd5d](https://github.com/gperdomor/nx-tools/commit/2dcfd5d))
+- **deps:** bump undici from 5.22.1 to v5.23.0 ([2dcfd5d](https://github.com/gperdomor/oss/commit/2dcfd5d))
 
-- **deps:** bump commander from 11.0.0 to v11.1.0 ([02a7db4](https://github.com/gperdomor/nx-tools/commit/02a7db4))
+- **deps:** bump commander from 11.0.0 to v11.1.0 ([02a7db4](https://github.com/gperdomor/oss/commit/02a7db4))
 
-- **deps:** bump undici from 5.23.0 to v5.26.3 ([029658c](https://github.com/gperdomor/nx-tools/commit/029658c))
+- **deps:** bump undici from 5.23.0 to v5.26.3 ([029658c](https://github.com/gperdomor/oss/commit/029658c))
 
-- **deps:** bump undici from 5.26.3 to v5.26.4 ([b184203](https://github.com/gperdomor/nx-tools/commit/b184203))
+- **deps:** bump undici from 5.26.3 to v5.26.4 ([b184203](https://github.com/gperdomor/oss/commit/b184203))
 
-- **deps:** bump undici from 5.26.4 to v5.26.5 ([93cce10](https://github.com/gperdomor/nx-tools/commit/93cce10))
+- **deps:** bump undici from 5.26.4 to v5.26.5 ([93cce10](https://github.com/gperdomor/oss/commit/93cce10))
 
-- **deps:** bump undici from 5.26.5 to v5.28.4 [security] ([eeedf36](https://github.com/gperdomor/nx-tools/commit/eeedf36))
+- **deps:** bump undici from 5.26.5 to v5.28.4 [security] ([eeedf36](https://github.com/gperdomor/oss/commit/eeedf36))
 
 #### ⚠️ Breaking Changes
 

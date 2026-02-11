@@ -10,7 +10,7 @@ on:
 
 jobs:
   fetch-tags:
-    if: github.repository == 'gperdomor/nx-tools'
+    if: github.repository == 'gperdomor/oss'
     runs-on: ubuntu-latest
     outputs:
       node-tags: ${{ steps.node-tags.outputs.tags }}
@@ -35,7 +35,7 @@ jobs:
           sort: true
 
   calculate-tag-difference:
-    if: github.repository == 'gperdomor/nx-tools'
+    if: github.repository == 'gperdomor/oss'
     runs-on: ubuntu-latest
     needs: [fetch-tags]
     outputs:
@@ -52,7 +52,7 @@ jobs:
           target-tags: ${{ needs.fetch-tags.outputs.nx-docker-tags }}
 
   build-docker:
-    if: ${{ github.repository == 'gperdomor/nx-tools' && needs.calculate-tag-difference.outputs.missing-count > 0}}
+    if: ${{ github.repository == 'gperdomor/oss' && needs.calculate-tag-difference.outputs.missing-count > 0}}
     runs-on: ubuntu-latest
     needs: calculate-tag-difference
     strategy:

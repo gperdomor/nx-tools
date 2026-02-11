@@ -7,7 +7,7 @@
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gperdomor/nx-tools",
+    "url": "https://github.com/gperdomor/oss",
     "directory": "packages/nx-set-shas"
   },
   "scripts": {

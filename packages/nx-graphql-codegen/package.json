@@ -5,10 +5,10 @@
   "author": "Rene Bonilla <rbonillajr@hotmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gperdomor/nx-tools",
+    "url": "https://github.com/gperdomor/oss",
     "directory": "packages/nx-graphql-codegen"
   },
-  "bugs": "https://github.com/gperdomor/nx-tools/issues",
+  "bugs": "https://github.com/gperdomor/oss/issues",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
