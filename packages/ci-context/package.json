@@ -1,6 +1,7 @@
 {
   "name": "@nx-tools/ci-context",
   "version": "7.2.1",
+  "type": "module",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -14,19 +15,19 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "@nx-tools/source": "./src/index.ts",
+      "@org/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./src/lib/utils/git": {
-      "@nx-tools/source": "./src/lib/utils/git.js",
+      "@org/source": "./src/lib/utils/git.js",
       "types": "./dist/lib/utils/git.d.ts",
       "import": "./dist/lib/utils/git.js",
       "default": "./dist/lib/utils/git.js"
     },
     "./src/lib/utils/github": {
-      "@nx-tools/source": "./src/lib/utils/github.js",
+      "@org/source": "./src/lib/utils/github.js",
       "types": "./dist/lib/utils/github.d.ts",
       "import": "./dist/lib/utils/github.js",
       "default": "./dist/lib/utils/github.js"

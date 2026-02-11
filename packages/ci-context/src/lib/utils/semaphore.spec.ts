@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as semaphore from './semaphore';
-import { Semaphore } from './semaphore';
+import { RunnerContext } from '../interfaces.js';
+import * as semaphore from './semaphore.js';
+import { Semaphore } from './semaphore.js';
 
 describe('Semaphore Context', () => {
   let context: RunnerContext;
@@ -77,7 +77,7 @@ describe('Semaphore Context', () => {
         description: '',
         html_url: 'https://semaphore.com/gperdomor/oss',
         license: null,
-        name: 'nx-tools',
+        name: 'oss',
       });
     });
   });

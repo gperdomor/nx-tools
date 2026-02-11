@@ -17,7 +17,9 @@
     {
       "plugin": "@nx/js/typescript",
       "options": {
-        "typecheck": { "targetName": "typecheck" },
+        "typecheck": {
+          "targetName": "typecheck"
+        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -26,8 +28,20 @@
         }
       }
     },
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
-    { "plugin": "@nx/vitest", "options": { "testTargetName": "test", "ciTargetName": "test-ci", "testMode": "watch" } },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testTargetName": "test",
+        "ciTargetName": "test-ci",
+        "testMode": "watch"
+      }
+    },
     {
       "plugin": "@nx/vite/plugin",
       "options": {
@@ -56,17 +70,46 @@
   ],
   "release": {
     "projects": ["packages/*"],
-    "releaseTag": { "pattern": "{version}" },
+    "releaseTag": {
+      "pattern": "{version}"
+    },
     "version": {
       "preVersionCommand": "pnpm dlx nx run-many -t build",
-      "versionActionsOptions": { "skipLockFileUpdate": true }
+      "versionActionsOptions": {
+        "skipLockFileUpdate": true
+      }
     },
-    "conventionalCommits": { "types": { "docs": { "semverBump": "none" }, "chore": true } },
-    "changelog": { "projectChangelogs": true, "workspaceChangelog": { "createRelease": "github" } }
+    "conventionalCommits": {
+      "types": {
+        "docs": {
+          "semverBump": "none"
+        },
+        "chore": true
+      }
+    },
+    "changelog": {
+      "projectChangelogs": true,
+      "workspaceChangelog": {
+        "createRelease": "github"
+      }
+    }
   },
   "targetDefaults": {
-    "test": { "dependsOn": ["^build"] },
-    "@nx/js:tsc": { "cache": true, "dependsOn": ["^build"], "inputs": ["production", "^production"] }
+    "test": {
+      "dependsOn": ["^build"]
+    },
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
   },
-  "generators": { "@nx/next": { "application": { "style": "tailwind", "linter": "eslint" } } }
+  "generators": {
+    "@nx/next": {
+      "application": {
+        "style": "tailwind",
+        "linter": "eslint"
+      }
+    }
+  }
 }

@@ -117,7 +117,6 @@ To use a different engine, you need to update the `options.engine` property of y
 ## More Documentation
 
 - Advanced usage:
-
   - [Multi-platform image](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/multi-platform)
   - [Push to multi-registries](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/push-multiple-registries)
   - [Cache](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/cache)
@@ -126,7 +125,6 @@ To use a different engine, you need to update the `options.engine` property of y
   - [Handle tags and labels](https://nx-tools.vercel.app/docs/nx-container/guides/advanced/tags-labels)
 
 - Usage with CI
-
   - [GitLab CI](https://nx-tools.vercel.app/docs/nx-container/guides/gitlab-ci)
   - [GitHub Actions](https://nx-tools.vercel.app/docs/nx-container/guides/github-actions)
 

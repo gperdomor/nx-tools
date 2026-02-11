@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as bitbucket from './bitbucket';
-import { BitBucket } from './bitbucket';
+import { RunnerContext } from '../interfaces.js';
+import * as bitbucket from './bitbucket.js';
+import { BitBucket } from './bitbucket.js';
 
 describe('BitBucket Context', () => {
   let context: RunnerContext;

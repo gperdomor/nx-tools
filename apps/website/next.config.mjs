@@ -1,7 +1,10 @@
 import { composePlugins, withNx } from '@nx/next';
 import { createMDX } from 'fumadocs-mdx/next';
 
-const withMDX = createMDX();
+const withMDX = createMDX({
+  configPath: './src/source.config.ts',
+  outDir: './src/.source',
+});
 
 /**
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
