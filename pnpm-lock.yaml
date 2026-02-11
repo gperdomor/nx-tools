@@ -190,8 +190,8 @@ importers:
         specifier: 22.5.0
         version: 22.5.0(@swc-node/register@1.11.1(@swc/core@1.15.8(@swc/helpers@0.5.18))(@swc/types@0.1.25)(typescript@5.9.3))(@swc/core@1.15.8(@swc/helpers@0.5.18))
       oclif:
-        specifier: 4.22.70
-        version: 4.22.70(@types/node@24.10.1)
+        specifier: 4.22.73
+        version: 4.22.73(@types/node@24.10.1)
       postcss:
         specifier: 8.5.6
         version: 8.5.6
@@ -2533,10 +2533,6 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
-
-  '@inquirer/figures@1.0.14':
-    resolution: {integrity: sha512-DbFgdt+9/OZYFM+19dbpXOSeAstPy884FPy1KjDu4anWwymZeOYhMY1mdFri172htv6mvc/uvIAAi7b7tvjJBQ==}
-    engines: {node: '>=18'}
 
   '@inquirer/figures@1.0.15':
     resolution: {integrity: sha512-t2IEY+unGHOzAaVM5Xx6DEWKeXlDDcNPeDyUpsRc6CUhBfU3VQOEl+Vssh7VNp1dR8MdUJBWhuObjXCsVpjN5g==}
@@ -9932,8 +9928,8 @@ packages:
   obug@2.1.1:
     resolution: {integrity: sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ==}
 
-  oclif@4.22.70:
-    resolution: {integrity: sha512-ql1LSSb69RrnpOOw+s3EiqgV3HKotpqVpPYKEZqqsN0A5KE5p81vVpZ3F4thQ57ONnOdpxS3voTmEiXSPvoYbg==}
+  oclif@4.22.73:
+    resolution: {integrity: sha512-nyODp0FrwdKc/jBPFeloGmAQA49Y6nC7ZANHwPZjok09RUCJpaJkuoe7EH6EOeMrS1Qsb+muYsV4fBa6bkVjIg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -12392,10 +12388,6 @@ packages:
   yocto-queue@1.2.1:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
-
-  yoctocolors-cjs@2.1.2:
-    resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
-    engines: {node: '>=18'}
 
   yoctocolors-cjs@2.1.3:
     resolution: {integrity: sha512-U/PBtDf35ff0D8X8D0jfdzHYEPFxAI7jJlxZXwCSez5M3190m+QobIfh+sWDWSHMCWWJN2AWamkegn6vr6YBTw==}
@@ -15045,7 +15037,7 @@ snapshots:
 
   '@inquirer/core@9.2.1':
     dependencies:
-      '@inquirer/figures': 1.0.14
+      '@inquirer/figures': 1.0.15
       '@inquirer/type': 2.0.0
       '@types/mute-stream': 0.0.4
       '@types/node': 22.18.12
@@ -15056,7 +15048,7 @@ snapshots:
       signal-exit: 4.1.0
       strip-ansi: 6.0.1
       wrap-ansi: 6.2.0
-      yoctocolors-cjs: 2.1.2
+      yoctocolors-cjs: 2.1.3
 
   '@inquirer/editor@4.2.23(@types/node@24.10.1)':
     dependencies:
@@ -15080,8 +15072,6 @@ snapshots:
       iconv-lite: 0.7.0
     optionalDependencies:
       '@types/node': 24.10.1
-
-  '@inquirer/figures@1.0.14': {}
 
   '@inquirer/figures@1.0.15': {}
 
@@ -15147,10 +15137,10 @@ snapshots:
   '@inquirer/select@2.5.0':
     dependencies:
       '@inquirer/core': 9.2.1
-      '@inquirer/figures': 1.0.14
+      '@inquirer/figures': 1.0.15
       '@inquirer/type': 1.5.5
       ansi-escapes: 4.3.2
-      yoctocolors-cjs: 2.1.2
+      yoctocolors-cjs: 2.1.3
 
   '@inquirer/select@4.4.2(@types/node@24.10.1)':
     dependencies:
@@ -24048,7 +24038,7 @@ snapshots:
 
   obug@2.1.1: {}
 
-  oclif@4.22.70(@types/node@24.10.1):
+  oclif@4.22.73(@types/node@24.10.1):
     dependencies:
       '@aws-sdk/client-cloudfront': 3.983.0
       '@aws-sdk/client-s3': 3.983.0
@@ -26828,8 +26818,6 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.2.1: {}
-
-  yoctocolors-cjs@2.1.2: {}
 
   yoctocolors-cjs@2.1.3: {}
 
