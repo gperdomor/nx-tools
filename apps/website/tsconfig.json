@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "jsx": "preserve",
     "noEmit": true,
     "emitDeclarationOnly": false,
@@ -21,9 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "fumadocs-mdx:collections/*": [".source/*"]
+      "fumadocs-mdx:collections/*": ["./.source/*"]
     },
     "outDir": "dist",
+    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
   "include": [
@@ -31,7 +31,6 @@
     "../../dist/apps/website/.next/types/**/*.ts",
     ".source/**/*.ts",
     "next-env.d.ts",
-    "source.config.ts",
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.ts",

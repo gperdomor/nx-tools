@@ -12,7 +12,7 @@ pnpm-lock.yaml
 /**/.next
 *.mdx
 
-apps/website/.source
+apps/website/**/.source
 .github/instructions/nx.instructions.md
 .github/workflows/build-nx-docker.yml
 .github/workflows/build-nx-podman.yml

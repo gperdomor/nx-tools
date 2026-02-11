@@ -1,6 +1,7 @@
 {
   "name": "@nx-tools/container-metadata",
   "version": "7.2.1",
+  "type": "module",
   "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
@@ -37,7 +38,7 @@
     "semver": "^7.7.4"
   },
   "devDependencies": {
-    "@nx/devkit": "22.4.5"
+    "@nx/devkit": "22.5.0"
   },
   "peerDependencies": {
     "@nx/devkit": ">=18.0.0 <23.0.0",

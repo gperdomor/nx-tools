@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as github from './github';
-import { Github } from './github';
+import { RunnerContext } from '../interfaces.js';
+import * as github from './github.js';
+import { Github } from './github.js';
 
 vi.mock('@actions/github', async (importOriginal) => {
   return {

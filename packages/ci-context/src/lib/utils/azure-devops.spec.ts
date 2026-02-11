@@ -1,6 +1,6 @@
-import { RunnerContext } from '../interfaces';
-import * as devops from './azure-devops';
-import { Azure } from './azure-devops';
+import { RunnerContext } from '../interfaces.js';
+import * as devops from './azure-devops.js';
+import { Azure } from './azure-devops.js';
 
 describe('Azure DevOps Context', () => {
   let context: RunnerContext;
