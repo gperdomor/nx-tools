@@ -1,8 +1,9 @@
 {
   "name": "@nx-tools/nx-prisma",
   "version": "7.2.1",
+  "license": "MIT",
+  "author": "Gustavo Perdomo <gperdomor@gmail.com>",
   "type": "commonjs",
-  "author": "gperdomor <gperdomor@gmail.com>",
   "contributors": [
     "wSedlacek"
   ],
@@ -12,7 +13,6 @@
     "directory": "packages/nx-prisma"
   },
   "bugs": "https://github.com/gperdomor/oss/issues",
-  "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "executors": "./executors.json",

@@ -1,14 +1,14 @@
 {
   "name": "@nx-tools/nx-container",
   "version": "7.2.1",
-  "author": "gperdomor <gperdomor@gmail.com>",
+  "license": "MIT",
+  "author": "Gustavo Perdomo <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/gperdomor/oss",
     "directory": "packages/nx-container"
   },
   "bugs": "https://github.com/gperdomor/oss/issues",
-  "license": "MIT",
   "type": "commonjs",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
