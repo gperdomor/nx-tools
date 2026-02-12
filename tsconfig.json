@@ -10,6 +10,9 @@
       "path": "./packages/nx-set-shas"
     },
     {
+      "path": "./packages/class-variance-builder"
+    },
+    {
       "path": "./packages/nx-container"
     },
     {
