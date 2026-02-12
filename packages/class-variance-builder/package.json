@@ -32,7 +32,6 @@
     "panda",
     "pandacss"
   ],
-  "private": false,
   "type": "module",
   "engines": {
     "node": ">=18"

@@ -1,15 +1,15 @@
 {
   "name": "@nx-tools/core",
   "version": "7.2.1",
+  "license": "MIT",
+  "author": "Gustavo Perdomo <gperdomor@gmail.com>",
   "type": "module",
-  "author": "gperdomor <gperdomor@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/gperdomor/oss",
     "directory": "packages/core"
   },
   "bugs": "https://github.com/gperdomor/oss/issues",
-  "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
