@@ -1,7 +1,43 @@
 {
   "name": "cvb",
-  "version": "0.0.1",
+  "version": "1.1.2",
+  "description": "Class Variance Builder 👷🏼",
+  "license": "MIT",
+  "author": "Gustavo Perdomo <gperdomor@gmail.com>",
+  "homepage": "https://github.com/gperdomor/oss/tree/main/packages/class-variance-builder",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gperdomor/oss.git",
+    "directory": "packages/class-variance-builder"
+  },
+  "bugs": {
+    "url": "https://github.com/gperdomor/oss/issues"
+  },
+  "keywords": [
+    "Class Variance Builder",
+    "class-variance-builder",
+    "Slot Variance Builder",
+    "slot-variance-builder",
+    "cvb",
+    "svb",
+    "classes",
+    "classname",
+    "classnames",
+    "css",
+    "cva",
+    "stitches",
+    "vanilla-extract",
+    "variants",
+    "tailwind-variants",
+    "panda",
+    "pandacss"
+  ],
+  "private": false,
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,6 +47,7 @@
       "@org/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.js"
     }
   },
