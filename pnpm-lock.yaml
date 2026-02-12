@@ -27,8 +27,8 @@ importers:
         specifier: 14.2.6
         version: 14.2.6(@types/react@19.2.13)(fumadocs-core@16.5.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.13)(lucide-react@0.563.0(react@19.2.4))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@3.25.76))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react@19.2.4)(vite@7.3.1(@types/node@24.10.10)(jiti@2.6.1)(less@4.4.0)(lightningcss@1.30.2)(sass-embedded@1.89.2)(sass@1.89.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.8.0))
       fumadocs-typescript:
-        specifier: 5.1.1
-        version: 5.1.1(20a3f69d932982b17c00379aa6376b69)
+        specifier: 5.1.2
+        version: 5.1.2(2cce29fe3721e42e03c28d8add814133)
       fumadocs-ui:
         specifier: 16.5.4
         version: 16.5.4(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(fumadocs-core@16.5.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.13)(lucide-react@0.563.0(react@19.2.4))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@3.25.76))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.1.18)
@@ -7935,15 +7935,24 @@ packages:
       vite:
         optional: true
 
-  fumadocs-typescript@5.1.1:
-    resolution: {integrity: sha512-RYtkZ+7fU7stqe0daO1d9V9AVhGfB3m88LEQweHPyjCH0LDApvR5o52ybI5Pq6iD5Gf0RavbYpF+MUAN+r1Ilw==}
+  fumadocs-typescript@5.1.2:
+    resolution: {integrity: sha512-I25stwqCHG1RyqpsAMZW4t43b0Tlmb/VHESSf+XgK7l5YiEhsqzbVYJqLa5B4c/t3Jri1/4nkFGcy0xH/jSHPg==}
     peerDependencies:
+      '@types/estree': '*'
+      '@types/hast': '*'
+      '@types/mdast': '*'
       '@types/react': '*'
       fumadocs-core: ^16.5.0
       fumadocs-ui: ^16.5.0
       react: '*'
       typescript: '*'
     peerDependenciesMeta:
+      '@types/estree':
+        optional: true
+      '@types/hast':
+        optional: true
+      '@types/mdast':
+        optional: true
       '@types/react':
         optional: true
       fumadocs-ui:
@@ -21691,7 +21700,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  fumadocs-typescript@5.1.1(20a3f69d932982b17c00379aa6376b69):
+  fumadocs-typescript@5.1.2(2cce29fe3721e42e03c28d8add814133):
     dependencies:
       estree-util-value-to-estree: 3.5.0
       fumadocs-core: 16.5.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.13)(lucide-react@0.563.0(react@19.2.4))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@3.25.76)
@@ -21706,6 +21715,9 @@ snapshots:
       unified: 11.0.5
       unist-util-visit: 5.1.0
     optionalDependencies:
+      '@types/estree': 1.0.8
+      '@types/hast': 3.0.4
+      '@types/mdast': 4.0.4
       '@types/react': 19.2.13
       fumadocs-ui: 16.5.4(@types/react-dom@19.2.3(@types/react@19.2.13))(@types/react@19.2.13)(fumadocs-core@16.5.4(@mdx-js/mdx@3.1.1)(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.13)(lucide-react@0.563.0(react@19.2.4))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(zod@3.25.76))(next@16.1.6(@babel/core@7.28.0)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(sass@1.89.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tailwindcss@4.1.18)
     transitivePeerDependencies:
